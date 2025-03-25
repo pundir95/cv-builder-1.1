@@ -38,7 +38,7 @@ export const GridView = () => {
       {resumes && (
         <AnimatePresence>
           {resumes
-            .sort((a, b) => sortByDate(a, b, "updatedAt"))
+            ?.sort((a, b) => sortByDate(a, b, "updatedAt"))
             .map((resume, index) => (
               <motion.div
                 key={resume.id}

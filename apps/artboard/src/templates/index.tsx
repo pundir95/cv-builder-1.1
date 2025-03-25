@@ -2,7 +2,7 @@ import type { Template } from "@reactive-resume/utils";
 
 import { Azurill } from "./azurill";
 import { Bronzor } from "./bronzor";
-import { Chikorita } from "./chikorita";
+import { Chikorita } from "./chikorita"; 
 import { Ditto } from "./ditto";
 import { Gengar } from "./gengar";
 import { Glalie } from "./glalie";

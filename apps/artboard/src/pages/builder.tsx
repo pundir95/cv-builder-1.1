@@ -21,6 +21,7 @@ export const BuilderLayout = () => {
 
   const Template = useMemo(() => getTemplate(template), [template]);
 
+
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return;
@@ -72,7 +73,7 @@ export const BuilderLayout = () => {
               animate={{ opacity: 1, x: 0, transition: { delay: pageIndex * 0.3 } }}
               exit={{ opacity: 0, x: -200 }}
             >
-              <Page mode="builder" pageNumber={pageIndex + 1}>
+               <Page mode="builder" pageNumber={pageIndex + 1}>
                 <Template isFirstPage={pageIndex === 0} columns={columns as SectionKey[][]} />
               </Page>
             </motion.div>

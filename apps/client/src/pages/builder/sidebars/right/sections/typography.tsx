@@ -178,7 +178,7 @@ export const TypographySection = () => {
           </div>
         </div>
 
-        <div className="space-y-1.5">
+        {/* <div className="space-y-1.5">
           <Label>{t`Options`}</Label>
 
           <div className="flex items-center gap-x-4 py-1">
@@ -202,7 +202,7 @@ export const TypographySection = () => {
             />
             <Label htmlFor="metadata.typography.underlineLinks">{t`Underline Links`}</Label>
           </div>
-        </div>
+        </div> */}
       </main>
     </section>
   );

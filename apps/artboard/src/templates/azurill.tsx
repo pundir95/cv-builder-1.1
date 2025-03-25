@@ -549,10 +549,10 @@ const mapSectionToComponent = (section: SectionKey) => {
   }
 };
 
-export const Azurill = ({ columns, isFirstPage = false }: TemplateProps) => {
+  export const Azurill = ({ columns, isFirstPage = false }: TemplateProps) => {
   const [main, sidebar] = columns;
 
-  return (
+  return (          
     <div className="p-custom space-y-3">
       {isFirstPage && <Header />}
 
@@ -574,3 +574,6 @@ export const Azurill = ({ columns, isFirstPage = false }: TemplateProps) => {
     </div>
   );
 };
+
+// Convert component to string representation
+export const AzurillString = Azurill.toString();

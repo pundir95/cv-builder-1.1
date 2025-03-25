@@ -4,9 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { axios } from "@/client/libs/axios";
 
 export const fetchFeatureFlags = async () => {
-  const response = await axios.get<FeatureDto>(`/feature/flags`);
+ 
 
-  return response.data;
+  return {
+    "isSignupsDisabled": false,
+    "isEmailAuthDisabled": false
+};
 };
 
 export const useFeatureFlags = () => {

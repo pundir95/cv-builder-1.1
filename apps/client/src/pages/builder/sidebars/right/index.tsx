@@ -37,22 +37,22 @@ export const RightSidebar = () => {
           <TypographySection />
           <Separator />
           <ThemeSection />
-          <Separator />
-          <CssSection />
+          {/* <Separator /> */}
+          {/* <CssSection /> */}
           <Separator />
           <PageSection />
           <Separator />
-          <SharingSection />
-          <Separator />
-          <StatisticsSection />
+          {/* <SharingSection /> */}
+          {/* <Separator /> */}
+          {/* <StatisticsSection /> */}
           <Separator />
           <ExportSection />
+          {/* <Separator /> */}
+          {/* <NotesSection /> */}
+          {/* <Separator /> */}
+          {/* <InformationSection /> */}
           <Separator />
-          <NotesSection />
-          <Separator />
-          <InformationSection />
-          <Separator />
-          <Copyright className="text-center" />
+          {/* <Copyright className="text-center" /> */}
         </div>
       </ScrollArea>
 

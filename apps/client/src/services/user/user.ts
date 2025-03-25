@@ -7,11 +7,19 @@ import { axios } from "@/client/libs/axios";
 import { useAuthStore } from "@/client/stores/auth";
 
 export const fetchUser = async () => {
-  const response = await axios.get<UserDto | undefined, AxiosResponse<UserDto | undefined>>(
-    "/user/me",
-  );
-
-  return response.data;
+  return {
+    "id": "cm8fqja5s0klgjee2tcmm08fc",
+    "name": "Pankaj Pundir",
+    "picture": "https://avatars.githubusercontent.com/u/106310650?v=4",
+    "username": "pundir95",
+    "email": "pankaj@avioxtechnologies.com",
+    "locale": "en-US",
+    "emailVerified": true,
+    "twoFactorEnabled": false,
+    "provider": "github",
+    "createdAt": "2025-03-19T09:43:51.089Z",
+    "updatedAt": "2025-03-19T09:43:51.089Z"
+}
 };
 
 export const useUser = () => {
