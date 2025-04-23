@@ -4,6 +4,7 @@ import {
   ChatTeardropText,
   CircleNotch,
   Exam,
+  Lightbulb,
   MagicWand,
   PenNib,
 } from "@phosphor-icons/react";
@@ -24,7 +25,7 @@ import { fixGrammar } from "../services/openai/fix-grammar";
 import { improveWriting } from "../services/openai/improve-writing";
 import { useOpenAiStore } from "../stores/openai";
 
-type Action = "improve" | "fix" | "tone";
+type Action = "improve" | "fix" | "tone" | "professional";
 type Mood = "casual" | "professional" | "confident" | "friendly";
 
 type Props = {
@@ -88,6 +89,11 @@ export const AiActions = ({ value, onChange, className }: Props) => {
       <Button size="sm" variant="outline" disabled={!!loading} onClick={() => onClick("fix")}>
         {loading === "fix" ? <CircleNotch className="animate-spin" /> : <Exam />}
         <span className="ml-2 text-xs">{t`Fix Spelling & Grammar`}</span>
+      </Button>
+
+      <Button size="sm" variant="outline" disabled={!!loading} onClick={() => onClick("tone","professional")}>
+        {loading === "tone" ? <CircleNotch className="animate-spin" /> : <Lightbulb />}
+        <span className="ml-2 text-xs">{t`Suggested Content`}</span>
       </Button>
 
       <DropdownMenu>

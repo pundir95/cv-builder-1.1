@@ -7,9 +7,16 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const updateResume = async (data: UpdateResumeDto) => {
+  console.log(data,"data222")
+  let payload ={
+    "cv_data":data.data,
+    "visibility":data.visibility,
+    "title":data.title,
+    "slug":data.slug,
+  }
   const response = await axios.patch<ResumeDto, AxiosResponse<ResumeDto>, UpdateResumeDto>(
-    `/resume/${data.id}`,
-    data,
+    `/cv-manager/cvs/${data.id}/`,
+    payload,
   );
 
   queryClient.setQueryData<ResumeDto>(["resume", { id: response.data.id }], response.data);
@@ -22,7 +29,8 @@ export const updateResume = async (data: UpdateResumeDto) => {
     });
   });
 
-  return response.data;
+
+  return response.data.cv_data;
 };
 
 export const debouncedUpdateResume = debounce(updateResume, 500);

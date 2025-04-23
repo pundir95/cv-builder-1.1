@@ -13,7 +13,7 @@ export const SettingsPage = () => (
   <>
     <Helmet>
       <title>
-        {t`Settings`} - {t`Reactive Resume`}
+        {t`Settings`}
       </title>
     </Helmet>
 
@@ -32,11 +32,11 @@ export const SettingsPage = () => (
           <Separator />
           <SecuritySettings />
           <Separator />
-          <ProfileSettings />
-          <Separator />
+          {/* <ProfileSettings /> */}
+          {/* <Separator /> */}
           <OpenAISettings />
-          <Separator />
-          <DangerZoneSettings />
+          {/* <Separator />
+          <DangerZoneSettings /> */}
         </div>
       </ScrollArea>
     </div>

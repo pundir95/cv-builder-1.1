@@ -16,8 +16,10 @@ export const usernameSchema = z
 
 export const userSchema = z.object({
   id: idSchema,
-  name: z.string().min(1).max(255),
+  first_name: z.string().min(1).max(255),
+  last_name: z.string().min(1).max(255),  
   picture: z.literal("").or(z.null()).or(z.string().url()),
+  phone_number: z.string().min(1).max(255),
   username: usernameSchema,
   email: z
     .string()

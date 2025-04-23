@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { useLocalStorage, useMediaQuery } from "usehooks-ts";
 
-const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
+const COLOR_SCHEME_QUERY = "(prefers-color-scheme: light)";
 
 type Theme = "system" | "dark" | "light";
 
@@ -40,8 +40,8 @@ export const useTheme = (): UseThemeOutput => {
 
   function toggleTheme() {
     const toggleDict: Record<Theme, Theme> = {
-      light: "system",
-      system: "dark",
+      light: "light",
+      system: "light",
       dark: "light",
     };
 

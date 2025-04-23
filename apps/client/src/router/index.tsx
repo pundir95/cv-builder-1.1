@@ -21,15 +21,27 @@ import { Providers } from "../providers";
 import { AuthGuard } from "./guards/auth";
 import { GuestGuard } from "./guards/guest";
 import { authLoader } from "./loaders/auth";
+import { UserDashboardPage } from "../pages/user-dashboard/page";
+import AdminDashboardPage from "../pages/admin-dashboard/page";
+import { Users } from "../pages/admin-dashboard/users/Users";
+import { AdminDashboardLayout } from "../pages/admin-dashboard/layout";
+import TemplatesPage from "../pages/admin-dashboard/template/page";
+import AccountSettings from "../pages/admin-dashboard/account/Accountant";
+import PlanPricing from "../pages/admin-dashboard/planPrice/PlanPricing";
+import ExperienceLevel from "../pages/experience-level/Page";
+import ChooseTemplate from "../pages/select-template/page";
+
 
 export const routes = createRoutesFromElements(
   <Route element={<Providers />}>
+
     <Route errorElement={<ErrorPage />}>
       <Route element={<HomeLayout />}>
         <Route path="/" element={<HomePage />} />
       </Route>
 
       <Route path="auth">
+          
         <Route element={<AuthLayout />}>
           <Route element={<GuestGuard />}>
             <Route path="login" element={<LoginPage />} />
@@ -60,16 +72,37 @@ export const routes = createRoutesFromElements(
         <Route index element={<Navigate replace to="/auth/login" />} />
       </Route>
 
-      <Route path="dashboard">
+      <Route path="onboard">
+      <Route path="experience-level" element={<ExperienceLevel />} />
+      <Route path="select-template" element={<ChooseTemplate />} />
+
+      </Route>
+
+
+      <Route path="">
         <Route element={<AuthGuard />}>
           <Route element={<DashboardLayout />}>
-            <Route path="resumes" element={<ResumesPage />} />
-            <Route path="settings" element={<SettingsPage />} />
+            <Route path="dashboard/resumes" element={<ResumesPage />} />
+            <Route path="dashboard/settings" element={<SettingsPage />} />
+            <Route path="dashboard" element={<UserDashboardPage />} />
+            <Route path="dashboard/account" element={<AccountSettings />} />
+            <Route path="dashboard/plan-pricing" element={<PlanPricing />} />
 
-            <Route index element={<Navigate replace to="/dashboard/resumes" />} />
+            {/* <Route index element={<Navigate replace to="/dashboard/resumes" />} /> */}
           </Route>
         </Route>
       </Route>
+
+      <Route path="">
+        <Route element={<AdminDashboardLayout />}>
+              <Route path="admin" element={<AdminDashboardPage />} />
+              <Route path="admin/users" element={<Users />} />
+              <Route path="admin/templates" element={<TemplatesPage />} />
+        </Route>
+      </Route>
+
+ 
+
 
       <Route path="builder">
         <Route element={<AuthGuard />}>

@@ -35,7 +35,7 @@ export const ListView = () => {
           </div>
         ))}
 
-      {resumes && (
+      {/* {resumes && (
         <AnimatePresence>
           {resumes
             .sort((a, b) => sortByDate(a, b, "updatedAt"))
@@ -50,7 +50,7 @@ export const ListView = () => {
               </motion.div>
             ))}
         </AnimatePresence>
-      )}
+      )} */}
     </div>
   );
 };

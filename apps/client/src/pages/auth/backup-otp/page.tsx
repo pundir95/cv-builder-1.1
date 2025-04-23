@@ -39,7 +39,7 @@ export const BackupOtpPage = () => {
     try {
       await backupOtp(data);
 
-      void navigate("/dashboard");
+      void navigate("/onboard/experience-level");
     } catch {
       form.reset();
     }

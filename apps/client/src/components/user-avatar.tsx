@@ -24,7 +24,7 @@ export const UserAvatar = ({ size = 36, className }: Props) => {
       />
     );
   } else {
-    const initials = getInitials(user.name);
+    const initials = getInitials("Avatar");
 
     picture = (
       <div

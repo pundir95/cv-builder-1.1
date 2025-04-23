@@ -19,20 +19,21 @@ import { BuilderHeader } from "./_components/header";
 import { BuilderToolbar } from "./_components/toolbar";
 import { LeftSidebar } from "./sidebars/left";
 import { RightSidebar } from "./sidebars/right";
+import { useState } from "react";
 
 const onOpenAutoFocus = (event: Event) => {
   event.preventDefault();
 };
 
-const OutletSlot = () => (
+const OutletSlot = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void,showLeftSidebar:boolean,setShowLeftSidebar:(show:boolean)=>void }) => (
   <>
-    <BuilderHeader />
+    <BuilderHeader showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar}/>
 
-    <div className="absolute inset-0">
+    {/* <div className="absolute inset-0"> */}
       <Outlet />
-    </div>
+    {/* </div> */}
 
-    <BuilderToolbar />
+    {/* <BuilderToolbar /> */}
   </>
 );
 
@@ -46,40 +47,38 @@ export const BuilderLayout = () => {
 
   const leftHandle = useBuilderStore((state) => state.panel.left.handle);
   const rightHandle = useBuilderStore((state) => state.panel.right.handle);
+  const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
+  const [showLeftSidebar, setShowLeftSidebar] = useState<boolean>(true);
+  console.log(showLeftSidebar,"showLeftSidebar")
 
   if (isDesktop) {
     return (
       <div className="relative size-full overflow-hidden">
         <PanelGroup direction="horizontal">
-          <Panel
-            minSize={25}
-            maxSize={45}
-            defaultSize={30}
+         {showLeftSidebar? <Panel
+            minSize={45}
+            maxSize={65}
+            defaultSize={45}
             className={cn("z-10 bg-background", !leftHandle.isDragging && "transition-[flex]")}
             onResize={leftSetSize}
           >
-            <LeftSidebar />
+            <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />
           </Panel>
-          <PanelResizeHandle
-            isDragging={leftHandle.isDragging}
-            onDragging={leftHandle.setDragging}
-          />
+          : <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />}
+         
           <Panel>
-            <OutletSlot />
+            <OutletSlot showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar}/>
           </Panel>
-          <PanelResizeHandle
-            isDragging={rightHandle.isDragging}
-            onDragging={rightHandle.setDragging}
-          />
-          <Panel
-            minSize={25}
+        
+        {showRightSidebar ?<Panel
+            minSize={45}
             maxSize={45}
-            defaultSize={30}
+            defaultSize={45}
             className={cn("z-10 bg-background", !rightHandle.isDragging && "transition-[flex]")}
             onResize={rightSetSize}
           >
-            <RightSidebar />
-          </Panel>
+            <RightSidebar showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} setShowLeftSidebar={setShowLeftSidebar}  showLeftSidebar={showLeftSidebar}/>
+          </Panel> : <RightSidebar showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} setShowLeftSidebar={setShowLeftSidebar} showLeftSidebar={showLeftSidebar} />}
         </PanelGroup>
       </div>
     );
@@ -101,11 +100,11 @@ export const BuilderLayout = () => {
           className="top-16 p-0 sm:max-w-xl"
           onOpenAutoFocus={onOpenAutoFocus}
         >
-          <LeftSidebar />
+          <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />
         </SheetContent>
       </Sheet>
 
-      <OutletSlot />
+      <OutletSlot showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar}/>
 
       <Sheet open={sheet.right.open} onOpenChange={sheet.right.setOpen}>
         <SheetContent
@@ -121,7 +120,7 @@ export const BuilderLayout = () => {
             </SheetHeader>
           </VisuallyHidden>
 
-          <RightSidebar />
+          <RightSidebar showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} setShowLeftSidebar={setShowLeftSidebar} showLeftSidebar={showLeftSidebar} />
         </SheetContent>
       </Sheet>
     </div>

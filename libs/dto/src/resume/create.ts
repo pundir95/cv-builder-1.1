@@ -5,6 +5,8 @@ import { z } from "zod";
 
 export const createResumeSchema = z.object({
   title: z.string().min(1),
+  cv_template: z.number().default(1),
+  cv_data: z.any(),
   slug: z
     .string()
     .min(1)

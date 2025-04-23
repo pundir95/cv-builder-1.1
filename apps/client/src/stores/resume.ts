@@ -30,13 +30,16 @@ export const useResumeStore = create<ResumeStore>()(
     immer((set) => ({
       resume: {} as ResumeDto,
       setValue: (path, value) => {
+        console.log(path, value, "path, value");
         set((state) => {
           if (path === "visibility") {
             state.resume.visibility = value as "public" | "private";
           } else {
+            console.log(state.resume,"state");
             state.resume.data = _set(state.resume.data, path, value);
           }
 
+          console.log(JSON.parse(JSON.stringify(state.resume)), "state.resume");
           void debouncedUpdateResume(JSON.parse(JSON.stringify(state.resume)));
         });
       },

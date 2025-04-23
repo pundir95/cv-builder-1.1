@@ -9,7 +9,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const MM_TO_PX = 3.78;
+export const MM_TO_PX = 2.78;
 
 export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
   const { isDarkMode } = useTheme();
@@ -24,7 +24,10 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
       style={{
         fontFamily,
         width: `${pageSizeMap[page.format].width * MM_TO_PX}px`,
-        minHeight: `${pageSizeMap[page.format].height * MM_TO_PX}px`,
+        minHeight: `${760}px`,
+        marginLeft: "200px",
+        marginBottom: "30px",
+        marginTop: "30px",
       }}
     >
       {mode === "builder" && page.options.pageNumbers && (

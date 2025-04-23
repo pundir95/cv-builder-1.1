@@ -1,58 +1,33 @@
 import type { Template } from "@reactive-resume/utils";
 
-import { Azurill } from "./azurill";
-import { Bronzor } from "./bronzor";
-import { Chikorita } from "./chikorita"; 
-import { Ditto } from "./ditto";
-import { Gengar } from "./gengar";
-import { Glalie } from "./glalie";
-import { Kakuna } from "./kakuna";
-import { Leafish } from "./leafish";
-import { Nosepass } from "./nosepass";
-import { Onyx } from "./onyx";
-import { Pikachu } from "./pikachu";
-import { Rhyhorn } from "./rhyhorn";
+import { cv_template_1 } from "./cv_template_1";
+import { cv_template_2 } from "./cv_template_2";
+import { cv_template_3 } from "./cv_template_3";
+import { cv_template_4 } from "./cv_template_4";
+import { cv_template_5 } from "./cv_template_5";
+
 
 export const getTemplate = (template: Template) => {
-  switch (template) {
-    case "azurill": {
-      return Azurill;
+  console.log(template,"templatename")
+  switch (template.name) {
+    case "cv_template_1": {
+      return cv_template_1;
     }
-    case "bronzor": {
-      return Bronzor;
+    case "cv_template_2": {
+      return cv_template_2;
     }
-    case "chikorita": {
-      return Chikorita;
+    case "cv_template_3": {
+      return cv_template_3;
     }
-    case "ditto": {
-      return Ditto;
+    case "cv_template_4": {
+      return cv_template_4;
     }
-    case "gengar": {
-      return Gengar;
+    case "cv_template_5": {
+      return cv_template_5;
     }
-    case "glalie": {
-      return Glalie;
-    }
-    case "kakuna": {
-      return Kakuna;
-    }
-    case "leafish": {
-      return Leafish;
-    }
-    case "nosepass": {
-      return Nosepass;
-    }
-    case "onyx": {
-      return Onyx;
-    }
-    case "pikachu": {
-      return Pikachu;
-    }
-    case "rhyhorn": {
-      return Rhyhorn;
-    }
+
     default: {
-      return Onyx;
+      return cv_template_4;
     }
   }
 };

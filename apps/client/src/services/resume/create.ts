@@ -4,10 +4,12 @@ import type { AxiosResponse } from "axios";
 
 import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
+import { RESUMES_KEY } from "@/client/constants/query-keys";
+import { fetchResumes } from "./resumes";
 
 export const createResume = async (data: CreateResumeDto) => {
   const response = await axios.post<ResumeDto, AxiosResponse<ResumeDto>, CreateResumeDto>(
-    "/resume",
+    "/cv-manager/cvs/",
     data,
   );
 
@@ -23,7 +25,10 @@ export const useCreateResume = () => {
     mutationFn: createResume,
     onSuccess: (data) => {
       queryClient.setQueryData<ResumeDto>(["resume", { id: data.id }], data);
-
+      
+      // Invalidate and refetch the resumes query
+      queryClient.invalidateQueries({ queryKey: RESUMES_KEY });
+      
       queryClient.setQueryData<ResumeDto[]>(["resumes"], (cache) => {
         if (!cache) return [data];
         return [...cache, data];

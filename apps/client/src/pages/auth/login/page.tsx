@@ -20,33 +20,48 @@ import { cn } from "@reactive-resume/utils";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link,useNavigate } from "react-router";
 import type { z } from "zod";
 
 import { useLogin } from "@/client/services/auth";
 import { useFeatureFlags } from "@/client/services/feature";
+import axios from "axios";
 
 type FormValues = z.infer<typeof loginSchema>;
 
 export const LoginPage = () => {
   const { login, loading } = useLogin();
   const { flags } = useFeatureFlags();
+  const navigate = useNavigate();
 
   const formRef = useRef<HTMLFormElement>(null);
   usePasswordToggle(formRef);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { identifier: "", password: "" },
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (data: FormValues) => {
     try {
+      // navigate("/onboard/experience-level");
       await login(data);
     } catch {
       form.reset();
     }
   };
+
+  const doItLater=()=>{
+    
+    axios.post("http://13.49.228.27/api/v1/accounts/guest-user/").then((res) => {
+      console.log(res.data.data.reference_id,"ress");
+      localStorage.setItem("reference_id",res.data.data.reference_id);
+      navigate("/onboard/experience-level");
+
+    });
+
+    // navigate("/auth/verify-otp");
+  }
 
   return (
     <div className="space-y-8">
@@ -83,7 +98,7 @@ export const LoginPage = () => {
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
-              name="identifier"
+              name="email"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -131,6 +146,9 @@ export const LoginPage = () => {
                 <Link to="/auth/forgot-password">{t`Forgot Password?`}</Link>
               </Button>
             </div>
+            <Button type="submit" disabled={loading} className="flex-1 p-2" variant="warning" onClick={doItLater}>
+               Do it Later
+              </Button>
           </form>
         </Form>
       </div>

@@ -7,11 +7,14 @@ import { Helmet } from "react-helmet-async";
 
 import { GridView } from "./_layouts/grid";
 import { ListView } from "./_layouts/list";
+import { useResumes } from "@/client/services/resume";
 
 type Layout = "grid" | "list";
 
 export const ResumesPage = () => {
   const [layout, setLayout] = useState<Layout>("grid");
+  const { resumes, loading } = useResumes();
+
 
   return (
     <>
@@ -54,11 +57,11 @@ export const ResumesPage = () => {
           className="h-[calc(100vh-140px)] overflow-visible lg:h-[calc(100vh-88px)]"
         >
           <TabsContent value="grid">
-            <GridView />
+            <GridView resumes={resumes} loading={loading} />
           </TabsContent>
-          <TabsContent value="list">
+          {/* <TabsContent value="list">
             <ListView />
-          </TabsContent>
+          </TabsContent> */}
         </ScrollArea>
       </Tabs>
     </>

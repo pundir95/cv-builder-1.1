@@ -29,7 +29,7 @@ import { SectionBase } from "./sections/shared/section-base";
 import { SectionIcon } from "./sections/shared/section-icon";
 import { SummarySection } from "./sections/summary";
 
-export const LeftSidebar = () => {
+export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRightSidebar, showRightSidebar }: { showLeftSidebar: boolean, setShowLeftSidebar: (show: boolean) => void, setShowRightSidebar: (show: boolean) => void, showRightSidebar: boolean }) => {
   const containterRef = useRef<HTMLDivElement | null>(null);
 
   const addSection = useResumeStore((state) => state.addSection);
@@ -42,12 +42,21 @@ export const LeftSidebar = () => {
 
   return (
     <div className="flex bg-secondary-accent/30">
-      <div className="hidden basis-12 flex-col items-center justify-between bg-secondary-accent/30 py-4 sm:flex">
+      <div className="hidden basis-12 flex-col items-center justify-between bg-blue-500 py-4 sm:flex">
         <Button asChild size="icon" variant="ghost" className="size-8 rounded-full">
           <Link to="/dashboard">
-            <Icon size={14} />
+            {/* <Icon size={14} /> */}
           </Link>
         </Button>
+        <SectionIcon
+            id="collapse"
+            name={t`Collapse`}
+            className="cursor-pointer"
+            onClick={() => {
+              setShowLeftSidebar(!showLeftSidebar);
+              setShowRightSidebar(false);
+            }}
+          />
 
         <div className="flex flex-col items-center justify-center gap-y-2">
           <SectionIcon
@@ -59,84 +68,112 @@ export const LeftSidebar = () => {
             })}
             onClick={() => {
               scrollIntoView("#basics");
+              setShowLeftSidebar(true); 
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="summary"
             onClick={() => {
               scrollIntoView("#summary");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="profiles"
             onClick={() => {
               scrollIntoView("#profiles");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="experience"
             onClick={() => {
               scrollIntoView("#experience");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="education"
             onClick={() => {
               scrollIntoView("#education");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="skills"
             onClick={() => {
               scrollIntoView("#skills");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="languages"
             onClick={() => {
               scrollIntoView("#languages");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="awards"
             onClick={() => {
               scrollIntoView("#awards");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="certifications"
             onClick={() => {
               scrollIntoView("#certifications");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="interests"
             onClick={() => {
               scrollIntoView("#interests");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="projects"
             onClick={() => {
               scrollIntoView("#projects");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="publications"
             onClick={() => {
               scrollIntoView("#publications");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="volunteer"
             onClick={() => {
               scrollIntoView("#volunteer");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
           <SectionIcon
             id="references"
             onClick={() => {
-              scrollIntoView("#references");
+                scrollIntoView("#references");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
 
@@ -146,9 +183,11 @@ export const LeftSidebar = () => {
             name={t`Add a new section`}
             icon={<Plus size={14} />}
             onClick={() => {
-              addSection();
+                addSection();
               // eslint-disable-next-line lingui/no-unlocalized-strings
               scrollIntoView("& > section:last-of-type");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
             }}
           />
         </div>
@@ -161,7 +200,7 @@ export const LeftSidebar = () => {
       </div>
 
       <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
-        <div ref={containterRef} className="grid gap-y-10 p-6 @container/left">
+        <div ref={containterRef} className={`grid gap-y-10 @container/left bg-[#a4abbbbd] ${showLeftSidebar ? 'p-6' : ''}`}>
           <BasicsSection />
           <Separator />
           <SummarySection />
@@ -198,44 +237,44 @@ export const LeftSidebar = () => {
             title={(item) => item.name}
             description={(item) => item.description}
           />
-          <Separator />
+          {/* <Separator />
           <SectionBase<Award>
             id="awards"
             title={(item) => item.title}
             description={(item) => item.awarder}
-          />
+          /> */}
           <Separator />
           <SectionBase<Certification>
             id="certifications"
             title={(item) => item.name}
             description={(item) => item.issuer}
           />
-          <Separator />
+          {/* <Separator />
           <SectionBase<Interest>
             id="interests"
             title={(item) => item.name}
             description={(item) => {
               if (item.keywords.length > 0) return `${item.keywords.length} keywords`;
             }}
-          />
+          /> */}
           <Separator />
           <SectionBase<Project>
             id="projects"
             title={(item) => item.name}
             description={(item) => item.description}
           />
-          <Separator />
+          {/* <Separator />
           <SectionBase<Publication>
             id="publications"
             title={(item) => item.name}
             description={(item) => item.publisher}
-          />
-          <Separator />
+          /> */}
+          {/* <Separator />
           <SectionBase<Volunteer>
             id="volunteer"
             title={(item) => item.organization}
             description={(item) => item.position}
-          />
+          /> */}
           <Separator />
           <SectionBase<Reference>
             id="references"

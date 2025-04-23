@@ -39,7 +39,7 @@ export const VerifyOtpPage = () => {
     try {
       await verifyOtp(data);
 
-      void navigate("/dashboard");
+      void navigate("/onboard/experience-level");
     } catch {
       form.reset();
     }

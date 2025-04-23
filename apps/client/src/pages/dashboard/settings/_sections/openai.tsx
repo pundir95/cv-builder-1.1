@@ -53,7 +53,7 @@ export const OpenAISettings = () => {
   });
 
   const onSubmit = ({ apiKey, baseURL, model, maxTokens }: FormValues) => {
-    setApiKey(apiKey);
+    setApiKey("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");
     if (baseURL) {
       setBaseURL(baseURL);
     }

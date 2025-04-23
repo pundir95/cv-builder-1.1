@@ -12,7 +12,7 @@ export const fetchUser = async () => {
     "name": "Pankaj Pundir",
     "picture": "https://avatars.githubusercontent.com/u/106310650?v=4",
     "username": "pundir95",
-    "email": "pankaj@avioxtechnologies.com",
+    "email": "pankaj@avioxtechnologie1111s.com",
     "locale": "en-US",
     "emailVerified": true,
     "twoFactorEnabled": false,

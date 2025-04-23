@@ -8,8 +8,9 @@ export const getAuthProviders = async () => {
   return [
     "email",
     "github",
-    "google"
-];
+    "google",
+    "linkedin"
+  ];
 };
 
 export const useAuthProviders = () => {

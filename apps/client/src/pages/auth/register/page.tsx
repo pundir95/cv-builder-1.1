@@ -39,10 +39,12 @@ export const RegisterPage = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
-      username: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
+      confirm_password: "",
+      phone_number: "",
       locale: "en-US",
     },
   });
@@ -58,7 +60,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" style={{width: "500px"}}>
       <Helmet>
         <title>
           {t`Create a new account`} - {t`Reactive Resume`}
@@ -83,25 +85,26 @@ export const RegisterPage = () => {
         </Alert>
       )}
 
-      <div className={cn(flags.isSignupsDisabled && "pointer-events-none select-none blur-sm")}>
+      <div className={cn(flags.isSignupsDisabled && "pointer-events-none select-none blur-sm", "max-w-2xl mx-auto")}>
         <Form {...form}>
           <form
             ref={formRef}
             className="flex flex-col gap-y-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
+                <div className="flex gap-4">
             <FormField
-              name="name"
+              name="first_name"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t`Name`}</FormLabel>
+                <FormItem className="w-1/2">
+                  <FormLabel>{t`First Name`}</FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t({
-                        message: "John Doe",
+                        message: "John",
                         context:
-                          "Localized version of a placeholder name. For example, Max Mustermann in German or Jan Kowalski in Polish.",
+                          "Localized version of a placeholder name. For example, Max in German or Jan in Polish.",
                       })}
                       {...field}
                     />
@@ -112,18 +115,18 @@ export const RegisterPage = () => {
             />
 
             <FormField
-              name="username"
+              name="last_name"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t`Username`}</FormLabel>
+                <FormItem className="w-1/2">
+                  <FormLabel>{t`Last Name`}</FormLabel>
                   <FormControl>
                     <Input
                       className="lowercase"
                       placeholder={t({
-                        message: "john.doe",
+                        message: "Doe",
                         context:
-                          "Localized version of a placeholder username. For example, max.mustermann in German or jan.kowalski in Polish.",
+                          "Localized version of a placeholder name. For example, Mustermann in German or Kowalski in Polish.",
                       })}
                       {...field}
                     />
@@ -132,7 +135,8 @@ export const RegisterPage = () => {
                 </FormItem>
               )}
             />
-
+            </div>
+            <div className="flex gap-4">
             <FormField
               name="email"
               control={form.control}
@@ -141,6 +145,7 @@ export const RegisterPage = () => {
                   <FormLabel>{t`Email`}</FormLabel>
                   <FormControl>
                     <Input
+                      type="email"
                       className="lowercase"
                       placeholder={t({
                         message: "john.doe@example.com",
@@ -156,7 +161,43 @@ export const RegisterPage = () => {
             />
 
             <FormField
+              name="phone_number"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t`Phone Number`}</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </div>
+
+            <div className="flex gap-4">
+            <FormField
               name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t`Confirm Password`}</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    <Trans>
+                      Hold <code className="text-xs font-bold">Ctrl</code> to display your password
+                      temporarily.
+                    </Trans>
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              name="confirm_password"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -174,6 +215,7 @@ export const RegisterPage = () => {
                 </FormItem>
               )}
             />
+            </div>
 
             <Button disabled={loading} className="mt-4 w-full">
               {t`Sign up`}

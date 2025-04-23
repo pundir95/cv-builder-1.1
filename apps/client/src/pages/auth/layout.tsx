@@ -9,6 +9,7 @@ import { ThemeSwitch } from "@/client/components/theme-switch";
 import { useAuthProviders } from "@/client/services/auth/providers";
 
 import { SocialAuth } from "./_components/social-auth";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const authRoutes = [{ path: "/auth/login" }, { path: "/auth/register" }];
 
@@ -24,18 +25,9 @@ export const AuthLayout = () => {
 
   return (
     // eslint-disable-next-line tailwindcss/enforces-shorthand -- size-screen not implemented yet
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <div className="flex h-screen w-screen">
-      <div className="relative flex w-full flex-col justify-center gap-y-8 px-12 sm:mx-auto sm:basis-[420px] sm:px-0 lg:basis-[480px] lg:px-12">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="size-24">
-            <Logo className="-ml-3" size={96} />
-          </Link>
-
-          <div className="right-0 space-x-2 text-right lg:absolute lg:p-12 lg:text-center">
-            <LocaleSwitch />
-            <ThemeSwitch />
-          </div>
-        </div>
+      <div className="relative flex w-full flex-col justify-center gap-y-8 px-12 sm:mx-auto sm:basis-[420px] sm:px-0 lg:basis-[480px] lg:px-12 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
 
         <Outlet />
 
@@ -47,7 +39,7 @@ export const AuthLayout = () => {
                 {t({
                   message: "or continue with",
                   context:
-                    "The user can either login with email/password, or continue with GitHub or Google.",
+                    "The user can either login with email/password, or continue with LinkedIn or Google.",
                 })}
               </span>
               <hr className="flex-1" />
@@ -58,25 +50,7 @@ export const AuthLayout = () => {
         )}
       </div>
 
-      {/* <div className="relative hidden lg:block lg:flex-1">
-        <img
-          width={1920}
-          height={1080}
-          alt="Open books on a table"
-          className="h-screen w-full object-cover object-center"
-          src="/backgrounds/patrick-tomasso-Oaqk7qqNh_c-unsplash.jpg"
-        />
-
-        <div className="absolute bottom-5 right-5 z-10 bg-primary/30 px-4 py-2 text-xs font-medium text-primary-foreground backdrop-blur-sm">
-          <a
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            href="https://unsplash.com/photos/Oaqk7qqNh_c"
-          >
-            {t`Photograph by Patrick Tomasso`}
-          </a>
-        </div>
-      </div> */}
     </div>
+    </GoogleOAuthProvider>
   );
 };

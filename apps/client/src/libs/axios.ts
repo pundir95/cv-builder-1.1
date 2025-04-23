@@ -12,7 +12,21 @@ import { toast } from "../hooks/use-toast";
 import { translateError } from "../services/errors/translate-error";
 import { queryClient } from "./query-client";
 
-export const axios = _axios.create({ baseURL: "/api", withCredentials: true });
+interface RefreshTokenResponse {
+  token: string;
+  refreshToken: string;
+}
+
+export const axios = _axios.create({ baseURL: " http://13.49.228.27/api/v1/", withCredentials: true });
+
+// Add token to every request
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 // Intercept responses to transform ISO dates to JS date objects
 axios.interceptors.response.use(
@@ -32,23 +46,55 @@ axios.interceptors.response.use(
       });
     }
 
-    return Promise.reject(new Error(message));
+    return Promise.reject(error);
   },
 );
 
 // Create another instance to handle failed refresh tokens
-// Reference: https://github.com/Flyrell/axios-auth-refresh/issues/191
-const axiosForRefresh = _axios.create({ baseURL: "/api", withCredentials: true });
+const axiosForRefresh = _axios.create({ baseURL: " http://13.49.228.27/api/v1/", withCredentials: true });
 
 // Interceptor to handle expired access token errors
-const handleAuthError = () => refreshToken(axiosForRefresh);
+const handleAuthError = async (failedRequest: any) => {
+  try {
+    const refreshTokenValue = localStorage.getItem('refresh_token');
+    if (!refreshTokenValue) {
+      throw new Error('No refresh token available');
+    }
+
+    // Add refresh token to the request
+    failedRequest.response.config.headers['X-Refresh-Token'] = refreshTokenValue;
+    
+    const response = await refreshToken(axiosForRefresh);
+    const tokenResponse = response as unknown as RefreshTokenResponse;
+    if (tokenResponse?.token) {
+      localStorage.setItem('token', tokenResponse.token);
+      if (tokenResponse.refreshToken) {
+        localStorage.setItem('refresh_token', tokenResponse.refreshToken);
+      }
+      failedRequest.response.config.headers.Authorization = `Bearer ${tokenResponse.token}`;
+      return Promise.resolve();
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 
 // Interceptor to handle expired refresh token errors
 const handleRefreshError = async () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('refresh_token');
   await queryClient.invalidateQueries({ queryKey: USER_KEY });
   redirect("/auth/login");
 };
 
 // Intercept responses to check for 401 and 403 errors, refresh token and retry the request
-createAuthRefreshInterceptor(axios, handleAuthError, { statusCodes: [401, 403] });
-createAuthRefreshInterceptor(axiosForRefresh, handleRefreshError);
+createAuthRefreshInterceptor(axios, handleAuthError, { 
+  statusCodes: [401, 403],
+  pauseInstanceWhileRefreshing: true,
+  retryInstance: axios
+});
+
+createAuthRefreshInterceptor(axiosForRefresh, handleRefreshError, {
+  statusCodes: [401, 403],
+  pauseInstanceWhileRefreshing: true
+});

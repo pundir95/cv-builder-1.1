@@ -1,5 +1,6 @@
 import type { IconProps } from "@phosphor-icons/react";
 import {
+  ArrowsOutLineHorizontal,
   Article,
   Books,
   Briefcase,
@@ -26,47 +27,50 @@ import { useResumeStore } from "@/client/stores/resume";
 const getSectionIcon = (id: SectionKey, props: IconProps = {}) => {
   switch (id) {
     // Left Sidebar
+    case "collapse": {
+      return <ArrowsOutLineHorizontal color="white" size={18} {...props} />;
+    }
     case "basics": {
-      return <User size={18} {...props} />;
+      return <User color="white"  size={18} {...props} />;
     }
     case "summary": {
-      return <Article size={18} {...props} />;
+      return <Article color="white" size={18} {...props} />;
     }
     case "awards": {
-      return <Medal size={18} {...props} />;
+      return <Medal color="white" size={18} {...props} />;
     }
     case "profiles": {
-      return <ShareNetwork size={18} {...props} />;
+      return <ShareNetwork color="white" size={18} {...props} />;
     }
     case "experience": {
-      return <Briefcase size={18} {...props} />;
+      return <Briefcase color="white" size={18} {...props} />;
     }
     case "education": {
-      return <GraduationCap size={18} {...props} />;
+      return <GraduationCap color="white" size={18} {...props} />;
     }
     case "certifications": {
-      return <Certificate size={18} {...props} />;
+      return <Certificate color="white" size={18} {...props} />;
     }
     case "interests": {
-      return <GameController size={18} {...props} />;
+      return <GameController color="white" size={18} {...props} />;
     }
     case "languages": {
-      return <Translate size={18} {...props} />;
+      return <Translate color="white" size={18} {...props} />;
     }
     case "volunteer": {
-      return <HandHeart size={18} {...props} />;
+      return <HandHeart color="white" size={18} {...props} />;
     }
     case "projects": {
-      return <PuzzlePiece size={18} {...props} />;
+      return <PuzzlePiece color="white" size={18} {...props} />;
     }
     case "publications": {
-      return <Books size={18} {...props} />;
+      return <Books color="white" size={18} {...props} />;
     }
     case "skills": {
-      return <CompassTool size={18} {...props} />;
+      return <CompassTool color="white" size={18} {...props} />;
     }
     case "references": {
-      return <Users size={18} {...props} />;
+      return <Users color="white" size={18} {...props} />;
     }
 
     default: {

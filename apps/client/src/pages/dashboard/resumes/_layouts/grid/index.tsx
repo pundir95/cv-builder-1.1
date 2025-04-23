@@ -1,5 +1,6 @@
 import { sortByDate } from "@reactive-resume/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import type { ResumeDto } from "@reactive-resume/dto";
 
 import { useResumes } from "@/client/services/resume";
 
@@ -8,8 +9,9 @@ import { CreateResumeCard } from "./_components/create-card";
 import { ImportResumeCard } from "./_components/import-card";
 import { ResumeCard } from "./_components/resume-card";
 
-export const GridView = () => {
-  const { resumes, loading } = useResumes();
+export const GridView = ({resumes,loading}:{resumes:any,loading:any}) => {
+  
+  console.log(resumes,"outs")
 
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
@@ -38,8 +40,7 @@ export const GridView = () => {
       {resumes && (
         <AnimatePresence>
           {resumes
-            ?.sort((a, b) => sortByDate(a, b, "updatedAt"))
-            .map((resume, index) => (
+            ?.map((resume: ResumeDto, index: number) => (
               <motion.div
                 key={resume.id}
                 layout

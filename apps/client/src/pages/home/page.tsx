@@ -16,29 +16,31 @@ export const HomePage = () => {
   const { i18n } = useLingui();
 
   return (
-    <main className="relative isolate bg-background">
-      <Helmet prioritizeSeoTags>
-        <html lang={i18n.locale} />
+    <>
+    </>
+    // <main className="relative isolate bg-background">
+    //   <Helmet prioritizeSeoTags>
+    //     <html lang={i18n.locale} />
 
-        <title>
-          {t`Reactive Resume`} - {t`A free and open-source resume builder`}
-        </title>
+    //     <title>
+    //       {t`Resume`} - {t`A free and open-source resume builder`}
+    //     </title>
 
-        <meta
-          name="description"
-          content="A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume."
-        />
-      </Helmet>
+    //     <meta
+    //       name="description"
+    //       content="A resume builder that simplifies the process of creating, updating, and sharing your resume."
+    //     />
+    //   </Helmet>
 
-      <HeroSection />
-      <LogoCloudSection />
-      <StatisticsSection />
-      <FeaturesSection />
-      <TemplatesSection />
-      <TestimonialsSection />
-      <SupportSection />
-      <FAQSection />
-      <ContributorsSection />
-    </main>
+    //   {/* <HeroSection />
+    //   <LogoCloudSection />
+    //   <StatisticsSection />
+    //   <FeaturesSection />
+    //   <TemplatesSection />
+    //   <TestimonialsSection />
+    //   <SupportSection />
+    //   <FAQSection />
+    //   <ContributorsSection /> */}
+    // </main>
   );
 };

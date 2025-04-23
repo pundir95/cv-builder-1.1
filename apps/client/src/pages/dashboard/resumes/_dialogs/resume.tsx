@@ -43,6 +43,7 @@ import { z } from "zod";
 import { useCreateResume, useDeleteResume, useUpdateResume } from "@/client/services/resume";
 import { useImportResume } from "@/client/services/resume/import";
 import { useDialog } from "@/client/stores/dialog";
+import { resumeData } from "../constant";
 
 const formSchema = createResumeSchema.extend({ id: idSchema.optional(), slug: z.string() });
 
@@ -79,7 +80,8 @@ export const ResumeDialog = () => {
 
   const onSubmit = async (values: FormValues) => {
     if (isCreate) {
-      await createResume({ slug: values.slug, title: values.title, visibility: "private" });
+      const templateId = Number(localStorage.getItem("templateId") || 1)
+      await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
     }
 
     if (isUpdate) {

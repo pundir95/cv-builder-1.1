@@ -6,7 +6,7 @@ import { saveAs } from "file-saver";
 
 import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
-
+import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
 
 const onJsonExport = () => {
@@ -23,6 +23,7 @@ const openInNewTab = (url: string) => {
 };
 
 export const ExportSection = () => {
+  const navigate = useNavigate();
   const { printResume, loading } = usePrintResume();
 
   const onPdfExport = async () => {
@@ -64,7 +65,10 @@ export const ExportSection = () => {
             "h-auto cursor-pointer flex-row items-center gap-x-5 px-4 pb-3 pt-1",
             loading && "pointer-events-none cursor-progress opacity-75",
           )}
-          onClick={onPdfExport}
+          // onClick={onPdfExport}
+          onClick={() => {
+            navigate("/dashboard/plan-pricing");
+          }}
         >
           {loading ? <CircleNotch size={22} className="animate-spin" /> : <FilePdf size={22} />}
 

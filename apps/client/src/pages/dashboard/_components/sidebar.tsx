@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { FadersHorizontal, ReadCvLogo } from "@phosphor-icons/react";
+import { ChartLine, ChartLineDown, FadersHorizontal, Money, ReadCvLogo, UserCircle } from "@phosphor-icons/react";
 import { Button, KeyboardShortcut, Separator } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
@@ -54,7 +54,7 @@ const SidebarItem = ({ path, name, shortcut, icon, onClick }: SidebarItemProps) 
     >
       <Link to={path}>
         <div className="mr-3">{icon}</div>
-        <span>{name}</span>
+        <span className="text-white">{name}</span>
         {!isActive && <KeyboardShortcut className="ml-auto">{shortcut}</KeyboardShortcut>}
         {isActive && <ActiveIndicator className="ml-auto" />}
       </Link>
@@ -82,25 +82,45 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
 
   const sidebarItems: SidebarItem[] = [
     {
+      path: "/dashboard",
+      name: t`Dashboard`,
+      shortcut: "⇧R",
+      icon: <ChartLineDown color="white" />,
+    },
+    {
       path: "/dashboard/resumes",
       name: t`Resumes`,
       shortcut: "⇧R",
-      icon: <ReadCvLogo />,
+      icon: <ReadCvLogo color="white" />,
+    },
+    {
+      path: "/dashboard/account",
+      name: t`Account`,
+      shortcut: "⇧S",
+      icon: <UserCircle color="white" />,
+    },
+    {
+      path: "/dashboard/plan-pricing",
+      name: t`Plan Pricing`,
+      shortcut: "⇧S",
+      icon: <Money color="white" />,
     },
     {
       path: "/dashboard/settings",
       name: t`Settings`,
       shortcut: "⇧S",
-      icon: <FadersHorizontal />,
-    },
+      icon: <FadersHorizontal color="white" />,
+    },  
+ 
   ];
 
   return (
-    <div className="flex h-full flex-col gap-y-4">
+    <div className="flex h-full flex-col gap-y-4 bg-blue-500">
       <div className="ml-12 flex justify-center lg:ml-0">
         <Button asChild size="icon" variant="ghost" className="size-10 p-0">
           <Link to="/">
-            <Icon size={24} className="mx-auto hidden lg:block" />
+            {/* <Icon size={24} className="mx-auto hidden lg:block" /> */}
+            
           </Link>
         </Button>
       </div>

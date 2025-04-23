@@ -9,7 +9,7 @@ import { useAuthStore } from "@/client/stores/auth";
 
 export const login = async (data: LoginDto) => {
   const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, LoginDto>(
-    "/auth/login",
+    "/accounts/email-login/",
     data,
   );
 
@@ -27,13 +27,14 @@ export const useLogin = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      if (data.status === "2fa_required") {
-        void navigate("/auth/verify-otp");
-        return;
-      }
+      localStorage.setItem("token", data.data.access);
+      localStorage.setItem("refresh_token", data.data.refresh);
+      localStorage.setItem("user", JSON.stringify(data.data.user));
+      // setUser(data.data.user);
+      navigate("/onboard/experience-level")
 
-      setUser(data.user);
-      queryClient.setQueryData(["user"], data.user);
+      
+      queryClient.setQueryData(["user"], data.data.user);
     },
   });
 

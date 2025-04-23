@@ -17,10 +17,11 @@ export const BuilderLayout = () => {
 
   const layout = useArtboardStore((state) => state.resume.metadata.layout);
   const format = useArtboardStore((state) => state.resume.metadata.page.format);
-  const template = useArtboardStore((state) => state.resume.metadata.template as Template);
-
+  const template = useArtboardStore((state) => state.resume.metadata.template as unknown as Template);
+console.log(template,"templatess")
   const Template = useMemo(() => getTemplate(template), [template]);
-
+console.log(layout,"layout")
+console.log(getTemplate(template),"Template()")
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -46,26 +47,8 @@ export const BuilderLayout = () => {
   }, [transformRef]);
 
   return (
-    <TransformWrapper
-      ref={transformRef}
-      centerOnInit
-      maxScale={2}
-      minScale={0.4}
-      initialScale={0.8}
-      limitToBounds={false}
-      wheel={{ wheelDisabled: wheelPanning }}
-      panning={{ wheelPanning: wheelPanning }}
-    >
-      <TransformComponent
-        wrapperClass="!w-screen !h-screen"
-        contentClass="grid items-start justify-center space-x-12 pointer-events-none"
-        contentStyle={{
-          width: `${layout.length * (pageSizeMap[format].width * MM_TO_PX + 42)}px`,
-          gridTemplateColumns: `repeat(${layout.length}, 1fr)`,
-        }}
-      >
-        <AnimatePresence>
-          {layout.map((columns, pageIndex) => (
+   <div className="overflow-y-auto h-screen">
+      {layout.map((columns, pageIndex) => (
             <motion.div
               key={pageIndex}
               layout
@@ -78,8 +61,10 @@ export const BuilderLayout = () => {
               </Page>
             </motion.div>
           ))}
-        </AnimatePresence>
-      </TransformComponent>
-    </TransformWrapper>
+   </div>
+     
+      
+       
+     
   );
 };

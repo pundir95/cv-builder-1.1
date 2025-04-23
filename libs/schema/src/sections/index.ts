@@ -31,6 +31,10 @@ export const customSchema = sectionSchema.extend({
 });
 
 export const sectionsSchema = z.object({
+  collapse: sectionSchema.extend({
+    id: z.literal("collapse"),
+    items: z.array(customSectionSchema),
+  }),
   summary: sectionSchema.extend({
     id: z.literal("summary"),
     content: z.string().default(""),

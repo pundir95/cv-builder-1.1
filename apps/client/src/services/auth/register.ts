@@ -8,7 +8,7 @@ import { useAuthStore } from "@/client/stores/auth";
 
 export const register = async (data: RegisterDto) => {
   const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, RegisterDto>(
-    "/auth/register",
+    "accounts/register/",
     data,
   );
 

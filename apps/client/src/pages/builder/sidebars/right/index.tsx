@@ -1,6 +1,6 @@
 import { t } from "@lingui/macro";
 import { ScrollArea, Separator } from "@reactive-resume/ui";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { Copyright } from "@/client/components/copyright";
 import { ThemeSwitch } from "@/client/components/theme-switch";
@@ -18,7 +18,8 @@ import { ThemeSection } from "./sections/theme";
 import { TypographySection } from "./sections/typography";
 import { SectionIcon } from "./shared/section-icon";
 
-export const RightSidebar = () => {
+export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLeftSidebar, showLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void, setShowLeftSidebar: (show: boolean) => void, showLeftSidebar: boolean }) => {
+  let showTemplateButton=false
   const containterRef = useRef<HTMLDivElement | null>(null);
 
   const scrollIntoView = (selector: string) => {
@@ -28,36 +29,65 @@ export const RightSidebar = () => {
 
   return (
     <div className="flex bg-secondary-accent/30">
-      <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
-        <div ref={containterRef} className="grid gap-y-6 p-6 @container/right">
-          <TemplateSection />
+      <ScrollArea orientation="vertical" className={`h-screen flex-1 pb-16 lg:pb-0 transition-all duration-300 bg-[#a4abbbbd] ${!showRightSidebar ? 'w-0 opacity-0' : 'w-full opacity-100'}`}>
+       <div 
+         ref={containterRef} 
+         className={`grid gap-y-6 p-6 @container/right transition-all duration-300 ${!showRightSidebar ? 'w-0 opacity-0 translate-x-full' : 'w-full opacity-100 translate-x-0'}`}
+       >
+          <div className="flex items-center justify-between">
+            <p className="text-2xl font-bold">Advance Features</p>
+            {/* <SectionIcon
+              id="collapse"
+              name={t`Collapse`}
+              className="cursor-pointer sm:hidden" 
+              onClick={() => {
+                const sidebar = containterRef.current?.parentElement;
+                sidebar?.classList.toggle("hidden");
+              }}
+            /> */}
+          </div>
+          <TemplateSection showTemplateButton={showTemplateButton} />
           <Separator />
           <LayoutSection />
           <Separator />
           <TypographySection />
           <Separator />
           <ThemeSection />
-          {/* <Separator /> */}
-          {/* <CssSection /> */}
           <Separator />
           <PageSection />
           <Separator />
-          {/* <SharingSection /> */}
-          {/* <Separator /> */}
-          {/* <StatisticsSection /> */}
-          <Separator />
           <ExportSection />
+          <Separator />
+          {/* <CssSection />
+          <Separator /> */}
+          {/* <PageSection />
+          <Separator /> */}
+           <SharingSection /> 
+          <Separator />
+          <StatisticsSection />
+          <Separator />
+          {/* <ExportSection /> */}
           {/* <Separator /> */}
           {/* <NotesSection /> */}
           {/* <Separator /> */}
           {/* <InformationSection /> */}
-          <Separator />
+          {/* <Separator /> */}
           {/* <Copyright className="text-center" /> */}
         </div>
       </ScrollArea>
 
-      <div className="hidden basis-12 flex-col items-center justify-between bg-secondary-accent/30 py-4 sm:flex">
-        <div />
+      <div className="hidden basis-12 flex-col items-center justify-between  bg-blue-500 py-4 sm:flex">
+        <div className="flex items-center">
+          <SectionIcon
+            id="collapse"
+            name={t`Collapse`}
+            className="cursor-pointer"
+            onClick={() => {
+              setShowRightSidebar(!showRightSidebar);
+              setShowLeftSidebar(!showLeftSidebar);
+            }}
+          />
+        </div>
 
         <div className="flex flex-col items-center justify-center gap-y-2">
           <SectionIcon
@@ -65,6 +95,8 @@ export const RightSidebar = () => {
             name={t`Template`}
             onClick={() => {
               scrollIntoView("#template");
+              setShowRightSidebar(true);
+              setShowLeftSidebar(!showLeftSidebar);
             }}
           />
           <SectionIcon
@@ -72,6 +104,8 @@ export const RightSidebar = () => {
             name={t`Layout`}
             onClick={() => {
               scrollIntoView("#layout");
+              setShowRightSidebar(true);
+              setShowLeftSidebar(!showLeftSidebar);
             }}
           />
           <SectionIcon
@@ -79,6 +113,8 @@ export const RightSidebar = () => {
             name={t`Typography`}
             onClick={() => {
               scrollIntoView("#typography");
+              setShowRightSidebar(true);
+              setShowLeftSidebar(!showLeftSidebar);
             }}
           />
           <SectionIcon
@@ -86,13 +122,8 @@ export const RightSidebar = () => {
             name={t`Theme`}
             onClick={() => {
               scrollIntoView("#theme");
-            }}
-          />
-          <SectionIcon
-            id="css"
-            name={t`Custom CSS`}
-            onClick={() => {
-              scrollIntoView("#css");
+              setShowRightSidebar(true);
+              setShowLeftSidebar(!showLeftSidebar);
             }}
           />
           <SectionIcon
@@ -100,20 +131,8 @@ export const RightSidebar = () => {
             name={t`Page`}
             onClick={() => {
               scrollIntoView("#page");
-            }}
-          />
-          <SectionIcon
-            id="sharing"
-            name={t`Sharing`}
-            onClick={() => {
-              scrollIntoView("#sharing");
-            }}
-          />
-          <SectionIcon
-            id="statistics"
-            name={t`Statistics`}
-            onClick={() => {
-              scrollIntoView("#statistics");
+              setShowRightSidebar(true);
+              setShowLeftSidebar(!showLeftSidebar);
             }}
           />
           <SectionIcon
@@ -121,20 +140,8 @@ export const RightSidebar = () => {
             name={t`Export`}
             onClick={() => {
               scrollIntoView("#export");
-            }}
-          />
-          <SectionIcon
-            id="notes"
-            name={t`Notes`}
-            onClick={() => {
-              scrollIntoView("#notes");
-            }}
-          />
-          <SectionIcon
-            id="information"
-            name={t`Information`}
-            onClick={() => {
-              scrollIntoView("#information");
+              setShowRightSidebar(true);
+              setShowLeftSidebar(!showLeftSidebar);
             }}
           />
         </div>

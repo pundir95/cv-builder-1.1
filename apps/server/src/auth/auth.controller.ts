@@ -40,6 +40,7 @@ import { RefreshGuard } from "./guards/refresh.guard";
 import { TwoFactorGuard } from "./guards/two-factor.guard";
 import { getCookieOptions } from "./utils/cookie";
 import { payloadSchema } from "./utils/payload";
+import { LinkedInGuard } from "./guards/linkedin.guard";
 
 @ApiTags("Authentication")
 @Controller("auth")
@@ -159,6 +160,16 @@ export class AuthController {
   @Get("openid/callback")
   @UseGuards(OpenIDGuard)
   async openidCallback(
+    @User() user: UserWithSecrets,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.handleAuthenticationResponse(user, response, false, true);
+  }
+
+  @ApiTags("OAuth", "LinkedIn")
+  @Get("linkedin/callback")
+  @UseGuards(LinkedInGuard)
+  async linkedinCallback(
     @User() user: UserWithSecrets,
     @Res({ passthrough: true }) response: Response,
   ) {
