@@ -18,7 +18,14 @@ import { ThemeSection } from "./sections/theme";
 import { TypographySection } from "./sections/typography";
 import { SectionIcon } from "./shared/section-icon";
 
-export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLeftSidebar, showLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void, setShowLeftSidebar: (show: boolean) => void, showLeftSidebar: boolean }) => {
+interface RightSidebarProps {
+  showRightSidebar: boolean;
+  setShowRightSidebar: (show: boolean) => void;
+  setShowLeftSidebar: (show: boolean) => void;
+  showLeftSidebar: boolean;
+}
+
+export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLeftSidebar, showLeftSidebar }: RightSidebarProps) => {
   let showTemplateButton=false
   const containterRef = useRef<HTMLDivElement | null>(null);
 

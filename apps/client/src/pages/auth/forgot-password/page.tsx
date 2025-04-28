@@ -42,12 +42,10 @@ export const ForgotPasswordPage = () => {
       setSubmitted(true);
       showToast('Email sent successfully Please check you email and get the OTP!', 'success');
       form.reset();
-    } catch (error) {
-      let errorMessage = error.response.data.message || 'Email sending failed. Please try again.';
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.message || 'Email sending failed. Please try again.';
       showToast(errorMessage, 'error');
     }
-    
-    form.reset();
   };
 
   if (submitted) {

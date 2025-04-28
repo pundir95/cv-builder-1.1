@@ -48,8 +48,9 @@ import { useDialog } from "@/client/stores/dialog";
 const formSchema = z.object({
   uri: z.literal("").or(z.string().optional()),
   code: z
-    .literal("")
-    .or(z.string().regex(/^\d{6}$/, i18n._(msg`Code must be exactly 6 digits long.`))),
+    .string()
+    .regex(/^\d{6}$/, i18n._(msg`Code must be exactly 6 digits long.`))
+    .optional(),
   backupCodes: z.array(z.string()),
 });
 

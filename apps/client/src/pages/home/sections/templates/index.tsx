@@ -20,7 +20,7 @@ export const TemplatesSection = () => (
             transition: {
               x: {
                 duration: 30,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: Infinity,
                 repeatType: "mirror",
               },
             },

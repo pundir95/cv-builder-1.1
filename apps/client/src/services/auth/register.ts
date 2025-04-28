@@ -29,7 +29,6 @@ export const useRegister = () => {
       queryClient.setQueryData(["user"], data.user);
     },
   });
-  console.log(error, 'error');
- 
+
   return { register: registerFn, loading, error: error?.response?.data };
 };
