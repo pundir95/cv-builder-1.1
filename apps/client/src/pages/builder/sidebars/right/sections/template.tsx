@@ -4,16 +4,26 @@ import { cn, templatesList } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
 
 import { useResumeStore } from "@/client/stores/resume";
-import { useDialog } from "@/client/stores/dialog";
+import { useDialog } from "@/client/hooks/use-dialog";
 import { SectionIcon } from "../shared/section-icon";
 import { useGetTemplateList } from "@/client/services/template/template";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+
+interface Template {
+  id: number;
+  name: string;
+  withPhoto: boolean;
+  withoutPhoto: boolean;
+  oneColumn: boolean;
+  twoColumn: boolean;
+}
+
 export const TemplateSection = ({selectedFilter,showTemplateButton}:{selectedFilter:any,showTemplateButton:any}) => {
   const setValue = useResumeStore((state) => state.setValue);
   const { open } = useDialog("resume");
   console.log(templatesList,"templatesList")
-  const [templatesItem,setTemplatesItem]=useState(templatesList)
+  const [templatesItem, setTemplatesItem] = useState<Template[]>([]);
   const { getTemplateList, loading, templateData } = useGetTemplateList();
   // const currentTemplate = useResumeStore((state) => state.resume.data.metadata.template);
   // console.log(currentTemplate,"currentTemplate")
@@ -49,11 +59,13 @@ useEffect(()=>{
   setTemplatesItem(templatesList)
 },[])
 
-const selectedTemplateId=(crrTemplate:any)=>{
-  console.log(crrTemplate,"crrTemplate")
-  const templateId=templateData?.find((template:any)=>template.internal_name==crrTemplate)
-  localStorage.setItem("templateId",templateId.id)
-  navigate(`/dashboard/resumes`)
+const selectedTemplateId = (crrTemplate: string) => {
+  console.log(crrTemplate, "crrTemplate")
+  const templateId = templateData?.find((template: Template) => template.name === crrTemplate)
+  if (templateId) {
+    localStorage.setItem("templateId", templateId.id.toString())
+    navigate(`/dashboard/resumes`)
+  }
 }
  
   return (

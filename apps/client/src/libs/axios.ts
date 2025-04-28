@@ -97,7 +97,7 @@ const handleAuthError = async (failedRequest: any) => {
       failedRequest.response.config.headers.Authorization = `Bearer ${tokenResponse.token}`;
       return Promise.resolve();
     }
-  } catch (error) {
+  } catch (error: unknown) {
     return Promise.reject(error);
   }
 };

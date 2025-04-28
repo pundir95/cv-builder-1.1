@@ -11,8 +11,8 @@ export const findResumeById = async (data: { id: string }) => {
     "slug": "Pankaj",
     "id": response.data.id,
     "data": response.data.cv_data,
-    
-}
+    "visibility": response.data.visibility
+  }
 };
 
 export const findResumeByUsernameSlug = async (data: { username: string; slug: string }) => {
