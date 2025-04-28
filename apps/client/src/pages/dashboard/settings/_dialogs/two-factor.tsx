@@ -45,6 +45,10 @@ import { useDialog } from "@/client/stores/dialog";
 // - "duplicate" mode is used to display the backup codes after initial verification.
 // - "delete" mode is used to disable 2FA.
 
+interface TwoFactorDto {
+  code: string;
+}
+
 const formSchema = z.object({
   uri: z.literal("").or(z.string().optional()),
   code: z
@@ -95,7 +99,7 @@ export const TwoFactorDialog = () => {
     if (isUpdate) {
       if (!values.code) return;
 
-      const data = await enable2FA({ code: values.code });
+      const data = await enable2FA({ code: values.code } as TwoFactorDto);
       form.setValue("backupCodes", data.backupCodes);
       await queryClient.invalidateQueries({ queryKey: ["user"] });
 

@@ -32,16 +32,16 @@ export const TemplatesSection = () => (
               key={index}
               target="_blank"
               rel="noreferrer"
-              href={`templates/pdf/${template}.pdf`}
+              href={`templates/pdf/${template.name}.pdf`}
               className="max-w-none flex-none"
               viewport={{ once: true }}
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
             >
               <img
-                alt={template}
+                alt={template.name}
                 loading="lazy"
-                src={`/templates/jpg/${template}.jpg`}
+                src={`/templates/jpg/${template.name}.jpg`}
                 className="aspect-[1/1.4142] h-[400px] rounded object-cover lg:h-[600px]"
               />
             </motion.a>

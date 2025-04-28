@@ -26,7 +26,8 @@ interface RightSidebarProps {
 }
 
 export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLeftSidebar, showLeftSidebar }: RightSidebarProps) => {
-  let showTemplateButton=false
+  let showTemplateButton = false;
+  const [selectedFilter, setSelectedFilter] = useState<any>(null);
   const containterRef = useRef<HTMLDivElement | null>(null);
 
   const scrollIntoView = (selector: string) => {
@@ -53,7 +54,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
               }}
             /> */}
           </div>
-          <TemplateSection showTemplateButton={showTemplateButton} />
+          <TemplateSection showTemplateButton={showTemplateButton} selectedFilter={selectedFilter} />
           <Separator />
           <LayoutSection />
           <Separator />

@@ -6,6 +6,10 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 import { useAuthStore } from "@/client/stores/auth";
 
+interface AuthResponseDto {
+  user: any; // Replace 'any' with the actual user type if available
+}
+
 export const register = async (data: RegisterDto) => {
   const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, RegisterDto>(
     "accounts/register/",
