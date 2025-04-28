@@ -73,6 +73,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
           {/* <InformationSection /> */}
           {/* <Separator /> */}
           {/* <Copyright className="text-center" /> */}
+          
         </div>
       </ScrollArea>
 
