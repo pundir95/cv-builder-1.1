@@ -20,27 +20,37 @@ import { Link, useNavigate } from "react-router";
 import type { z } from "zod";
 
 import { useVerifyOtp } from "@/client/services/auth";
-
+import { useToast } from "@/client/components/ToastProvider";
 type FormValues = z.infer<typeof twoFactorSchema>;
 
 export const VerifyOtpPage = () => {
   const navigate = useNavigate();
   const { verifyOtp, loading } = useVerifyOtp();
+  const { showToast } = useToast();
+
 
   const formRef = useRef<HTMLFormElement>(null);
   usePasswordToggle(formRef);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(twoFactorSchema),
-    defaultValues: { code: "" },
+    defaultValues: { otp: "" },
   });
 
   const onSubmit = async (data: FormValues) => {
+    let newPayload = {
+      otp: data.otp,
+      email: localStorage.getItem("email"),
+    };
     try {
-      await verifyOtp(data);
+      await verifyOtp(newPayload);
+      showToast('Operation successful!', 'success');
 
-      void navigate("/onboard/experience-level");
-    } catch {
+      void navigate("/auth/login");
+    } catch (error) {
+      console.log(error);
+      let errorMessage = error.response.data.data.non_field_errors[0] || 'Operation failed. Please try again.';
+      showToast(errorMessage, 'error');
       form.reset();
     }
   };
@@ -75,7 +85,7 @@ export const VerifyOtpPage = () => {
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
-              name="code"
+              name="otp"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -87,9 +97,20 @@ export const VerifyOtpPage = () => {
                 </FormItem>
               )}
             />
+            <Button
+              type="button"
+              variant="link" 
+              className="w-full"
+              onClick={() => {
+                form.reset();
+                showToast('OTP reset. Please try again.', 'info');
+              }}
+            >
+              {t`Reset OTP`}
+            </Button>
 
-            <Button type="submit" disabled={loading} className="mt-4 w-full">
-              {t`Sign in`}
+            <Button type="submit" disabled={loading} className="mt-4 w-full" loading={loading}>
+              {t`Submit`}
             </Button>
           </form>
         </Form>

@@ -7,6 +7,7 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const updateResume = async (data: UpdateResumeDto) => {
+  const referenceId = localStorage.getItem("reference_id");
   console.log(data,"data222")
   let payload ={
     "cv_data":data.data,
@@ -15,7 +16,7 @@ export const updateResume = async (data: UpdateResumeDto) => {
     "slug":data.slug,
   }
   const response = await axios.patch<ResumeDto, AxiosResponse<ResumeDto>, UpdateResumeDto>(
-    `/cv-manager/cvs/${data.id}/`,
+    referenceId ? `/cv-manager/cvs/${data.id}/?reference_id=${referenceId}` : `/cv-manager/cvs/${data.id}/`,
     payload,
   );
 

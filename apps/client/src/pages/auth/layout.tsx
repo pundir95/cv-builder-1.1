@@ -25,7 +25,7 @@ export const AuthLayout = () => {
 
   return (
     // eslint-disable-next-line tailwindcss/enforces-shorthand -- size-screen not implemented yet
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider clientId={"48252327683-8asdmh85nur7uiunvo17dvgh0h3tpnmv.apps.googleusercontent.com"}>
     <div className="flex h-screen w-screen">
       <div className="relative flex w-full flex-col justify-center gap-y-8 px-12 sm:mx-auto sm:basis-[420px] sm:px-0 lg:basis-[480px] lg:px-12 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
 

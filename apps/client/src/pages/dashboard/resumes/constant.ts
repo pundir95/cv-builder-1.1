@@ -4,11 +4,11 @@ export const resumeData = {
             "href": "",
             "label": ""
         },
-        "name": "Pankaj Pundir1111",
-        "email": "pankaj@avioxtechnologies.com",
+        "name": "",
+        "email": "",
         "phone": "",
         "picture": {
-            "url": "https://avatars.githubusercontent.com/u/106310650?v=4",
+            "url": "",
             "size": 64,
             "effects": {
                 "border": false,
@@ -18,7 +18,7 @@ export const resumeData = {
             "aspectRatio": 1,
             "borderRadius": 0
         },
-        "headline": "b",
+        "headline": "",
         "location": "",
         "customFields": []
     },

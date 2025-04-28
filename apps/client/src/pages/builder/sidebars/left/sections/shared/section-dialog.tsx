@@ -30,6 +30,7 @@ import type { UseFormReturn } from "react-hook-form";
 import type { DialogName } from "@/client/stores/dialog";
 import { useDialog } from "@/client/stores/dialog";
 import { useResumeStore } from "@/client/stores/resume";
+import { useProgressStore } from "@/client/stores/progress";
 
 type Props<T extends SectionItem> = {
   id: DialogName;
@@ -47,6 +48,7 @@ export const SectionDialog = <T extends SectionItem>({
   children,
 }: Props<T>) => {
   const { isOpen, mode, close, payload } = useDialog<T>(id);
+  const { incrementProgress } = useProgressStore();
 
   const setValue = useResumeStore((state) => state.setValue);
   const section = useResumeStore((state) => {
@@ -76,6 +78,9 @@ export const SectionDialog = <T extends SectionItem>({
           draft.push({ ...values, id: createId() });
         }),
       );
+      
+      // Increment progress when a new item is created
+      incrementProgress(id);
     }
 
     if (isUpdate) {

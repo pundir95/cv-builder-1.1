@@ -25,12 +25,14 @@ import type { z } from "zod";
 
 import { useLogin } from "@/client/services/auth";
 import { useFeatureFlags } from "@/client/services/feature";
+import { useToast } from "@/client/components/ToastProvider";
 import axios from "axios";
 
 type FormValues = z.infer<typeof loginSchema>;
 
 export const LoginPage = () => {
   const { login, loading } = useLogin();
+  const { showToast } = useToast();
   const { flags } = useFeatureFlags();
   const navigate = useNavigate();
 
@@ -45,8 +47,13 @@ export const LoginPage = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       // navigate("/onboard/experience-level");
+
       await login(data);
-    } catch {
+      navigate("/onboard/experience-level");
+      showToast('Login successful!', 'success');
+    } catch (error) {
+      let errorMessage = error.response.data.message || 'Login failed. Please try again.';
+      showToast(errorMessage, 'error');
       form.reset();
     }
   };
@@ -138,7 +145,7 @@ export const LoginPage = () => {
             />
 
             <div className="mt-4 flex items-center gap-x-4">
-              <Button type="submit" disabled={loading} className="flex-1">
+              <Button type="submit" disabled={loading} className="flex-1" loading={loading}>
                 {t`Sign in`}
               </Button>
 
@@ -146,7 +153,7 @@ export const LoginPage = () => {
                 <Link to="/auth/forgot-password">{t`Forgot Password?`}</Link>
               </Button>
             </div>
-            <Button type="submit" disabled={loading} className="flex-1 p-2" variant="warning" onClick={doItLater}>
+            <Button type="button" disabled={loading} className="flex-1 p-2" variant="warning" onClick={doItLater}>
                Do it Later
               </Button>
           </form>

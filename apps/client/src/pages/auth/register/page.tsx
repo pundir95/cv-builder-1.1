@@ -25,13 +25,17 @@ import type { z } from "zod";
 
 import { useRegister } from "@/client/services/auth";
 import { useFeatureFlags } from "@/client/services/feature";
+import { useToast } from "@/client/components/ToastProvider";
+import { ErrorMessage } from "@reactive-resume/utils";
+import { translateError } from "@/client/services/errors/translate-error";
 
 type FormValues = z.infer<typeof registerSchema>;
 
 export const RegisterPage = () => {
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const { flags } = useFeatureFlags();
-  const { register, loading } = useRegister();
+  const { register, loading, error } = useRegister();
 
   const formRef = useRef<HTMLFormElement>(null);
   usePasswordToggle(formRef);
@@ -50,11 +54,26 @@ export const RegisterPage = () => {
   });
 
   const onSubmit = async (data: FormValues) => {
+    localStorage.setItem("email", data.email);
     try {
       await register(data);
-
-      void navigate("/auth/verify-email");
-    } catch {
+      void navigate("/auth/verify-otp");
+      showToast('Registration successful!', 'success');
+    } catch (err) {
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      if (err instanceof Error) {
+        if (err.message === ErrorMessage.UserAlreadyExists) {
+          errorMessage = translateError(ErrorMessage.UserAlreadyExists) || 'A user with this email already exists.';
+          showToast(errorMessage, 'error');
+        } else {
+          errorMessage = err.message;
+          showToast("A user with this email already exists", 'error');
+        }
+      } else {
+        showToast('Registration failed. Please try again.', 'error');
+      }
+      
       form.reset();
     }
   };
@@ -79,11 +98,18 @@ export const RegisterPage = () => {
         </h6>
       </div>
 
-      {flags.isSignupsDisabled && (
+      {/* {flags.isSignupsDisabled && (
         <Alert variant="error">
           <AlertTitle>{t`Signups are currently disabled by the administrator.`}</AlertTitle>
         </Alert>
-      )}
+      )} */}
+
+      {/* {error && (
+        <Alert variant="error">
+          <AlertTitle>{t`Registration Error`}</AlertTitle>
+          <p>{error instanceof Error ? error.message : 'An error occurred during registration.'}</p>
+        </Alert>
+      )} */}
 
       <div className={cn(flags.isSignupsDisabled && "pointer-events-none select-none blur-sm", "max-w-2xl mx-auto")}>
         <Form {...form}>
@@ -217,7 +243,7 @@ export const RegisterPage = () => {
             />
             </div>
 
-            <Button disabled={loading} className="mt-4 w-full">
+            <Button disabled={loading} loading={loading} className="mt-4 w-full">
               {t`Sign up`}
             </Button>
           </form>

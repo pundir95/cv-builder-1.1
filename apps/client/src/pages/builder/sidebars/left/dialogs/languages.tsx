@@ -13,6 +13,8 @@ import {
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
+import { useSectionProgress } from "@/client/hooks/use-section-progress";
+
 import { SectionDialog } from "../sections/shared/section-dialog";
 
 const formSchema = languageSchema;
@@ -24,6 +26,16 @@ export const LanguagesDialog = () => {
     defaultValues: defaultLanguage,
     resolver: zodResolver(formSchema),
   });
+
+  // Watch form values to determine completion
+  const formValues = form.watch();
+  const isCompleted = Boolean(
+    formValues.name &&
+    formValues.level > 0
+  );
+
+  // Use the progress hook
+  useSectionProgress("languages", isCompleted);
 
   return (
     <SectionDialog<FormValues> id="languages" form={form} defaultValues={defaultLanguage}>

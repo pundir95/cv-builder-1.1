@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { AiActions } from "@/client/components/ai-actions";
+import { useSectionProgress } from "@/client/hooks/use-section-progress";
 
 import { SectionDialog } from "../sections/shared/section-dialog";
 import { URLInput } from "../sections/shared/url-input";
@@ -27,6 +28,18 @@ export const ExperienceDialog = () => {
     defaultValues: defaultExperience,
     resolver: zodResolver(formSchema),
   });
+
+  // Watch form values to determine completion
+  const formValues = form.watch();
+  const isCompleted = Boolean(
+    formValues.company &&
+    formValues.position &&
+    formValues.date &&
+    formValues.summary
+  );
+
+  // Use the progress hook
+  useSectionProgress("experience", isCompleted);
 
   return (
     <SectionDialog<FormValues> id="experience" form={form} defaultValues={defaultExperience}>

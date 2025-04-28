@@ -21,6 +21,7 @@ export const userSchema = z.object({
   picture: z.literal("").or(z.null()).or(z.string().url()),
   phone_number: z.string().min(1).max(255),
   username: usernameSchema,
+  
   email: z
     .string()
     .email()

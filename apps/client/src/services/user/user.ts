@@ -7,19 +7,25 @@ import { axios } from "@/client/libs/axios";
 import { useAuthStore } from "@/client/stores/auth";
 
 export const fetchUser = async () => {
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user ?? "{}");
+  console.log(userData, "userData");
   return {
-    "id": "cm8fqja5s0klgjee2tcmm08fc",
-    "name": "Pankaj Pundir",
-    "picture": "https://avatars.githubusercontent.com/u/106310650?v=4",
-    "username": "pundir95",
-    "email": "pankaj@avioxtechnologie1111s.com",
-    "locale": "en-US",
-    "emailVerified": true,
-    "twoFactorEnabled": false,
-    "provider": "github",
-    "createdAt": "2025-03-19T09:43:51.089Z",
-    "updatedAt": "2025-03-19T09:43:51.089Z"
-}
+    id: userData.id,
+    name: userData.first_name + " " + userData.last_name,
+    first_name: userData.first_name,
+    last_name: userData.last_name,
+    phone_number: userData.phone_number,
+    picture: userData.picture,
+    username: userData.username,
+    email: userData.email,
+    locale: "en-US",
+    emailVerified: true,
+    twoFactorEnabled: false,
+    provider: (userData.provider ?? "github") as "github" | "email" | "google" | "openid",
+    createdAt: userData.created_at,
+    updatedAt: userData.updated_at
+  };
 };
 
 export const useUser = () => {

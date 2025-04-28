@@ -8,7 +8,7 @@ import { cv_template_5 } from "./cv_template_5";
 
 
 export const getTemplate = (template: Template) => {
-  console.log(template,"templatename")
+  console.log(template, "templatename");
   switch (template.name) {
     case "cv_template_1": {
       return cv_template_1;
@@ -25,9 +25,8 @@ export const getTemplate = (template: Template) => {
     case "cv_template_5": {
       return cv_template_5;
     }
-
     default: {
-      return cv_template_4;
+      return cv_template_2;
     }
   }
 };

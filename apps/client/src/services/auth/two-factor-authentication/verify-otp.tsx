@@ -8,7 +8,7 @@ import { useAuthStore } from "@/client/stores/auth";
 
 export const verifyOtp = async (data: TwoFactorDto) => {
   const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, TwoFactorDto>(
-    "/auth/2fa/verify",
+    "accounts/verify-user/",
     data,
   );
 
@@ -25,8 +25,8 @@ export const useVerifyOtp = () => {
   } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      setUser(data.user);
-      queryClient.setQueryData(["user"], data.user);
+      setUser(data);
+      queryClient.setQueryData(["user"], data);
     },
   });
 

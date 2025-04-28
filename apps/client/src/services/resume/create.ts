@@ -8,8 +8,9 @@ import { RESUMES_KEY } from "@/client/constants/query-keys";
 import { fetchResumes } from "./resumes";
 
 export const createResume = async (data: CreateResumeDto) => {
+  const referenceId = localStorage.getItem("reference_id");
   const response = await axios.post<ResumeDto, AxiosResponse<ResumeDto>, CreateResumeDto>(
-    "/cv-manager/cvs/",
+    referenceId ? `/cv-manager/cvs/?reference_id=${referenceId}` : "/cv-manager/cvs/",
     data,
   );
 

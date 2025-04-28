@@ -21,13 +21,14 @@ import { useNavigate } from "react-router";
 import type { z } from "zod";
 
 import { useForgotPassword } from "@/client/services/auth";
-
+import { useToast } from "@/client/components/ToastProvider";
 type FormValues = z.infer<typeof forgotPasswordSchema>;
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const { forgotPassword, loading } = useForgotPassword();
+  const { showToast } = useToast();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -35,9 +36,17 @@ export const ForgotPasswordPage = () => {
   });
 
   const onSubmit = async (data: FormValues) => {
-    await forgotPassword(data);
-
-    setSubmitted(true);
+    try {
+      await forgotPassword(data);
+      navigate("/auth/verify-otp");
+      setSubmitted(true);
+      showToast('Email sent successfully Please check you email and get the OTP!', 'success');
+      form.reset();
+    } catch (error) {
+      let errorMessage = error.response.data.message || 'Email sending failed. Please try again.';
+      showToast(errorMessage, 'error');
+    }
+    
     form.reset();
   };
 
@@ -46,7 +55,7 @@ export const ForgotPasswordPage = () => {
       <div className="space-y-8">
         <Helmet>
           <title>
-            {t`You've got mail!`} - {t`Reactive Resume`}
+            {t`You've got mail!`} - {t`Cv Builder`}
           </title>
         </Helmet>
 
@@ -100,7 +109,7 @@ export const ForgotPasswordPage = () => {
                 <span>{t`Back`}</span>
               </Button>
 
-              <Button type="submit" disabled={loading} className="w-full">
+              <Button type="submit" disabled={loading} className="w-full" loading={loading}>
                 {t`Send Email`}
               </Button>
             </div>

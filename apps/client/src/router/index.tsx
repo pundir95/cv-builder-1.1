@@ -30,6 +30,7 @@ import AccountSettings from "../pages/admin-dashboard/account/Accountant";
 import PlanPricing from "../pages/admin-dashboard/planPrice/PlanPricing";
 import ExperienceLevel from "../pages/experience-level/Page";
 import ChooseTemplate from "../pages/select-template/page";
+import { ExperienceGuard } from "./guards/experience";
 
 
 export const routes = createRoutesFromElements(
@@ -73,8 +74,10 @@ export const routes = createRoutesFromElements(
       </Route>
 
       <Route path="onboard">
+      <Route element={<ExperienceGuard />}>
       <Route path="experience-level" element={<ExperienceLevel />} />
       <Route path="select-template" element={<ChooseTemplate />} />
+      </Route>
 
       </Route>
 

@@ -13,6 +13,7 @@ import { immer } from "zustand/middleware/immer";
 import { useStoreWithEqualityFn } from "zustand/traditional";
 
 import { debouncedUpdateResume } from "../services/resume";
+import { useProgressStore } from "./progress";
 
 type ResumeStore = {
   resume: ResumeDto;
@@ -55,6 +56,7 @@ export const useResumeStore = create<ResumeStore>()(
           const lastPageIndex = state.resume.data.metadata.layout.length - 1;
           state.resume.data.metadata.layout[lastPageIndex][0].push(`custom.${section.id}`);
           state.resume.data = _set(state.resume.data, `sections.custom.${section.id}`, section);
+
 
           void debouncedUpdateResume(JSON.parse(JSON.stringify(state.resume)));
         });

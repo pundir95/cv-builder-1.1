@@ -12,6 +12,26 @@ import { toast } from "../hooks/use-toast";
 import { translateError } from "../services/errors/translate-error";
 import { queryClient } from "./query-client";
 
+// Create a loading state manager
+let activeRequests = 0;
+let setLoading: ((loading: boolean) => void) | null = null;
+
+export const setLoadingState = (setter: (loading: boolean) => void) => {
+  setLoading = setter;
+};
+
+const updateLoadingState = (increment: boolean) => {
+  if (increment) {
+    activeRequests++;
+  } else {
+    activeRequests--;
+  }
+  
+  if (setLoading) {
+    setLoading(activeRequests > 0);
+  }
+};
+
 interface RefreshTokenResponse {
   token: string;
   refreshToken: string;
@@ -21,6 +41,7 @@ export const axios = _axios.create({ baseURL: " http://13.49.228.27/api/v1/", wi
 
 // Add token to every request
 axios.interceptors.request.use((config) => {
+  updateLoadingState(true);
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -31,10 +52,12 @@ axios.interceptors.request.use((config) => {
 // Intercept responses to transform ISO dates to JS date objects
 axios.interceptors.response.use(
   (response) => {
+    updateLoadingState(false);
     const transformedResponse = deepSearchAndParseDates(response.data, ["createdAt", "updatedAt"]);
     return { ...response, data: transformedResponse };
   },
   (error) => {
+    updateLoadingState(false);
     const message = error.response?.data.message as ErrorMessage;
     const description = translateError(message);
 

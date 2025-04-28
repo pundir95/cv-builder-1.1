@@ -6,8 +6,9 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const getTemplateList = async (data: GetTemplateListDto) => {
+  const referenceId = localStorage.getItem("reference_id");
   const response = await axios.get<ResumeDto, AxiosResponse<ResumeDto>, GetTemplateListDto>(
-    "/cv-manager/templates-list/",
+    referenceId ? `/cv-manager/templates-list/?reference_id=${referenceId}` : "/cv-manager/templates-list",
   );
 
   return response.data;

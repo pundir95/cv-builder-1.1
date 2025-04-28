@@ -6,11 +6,13 @@ import { Link } from "react-router";
 
 import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
+import { useProgressStore } from "@/client/stores/progress";
 
 export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void,showLeftSidebar:boolean,setShowLeftSidebar:(show:boolean)=>void } ) => {
   const title = useResumeStore((state) => state.resume.title);
   const locked = useResumeStore((state) => state.resume.locked);
-
+  const progress = useResumeStore((state) => state.resume.data.metadata.template);
+console.log(progress,"progress")
   const toggle = useBuilderStore((state) => state.toggle);
   const isDragging = useBuilderStore(
     (state) => state.panel.left.handle.isDragging || state.panel.right.handle.isDragging,
@@ -73,13 +75,13 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSi
         </Button>
         <div className="absolute bottom-5 left-0 h-2 w-full bg-muted">
           <div className="mb-1">
-          <span className="bg-green-500 text-white px-1 mb-4 rounded">{30}%</span>
+          {/* <span className="bg-green-500 text-white px-1 mb-4 rounded">{progress}%</span> */}
           <span className="ml-2 text-white text-bold">Resume Score</span>
           </div>
          
           <div 
             className="h-full bg-green-500 transition-[width] mb-2 hover:bg-green-600"
-            style={{ width: `${30}%` }}
+            // style={{ width: `${progress}%` }}
           >
           </div>
         </div>

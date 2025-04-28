@@ -65,10 +65,10 @@ export const ExportSection = () => {
             "h-auto cursor-pointer flex-row items-center gap-x-5 px-4 pb-3 pt-1",
             loading && "pointer-events-none cursor-progress opacity-75",
           )}
-          // onClick={onPdfExport}
-          onClick={() => {
-            navigate("/dashboard/plan-pricing");
-          }}
+          onClick={onPdfExport}
+          // onClick={() => {
+          //   navigate("/dashboard/plan-pricing");
+          // }}
         >
           {loading ? <CircleNotch size={22} className="animate-spin" /> : <FilePdf size={22} />}
 

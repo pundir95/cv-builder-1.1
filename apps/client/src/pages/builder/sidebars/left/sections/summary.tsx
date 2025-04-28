@@ -4,6 +4,7 @@ import { cn } from "@reactive-resume/utils";
 
 import { AiActions } from "@/client/components/ai-actions";
 import { useResumeStore } from "@/client/stores/resume";
+import { useSectionProgress } from "@/client/hooks/use-section-progress";
 
 import { SectionIcon } from "./shared/section-icon";
 import { SectionOptions } from "./shared/section-options";
@@ -14,6 +15,12 @@ export const SummarySection = () => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     (state) => state.resume.data.sections.summary ?? defaultSections.summary,
   );
+
+  // Check if summary is complete (has content)
+  const isCompleted = Boolean(section.content && section.content.trim().length > 0);
+
+  // Use the progress hook
+  useSectionProgress("summary", isCompleted);
 
   return (
     <section id="summary" className="grid gap-y-6">

@@ -25,6 +25,14 @@ export const sampleResume: ResumeData = {
     },
   },
   sections: {
+    collapse: {
+      name: "Collapse",
+      columns: 1,
+      separateLinks: true,
+      visible: true,
+      id: "collapse",
+      items: [],
+    },
     summary: {
       name: "Summary",
       columns: 1,
@@ -291,7 +299,15 @@ export const sampleResume: ResumeData = {
     custom: {},
   },
   metadata: {
-    template: "glalie",
+    template: {
+      name: "glalie",
+      id: 1,
+      withPhoto: true,
+      withoutPhoto: false,
+      oneColumn: true,
+      twoColumn: false,
+      progress: 0,
+    },
     layout: [
       [
         ["summary", "experience", "education", "projects", "references"],

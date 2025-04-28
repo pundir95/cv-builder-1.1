@@ -1,6 +1,6 @@
 import type { AuthResponseDto, RegisterDto } from "@reactive-resume/dto";
 import { useMutation } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
+import type { AxiosError, AxiosResponse } from "axios";
 
 import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
@@ -22,13 +22,14 @@ export const useRegister = () => {
     error,
     isPending: loading,
     mutateAsync: registerFn,
-  } = useMutation({
+  } = useMutation<AuthResponseDto, AxiosError, RegisterDto>({
     mutationFn: register,
     onSuccess: (data) => {
       setUser(data.user);
       queryClient.setQueryData(["user"], data.user);
     },
   });
-
-  return { register: registerFn, loading, error };
+  console.log(error, 'error');
+ 
+  return { register: registerFn, loading, error: error?.response?.data };
 };

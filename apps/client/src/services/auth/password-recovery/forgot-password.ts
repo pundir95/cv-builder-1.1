@@ -6,7 +6,7 @@ import { axios } from "@/client/libs/axios";
 
 export const forgotPassword = async (data: ForgotPasswordDto) => {
   return axios.post<undefined, AxiosResponse<undefined>, ForgotPasswordDto>(
-    "/auth/forgot-password",
+    "accounts/forget-password/",
     data,
   );
 };

@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { AiActions } from "@/client/components/ai-actions";
+import { useSectionProgress } from "@/client/hooks/use-section-progress";
 
 import { SectionDialog } from "../sections/shared/section-dialog";
 import { URLInput } from "../sections/shared/url-input";
@@ -40,6 +41,18 @@ export const ProjectsDialog = () => {
 
   const [pendingKeyword, setPendingKeyword] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+  // Watch form values to determine completion
+  const formValues = form.watch();
+  const isCompleted = Boolean(
+    formValues.name &&
+    formValues.description &&
+    formValues.date &&
+    formValues.summary
+  );
+
+  // Use the progress hook
+  useSectionProgress("projects", isCompleted);
 
   const handleDrop = (
     e: React.DragEvent,

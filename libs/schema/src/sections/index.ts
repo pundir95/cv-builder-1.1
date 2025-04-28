@@ -108,6 +108,12 @@ export const defaultSection: Section = {
 };
 
 export const defaultSections: Sections = {
+  collapse: {
+    ...defaultSection,
+    id: "collapse",
+    name: "Collapse",
+    items: [],
+  },
   summary: { ...defaultSection, id: "summary", name: "Summary", content: "" },
   awards: { ...defaultSection, id: "awards", name: "Awards", items: [] },
   certifications: { ...defaultSection, id: "certifications", name: "Certifications", items: [] },

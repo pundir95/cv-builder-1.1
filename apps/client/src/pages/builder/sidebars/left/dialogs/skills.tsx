@@ -19,6 +19,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
+import { useSectionProgress } from "@/client/hooks/use-section-progress";
+
 import { SectionDialog } from "../sections/shared/section-dialog";
 
 const formSchema = skillSchema;
@@ -32,6 +34,16 @@ export const SkillsDialog = () => {
   });
 
   const [pendingKeyword, setPendingKeyword] = useState("");
+
+  // Watch form values to determine completion
+  const formValues = form.watch();
+  const isCompleted = Boolean(
+    formValues.name &&
+    formValues.keywords.length > 0
+  );
+
+  // Use the progress hook
+  useSectionProgress("skills", isCompleted);
 
   return (
     <SectionDialog<FormValues>

@@ -9,7 +9,15 @@ export const defaultLayout = [
 
 // Schema
 export const metadataSchema = z.object({
-  template: z.string().default("rhyhorn"),
+  template: z.object({
+    name: z.string().default("cv_template_2"),
+    id: z.number().default(2),
+    withPhoto: z.boolean().default(false),
+    withoutPhoto: z.boolean().default(true),
+    oneColumn: z.boolean().default(true),
+    twoColumn: z.boolean().default(false),
+    progress: z.number().default(0),
+  }),
   layout: z.array(z.array(z.array(z.string()))).default(defaultLayout), // pages -> columns -> sections
   css: z.object({
     value: z.string().default("* {\n\toutline: 1px solid #000;\n\toutline-offset: 4px;\n}"),
@@ -47,7 +55,15 @@ export type Metadata = z.infer<typeof metadataSchema>;
 
 // Defaults
 export const defaultMetadata: Metadata = {
-  template: "cv_template_2",
+  template: {
+    name: "cv_template_2",
+    id: 2,
+    withPhoto: false,
+    withoutPhoto: true,
+    oneColumn: true,
+    twoColumn: false,
+    progress: 0,
+  },
   layout: defaultLayout,
   css: {
     value: "* {\n\toutline: 1px solid #000;\n\toutline-offset: 4px;\n}",

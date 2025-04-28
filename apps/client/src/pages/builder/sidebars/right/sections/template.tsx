@@ -76,7 +76,8 @@ const selectedTemplateId=(crrTemplate:any)=>{
                 // currentTemplate === template.name && "ring-2",
               )}
               onClick={() => {
-                setValue("metadata.template", template.name);
+                setValue("metadata.template", template);
+                // open("create");
               }}
             > 
               <img src={`/templates/jpg/${template.name}.jpg`} alt={template.name} className="rounded-sm" />
