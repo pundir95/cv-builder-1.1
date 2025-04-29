@@ -28,7 +28,8 @@ export default defineConfig({
     fs: { allow: [searchForWorkspaceRoot(process.cwd())] },
     allowedHosts: [
       'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
-    ]
+    ],
+    hmr: false
   },
 
   plugins: [react(), nxViteTsPaths()],
