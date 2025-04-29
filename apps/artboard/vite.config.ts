@@ -23,12 +23,18 @@ export default defineConfig({
   },
 
   server: {
-    host: true,
+    host: '0.0.0.0',
     port: 6173,
     fs: { allow: [searchForWorkspaceRoot(process.cwd())] },
     allowedHosts: [
       'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
-    ]
+    ],
+    hmr: {
+      protocol: 'ws',
+      host: 'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me',
+      port: 443,
+      path: '/artboard'
+    }
   },
 
   plugins: [react(), nxViteTsPaths()],
