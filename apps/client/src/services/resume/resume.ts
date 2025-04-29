@@ -6,13 +6,7 @@ export const findResumeById = async (data: { id: string }) => {
   const referenceId = localStorage.getItem("reference_id");
   const {data:response} = await axios.get<{data:ResumeDto}>(referenceId ? `/cv-manager/cvs/${data.id}/?reference_id=${referenceId}` : `/cv-manager/cvs/${data.id}/`);
   console.log(response.data,"response");
-  return {
-    "title": "Pankaj",
-    "slug": "Pankaj",
-    "id": response.data.id,
-    "data": response.data.cv_data,
-    "visibility": response.data.visibility
-  }
+  return response.data
 };
 
 export const findResumeByUsernameSlug = async (data: { username: string; slug: string }) => {

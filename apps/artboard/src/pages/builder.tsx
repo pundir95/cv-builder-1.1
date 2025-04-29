@@ -22,70 +22,70 @@ export const BuilderLayout = () => {
   const template = useArtboardStore((state) => state.resume.metadata.template as unknown as Template);
   const Template = useMemo(() => getTemplate(template), [template]);
 
-  const getTemplateHtml = () => {
-    if (templateRef.current) {
-      // Get all stylesheets
-      const styles = Array.from(document.styleSheets)
-        .map(stylesheet => {
-          try {
-            return Array.from(stylesheet.cssRules)
-              .map(rule => rule.cssText)
-              .join('\n');
-          } catch (e) {
-            // Skip external stylesheets
-            return '';
-          }
-        })
-        .join('\n');
+  // const getTemplateHtml = () => {
+  //   if (templateRef.current) {
+  //     // Get all stylesheets
+  //     const styles = Array.from(document.styleSheets)
+  //       .map(stylesheet => {
+  //         try {
+  //           return Array.from(stylesheet.cssRules)
+  //             .map(rule => rule.cssText)
+  //             .join('\n');
+  //         } catch (e) {
+  //           // Skip external stylesheets
+  //           return '';
+  //         }
+  //       })
+  //       .join('\n');
 
-      // Create style element
-      const styleElement = `<style>${styles}</style>`;
+  //     // Create style element
+  //     const styleElement = `<style>${styles}</style>`;
       
-      // Get HTML content
-      const html = templateRef.current.innerHTML;
+  //     // Get HTML content
+  //     const html = templateRef.current.innerHTML;
       
-      // Combine style and HTML
-      const fullHtml = styleElement + html;
+  //     // Combine style and HTML
+  //     const fullHtml = styleElement + html;
       
-      console.log(fullHtml, "html with styles");
-      return fullHtml;
-    }
-    return '';
-  };
+  //     console.log(fullHtml, "html with styles");
+  //     return fullHtml;
+  //   }
+  //   return '';
+  // };
 
-  const generatePDF = () => {
-    const fullHtml = getTemplateHtml();
-    if (fullHtml) {
-      // Create a temporary container
-      const container = document.createElement('div');
-      container.innerHTML = fullHtml;
-      container.style.width = '800px'; // Set to your resume width (adjust as needed)
-      container.style.margin = '0 auto'; // Center it
+  // const generatePDF = () => {
+  //   const fullHtml = getTemplateHtml();
+  //   if (fullHtml) {
+  //     // Create a temporary container
+  //     const container = document.createElement('div');
+  //     container.innerHTML = fullHtml;
+  //     container.style.width = '800px'; // Set to your resume width (adjust as needed)
+  //     container.style.margin = '0 auto'; // Center it
 
-      const opt = {
-        margin: 0, // Remove extra margin
-        filename: 'resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-          scale: 2,
-          useCORS: true,
-          logging: true,
-          letterRendering: true,
-          allowTaint: true
-        },
-        jsPDF: { 
-          unit: 'px', // Use pixels for more control
-          format: [800, 1131], // A4 in px at 96dpi, or match your resume
-          orientation: 'portrait',
-          compress: true,
-          precision: 16
-        },
-        pagebreak: { mode: 'avoid-all' }
-      };
+  //     const opt = {
+  //       margin: 0, // Remove extra margin
+  //       filename: 'resume.pdf',
+  //       image: { type: 'jpeg', quality: 0.98 },
+  //       html2canvas: { 
+  //         scale: 2,
+  //         useCORS: true,
+  //         logging: true,
+  //         letterRendering: true,
+  //         allowTaint: true
+  //       },
+  //       jsPDF: { 
+  //         unit: 'px', // Use pixels for more control
+  //         format: [800, 1131], // A4 in px at 96dpi, or match your resume
+  //         orientation: 'portrait',
+  //         compress: true,
+  //         precision: 16
+  //       },
+  //       pagebreak: { mode: 'avoid-all' }
+  //     };
 
-      html2pdf().set(opt).from(container).save();
-    }
-  };
+  //     html2pdf().set(opt).from(container).save();
+  //   }
+  // };
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -101,10 +101,10 @@ export const BuilderLayout = () => {
       if (event.data.type === "TOGGLE_PAN_MODE") {
         setWheelPanning(event.data.panMode);
       }
-      if (event.data.type === "GET_TEMPLATE_HTML") {
-        const html = getTemplateHtml();
-        window.postMessage({ type: "TEMPLATE_HTML", html }, window.location.origin);
-      }
+      // if (event.data.type === "GET_TEMPLATE_HTML") {
+      //   const html = getTemplateHtml();
+      //   window.postMessage({ type: "TEMPLATE_HTML", html }, window.location.origin);
+      // }
     };
 
     window.addEventListener("message", handleMessage);
@@ -116,7 +116,7 @@ export const BuilderLayout = () => {
 
   return (
     <>
-      <div className="flex gap-4 p-4">
+      {/* <div className="flex gap-4 p-4">
         <button 
           onClick={getTemplateHtml}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -129,7 +129,7 @@ export const BuilderLayout = () => {
         >
           Download PDF
         </button>
-      </div>
+      </div> */}
       <div ref={templateRef} className="overflow-y-auto h-screen">
         {layout.map((columns, pageIndex) => (
           <motion.div

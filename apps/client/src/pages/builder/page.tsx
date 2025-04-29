@@ -82,20 +82,21 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
       queryFn: () => findResumeById({ id }),
     });
 
-    const data = resume.data;
+    const data1 = resume;
+    console.log(data1, "data1333")
 
     const resumeDto = {
-      id: data.id,
-      title: data.title,
-      slug: data.slug,
-      data: data.data,
-      visibility: data.visibility,
-      userId: data.userId,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-      locked: data.locked,
-      cv_data: data.cv_data,
-      cv_template: data.cv_template,
+      id: data1.id,
+      title: data1.title,
+      slug: data1.slug,
+      data1: data1.data,
+      visibility: data1.visibility,
+      userId: data1.user?.id ?? '',
+      createdAt: data1.createdAt,
+      updatedAt: data1.updatedAt,
+      locked: data1.locked,
+      data: data1.cv_data,
+      cv_template: data1.cv_template,
     };
 
     useResumeStore.setState({ resume: resumeDto });

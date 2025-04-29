@@ -8,6 +8,7 @@ import { axios } from "@/client/libs/axios";
 export const fetchResumes = async () => {
   const referenceId = localStorage.getItem("reference_id");
   const response = await axios.get<{ data: ResumeDto[] }>(referenceId ? `/cv-manager/cvs/?reference_id=${referenceId}` : "/cv-manager/cvs/");
+  console.log(response.data.data, "response.data.data")
   return response.data.data;
 };
 
