@@ -12,11 +12,21 @@ export default defineConfig({
   build: {
     sourcemap: true,
     emptyOutDir: true,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
       external: ['html2pdf.js'],
       output: {
         globals: {
           'html2pdf.js': 'html2pdf'
+        },
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
         }
       }
     }
