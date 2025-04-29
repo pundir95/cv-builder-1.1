@@ -33,7 +33,7 @@ export default defineConfig({
       clientPort: 443,
       host: 'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me',
       protocol: 'wss',
-      path: '/artboard'
+      path: '/artboard/hmr'
     }
   },
 
