@@ -16,11 +16,11 @@ interface Template {
 
 export const getTemplateList = async (data: GetTemplateListDto) => {
   const referenceId = localStorage.getItem("reference_id");
-  const response = await axios.get<Template[], AxiosResponse<Template[]>, GetTemplateListDto>(
+  const response = await axios.get<{ data: Template[] }, AxiosResponse<{ data: Template[] }>, GetTemplateListDto>(
     referenceId ? `/cv-manager/templates-list/?reference_id=${referenceId}` : "/cv-manager/templates-list",
   );
 
-  return response.data;
+  return response.data.data;
 };
 
 export const useGetTemplateList = () => {

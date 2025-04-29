@@ -60,8 +60,7 @@ useEffect(()=>{
 },[])
 
 const selectedTemplateId = (crrTemplate: string) => {
-  console.log(crrTemplate, "crrTemplate")
-  const templateId = templateData?.find((template: Template) => template.name === crrTemplate)
+  const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
   if (templateId) {
     localStorage.setItem("templateId", templateId.id.toString())
     navigate(`/dashboard/resumes`)

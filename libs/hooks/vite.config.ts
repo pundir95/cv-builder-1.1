@@ -37,4 +37,9 @@ export default defineConfig({
     environment: "jsdom",
     include: ["src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
   },
+  server: {
+    allowedHosts: [
+      'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
+    ]
+  },
 });
