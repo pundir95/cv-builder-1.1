@@ -44,11 +44,6 @@ export default defineConfig({
       host: 'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me',
       port: 443,
     },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-    }
   },
 
   plugins: [react(), nxViteTsPaths()],
