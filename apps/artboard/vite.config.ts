@@ -12,6 +12,14 @@ export default defineConfig({
   build: {
     sourcemap: true,
     emptyOutDir: true,
+    rollupOptions: {
+      external: ['html2pdf.js'],
+      output: {
+        globals: {
+          'html2pdf.js': 'html2pdf'
+        }
+      }
+    }
   },
 
   server: {
