@@ -7,15 +7,11 @@ import { Providers } from "../providers";
 
 export const routes = createRoutesFromChildren(
   <Route element={<Providers />}>
-    <Route index element={<BuilderLayout />} />
-    <Route path="artboard">
-      <Route index element={<ArtboardPage />} />
+    <Route path="artboard" element={<ArtboardPage />}>
       <Route path="builder" element={<BuilderLayout />} />
       <Route path="preview" element={<PreviewLayout />} />
     </Route>
   </Route>,
 );
 
-export const router = createBrowserRouter(routes, {
-  basename: window.location.pathname
-});
+export const router = createBrowserRouter(routes);
