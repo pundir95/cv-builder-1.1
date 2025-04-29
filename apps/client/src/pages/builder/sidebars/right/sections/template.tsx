@@ -4,7 +4,7 @@ import { cn, templatesList } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
 
 import { useResumeStore } from "@/client/stores/resume";
-import { useDialog } from "@/client/hooks/use-dialog";
+import { useDialog } from "@/client/stores/dialog";
 import { SectionIcon } from "../shared/section-icon";
 import { useGetTemplateList } from "@/client/services/template/template";
 import { useEffect, useState } from "react";
