@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react-swc";
 import { defineConfig, searchForWorkspaceRoot } from "vite";
 
 export default defineConfig({
-  base: "/artboard/",
+  base: "",
 
   cacheDir: "../../node_modules/.vite/artboard",
 
@@ -40,10 +40,15 @@ export default defineConfig({
       'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
     ],
     hmr: {
-      protocol: 'ws', // Use 'wss' if Traefik uses HTTPS
+      protocol: 'ws',
       host: 'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me',
-      port: 443, // Public-facing port
+      port: 443,
     },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
 
   plugins: [react(), nxViteTsPaths()],
