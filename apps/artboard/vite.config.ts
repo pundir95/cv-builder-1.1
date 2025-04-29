@@ -26,7 +26,7 @@ export default defineConfig({
           'html2pdf.js': 'html2pdf'
         },
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
+          vendor: ['react', 'react-dom'],
         }
       }
     }
