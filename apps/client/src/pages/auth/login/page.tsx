@@ -51,8 +51,8 @@ export const LoginPage = () => {
       await login(data);
       navigate("/onboard/experience-level");
       showToast('Login successful!', 'success');
-    } catch (error) {
-      let errorMessage = error.response.data.message || 'Login failed. Please try again.';
+    } catch (error: any) {
+      let errorMessage = error?.response?.data?.message || 'Login failed. Please try again.';
       showToast(errorMessage, 'error');
       form.reset();
     }

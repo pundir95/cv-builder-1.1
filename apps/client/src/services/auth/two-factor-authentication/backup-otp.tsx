@@ -26,8 +26,8 @@ export const useBackupOtp = () => {
   } = useMutation({
     mutationFn: backupOtp,
     onSuccess: (data) => {
-      setUser(data.user);
-      queryClient.setQueryData(["user"], data.user);
+      setUser(data.data.user);
+      queryClient.setQueryData(["user"], data.data.user);
     },
   });
 

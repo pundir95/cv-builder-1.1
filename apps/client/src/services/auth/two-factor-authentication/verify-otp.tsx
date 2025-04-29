@@ -25,8 +25,8 @@ export const useVerifyOtp = () => {
   } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      setUser(data);
-      queryClient.setQueryData(["user"], data);
+      setUser(data.data.user);
+      queryClient.setQueryData(["user"], data.data.user);
     },
   });
 

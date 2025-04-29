@@ -82,10 +82,26 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
       queryFn: () => findResumeById({ id }),
     });
 
-    useResumeStore.setState({ resume });
+    const data = resume.data;
+
+    const resumeDto = {
+      id: data.id,
+      title: data.title,
+      slug: data.slug,
+      data: data.data,
+      visibility: data.visibility,
+      userId: data.userId,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      locked: data.locked,
+      cv_data: data.cv_data,
+      cv_template: data.cv_template,
+    };
+
+    useResumeStore.setState({ resume: resumeDto });
     useResumeStore.temporal.getState().clear();
 
-    return resume;
+    return resumeDto;
   } catch {
     return redirect("/dashboard");
   }

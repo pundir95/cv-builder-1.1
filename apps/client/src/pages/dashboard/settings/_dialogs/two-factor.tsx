@@ -47,6 +47,7 @@ import { useDialog } from "@/client/stores/dialog";
 
 interface TwoFactorDto {
   code: string;
+  otp: string;
 }
 
 const formSchema = z.object({
@@ -99,7 +100,7 @@ export const TwoFactorDialog = () => {
     if (isUpdate) {
       if (!values.code) return;
 
-      const data = await enable2FA({ code: values.code } as TwoFactorDto);
+      const data = await enable2FA({ code: values.code, otp: values.code } as TwoFactorDto);
       form.setValue("backupCodes", data.backupCodes);
       await queryClient.invalidateQueries({ queryKey: ["user"] });
 

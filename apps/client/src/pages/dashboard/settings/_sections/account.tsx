@@ -39,9 +39,9 @@ export const AccountSettings = () => {
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       picture: "",
-      name: "",
       username: "",
       email: "",
+      locale: "",
     },
   });
 
@@ -54,9 +54,9 @@ export const AccountSettings = () => {
 
     form.reset({
       picture: user.picture ?? "",
-      name: user.name,
       username: user.username,
       email: user.email,
+      locale: user.locale,
     });
   };
 
@@ -72,10 +72,10 @@ export const AccountSettings = () => {
     }
 
     await updateUser({
-      name: data.name,
       email: data.email,
       picture: data.picture,
       username: data.username,
+      locale: data.locale,
     });
 
     form.reset(data);
@@ -146,27 +146,13 @@ export const AccountSettings = () => {
           />
 
           <FormField
-            name="name"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t`Name`}</FormLabel>
-                <FormControl>
-                  <Input autoComplete="name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
             name="username"
             control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t`Username`}</FormLabel>
                 <FormControl>
-                  <Input autoComplete="username" className="lowercase" {...field} />
+                  <Input autoComplete="username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -47,9 +47,9 @@ export const VerifyOtpPage = () => {
       showToast('Operation successful!', 'success');
 
       void navigate("/auth/login");
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      let errorMessage = error.response.data.data.non_field_errors[0] || 'Operation failed. Please try again.';
+      let errorMessage = error?.response?.data?.data?.non_field_errors?.[0] || 'Operation failed. Please try again.';
       showToast(errorMessage, 'error');
       form.reset();
     }
