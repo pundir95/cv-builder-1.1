@@ -12,6 +12,9 @@ export default defineConfig({
 
   server: {
     fs: { allow: [searchForWorkspaceRoot(process.cwd())] },
+    allowedHosts: [
+      'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
+    ]
   },
 
   plugins: [

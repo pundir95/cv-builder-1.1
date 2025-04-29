@@ -6,6 +6,12 @@ export default defineConfig({
 
   plugins: [nxViteTsPaths()],
 
+  server: {
+    allowedHosts: [
+      'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
+    ]
+  },
+
   test: {
     globals: true,
     environment: "jsdom",
