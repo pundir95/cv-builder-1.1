@@ -50,6 +50,7 @@ export const metadataSchema = z.object({
   notes: z.string().default(""),
 });
 
+
 // Type
 export type Metadata = z.infer<typeof metadataSchema>;
 
