@@ -6,13 +6,9 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 import { useAuthStore } from "@/client/stores/auth";
 
-interface AuthResponseDto {
-  user: any; // Replace 'any' with the actual user type if available
-}
-
 export const register = async (data: RegisterDto) => {
   const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, RegisterDto>(
-    "accounts/register/",
+    "/auth/register",
     data,
   );
 
@@ -26,13 +22,13 @@ export const useRegister = () => {
     error,
     isPending: loading,
     mutateAsync: registerFn,
-  } = useMutation<AuthResponseDto, AxiosError, RegisterDto>({
+  } = useMutation({
     mutationFn: register,
     onSuccess: (data) => {
-      setUser(data.user);
-      queryClient.setQueryData(["user"], data.user);
+      setUser(data.data.user);
+      queryClient.setQueryData(["user"], data.data.user);
     },
   });
 
-  return { register: registerFn, loading, error: error?.response?.data };
+  return { register: registerFn, loading, error };
 };
