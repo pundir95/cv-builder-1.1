@@ -10,9 +10,17 @@ export const Providers = () => {
   const setResume = useArtboardStore((state) => state.setResume);
 
   useEffect(() => {
+    console.log("Setting up message event listener");
     const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== window.location.origin) return;
-      if (event.data.type === "SET_RESUME") setResume(event.data.payload);
+      console.log("Received message event:", event);
+      if (event.origin !== window.location.origin) {
+        console.log("Origin mismatch:", event.origin, window.location.origin);
+        return;
+      }
+      if (event.data.type === "SET_RESUME") {
+        console.log("Setting resume from message:", event.data.payload);
+        setResume(event.data.payload);
+      }
     };
 
     window.addEventListener("message", handleMessage, false);
@@ -23,13 +31,30 @@ export const Providers = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Checking localStorage for resume data");
     const resumeData = window.localStorage.getItem("resume");
 
-    if (resumeData) setResume(JSON.parse(resumeData));
+    if (resumeData) {
+      console.log("Found resume data in localStorage");
+      try {
+        const parsedData = JSON.parse(resumeData);
+        console.log("Setting resume from localStorage:", parsedData);
+        setResume(parsedData);
+      } catch (error) {
+        console.error("Failed to parse resume data from localStorage:", error);
+      }
+    } else {
+      console.log("No resume data found in localStorage");
+    }
   }, [window.localStorage.getItem("resume")]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!resume) return null;
+  if (!resume) {
+    console.log("Resume data is null, rendering nothing");
+    return null;
+  }
+  console.log(resume, "resumedddddd")
+  
+  console.log("Resume data is available, rendering content");
 
   return (
     <HelmetProvider context={helmetContext}>
