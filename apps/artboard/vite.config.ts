@@ -46,7 +46,18 @@ export default defineConfig({
     },
   },
 
-  plugins: [react(), nxViteTsPaths()],
+  plugins: [
+    react({
+      plugins: [
+        ['@swc/plugin-transform-react-jsx', {
+          runtime: 'automatic',
+          development: process.env.NODE_ENV === 'development',
+          refresh: true,
+        }]
+      ]
+    }),
+    nxViteTsPaths()
+  ],
 
   resolve: {
     alias: {

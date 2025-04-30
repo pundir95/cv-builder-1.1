@@ -1,3 +1,4 @@
+import React from 'react';
 import { createBrowserRouter, createRoutesFromChildren, Route } from "react-router";
 
 import { ArtboardPage } from "../pages/artboard";
