@@ -39,7 +39,7 @@ export const SocialAuth = () => {
         className="w-full !bg-[#222] !text-white hover:!bg-[#222]/80"
       >
         <LinkedinLogo className="mr-3 size-4" />
-        {t`Linkedin`}
+        Linkedin
       </Button>
 
       <GoogleLogin onSuccess={handleSuccess} />

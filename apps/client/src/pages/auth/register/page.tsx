@@ -127,11 +127,7 @@ export const RegisterPage = () => {
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={t({
-                        message: "John",
-                        context:
-                          "Localized version of a placeholder name. For example, Max in German or Jan in Polish.",
-                      })}
+                      placeholder="John"
                       {...field}
                     />
                   </FormControl>
@@ -149,11 +145,7 @@ export const RegisterPage = () => {
                   <FormControl>
                     <Input
                       className="lowercase"
-                      placeholder={t({
-                        message: "Doe",
-                        context:
-                          "Localized version of a placeholder name. For example, Mustermann in German or Kowalski in Polish.",
-                      })}
+                      placeholder="Doe"
                       {...field}
                     />
                   </FormControl>
@@ -173,11 +165,7 @@ export const RegisterPage = () => {
                     <Input
                       type="email"
                       className="lowercase"
-                      placeholder={t({
-                        message: "john.doe@example.com",
-                        context:
-                          "Localized version of a placeholder email. For example, max.mustermann@example.de in German or jan.kowalski@example.pl in Polish.",
-                      })}
+                      placeholder="john.doe@example.com"
                       {...field}
                     />
                   </FormControl>
@@ -208,7 +196,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t`Confirm Password`}</FormLabel>
+                  <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
