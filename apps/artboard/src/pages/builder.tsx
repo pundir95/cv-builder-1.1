@@ -116,20 +116,20 @@ export const BuilderLayout = () => {
 
   return (
     <>
-      <div className="flex gap-4 p-4">
+      {/* <div className="flex gap-4 p-4">
         <button 
-          // onClick={getTemplateHtml}
+          onClick={getTemplateHtml}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Get HTML
         </button>
         <button 
-          // onClick={generatePDF}
+          onClick={generatePDF}
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
         >
           Download PDF
         </button>
-      </div>
+      </div> */}
       <div ref={templateRef} className="overflow-y-auto h-screen">
         {layout.map((columns, pageIndex) => (
           <motion.div

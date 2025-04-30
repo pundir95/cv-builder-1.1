@@ -12,44 +12,23 @@ export default defineConfig({
   build: {
     sourcemap: true,
     emptyOutDir: true,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
     rollupOptions: {
       external: ['html2pdf.js'],
       output: {
         globals: {
           'html2pdf.js': 'html2pdf'
-        },
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
         }
       }
     }
   },
 
   server: {
-    host: '0.0.0.0',
+    host: true,
     port: 6173,
     fs: { allow: [searchForWorkspaceRoot(process.cwd())] },
-    allowedHosts: [
-      'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me'
-    ],
-    hmr: {
-      protocol: 'ws',
-      host: 'cv-vbbuilder-ltpiax-b07da2-13-48-133-111.traefik.me',
-      port: 443,
-    },
   },
 
-  plugins: [
-    react(),
-    nxViteTsPaths()
-  ],
+  plugins: [react(), nxViteTsPaths()],
 
   resolve: {
     alias: {

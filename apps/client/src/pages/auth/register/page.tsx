@@ -124,7 +124,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-1/2">
-                  <FormLabel>{t`First Name`}</FormLabel>
+                  <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t({
@@ -145,7 +145,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-1/2">
-                  <FormLabel>{t`Last Name`}</FormLabel>
+                  <FormLabel>Last Name</FormLabel>
                   <FormControl>
                     <Input
                       className="lowercase"
@@ -191,7 +191,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t`Phone Number`}</FormLabel>
+                  <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>

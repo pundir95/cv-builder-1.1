@@ -83,31 +83,31 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
   const sidebarItems: SidebarItem[] = [
     {
       path: "/dashboard",
-      name: t`Dashboard`,
+      name: `Dashboard`,
       shortcut: "⇧R",
       icon: <ChartLineDown color="white" />,
     },
     {
       path: "/dashboard/resumes",
-      name: t`Resumes`,
+      name: `Resumes`,
       shortcut: "⇧R",
       icon: <ReadCvLogo color="white" />,
     },
     {
       path: "/dashboard/account",
-      name: t`Account`,
+      name: `Account`,
       shortcut: "⇧S",
       icon: <UserCircle color="white" />,
     },
     {
       path: "/dashboard/plan-pricing",
-      name: t`Plan Pricing`,
+      name: `Plan Pricing`,
       shortcut: "⇧S",
       icon: <Money color="white" />,
     },
     {
       path: "/dashboard/settings",
-      name: t`Settings`,
+      name: `Settings`,
       shortcut: "⇧S",
       icon: <FadersHorizontal color="white" />,
     },  

@@ -36,11 +36,7 @@ export const AuthLayout = () => {
             <div className={cn("flex items-center gap-x-4", hideDivider && "hidden")}>
               <hr className="flex-1" />
               <span className="text-xs font-medium">
-                {t({
-                  message: "or continue with",
-                  context:
-                    "The user can either login with email/password, or continue with LinkedIn or Google.",
-                })}
+              or continue with
               </span>
               <hr className="flex-1" />
             </div>
