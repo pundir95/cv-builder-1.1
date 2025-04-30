@@ -143,19 +143,20 @@ export const LoginPage = () => {
                 </FormItem>
               )}
             />
+   <Button type="submit" disabled={loading} className="flex-1 p-2" loading={loading}>
+                Log in
+              </Button>
 
             <div className="mt-4 flex items-center gap-x-4">
-              <Button type="submit" disabled={loading} className="flex-1" loading={loading}>
-                {t`Sign in`}
+            <Button type="button" disabled={loading} className="flex-1 p-2" variant="warning" onClick={doItLater}>
+               Do it Later
               </Button>
 
               <Button asChild variant="link" className="px-4">
                 <Link to="/auth/forgot-password">{t`Forgot Password?`}</Link>
               </Button>
             </div>
-            <Button type="button" disabled={loading} className="flex-1 p-2" variant="warning" onClick={doItLater}>
-               Do it Later
-              </Button>
+          
           </form>
         </Form>
       </div>

@@ -31,6 +31,7 @@ import PlanPricing from "../pages/admin-dashboard/planPrice/PlanPricing";
 import ExperienceLevel from "../pages/experience-level/Page";
 import ChooseTemplate from "../pages/select-template/page";
 import { ExperienceGuard } from "./guards/experience";
+import UploadResume from "../pages/upload-resume/UploadResume";
 
 
 export const routes = createRoutesFromElements(
@@ -77,6 +78,7 @@ export const routes = createRoutesFromElements(
       <Route element={<ExperienceGuard />}>
       <Route path="experience-level" element={<ExperienceLevel />} />
       <Route path="select-template" element={<ChooseTemplate />} />
+      <Route path="upload-resume" element={<UploadResume />} />
       </Route>
 
       </Route>

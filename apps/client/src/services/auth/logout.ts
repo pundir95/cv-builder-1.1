@@ -16,6 +16,7 @@ export const useLogout = () => {
   } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      localStorage.clear();
       setUser(null);
       queryClient.setQueryData(["user"], null);
     },

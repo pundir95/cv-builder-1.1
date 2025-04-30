@@ -44,7 +44,7 @@ import { useCreateResume, useDeleteResume, useUpdateResume } from "@/client/serv
 import { useImportResume } from "@/client/services/resume/import";
 import { useDialog } from "@/client/stores/dialog";
 import { resumeData } from "../constant";
-
+import { useNavigate } from "react-router";
 const formSchema = createResumeSchema.extend({ id: idSchema.optional(), slug: z.string() });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -61,6 +61,7 @@ export const ResumeDialog = () => {
   const { updateResume, loading: updateLoading } = useUpdateResume();
   const { deleteResume, loading: deleteLoading } = useDeleteResume();
   const { importResume: duplicateResume, loading: duplicateLoading } = useImportResume();
+  const navigate = useNavigate();
 
   const loading = createLoading || updateLoading || deleteLoading || duplicateLoading;
 
@@ -82,6 +83,7 @@ export const ResumeDialog = () => {
     if (isCreate) {
       const templateId = Number(localStorage.getItem("templateId") || 1)
       await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
+     void navigate(`/builder/47`)
     }
 
     if (isUpdate) {

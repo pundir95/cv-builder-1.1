@@ -63,7 +63,7 @@ const selectedTemplateId = (crrTemplate: string) => {
   const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
   if (templateId) {
     localStorage.setItem("templateId", templateId.id.toString())
-    navigate(`/dashboard/resumes`)
+    navigate(`/onboard/upload-resume`)
   }
 }
  
@@ -87,8 +87,9 @@ const selectedTemplateId = (crrTemplate: string) => {
                 // currentTemplate === template.name && "ring-2",
               )}
               onClick={() => {
-                setValue("metadata.template", template);
-                // open("create");
+                if(!showTemplateButton){
+                  setValue("metadata.template", template);
+                }
               }}
             > 
               <img src={`/templates/jpg/${template.name}.jpg`} alt={template.name} className="rounded-sm" />
