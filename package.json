@@ -4,13 +4,11 @@
   "version": "4.4.6",
   "license": "null",
   "private": true,
-
   "scripts": {
     "dev": "nx run-many -t serve",
     "test": "pnpm vitest run",
     "build": "nx run-many -t build",
-    "start":"nx run-many -t serve"
-    
+    "start": "nx run-many -t serve"
   },
   "devDependencies": {
     "@babel/core": "^7.26.7",
@@ -239,5 +237,20 @@
   },
   "prisma": {
     "schema": "tools/prisma/schema.prisma"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@nestjs/core",
+      "@parcel/watcher",
+      "@prisma/client",
+      "@prisma/engines",
+      "@swc/core",
+      "core-js",
+      "esbuild",
+      "nx",
+      "prisma",
+      "puppeteer",
+      "sharp"
+    ]
   }
 }
