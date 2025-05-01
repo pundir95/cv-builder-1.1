@@ -7,17 +7,34 @@ import {
   useGoogleLogin,
 } from '@react-oauth/google';
 
+
 import { useAuthProviders } from "@/client/services/auth/providers";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 export const SocialAuth = () => {
   const { providers } = useAuthProviders();
+  const navigate = useNavigate();
 
   if (!providers || providers.length === 0) return null;
 
-  const handleSuccess = (credentialResponse: any) => {
-    console.log('User Info:', credentialResponse);
-    // Save user info or token in localStorage, context, etc.
-  };
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse,"tokenResponse");
+        axios.post("http://13.49.228.27/api/v1/accounts/google/",{
+        access_token:tokenResponse.access_token
+      }).then((res) => {
+        console.log(res,"ress");
+        localStorage.setItem("token",res.data.access);
+        localStorage.setItem("refresh_token",res.data.refresh);
+        navigate("/onboard/experience-level");
+
+      });
+      
+    },
+    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+    flow: 'implicit', // or "auth-code" depending on your setup
+  });
 
   const handleLinkedInLogin = () => {
     // LinkedIn OAuth URL with required parameters
@@ -42,7 +59,15 @@ export const SocialAuth = () => {
         Linkedin
       </Button>
 
-      <GoogleLogin onSuccess={handleSuccess} />
+      {/* <GoogleLogin onSuccess={handleSuccess} /> */}
+      <Button 
+        onClick={() => login()}
+        size="lg" 
+        className="w-full !bg-[#222] !text-white hover:!bg-[#222]/80"
+      >
+        <GoogleLogo className="mr-3 size-4" />
+        Google
+      </Button>
     </div>
   );
 };
