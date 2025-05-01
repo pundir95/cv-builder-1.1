@@ -22,6 +22,7 @@ export const useCreateResume = () => {
     error,
     isPending: loading,
     mutateAsync: createResumeFn,
+    data: response,
   } = useMutation({
     mutationFn: createResume,
     onSuccess: (data) => {
@@ -34,8 +35,8 @@ export const useCreateResume = () => {
         if (!cache) return [data];
         return [...cache, data];
       });
-    },
+    },  
   });
 
-  return { createResume: createResumeFn, loading, error };
+  return { createResume: createResumeFn, loading, error, response };
 };

@@ -85,7 +85,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
         </div>
       </ScrollArea>
 
-      <div className="hidden basis-12 flex-col items-center justify-between  bg-blue-500 py-4 sm:flex">
+      {!showRightSidebar && <div className="hidden basis-12 flex-col items-center justify-between  bg-blue-500 py-4 sm:flex">
         <div className="flex items-center">
           <SectionIcon
             id="collapse"
@@ -93,7 +93,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
             className="cursor-pointer"
             onClick={() => {
               setShowRightSidebar(!showRightSidebar);
-              setShowLeftSidebar(!showLeftSidebar);
+              setShowLeftSidebar();
             }}
           />
         </div>
@@ -156,7 +156,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
         </div>
 
         <ThemeSwitch size={14} />
-      </div>
+      </div>}
     </div>
   );
 };

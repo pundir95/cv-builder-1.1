@@ -57,7 +57,7 @@ export const ResumeDialog = () => {
   const isDelete = mode === "delete";
   const isDuplicate = mode === "duplicate";
 
-  const { createResume, loading: createLoading } = useCreateResume();
+  const { createResume, loading: createLoading, response } = useCreateResume();
   const { updateResume, loading: updateLoading } = useUpdateResume();
   const { deleteResume, loading: deleteLoading } = useDeleteResume();
   const { importResume: duplicateResume, loading: duplicateLoading } = useImportResume();
@@ -82,8 +82,8 @@ export const ResumeDialog = () => {
   const onSubmit = async (values: FormValues) => {
     if (isCreate) {
       const templateId = Number(localStorage.getItem("templateId") || 1)
-      await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
-     void navigate(`/builder/47`)
+      const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
+      void navigate(`/builder/${newResume.data.id}`)
     }
 
     if (isUpdate) {

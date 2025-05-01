@@ -9,6 +9,7 @@ export const resumeDataSchema = z.object({
   basics: basicsSchema,
   sections: sectionsSchema,
   metadata: metadataSchema,
+  id: z.number(),
 });
 
 // Type
@@ -19,6 +20,7 @@ export const defaultResumeData: ResumeData = {
   basics: defaultBasics,
   sections: defaultSections,
   metadata: defaultMetadata,
+  id: 0,
 };
 
 export * from "./basics";

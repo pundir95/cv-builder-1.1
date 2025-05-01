@@ -1,14 +1,15 @@
 import { t } from "@lingui/macro";
-import { HouseSimple, Lock, SidebarSimple } from "@phosphor-icons/react";
+import { HouseSimple, Lock, SidebarSimple, ArrowLeft } from "@phosphor-icons/react";
 import { Button, Tooltip } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
 import { useProgressStore } from "@/client/stores/progress";
 
 export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void,showLeftSidebar:boolean,setShowLeftSidebar:(show:boolean)=>void } ) => {
+  const navigate = useNavigate();
   const title = useResumeStore((state) => state.resume.title);
   const locked = useResumeStore((state) => state.resume.locked);
   const progress = useResumeStore((state) => state.resume.data.metadata.template);
@@ -26,23 +27,37 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSi
 
   return (
     <div
-      style={{ left: `${showLeftSidebar ? leftPanelSize : 3}%`, right: `${showRightSidebar ? rightPanelSize : 3}%` }}
+      // style={{ left: `${showLeftSidebar ? leftPanelSize : 3}%`, right: `${showRightSidebar ? rightPanelSize : 3}%` }}
+      // style={{ left: "0%", right: "1.7%" }}
+
       className={cn(
         "fixed inset-x-0 top-0 z-[60] h-16  bg-blue-500 backdrop-blur-lg lg:z-20",
         !isDragging && "transition-[left,right]",
       )}
     >
       <div className="flex h-full items-center justify-between px-4">
-        <Button
-          size="icon"
-          variant="ghost"
-          className="flex lg:hidden"
-          onClick={() => {
-            onToggle("left");
-          }}
-        >
-          <SidebarSimple />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="flex lg:hidden"
+            onClick={() => {
+              onToggle("left");
+            }}
+          >
+            <SidebarSimple />
+          </Button>
+
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => navigate(-1)}
+            className="text-white mb-5"
+          >
+            <ArrowLeft />
+            Back
+          </Button>
+        </div>
 
         <div className="flex items-center justify-center gap-x-1 lg:mx-auto">
           <Button asChild size="icon" variant="ghost">
