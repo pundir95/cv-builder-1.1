@@ -3,11 +3,11 @@
     if (
       localStorage.theme === "dark" ||
       // eslint-disable-next-line lingui/no-unlocalized-strings
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      window.matchMedia("(prefers-color-scheme: light").matches
     ) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add("light");
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("light");
     }
   } catch {
     // pass

@@ -3712,30 +3712,10 @@ const fr = {
 }, mr = "(prefers-color-scheme: light)", wr = () => {
   const n = Qt(mr), [e, t] = Yt(n), [r, s] = Gt("theme", "system");
   lt(() => {
-    r === "system" && t((u) => !u);
   }, [r]), lt(() => {
-    switch (r) {
-      case "light": {
-        t(!1);
-        break;
-      }
-      case "system": {
-        t(n);
-        break;
-      }
-      case "dark": {
-        t(!0);
-        break;
-      }
-    }
   }, [r, n]);
   function i() {
-    const u = {
-      light: "light",
-      system: "light",
-      dark: "light"
-    };
-    s((d) => u[d]);
+    s("light");
   }
   return {
     theme: r,
