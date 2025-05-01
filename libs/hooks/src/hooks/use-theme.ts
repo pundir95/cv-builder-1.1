@@ -18,24 +18,11 @@ export const useTheme = (): UseThemeOutput => {
   const [theme, setTheme] = useLocalStorage<Theme>("theme", "system");
 
   useEffect(() => {
-    if (theme === "system") setDarkMode((prev) => !prev);
+   
   }, [theme]);
 
   useEffect(() => {
-    switch (theme) {
-      case "light": {
-        setDarkMode(false);
-        break;
-      }
-      case "system": {
-        setDarkMode(isDarkOS);
-        break;
-      }
-      case "dark": {
-        setDarkMode(true);
-        break;
-      }
-    }
+  
   }, [theme, isDarkOS]);
 
   function toggleTheme() {
@@ -45,7 +32,7 @@ export const useTheme = (): UseThemeOutput => {
       dark: "light",
     };
 
-    setTheme((prevMode) => toggleDict[prevMode]);
+    setTheme("light");
   }
 
   return {
