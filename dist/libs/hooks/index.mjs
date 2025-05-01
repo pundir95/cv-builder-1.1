@@ -3710,8 +3710,9 @@ const fr = {
     };
   }, [n]);
 }, mr = "(prefers-color-scheme: light)", wr = () => {
-  const n = Qt(mr), [e, t] = Yt(n), [r, s] = Gt("theme", "system");
+  const n = Qt(mr), [e, t] = Yt(!1), [r, s] = Gt("theme", "light");
   lt(() => {
+    s("light");
   }, [r]), lt(() => {
   }, [r, n]);
   function i() {

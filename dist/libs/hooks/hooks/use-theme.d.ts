@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-type Theme = "light";
+type Theme = "system" | "dark" | "light";
 type UseThemeOutput = {
     theme: Theme;
     isDarkMode: boolean;
