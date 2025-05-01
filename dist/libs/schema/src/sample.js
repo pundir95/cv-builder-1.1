@@ -9,6 +9,7 @@ Object.defineProperty(exports, "sampleResume", {
     }
 });
 const sampleResume = {
+    id: 1,
     basics: {
         name: "John Doe",
         headline: "Creative and Innovative Web Developer",

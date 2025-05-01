@@ -2022,7 +2022,9 @@ export declare const importResumeSchema: z.ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
+        id: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -2361,6 +2363,7 @@ export declare const importResumeSchema: z.ZodObject<{
             notes: string;
         };
     }, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -2701,6 +2704,7 @@ export declare const importResumeSchema: z.ZodObject<{
     }>;
 }, "strip", z.ZodTypeAny, {
     data: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -3044,6 +3048,7 @@ export declare const importResumeSchema: z.ZodObject<{
     visibility?: "public" | "private" | undefined;
 }, {
     data: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -3388,6 +3393,7 @@ export declare const importResumeSchema: z.ZodObject<{
 }>;
 declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     data: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -5752,7 +5758,9 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
+        id: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -6091,6 +6099,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             notes: string;
         };
     }, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -6431,6 +6440,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     }>;
 }, "strip", z.ZodTypeAny>, {
     data: {
+        id: number;
         basics: {
             name: string;
             headline: string;

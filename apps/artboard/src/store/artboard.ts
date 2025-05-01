@@ -2,6 +2,7 @@ import type { ResumeData } from "@reactive-resume/schema";
 import { create } from "zustand";
 
 const defaultResume: ResumeData = {
+  id: 1,
   basics: {
     name: "New Resume",
     headline: "",

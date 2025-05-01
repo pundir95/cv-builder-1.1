@@ -2023,7 +2023,9 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
+        id: import("zod").ZodNumber;
     }, "strip", import("zod").ZodTypeAny, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -2362,6 +2364,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             notes: string;
         };
     }, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -2754,6 +2757,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     data?: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -3119,6 +3123,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
     createdAt?: string | Date | undefined;
     updatedAt?: string | Date | undefined;
     data?: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -3485,6 +3490,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     data?: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -5869,7 +5875,9 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
+        id: import("zod").ZodNumber;
     }, "strip", import("zod").ZodTypeAny, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -6208,6 +6216,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             notes: string;
         };
     }, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -6600,6 +6609,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     createdAt?: string | Date | undefined;
     updatedAt?: string | Date | undefined;
     data?: {
+        id: number;
         basics: {
             name: string;
             headline: string;

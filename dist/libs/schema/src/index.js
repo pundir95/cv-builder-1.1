@@ -26,12 +26,14 @@ _export_star._(require("./shared"), exports);
 const resumeDataSchema = _zod.z.object({
     basics: _basics.basicsSchema,
     sections: _sections.sectionsSchema,
-    metadata: _metadata.metadataSchema
+    metadata: _metadata.metadataSchema,
+    id: _zod.z.number()
 });
 const defaultResumeData = {
     basics: _basics.defaultBasics,
     sections: _sections.defaultSections,
-    metadata: _metadata.defaultMetadata
+    metadata: _metadata.defaultMetadata,
+    id: 0
 };
 
 //# sourceMappingURL=index.js.map

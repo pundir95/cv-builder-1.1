@@ -93,7 +93,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
             className="cursor-pointer"
             onClick={() => {
               setShowRightSidebar(!showRightSidebar);
-              setShowLeftSidebar();
+              setShowLeftSidebar(true);
             }}
           />
         </div>

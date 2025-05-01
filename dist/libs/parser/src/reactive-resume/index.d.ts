@@ -8,6 +8,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
     readFile(file: File): Promise<Json>;
     validate(data: Json): ResumeData;
     convert(data: ResumeData): {
+        id: number;
         basics: {
             name: string;
             headline: string;

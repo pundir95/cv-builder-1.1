@@ -2018,7 +2018,9 @@ export declare const resumeDataSchema: z.ZodObject<{
         layout?: string[][][] | undefined;
         notes?: string | undefined;
     }>;
+    id: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
+    id: number;
     basics: {
         name: string;
         headline: string;
@@ -2357,6 +2359,7 @@ export declare const resumeDataSchema: z.ZodObject<{
         notes: string;
     };
 }, {
+    id: number;
     basics: {
         name: string;
         headline: string;

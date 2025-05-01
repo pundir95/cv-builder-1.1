@@ -2024,7 +2024,9 @@ export declare const resumeSchema: z.ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
+        id: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -2363,6 +2365,7 @@ export declare const resumeSchema: z.ZodObject<{
             notes: string;
         };
     }, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -2755,6 +2758,7 @@ export declare const resumeSchema: z.ZodObject<{
     createdAt: Date;
     updatedAt: Date;
     data: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -3122,6 +3126,7 @@ export declare const resumeSchema: z.ZodObject<{
     id?: string | undefined;
     userId?: string | undefined;
     data?: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -3486,6 +3491,7 @@ declare const ResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     createdAt: Date;
     updatedAt: Date;
     data: {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -5870,7 +5876,9 @@ declare const ResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
+        id: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -6209,6 +6217,7 @@ declare const ResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             notes: string;
         };
     }, {
+        id: number;
         basics: {
             name: string;
             headline: string;
@@ -6603,6 +6612,7 @@ declare const ResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     id?: string | undefined;
     userId?: string | undefined;
     data?: {
+        id: number;
         basics: {
             name: string;
             headline: string;

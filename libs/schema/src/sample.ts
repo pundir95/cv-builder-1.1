@@ -1,6 +1,7 @@
 import type { ResumeData } from "./index";
 
 export const sampleResume: ResumeData = {
+  id: 1,
   basics: {
     name: "John Doe",
     headline: "Creative and Innovative Web Developer",
