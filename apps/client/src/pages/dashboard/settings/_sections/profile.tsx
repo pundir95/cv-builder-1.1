@@ -19,7 +19,7 @@ import { LocaleComboboxPopover } from "@/client/components/locale-combobox";
 import { useUpdateUser, useUser } from "@/client/services/user";
 
 const formSchema = z.object({
-  theme: z.enum(["system", "light", "dark"]).default("system"),
+  theme: z.enum(["system", "light", "dark"]).default("light"),
   locale: z.string().default("en-US"),
 });
 
