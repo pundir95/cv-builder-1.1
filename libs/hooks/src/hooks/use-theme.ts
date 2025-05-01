@@ -14,11 +14,11 @@ type UseThemeOutput = {
 
 export const useTheme = (): UseThemeOutput => {
   const isDarkOS = useMediaQuery(COLOR_SCHEME_QUERY);
-  const [isDarkMode, setDarkMode] = useState<boolean>(isDarkOS);
-  const [theme, setTheme] = useLocalStorage<Theme>("theme", "system");
+  const [isDarkMode, setDarkMode] = useState<boolean>(false);
+  const [theme, setTheme] = useLocalStorage<Theme>("theme", "light");
 
   useEffect(() => {
-   
+    setTheme("light");
   }, [theme]);
 
   useEffect(() => {
