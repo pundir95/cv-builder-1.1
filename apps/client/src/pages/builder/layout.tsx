@@ -20,15 +20,17 @@ import { BuilderToolbar } from "./_components/toolbar";
 import { LeftSidebar } from "./sidebars/left";
 import { RightSidebar } from "./sidebars/right";
 import { useState } from "react";
+import ImproveResume from "@/client/components/ImproveResume";
 
 const onOpenAutoFocus = (event: Event) => {
   event.preventDefault();
 };
 
 const OutletSlot = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void,showLeftSidebar:boolean,setShowLeftSidebar:(show:boolean)=>void }) => (
+
   <>
     <BuilderHeader showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar}/>
-
+    {window.location.search.includes('improve=true') && <ImproveResume />}
     {/* <div className="absolute inset-0"> */}
       <Outlet />
     {/* </div> */}

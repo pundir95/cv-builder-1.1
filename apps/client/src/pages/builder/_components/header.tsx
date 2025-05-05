@@ -88,14 +88,27 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSi
           <SidebarSimple className="-scale-x-100" />
         </Button>
         <div className="absolute bottom-5 left-0 h-2 w-full bg-muted">
-          <div className="mb-1">
-          <span className="bg-green-500 text-white px-1 mb-4 rounded">{progress.progress}%</span>
-          <span className="ml-2 text-white text-bold">Resume Score</span>
+          <div className="mb-4 flex items-center justify-end gap-x-2">
+            <span className={`text-xl font-bold transition-colors ${
+              progress.progress <= 20 ? 'text-red-500 hover:text-red-400' :
+              progress.progress <= 50 ? 'text-yellow-500 hover:text-yellow-400' :
+              'text-white hover:text-green-400'
+            }`}>Resume Score</span>
+            <span className={`text-white  px-4 py-2 rounded-lg text-l font-bold transition-colors ${
+              progress.progress <= 20 ? 'bg-red-500 hover:bg-red-600' :
+              progress.progress <= 50 ? 'bg-yellow-500 hover:bg-yellow-600' : 
+              'bg-green-500 hover:bg-green-600'
+            }`}>{progress.progress}%</span>
           </div>
+        
          
           <div 
-            className="h-full bg-green-500 transition-[width] mb-2 hover:bg-green-600"
-            style={{ width: `${progress.progress}%` }}
+            className={`h-full transition-[width] mb-2 ${
+              progress.progress <= 20 ? 'bg-red-500 hover:bg-red-600' :
+              progress.progress <= 50 ? 'bg-yellow-500 hover:bg-yellow-600' :
+              'bg-green-500 hover:bg-green-600'
+            }`}
+            style={{ width: `${progress.progress}%`,marginTop:"-27px" }}
           >
           </div>
         </div>

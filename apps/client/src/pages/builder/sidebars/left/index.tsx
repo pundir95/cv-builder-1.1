@@ -28,6 +28,7 @@ import { BasicsSection } from "./sections/basics";
 import { SectionBase } from "./sections/shared/section-base";
 import { SectionIcon } from "./sections/shared/section-icon";
 import { SummarySection } from "./sections/summary";
+import { cn } from "@reactive-resume/utils";
 
 export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRightSidebar, showRightSidebar }: { showLeftSidebar: boolean, setShowLeftSidebar: (show: boolean) => void, setShowRightSidebar: (show: boolean) => void, showRightSidebar: boolean }) => {
   const containterRef = useRef<HTMLDivElement | null>(null);
@@ -200,10 +201,13 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
       </div>}
 
       <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
-        <div ref={containterRef} className={`grid gap-y-10 @container/left bg-[#a4abbbbd] mt-[68px] ${showLeftSidebar ? 'p-6' : ''}`}>
+        <div ref={containterRef} className={`grid gap-y-10 @container/left bg-[#a4abbbbd] mt-[64px] ${showLeftSidebar ? 'p-6' : ''}`}>
           <BasicsSection />
           <Separator />
-          <SummarySection />
+        
+            <SummarySection />
+          
+          
           <Separator />
           <SectionBase<Profile>
             id="profiles"

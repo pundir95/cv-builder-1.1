@@ -4,21 +4,21 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@reactive-resume/ui";
 import { Warning, PencilSimple, Download, Plus } from "@phosphor-icons/react";
 import { useNavigate } from "react-router";
+import { useResumes } from "@/client/services/resume";
+import { useState, useEffect } from "react";
+import { ResumeDto } from "@reactive-resume/dto";
 
 export const UserDashboardPage = () => {
   const navigate = useNavigate();
   const { i18n } = useLingui();
+  const { resumes, loading } = useResumes();
+  const [selectedResume, setSelectedResume] = useState<ResumeDto | null>(null);
 
-  // Mock data for demonstration
-  const mockResumes = [
-    {
-      id: 1,
-      name: "Kristen_Connelly_Resume.pdf",
-      strength: 17,
-      isPrimary: true,
-      preview: "/templates/jpg/cv_template_5.jpg",
-    },
-  ];
+  useEffect(() => {
+    if (resumes && resumes.length > 0) {
+      setSelectedResume(resumes[0]);
+    }
+  }, [resumes]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -36,9 +36,15 @@ export const UserDashboardPage = () => {
           {/* Resume Dropdown */}
           <div className="w-full mb-2">
             <label className="block text-xs font-bold text-gray-600 mb-1">RESUME</label>
-            <select className="w-full border rounded px-3 py-2 text-sm">
-              {mockResumes.map((resume) => (
-                <option key={resume.id}>{resume.name}</option>
+            <select className="w-full border rounded px-3 py-2 text-sm" onChange={(e) => {
+              const value = Number(e.target.value);
+              const selectedResume = resumes?.find((resume:any) => resume.id === value);
+              if (selectedResume) {
+                setSelectedResume(selectedResume);
+              }
+            }}>
+              {resumes?.map((resume) => (
+                <option key={resume.id} value={resume.id}>{resume.title}</option>
               ))}
             </select>
             <div className="flex items-center mt-2 text-xs text-gray-500">
@@ -49,7 +55,7 @@ export const UserDashboardPage = () => {
           {/* Resume Preview */}
           <div className="my-4 w-full flex justify-center">
             <img
-              src={mockResumes[0].preview}
+              src={`/templates/jpg/${selectedResume?.cv_template?.internal_name}.jpg`}
               alt="Resume Preview"
               className="rounded shadow border w-60 h-72 object-contain bg-gray-100"
             />
@@ -66,7 +72,7 @@ export const UserDashboardPage = () => {
           {/* Resume Strength */}
           <div className="w-full flex items-center justify-between mt-2 mb-2">
             <span className="text-sm text-gray-700">Resume Strength:</span>
-            <span className="bg-green-100 text-green-700 rounded-full px-3 py-1 text-sm font-bold">{mockResumes[0].strength}</span>
+            <span className="bg-green-100 text-green-700 rounded-full px-3 py-1 text-sm font-bold">{selectedResume?.cv_data?.metadata?.template?.progress || 0}</span>
             <a href="#" className="text-blue-600 text-sm ml-2 hover:underline">Improve</a>
           </div>
           {/* Create New Resume */}
@@ -82,19 +88,57 @@ export const UserDashboardPage = () => {
           <div className="bg-blue-50 rounded-xl p-6 flex items-center mb-8">
             <div className="bg-white rounded-lg shadow p-6 mr-8 flex flex-col items-center min-w-[220px]">
               <span className="text-blue-700 font-bold text-lg mb-2">Resume Strength</span>
-              <span className="bg-blue-100 text-blue-700 rounded-full px-4 py-2 text-xl font-bold mb-2">17</span>
+              <span className="bg-blue-100 text-blue-700 rounded-full px-4 py-2 text-xl font-bold mb-2">{selectedResume?.cv_data?.metadata?.template?.progress || 0}</span>
               <ul className="text-left text-sm text-gray-700 space-y-1">
-                <li className="flex items-center gap-2"><span className="w-2 h-2 bg-green-500 rounded-full inline-block"></span>Contact Information</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 bg-red-500 rounded-full inline-block"></span>Professional Summary</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 bg-red-500 rounded-full inline-block"></span>Work History</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 bg-red-500 rounded-full inline-block"></span>Education</li>
-                <li className="flex items-center gap-2"><span className="w-2 h-2 bg-red-500 rounded-full inline-block"></span>Skills</li>
+                {selectedResume?.cv_data?.sections?.education?.items?.length === 0 && (
+                  <li className="flex items-center gap-2">
+                    <Warning size={17} className="bg-red-500 rounded text-white" />
+                    Education
+                  </li>
+                )}
+                {selectedResume?.cv_data?.sections?.skills?.items?.length === 0 && (
+                  <li className="flex items-center gap-2">
+                    <Warning size={17} className="bg-red-500 rounded text-white" />
+                    Skills
+                  </li>
+                )}
+                {selectedResume?.cv_data?.sections?.experience?.items?.length === 0 && (
+                  <li className="flex items-center gap-2">
+                    <Warning size={17} className="bg-red-500 rounded text-white" />
+                    Experience
+                  </li>
+                )}
+                {selectedResume?.cv_data?.sections?.languages?.items?.length === 0 && (
+                  <li className="flex items-center gap-2">
+                    <Warning size={17} className="bg-red-500 rounded text-white" />
+                    Languages
+                  </li>
+                )}
+                {!selectedResume?.cv_data?.sections?.summary?.content && (
+                  <li className="flex items-center gap-2">
+                    <Warning size={17} className="bg-red-500 rounded text-white" />
+                    Summary
+                  </li>
+                )}
+                {selectedResume?.cv_data?.sections?.projects?.items?.length === 0 && (
+                  <li className="flex items-center gap-2">
+                    <Warning size={17} className="bg-red-500 rounded text-white" />
+                    Projects
+                  </li>
+                )}
               </ul>
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-semibold mb-2">Fix Resume</h2>
-              <p className="mb-4">We found <span className="font-bold">4</span> errors in your resume.<br />Use our Resume Check tool to fix them.</p>
-              <Button className="bg-blue-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800">Improve Resume</Button>
+              <p className="mb-4">
+                We found missing sections in your resume.<br />
+                Use our Resume Check tool to complete them.
+              </p>
+              <Button className="bg-blue-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800"
+              onClick={() => navigate(`/builder/${selectedResume?.id}`)}
+              >
+                Improve Resume
+              </Button>
             </div>
           </div>
 

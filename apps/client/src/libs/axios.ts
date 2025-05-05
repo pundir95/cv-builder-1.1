@@ -37,7 +37,7 @@ interface RefreshTokenResponse {
   refreshToken: string;
 }
 
-export const axios = _axios.create({ baseURL: " http://13.49.228.27/api/v1/", withCredentials: true });
+export const axios = _axios.create({ baseURL: "https://cvbuilder-api.rexett.com/api/v1/", withCredentials: true });
 
 // Add token to every request
 axios.interceptors.request.use((config) => {
@@ -74,7 +74,7 @@ axios.interceptors.response.use(
 );
 
 // Create another instance to handle failed refresh tokens
-const axiosForRefresh = _axios.create({ baseURL: " http://13.49.228.27/api/v1/", withCredentials: true });
+const axiosForRefresh = _axios.create({ baseURL: "https://cvbuilder-api.rexett.com/api/v1/", withCredentials: true });
 
 // Interceptor to handle expired access token errors
 const handleAuthError = async (failedRequest: any) => {

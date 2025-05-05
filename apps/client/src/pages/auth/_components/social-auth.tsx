@@ -21,7 +21,7 @@ export const SocialAuth = () => {
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       console.log(tokenResponse,"tokenResponse");
-        axios.post("http://13.49.228.27/api/v1/accounts/google/",{
+        axios.post("https://cvbuilder-api.rexett.com/api/v1/accounts/google/",{
         access_token:tokenResponse.access_token
       }).then((res) => {
         console.log(res,"ress");

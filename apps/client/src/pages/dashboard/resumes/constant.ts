@@ -95,7 +95,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "summary": {
             "id": "summary",
@@ -103,7 +104,8 @@ export const resumeData = {
             "columns": 1,
             "content": "",
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "profiles": {
             "id": "profiles",
@@ -111,7 +113,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "projects": {
             "id": "projects",
@@ -119,7 +122,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "education": {
             "id": "education",
@@ -127,7 +131,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "interests": {
             "id": "interests",
@@ -135,7 +140,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "languages": {
             "id": "languages",
@@ -143,7 +149,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "volunteer": {
             "id": "volunteer",
@@ -151,7 +158,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "experience": {
             "id": "experience",
@@ -159,7 +167,8 @@ export const resumeData = {
             "items": [],
             "columns": 1,
             "visible": true,
-            "separateLinks": true
+            "separateLinks": true,
+            "progress":10
         },
         "references": {
             "id": "references",

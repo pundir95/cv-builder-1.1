@@ -60,7 +60,7 @@ export const LoginPage = () => {
 
   const doItLater=()=>{
     
-    axios.post("http://13.49.228.27/api/v1/accounts/guest-user/").then((res) => {
+    axios.post("https://cvbuilder-api.rexett.com/api/v1/accounts/guest-user/").then((res) => {
       console.log(res.data.data.reference_id,"ress");
       localStorage.setItem("reference_id",res.data.data.reference_id);
       navigate("/onboard/experience-level");

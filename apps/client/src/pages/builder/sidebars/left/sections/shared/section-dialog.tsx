@@ -2,7 +2,7 @@ import { t } from "@lingui/macro";
 import { createId } from "@paralleldrive/cuid2";
 import { CopySimple, PencilSimple, Plus } from "@phosphor-icons/react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import type { SectionItem, SectionWithItem } from "@reactive-resume/schema";
+import type { SectionItem, SectionKey, SectionWithItem } from "@reactive-resume/schema";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,7 +30,7 @@ import type { UseFormReturn } from "react-hook-form";
 import type { DialogName } from "@/client/stores/dialog";
 import { useDialog } from "@/client/stores/dialog";
 import { useResumeStore } from "@/client/stores/resume";
-import { useProgressStore } from "@/client/stores/progress";
+import { SECTION_PROGRESS, useProgressStore } from "@/client/stores/progress";
 
 type Props<T extends SectionItem> = {
   id: DialogName;
@@ -48,7 +48,7 @@ export const SectionDialog = <T extends SectionItem>({
   children,
 }: Props<T>) => {
   const { isOpen, mode, close, payload } = useDialog<T>(id);
-  const { incrementProgress } = useProgressStore();
+  const { incrementProgress, handleItemDeletion } = useProgressStore();
 
   const setValue = useResumeStore((state) => state.setValue);
   const section = useResumeStore((state) => {
@@ -80,7 +80,7 @@ export const SectionDialog = <T extends SectionItem>({
       );
       
       // Increment progress when a new item is created
-      incrementProgress(id);
+      incrementProgress(id as keyof typeof SECTION_PROGRESS);
     }
 
     if (isUpdate) {
@@ -111,6 +111,9 @@ export const SectionDialog = <T extends SectionItem>({
           draft.splice(index, 1);
         }),
       );
+
+      // Handle progress update after item deletion
+      handleItemDeletion(id as SectionKey);
     }
 
     close();
