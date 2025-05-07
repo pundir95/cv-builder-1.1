@@ -1,4 +1,3 @@
-import html2pdf from 'html2pdf.js';
 
 const getTemplateHtml = (templateRef:any) => {
     console.log(templateRef,"templateRefnew")
@@ -68,7 +67,7 @@ const getTemplateHtml = (templateRef:any) => {
         };
 
         // Generate and save PDF
-        await html2pdf().set(opt).from(container).save();
+        // await html2pdf().set(opt).from(container).save();
       }
     } catch (error) {
       console.error('Error generating PDF:', error);
