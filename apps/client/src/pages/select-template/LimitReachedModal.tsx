@@ -46,7 +46,7 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
             transition={{ delay: 0.2 }}
             className="text-3xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-sm"
           >
-            {t`You are over the resume limit`}
+            You are over the resume limit
           </motion.h2>
 
           <motion.p 
@@ -55,16 +55,16 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
             transition={{ delay: 0.3 }}
             className="text-gray-600 mb-8 text-lg"
           >
-            {t`Only one resume is available on the free plan. Upgrade your plan to create an unlimited number of resumes.`}
+            {`Only one resume is available on the free plan. Upgrade your plan to create an unlimited number of resumes.`}
           </motion.p>
 
           <div className="w-full bg-white rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300">
-            <h3 className="font-semibold text-left mb-4 text-lg text-gray-800">{t`ALSO UNLOCK:`}</h3>
+            <h3 className="font-semibold text-left mb-4 text-lg text-gray-800">ALSO UNLOCK:</h3>
             <ul className="space-y-4 text-left mb-8">
               {[
-                t`Access to all templates`,
-                t`Unlimited resume downloads`,
-                t`Access to advanced features`,
+                `Access to all templates`,
+                `Unlimited resume downloads`,
+                `Access to advanced features`,
 
               ].map((feature, index) => (
                 <motion.li 
@@ -91,7 +91,7 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
                 onClick={skipModal}
                 className="px-6 py-2.5 text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
-                {t`Skip`}
+                Skip
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -101,7 +101,7 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
                 }}
                 className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
               >
-                {t`Upgrade Plan`}
+                Upgrade Plan
               </motion.button>
             </div>
           </div>
