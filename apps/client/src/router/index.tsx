@@ -32,6 +32,7 @@ import ExperienceLevel from "../pages/experience-level/Page";
 import ChooseTemplate from "../pages/select-template/page";
 import { ExperienceGuard } from "./guards/experience";
 import UploadResume from "../pages/upload-resume/UploadResume";
+import SubscriptionStatus from "../pages/subscription-status/SubscriptionStatus";
 
 
 export const routes = createRoutesFromElements(
@@ -74,11 +75,15 @@ export const routes = createRoutesFromElements(
         <Route index element={<Navigate replace to="/auth/login" />} />
       </Route>
 
+
+
       <Route path="onboard">
+      <Route element={<AuthGuard />}>
       <Route element={<ExperienceGuard />}>
       <Route path="experience-level" element={<ExperienceLevel />} />
       <Route path="select-template" element={<ChooseTemplate />} />
       <Route path="upload-resume" element={<UploadResume />} />
+      </Route>
       </Route>
 
       </Route>
@@ -92,6 +97,7 @@ export const routes = createRoutesFromElements(
             <Route path="dashboard" element={<UserDashboardPage />} />
             <Route path="dashboard/account" element={<AccountSettings />} />
             <Route path="dashboard/plan-pricing" element={<PlanPricing />} />
+            <Route path="dashboard/subscription-status" element={<SubscriptionStatus />} />
 
             {/* <Route index element={<Navigate replace to="/dashboard/resumes" />} /> */}
           </Route>

@@ -51,7 +51,7 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSi
           <Button
             size="icon"
             variant="ghost"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/dashboard/resumes')}
             className="text-white mb-5"
           >
             <ArrowLeft />

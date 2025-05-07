@@ -17,9 +17,9 @@ export const ExperienceGuard = () => {
   const [searchParams] = useSearchParams();
   const redirect = searchParams.get("redirect") ?? "/dashboard";
 
-  if (isLoggedIn) {
-    return <Navigate to={redirect} />;
-  }
+//   if (isLoggedIn) {
+//     return <Navigate to={redirect} />;
+//   }
 
   return (
     <>

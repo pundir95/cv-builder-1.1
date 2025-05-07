@@ -7,13 +7,24 @@ import { useDialog } from "@/client/stores/dialog";
 
 import { BaseCard } from "./base-card";
 
-export const CreateResumeCard = () => {
+export const CreateResumeCard = ({setIsLimitReachedModalOpen}:{setIsLimitReachedModalOpen:any}) => {
   const { open } = useDialog("resume");
+  const user = localStorage.getItem("user") || '{"isPlanReached":[],"count":0}';
+  const userData = JSON.parse(user);
+  let isSubscriptionHave = userData?.subscription_details;
+  let resumeCount=userData?.resume_count;
 
   return (
     <BaseCard
       onClick={() => {
-        open("create");
+        if(isSubscriptionHave.length==0 && resumeCount==1){
+          setIsLimitReachedModalOpen(true)
+          
+        }else{
+          open("create");
+          
+        }
+       
       }}
     >
       <Plus size={64} weight="thin" />

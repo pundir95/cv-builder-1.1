@@ -34,7 +34,10 @@ export const UserOptions = ({ children }: Props) => {
           <KeyboardShortcut>⇧S</KeyboardShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => logout()}>
+        <DropdownMenuItem onClick={() =>{
+          localStorage.clear()
+          logout()
+        }}>
           {t`Logout`}
           {/* eslint-disable-next-line lingui/no-unlocalized-strings */}
           <KeyboardShortcut>⇧Q</KeyboardShortcut>

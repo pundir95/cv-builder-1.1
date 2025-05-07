@@ -8,15 +8,27 @@ import { BaseCard } from "./_components/base-card";
 import { CreateResumeCard } from "./_components/create-card";
 import { ImportResumeCard } from "./_components/import-card";
 import { ResumeCard } from "./_components/resume-card";
+import { LimitReachedModal } from "@/client/pages/select-template/LimitReachedModal";
+import { useState } from "react";
 
 export const GridView = ({resumes,loading}:{resumes:any,loading:any}) => {
+const [isLimitReachedModalOpen,setIsLimitReachedModalOpen]=useState(false)
+const user = localStorage.getItem("user") || '{"isPlanReached":[],"count":0}';
+  const userData = JSON.parse(user);
+  let isSubscriptionHave = userData?.subscription_details;
+  let resumeCount=userData?.resume_count;
+  let resumeDetailsId=userData?.resume_details[0]?.id;
+
+const onCloseLimitReached=()=>{
+  setIsLimitReachedModalOpen(false)
+}
   
   console.log(resumes,"outs")
 
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }}>
-        <CreateResumeCard />
+        <CreateResumeCard setIsLimitReachedModalOpen={setIsLimitReachedModalOpen} />
       </motion.div>
 
       <motion.div
@@ -53,6 +65,7 @@ export const GridView = ({resumes,loading}:{resumes:any,loading:any}) => {
             ))}
         </AnimatePresence>
       )}
+      <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} />
     </div>
   );
 };

@@ -33,8 +33,10 @@ const updateLoadingState = (increment: boolean) => {
 };
 
 interface RefreshTokenResponse {
-  token: string;
-  refreshToken: string;
+  data: {
+    access: string;
+    refresh: string;
+  };
 }
 
 export const axios = _axios.create({ baseURL: "https://cvbuilder-api.rexett.com/api/v1/", withCredentials: true });
@@ -89,12 +91,13 @@ const handleAuthError = async (failedRequest: any) => {
     
     const response = await refreshToken(axiosForRefresh);
     const tokenResponse = response as unknown as RefreshTokenResponse;
-    if (tokenResponse?.token) {
-      localStorage.setItem('token', tokenResponse.token);
-      if (tokenResponse.refreshToken) {
-        localStorage.setItem('refresh_token', tokenResponse.refreshToken);
-      }
-      failedRequest.response.config.headers.Authorization = `Bearer ${tokenResponse.token}`;
+    console.log(tokenResponse,"opppp");
+    if (tokenResponse?.data.access) {
+      localStorage.setItem('token', tokenResponse.data.access);
+     
+        localStorage.setItem('refresh_token', tokenResponse.data.refresh);
+      
+      failedRequest.response.config.headers.Authorization = `Bearer ${tokenResponse.data.access}`;
       return Promise.resolve();
     }
   } catch (error: unknown) {

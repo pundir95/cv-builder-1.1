@@ -45,6 +45,7 @@ import { useImportResume } from "@/client/services/resume/import";
 import { useDialog } from "@/client/stores/dialog";
 import { resumeData } from "../constant";
 import { useNavigate } from "react-router";
+import { axios } from "@/client/libs/axios";
 const formSchema = createResumeSchema.extend({ id: idSchema.optional(), slug: z.string() });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -88,6 +89,10 @@ export const ResumeDialog = () => {
 
       const templateId = Number(localStorage.getItem("templateId") || 1)
       const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
+      axios.get(`/accounts/api/users/`).then((res)=>{
+        localStorage.setItem("user",JSON.stringify(res.data[0]))
+
+      })
       void navigate(`/builder/${newResume.data.id}`)
     }
 

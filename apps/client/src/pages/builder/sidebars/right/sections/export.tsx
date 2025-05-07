@@ -3,11 +3,15 @@ import { CircleNotch, FileJs, FilePdf } from "@phosphor-icons/react";
 import { buttonVariants, Card, CardContent, CardDescription, CardTitle } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { saveAs } from "file-saver";
+import { generatePDF } from "@/artboard/constants/download";
+import { eventBus } from "@/artboard/utils/eventBus";
+import { sharedState } from "@/artboard/utils/sharedState";
 
 import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
 import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
+import { useState, useEffect } from "react";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -27,10 +31,18 @@ export const ExportSection = () => {
   const { printResume, loading } = usePrintResume();
 
   const onPdfExport = async () => {
-    const { resume } = useResumeStore.getState();
-    const { url } = await printResume({ id: resume.id });
-
-    openInNewTab(url);
+    console.log("Window parent:", window.parent);
+    console.log("Current window:", window);
+    console.log("Shared state:", window.__RESUME_BUILDER__);
+    
+    const templateRef = sharedState.getTemplateRef();
+    console.log("Template ref from shared state:", templateRef);
+    
+    if (templateRef) {
+      generatePDF(templateRef);
+    } else {
+      console.error("Template reference is null. Please ensure the builder page is loaded.");
+    }
   };
 
   return (

@@ -2,53 +2,73 @@ import { t } from "@lingui/macro";
 import { Helmet } from "react-helmet-async";
 import { ScrollArea, Button, Card, Separator, Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@reactive-resume/ui";
 import { Check, Shield, CreditCard, Bank, Money } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { axios } from "@/client/libs/axios";
 
 export const PlanPricing = () => {
-  const plans = [
-    {
-      name: "Free",
-      price: "$0",
-      period: "/month", 
-      features: [
-        "1 Resume Template",
-        "Basic Export Options",
-        "Limited Storage",
-        "Community Support"
-      ],
-      buttonText: "Current Plan",
-      isPopular: false
-    },
-    {
-      name: "Premium",
-      price: "$7.99",
-      period: "/month",
-      features: [
-        "All Resume Templates",
-        "Advanced Export Options",
-        "Unlimited Storage",
-        "Priority Support",
-        "Custom Domains",
-        "Remove Watermark"
-      ],
-      buttonText: "Upgrade Now",
-      isPopular: true
-    },
-    {
-      name: "Team",
-      price: "$24.99",
-      period: "/month",
-      features: [
-        "Everything in Premium",
-        "Team Management",
-        "Shared Templates",
-        "Analytics Dashboard",
-        "API Access",
-        "24/7 Support"
-      ],
-      buttonText: "Contact Sales",
-      isPopular: false
+  const [plans,setPlans]=useState([])
+
+  useEffect(()=>{
+    axios.get(`/subscription/subscription-plans`).then((res)=>{
+      console.log(res,"res")
+      setPlans(res.data.data)
+    })
+  },[])
+
+  // const plans = [ 
+  //   {
+  //     name: "Free",
+  //     price: "$0",
+  //     period: "/month", 
+  //     features: [
+  //       "1 Resume Template",
+  //       "Basic Export Options",
+  //       "Limited Storage",
+  //       "Community Support"
+  //     ],
+  //     buttonText: "Current Plan",
+  //     isPopular: false
+  //   },
+  //   {
+  //     name: "Premium",
+  //     price: "$7.99",
+  //     period: "/month",
+  //     features: [
+  //       "All Resume Templates",
+  //       "Advanced Export Options",
+  //       "Unlimited Storage",
+  //       "Priority Support",
+  //       "Custom Domains",
+  //       "Remove Watermark"
+  //     ],
+  //     buttonText: "Upgrade Now",
+  //     isPopular: true
+  //   },
+  //   {
+  //     name: "Team",
+  //     price: "$24.99",
+  //     period: "/month",
+  //     features: [
+  //       "Everything in Premium",
+  //       "Team Management",
+  //       "Shared Templates",
+  //       "Analytics Dashboard",
+  //       "API Access",
+  //       "24/7 Support"
+  //     ],
+  //     buttonText: "Contact Sales",
+  //     isPopular: false
+  //   }
+  // ];
+  const getThePlan=(id:string)=>{
+    axios.post(`/subscription/subscription-details/`,{
+      plan_id:id
+    }).then((res)=>{
+    if (res.data.data.approve_link) {
+      window.location.href = res.data.data.approve_link;
     }
-  ];
+    })
+  }
 
   return (
     <ScrollArea orientation="vertical" className="h-screen">
@@ -65,8 +85,10 @@ export const PlanPricing = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
-          {plans.map((plan) => (
-            <Card key={plan.name} className={`p-6 relative ${plan.isPopular ? 'border-2 border-primary' : ''}`}>
+          {plans.map((plan:any) => (
+            <Card key={plan.name} className={`p-6 relative ${plan.isPopular ? 'border-2 border-primary' : ''}`} onClick={()=>{
+              getThePlan(plan.id)
+            }}>
               {plan.isPopular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm">
                   Most Popular
@@ -81,14 +103,14 @@ export const PlanPricing = () => {
                 </div>
               </div>
 
-              <div className="space-y-4 mb-8">
+              {/* <div className="space-y-4 mb-8">
                 {plan.features.map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
                     <Check size={20} className="text-green-500" />
                     <span className="text-primary/80">{feature}</span>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               <Button 
                 className={`w-full ${plan.isPopular ? 'bg-blue-500 text-white' : 'bg-primary/10'}`}
@@ -100,7 +122,7 @@ export const PlanPricing = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        {/* <div className="mt-12 text-center">
           <div className="flex flex-col items-center justify-center gap-4">
 
             <div className="flex items-center gap-2 mb-4">
@@ -185,7 +207,7 @@ export const PlanPricing = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </ScrollArea>
   );

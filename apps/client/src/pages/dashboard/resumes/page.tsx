@@ -8,12 +8,15 @@ import { Helmet } from "react-helmet-async";
 import { GridView } from "./_layouts/grid";
 import { ListView } from "./_layouts/list";
 import { useResumes } from "@/client/services/resume";
+import { LimitReachedModal } from "../../select-template/LimitReachedModal";
 
 type Layout = "grid" | "list";
 
 export const ResumesPage = () => {
   const [layout, setLayout] = useState<Layout>("grid");
   const { resumes, loading } = useResumes();
+
+
 
 
   return (
@@ -64,6 +67,7 @@ export const ResumesPage = () => {
           </TabsContent> */}
         </ScrollArea>
       </Tabs>
+      
     </>
   );
 };

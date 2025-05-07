@@ -7,7 +7,7 @@ export const AuthGuard = () => {
   const redirectTo = location.pathname + location.search;
 
   const { user, loading } = useUser();
-
+console.log(user,"ios")
   if (loading) return null;
 
   if (user) {

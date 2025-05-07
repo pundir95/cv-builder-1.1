@@ -135,7 +135,7 @@ export const UserDashboardPage = () => {
                 Use our Resume Check tool to complete them.
               </p>
               <Button className="bg-blue-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800"
-              onClick={() => navigate(`/builder/${selectedResume?.id}`)}
+              onClick={() => navigate(`/builder/${selectedResume?.id}?improve=true`)}
               >
                 Improve Resume
               </Button>
