@@ -188,6 +188,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     id?: string | undefined;
                     keywords?: string[] | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "collapse";
                 visible: boolean;
@@ -208,6 +209,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             }, {
                 id: "collapse";
                 name: string;
@@ -228,6 +230,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             summary: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -237,12 +240,14 @@ export declare const importResumeSchema: z.ZodObject<{
             }, {
                 id: z.ZodLiteral<"summary">;
                 content: z.ZodDefault<z.ZodString>;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "summary";
                 visible: boolean;
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             }, {
                 id: "summary";
@@ -250,6 +255,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             }>;
             awards: z.ZodObject<z.objectUtil.extendShape<{
@@ -300,6 +306,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     awarder: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "awards";
                 visible: boolean;
@@ -318,6 +325,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "awards";
                 name: string;
@@ -336,6 +344,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             certifications: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -385,6 +394,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     issuer: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "certifications";
                 visible: boolean;
@@ -403,6 +413,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "certifications";
                 name: string;
@@ -421,6 +432,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             education: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -476,6 +488,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     score: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "education";
                 visible: boolean;
@@ -496,6 +509,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "education";
                 name: string;
@@ -516,6 +530,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             experience: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -568,6 +583,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     position: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "experience";
                 visible: boolean;
@@ -587,6 +603,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "experience";
                 name: string;
@@ -606,6 +623,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             volunteer: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -658,6 +676,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     organization: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "volunteer";
                 visible: boolean;
@@ -677,6 +696,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "volunteer";
                 name: string;
@@ -696,6 +716,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             interests: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -721,6 +742,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     id?: string | undefined;
                     keywords?: string[] | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "interests";
                 visible: boolean;
@@ -733,6 +755,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             }, {
                 id: "interests";
                 name: string;
@@ -745,6 +768,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             languages: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -773,6 +797,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     id?: string | undefined;
                     level?: number | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "languages";
                 visible: boolean;
@@ -786,6 +811,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             }, {
                 id: "languages";
                 name: string;
@@ -799,6 +825,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             profiles: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -845,6 +872,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     username: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "profiles";
                 visible: boolean;
@@ -862,6 +890,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "profiles";
                 name: string;
@@ -879,6 +908,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             projects: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -931,6 +961,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     id?: string | undefined;
                     keywords?: string[] | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "projects";
                 visible: boolean;
@@ -950,6 +981,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             }, {
                 id: "projects";
                 name: string;
@@ -969,6 +1001,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             publications: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -1018,6 +1051,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     publisher: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "publications";
                 visible: boolean;
@@ -1036,6 +1070,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "publications";
                 name: string;
@@ -1054,6 +1089,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             references: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -1100,6 +1136,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "references";
                 visible: boolean;
@@ -1117,6 +1154,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "references";
                 name: string;
@@ -1134,6 +1172,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             skills: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -1165,6 +1204,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     keywords?: string[] | undefined;
                     level?: number | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "skills";
                 visible: boolean;
@@ -1179,6 +1219,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             }, {
                 id: "skills";
                 name: string;
@@ -1193,6 +1234,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             custom: z.ZodRecord<z.ZodString, z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -1328,6 +1370,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -1335,6 +1378,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -1356,6 +1400,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -1377,6 +1422,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -1397,6 +1443,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -1417,6 +1464,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -1435,6 +1483,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -1450,6 +1499,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -1463,6 +1513,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -1482,6 +1533,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -1501,6 +1553,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -1520,6 +1573,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -1534,6 +1588,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -1555,6 +1610,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         }, {
             custom: Record<string, {
@@ -1595,6 +1651,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             summary: {
                 id: "summary";
@@ -1602,6 +1659,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             };
             experience: {
@@ -1623,6 +1681,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             education: {
                 id: "education";
@@ -1644,6 +1703,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             projects: {
                 id: "projects";
@@ -1664,6 +1724,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             volunteer: {
                 id: "volunteer";
@@ -1684,6 +1745,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             references: {
                 id: "references";
@@ -1702,6 +1764,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             skills: {
                 id: "skills";
@@ -1717,6 +1780,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             interests: {
                 id: "interests";
@@ -1730,6 +1794,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             certifications: {
                 id: "certifications";
@@ -1749,6 +1814,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             awards: {
                 id: "awards";
@@ -1768,6 +1834,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             publications: {
                 id: "publications";
@@ -1787,6 +1854,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             languages: {
                 id: "languages";
@@ -1801,6 +1869,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             collapse: {
                 id: "collapse";
@@ -1822,6 +1891,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
         }>;
         metadata: z.ZodObject<{
@@ -2096,6 +2166,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -2103,6 +2174,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -2124,6 +2196,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -2145,6 +2218,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -2165,6 +2239,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -2185,6 +2260,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -2203,6 +2279,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -2218,6 +2295,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -2231,6 +2309,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -2250,6 +2329,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -2269,6 +2349,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -2288,6 +2369,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -2302,6 +2384,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -2323,6 +2406,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         };
         metadata: {
@@ -2436,6 +2520,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             summary: {
                 id: "summary";
@@ -2443,6 +2528,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             };
             experience: {
@@ -2464,6 +2550,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             education: {
                 id: "education";
@@ -2485,6 +2572,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             projects: {
                 id: "projects";
@@ -2505,6 +2593,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             volunteer: {
                 id: "volunteer";
@@ -2525,6 +2614,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             references: {
                 id: "references";
@@ -2543,6 +2633,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             skills: {
                 id: "skills";
@@ -2558,6 +2649,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             interests: {
                 id: "interests";
@@ -2571,6 +2663,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             certifications: {
                 id: "certifications";
@@ -2590,6 +2683,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             awards: {
                 id: "awards";
@@ -2609,6 +2703,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             publications: {
                 id: "publications";
@@ -2628,6 +2723,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             languages: {
                 id: "languages";
@@ -2642,6 +2738,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             collapse: {
                 id: "collapse";
@@ -2663,6 +2760,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
         };
         metadata: {
@@ -2778,6 +2876,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -2785,6 +2884,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -2806,6 +2906,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -2827,6 +2928,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -2847,6 +2949,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -2867,6 +2970,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -2885,6 +2989,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -2900,6 +3005,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -2913,6 +3019,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -2932,6 +3039,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -2951,6 +3059,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -2970,6 +3079,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -2984,6 +3094,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -3005,6 +3116,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         };
         metadata: {
@@ -3123,6 +3235,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             summary: {
                 id: "summary";
@@ -3130,6 +3243,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             };
             experience: {
@@ -3151,6 +3265,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             education: {
                 id: "education";
@@ -3172,6 +3287,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             projects: {
                 id: "projects";
@@ -3192,6 +3308,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             volunteer: {
                 id: "volunteer";
@@ -3212,6 +3329,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             references: {
                 id: "references";
@@ -3230,6 +3348,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             skills: {
                 id: "skills";
@@ -3245,6 +3364,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             interests: {
                 id: "interests";
@@ -3258,6 +3378,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             certifications: {
                 id: "certifications";
@@ -3277,6 +3398,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             awards: {
                 id: "awards";
@@ -3296,6 +3418,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             publications: {
                 id: "publications";
@@ -3315,6 +3438,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             languages: {
                 id: "languages";
@@ -3329,6 +3453,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             collapse: {
                 id: "collapse";
@@ -3350,6 +3475,7 @@ export declare const importResumeSchema: z.ZodObject<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
         };
         metadata: {
@@ -3469,6 +3595,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -3476,6 +3603,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -3497,6 +3625,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -3518,6 +3647,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -3538,6 +3668,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -3558,6 +3689,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -3576,6 +3708,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -3591,6 +3724,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -3604,6 +3738,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -3623,6 +3758,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -3642,6 +3778,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -3661,6 +3798,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -3675,6 +3813,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -3696,6 +3835,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         };
         metadata: {
@@ -3932,6 +4072,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     id?: string | undefined;
                     keywords?: string[] | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "collapse";
                 visible: boolean;
@@ -3952,6 +4093,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             }, {
                 id: "collapse";
                 name: string;
@@ -3972,6 +4114,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             summary: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -3981,12 +4124,14 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             }, {
                 id: z.ZodLiteral<"summary">;
                 content: z.ZodDefault<z.ZodString>;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "summary";
                 visible: boolean;
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             }, {
                 id: "summary";
@@ -3994,6 +4139,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             }>;
             awards: z.ZodObject<z.objectUtil.extendShape<{
@@ -4044,6 +4190,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     awarder: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "awards";
                 visible: boolean;
@@ -4062,6 +4209,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "awards";
                 name: string;
@@ -4080,6 +4228,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             certifications: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4129,6 +4278,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     issuer: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "certifications";
                 visible: boolean;
@@ -4147,6 +4297,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "certifications";
                 name: string;
@@ -4165,6 +4316,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             education: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4220,6 +4372,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     score: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "education";
                 visible: boolean;
@@ -4240,6 +4393,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "education";
                 name: string;
@@ -4260,6 +4414,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             experience: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4312,6 +4467,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     position: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "experience";
                 visible: boolean;
@@ -4331,6 +4487,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "experience";
                 name: string;
@@ -4350,6 +4507,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             volunteer: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4402,6 +4560,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     organization: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "volunteer";
                 visible: boolean;
@@ -4421,6 +4580,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "volunteer";
                 name: string;
@@ -4440,6 +4600,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             interests: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4465,6 +4626,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     id?: string | undefined;
                     keywords?: string[] | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "interests";
                 visible: boolean;
@@ -4477,6 +4639,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             }, {
                 id: "interests";
                 name: string;
@@ -4489,6 +4652,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             languages: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4517,6 +4681,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     id?: string | undefined;
                     level?: number | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "languages";
                 visible: boolean;
@@ -4530,6 +4695,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             }, {
                 id: "languages";
                 name: string;
@@ -4543,6 +4709,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             profiles: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4589,6 +4756,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     username: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "profiles";
                 visible: boolean;
@@ -4606,6 +4774,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "profiles";
                 name: string;
@@ -4623,6 +4792,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             projects: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4675,6 +4845,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     id?: string | undefined;
                     keywords?: string[] | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "projects";
                 visible: boolean;
@@ -4694,6 +4865,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             }, {
                 id: "projects";
                 name: string;
@@ -4713,6 +4885,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             publications: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4762,6 +4935,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     publisher: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "publications";
                 visible: boolean;
@@ -4780,6 +4954,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "publications";
                 name: string;
@@ -4798,6 +4973,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             references: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4844,6 +5020,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     id?: string | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "references";
                 visible: boolean;
@@ -4861,6 +5038,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             }, {
                 id: "references";
                 name: string;
@@ -4878,6 +5056,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             skills: z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -4909,6 +5088,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     keywords?: string[] | undefined;
                     level?: number | undefined;
                 }>, "many">;
+                extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
                 id: "skills";
                 visible: boolean;
@@ -4923,6 +5103,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             }, {
                 id: "skills";
                 name: string;
@@ -4937,6 +5118,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             }>;
             custom: z.ZodRecord<z.ZodString, z.ZodObject<z.objectUtil.extendShape<{
                 name: z.ZodString;
@@ -5072,6 +5254,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -5079,6 +5262,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -5100,6 +5284,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -5121,6 +5306,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -5141,6 +5327,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -5161,6 +5348,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -5179,6 +5367,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -5194,6 +5383,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -5207,6 +5397,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -5226,6 +5417,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -5245,6 +5437,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -5264,6 +5457,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -5278,6 +5472,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -5299,6 +5494,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         }, {
             custom: Record<string, {
@@ -5339,6 +5535,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             summary: {
                 id: "summary";
@@ -5346,6 +5543,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             };
             experience: {
@@ -5367,6 +5565,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             education: {
                 id: "education";
@@ -5388,6 +5587,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             projects: {
                 id: "projects";
@@ -5408,6 +5608,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             volunteer: {
                 id: "volunteer";
@@ -5428,6 +5629,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             references: {
                 id: "references";
@@ -5446,6 +5648,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             skills: {
                 id: "skills";
@@ -5461,6 +5664,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             interests: {
                 id: "interests";
@@ -5474,6 +5678,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             certifications: {
                 id: "certifications";
@@ -5493,6 +5698,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             awards: {
                 id: "awards";
@@ -5512,6 +5718,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             publications: {
                 id: "publications";
@@ -5531,6 +5738,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             languages: {
                 id: "languages";
@@ -5545,6 +5753,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             collapse: {
                 id: "collapse";
@@ -5566,6 +5775,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
         }>;
         metadata: z.ZodObject<{
@@ -5840,6 +6050,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -5847,6 +6058,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -5868,6 +6080,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -5889,6 +6102,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -5909,6 +6123,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -5929,6 +6144,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -5947,6 +6163,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -5962,6 +6179,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -5975,6 +6193,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -5994,6 +6213,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -6013,6 +6233,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -6032,6 +6253,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -6046,6 +6268,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -6067,6 +6290,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         };
         metadata: {
@@ -6180,6 +6404,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             summary: {
                 id: "summary";
@@ -6187,6 +6412,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             };
             experience: {
@@ -6208,6 +6434,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             education: {
                 id: "education";
@@ -6229,6 +6456,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             projects: {
                 id: "projects";
@@ -6249,6 +6477,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             volunteer: {
                 id: "volunteer";
@@ -6269,6 +6498,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             references: {
                 id: "references";
@@ -6287,6 +6517,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             skills: {
                 id: "skills";
@@ -6302,6 +6533,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             interests: {
                 id: "interests";
@@ -6315,6 +6547,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             certifications: {
                 id: "certifications";
@@ -6334,6 +6567,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             awards: {
                 id: "awards";
@@ -6353,6 +6587,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             publications: {
                 id: "publications";
@@ -6372,6 +6607,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             languages: {
                 id: "languages";
@@ -6386,6 +6622,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             collapse: {
                 id: "collapse";
@@ -6407,6 +6644,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
         };
         metadata: {
@@ -6522,6 +6760,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             summary: {
                 id: "summary";
@@ -6529,6 +6768,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
                 content?: string | undefined;
             };
             experience: {
@@ -6550,6 +6790,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             education: {
                 id: "education";
@@ -6571,6 +6812,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             projects: {
                 id: "projects";
@@ -6591,6 +6833,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             volunteer: {
                 id: "volunteer";
@@ -6611,6 +6854,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             references: {
                 id: "references";
@@ -6629,6 +6873,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             skills: {
                 id: "skills";
@@ -6644,6 +6889,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             interests: {
                 id: "interests";
@@ -6657,6 +6903,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             certifications: {
                 id: "certifications";
@@ -6676,6 +6923,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             awards: {
                 id: "awards";
@@ -6695,6 +6943,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             publications: {
                 id: "publications";
@@ -6714,6 +6963,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             languages: {
                 id: "languages";
@@ -6728,6 +6978,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
             collapse: {
                 id: "collapse";
@@ -6749,6 +7000,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
                 visible?: boolean | undefined;
                 columns?: number | undefined;
                 separateLinks?: boolean | undefined;
+                extraDescription?: string | undefined;
             };
         };
         metadata: {

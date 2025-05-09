@@ -77,6 +77,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -84,6 +85,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -105,6 +107,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -126,6 +129,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -146,6 +150,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -166,6 +171,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -184,6 +190,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -199,6 +206,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -212,6 +220,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -231,6 +240,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -250,6 +260,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -269,6 +280,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -283,6 +295,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -304,6 +317,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         };
         metadata: {

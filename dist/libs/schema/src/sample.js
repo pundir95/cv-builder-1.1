@@ -41,7 +41,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "collapse",
-            items: []
+            items: [],
+            extraDescription: ""
         },
         summary: {
             name: "Summary",
@@ -49,7 +50,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "summary",
-            content: "<p>Innovative Web Developer with 5 years of experience in building impactful and user-friendly websites and applications. Specializes in <strong>front-end technologies</strong> and passionate about modern web standards and cutting-edge development techniques. Proven track record of leading successful projects from concept to deployment.</p>"
+            content: "<p>Innovative Web Developer with 5 years of experience in building impactful and user-friendly websites and applications. Specializes in <strong>front-end technologies</strong> and passionate about modern web standards and cutting-edge development techniques. Proven track record of leading successful projects from concept to deployment.</p>",
+            extraDescription: ""
         },
         awards: {
             name: "Awards",
@@ -57,7 +59,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "awards",
-            items: []
+            items: [],
+            extraDescription: ""
         },
         certifications: {
             name: "Certifications",
@@ -90,7 +93,8 @@ const sampleResume = {
                         href: ""
                     }
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         education: {
             name: "Education",
@@ -113,7 +117,8 @@ const sampleResume = {
                         href: ""
                     }
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         experience: {
             name: "Experience",
@@ -148,7 +153,8 @@ const sampleResume = {
                         href: "https://techadvancers.com/"
                     }
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         volunteer: {
             name: "Volunteering",
@@ -156,7 +162,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "volunteer",
-            items: []
+            items: [],
+            extraDescription: ""
         },
         interests: {
             name: "Interests",
@@ -164,7 +171,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "interests",
-            items: []
+            items: [],
+            extraDescription: ""
         },
         languages: {
             name: "Languages",
@@ -172,7 +180,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "languages",
-            items: []
+            items: [],
+            extraDescription: ""
         },
         profiles: {
             name: "Profiles",
@@ -203,7 +212,8 @@ const sampleResume = {
                         href: "https://github.com/johndoe"
                     }
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         projects: {
             name: "Projects",
@@ -238,7 +248,8 @@ const sampleResume = {
                         href: ""
                     }
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         publications: {
             name: "Publications",
@@ -246,7 +257,8 @@ const sampleResume = {
             separateLinks: true,
             visible: true,
             id: "publications",
-            items: []
+            items: [],
+            extraDescription: ""
         },
         references: {
             name: "References",
@@ -266,7 +278,8 @@ const sampleResume = {
                         href: ""
                     }
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         skills: {
             name: "Skills",
@@ -316,7 +329,8 @@ const sampleResume = {
                         "JIRA"
                     ]
                 }
-            ]
+            ],
+            extraDescription: ""
         },
         custom: {}
     },

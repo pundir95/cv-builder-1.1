@@ -28,12 +28,14 @@ export const sampleResume: ResumeData = {
   },
   sections: {
     collapse: {
+      
       name: "Collapse",
       columns: 1,
       separateLinks: true,
       visible: true,
       id: "collapse",
       items: [],
+      extraDescription: "",
     },
     summary: {
       name: "Summary",
@@ -43,6 +45,7 @@ export const sampleResume: ResumeData = {
       id: "summary",
       content:
         "<p>Innovative Web Developer with 5 years of experience in building impactful and user-friendly websites and applications. Specializes in <strong>front-end technologies</strong> and passionate about modern web standards and cutting-edge development techniques. Proven track record of leading successful projects from concept to deployment.</p>",
+      extraDescription: "",
     },
     awards: {
       name: "Awards",
@@ -51,6 +54,7 @@ export const sampleResume: ResumeData = {
       visible: true,
       id: "awards",
       items: [],
+      extraDescription: "",
     },
     certifications: {
       name: "Certifications",
@@ -84,6 +88,7 @@ export const sampleResume: ResumeData = {
           },
         },
       ],
+      extraDescription: "",
     },
     education: {
       name: "Education",
@@ -107,6 +112,7 @@ export const sampleResume: ResumeData = {
           },
         },
       ],
+      extraDescription: "",
     },
     experience: {
       name: "Experience",
@@ -144,6 +150,7 @@ export const sampleResume: ResumeData = {
           },
         },
       ],
+      extraDescription: "",
     },
     volunteer: {
       name: "Volunteering",
@@ -152,6 +159,7 @@ export const sampleResume: ResumeData = {
       visible: true,
       id: "volunteer",
       items: [],
+      extraDescription: "",
     },
     interests: {
       name: "Interests",
@@ -160,6 +168,7 @@ export const sampleResume: ResumeData = {
       visible: true,
       id: "interests",
       items: [],
+      extraDescription: "",
     },
     languages: {
       name: "Languages",
@@ -168,6 +177,7 @@ export const sampleResume: ResumeData = {
       visible: true,
       id: "languages",
       items: [],
+      extraDescription: "",
     },
     profiles: {
       name: "Profiles",
@@ -199,6 +209,7 @@ export const sampleResume: ResumeData = {
           },
         },
       ],
+      extraDescription: "",
     },
     projects: {
       name: "Projects",
@@ -236,6 +247,7 @@ export const sampleResume: ResumeData = {
           },
         },
       ],
+      extraDescription: "",
     },
     publications: {
       name: "Publications",
@@ -244,6 +256,7 @@ export const sampleResume: ResumeData = {
       visible: true,
       id: "publications",
       items: [],
+      extraDescription: "",
     },
     references: {
       name: "References",
@@ -264,6 +277,7 @@ export const sampleResume: ResumeData = {
           },
         },
       ],
+      extraDescription: "",
     },
     skills: {
       name: "Skills",
@@ -297,6 +311,7 @@ export const sampleResume: ResumeData = {
           keywords: ["Webpack", "Git", "Jenkins", "Docker", "JIRA"],
         },
       ],
+      extraDescription: "",
     },
     custom: {},
   },

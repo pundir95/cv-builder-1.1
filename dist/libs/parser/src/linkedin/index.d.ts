@@ -138,6 +138,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     network: string;
                     username: string;
                 }[];
+                extraDescription: string;
             };
             summary: {
                 id: "summary";
@@ -145,6 +146,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                 name: string;
                 columns: number;
                 separateLinks: boolean;
+                extraDescription: string;
                 content: string;
             };
             experience: {
@@ -166,6 +168,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     company: string;
                     position: string;
                 }[];
+                extraDescription: string;
             };
             education: {
                 id: "education";
@@ -187,6 +190,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     area: string;
                     score: string;
                 }[];
+                extraDescription: string;
             };
             projects: {
                 id: "projects";
@@ -207,6 +211,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             volunteer: {
                 id: "volunteer";
@@ -227,6 +232,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     position: string;
                     organization: string;
                 }[];
+                extraDescription: string;
             };
             references: {
                 id: "references";
@@ -245,6 +251,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     summary: string;
                     description: string;
                 }[];
+                extraDescription: string;
             };
             skills: {
                 id: "skills";
@@ -260,6 +267,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     keywords: string[];
                     level: number;
                 }[];
+                extraDescription: string;
             };
             interests: {
                 id: "interests";
@@ -273,6 +281,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     name: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
             certifications: {
                 id: "certifications";
@@ -292,6 +301,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     summary: string;
                     issuer: string;
                 }[];
+                extraDescription: string;
             };
             awards: {
                 id: "awards";
@@ -311,6 +321,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     title: string;
                     awarder: string;
                 }[];
+                extraDescription: string;
             };
             publications: {
                 id: "publications";
@@ -330,6 +341,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     summary: string;
                     publisher: string;
                 }[];
+                extraDescription: string;
             };
             languages: {
                 id: "languages";
@@ -344,6 +356,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     description: string;
                     level: number;
                 }[];
+                extraDescription: string;
             };
             collapse: {
                 id: "collapse";
@@ -365,6 +378,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     description: string;
                     keywords: string[];
                 }[];
+                extraDescription: string;
             };
         };
         metadata: {

@@ -71,6 +71,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     awards: {
       name: "Awards",
@@ -79,6 +80,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     certifications: {
       name: "Certifications",
@@ -87,6 +89,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     interests: {
       name: "Interests",
@@ -95,6 +98,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     languages: {
       name: "Languages",
@@ -103,6 +107,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     profiles: {
       name: "Profiles",
@@ -111,6 +116,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     projects: {
       name: "Projects",
@@ -119,6 +125,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     publications: {
       name: "Publications",
@@ -127,6 +134,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     references: {
       name: "References",
@@ -135,6 +143,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     volunteer: {
       name: "Volunteer Work",
@@ -143,6 +152,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     summary: {
       name: "Professional Summary",
@@ -151,6 +161,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       content: "",
+      extraDescription: "",
     },
     experience: {
       name: "Work Experience",
@@ -159,6 +170,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     education: {
       name: "Education",
@@ -167,6 +179,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
     skills: {
       name: "Skills",
@@ -175,6 +188,7 @@ const defaultResume: ResumeData = {
       visible: true,
       separateLinks: false,
       items: [],
+      extraDescription: "",
     },
   }
 };
