@@ -76,7 +76,9 @@ export const UserDashboardPage = () => {
             <a href="#" className="text-blue-600 text-sm ml-2 hover:underline">Improve</a>
           </div>
           {/* Create New Resume */}
-          <Button className="w-full mt-6 flex items-center gap-2 bg-blue-100 text-blue-700 hover:bg-blue-200">
+          <Button className="w-full mt-6 flex items-center gap-2 bg-blue-100 text-blue-700 hover:bg-blue-200" 
+          onClick={() => navigate("/onboard/experience-level")}
+          >
             <Plus size={18} /> Create New Resume
           </Button>
         </aside>

@@ -1,8 +1,9 @@
 import { defaultSections } from "@reactive-resume/schema";
-import { RichInput } from "@reactive-resume/ui";
+import { Button, RichInput } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router";
+import { Editor } from '@tiptap/react';
 
 import { AiActions } from "@/client/components/ai-actions";
 import { useResumeStore } from "@/client/stores/resume";
@@ -10,9 +11,13 @@ import { useSectionProgress } from "@/client/hooks/use-section-progress";
 
 import { SectionIcon } from "./shared/section-icon";
 import { SectionOptions } from "./shared/section-options";
+import { Lightbulb } from "@phosphor-icons/react";
+import AiModal from "@/client/components/AiModal";
 
 export const SummarySection = () => {
   const setValue = useResumeStore((state) => state.setValue);
+  const editorRef = useRef<Editor | null>(null);
+  
   const section = useResumeStore(
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     (state) => state.resume.data.sections.summary ?? defaultSections.summary,
@@ -22,6 +27,7 @@ export const SummarySection = () => {
   const searchParams = new URLSearchParams(location.search);
   const improve = searchParams.get("improve") === "true";
   const [isEditing, setIsEditing] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Check if summary is complete (has content)
   const isCompleted = Boolean(section.content && section.content.trim().length > 0);
@@ -32,24 +38,47 @@ export const SummarySection = () => {
   // Only show effect if improve=true and not editing
   const showEffect = improve && !isEditing;
 
+
+
+
   return (
     <section id="summary" className="grid gap-y-6">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
-          <SectionIcon id="summary" size={18} />
+        <div className="bg-[#0D84F3] p-1 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <line x1="10" y1="9" x2="8" y2="9"></line>
+            </svg>
+          </div>
           <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{section.name}</h2>
         </div>
+       
 
         <div className="flex items-center gap-x-2">
-          <button
+          <Button
+            ref={buttonRef}
+            size="sm"
             onClick={() => setShowSuggestions(!showSuggestions)}
-            className="rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="bg-white text-blue-500 hover:text-blue-700 bg-white"
           >
-            <span className="text-sm text-gray-600 dark:text-gray-400">💡</span>
-          </button>
+            <Lightbulb className="bg-yellow-400" />
+            <span className="ml-2 text-base font-medium">Get help with writing</span>
+          </Button>
           <SectionOptions id="summary" />
         </div>
+        
       </header>
+      {showSuggestions && (
+        <AiModal
+          onClose={() => setShowSuggestions(false)}
+          anchorRef={buttonRef}
+          editorRef={editorRef}
+        />
+      )}
 
       <main
         className={cn(
@@ -58,28 +87,25 @@ export const SummarySection = () => {
           !section.visible && "opacity-50"
         )}
       >
-        {showSuggestions && (
-          <div className="absolute right-0 top-0 z-10 w-64 rounded-lg bg-white/80 backdrop-blur-md p-4 shadow-lg dark:bg-gray-800/80">
-            <h3 className="mb-2 font-semibold">Suggestions</h3>
-            <ul className="text-sm text-gray-600 dark:text-gray-400">
-              <li>• Keep it concise and impactful</li>
-              <li>• Highlight key achievements</li>
-              <li>• Use action verbs</li>
-              <li>• Focus on relevant experience</li>
-            </ul>
-          </div>
-        )}
+         <div className="flex items-center gap-x-2 mb-2">
+        <p className="text-x text-black-400">Write 2-4 short, energetic sentences about how great you are. Mention the role and what you did. What were the big achievements? Describe your motivation and list your skills.</p>
+
+        </div>
+       
         <RichInput
           content={section.content}
-          footer={(editor) => (
-            <AiActions
-              value={editor.getText()}
-              onChange={(value) => {
-                editor.commands.setContent(value, true);
-                setValue("sections.summary.content", value);
-              }}
-            />
-          )}
+          footer={(editor) => {
+            editorRef.current = editor;
+            return (
+              <AiActions
+                value={editor.getText()}
+                onChange={(value) => {
+                  editor.commands.setContent(value, true);
+                  setValue("sections.summary.content", value);
+                }}
+              />
+            );
+          }}
           onFocus={() => setIsEditing(true)}
           onBlur={() => setIsEditing(false)}
           onChange={(value) => {

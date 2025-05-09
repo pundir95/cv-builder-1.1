@@ -22,6 +22,7 @@ const _shared = require("../shared");
 const _custom = _export_star._(require("./custom"), exports);
 const basicsSchema = _zod.z.object({
     name: _zod.z.string(),
+    profession: _zod.z.string(),
     headline: _zod.z.string(),
     email: _zod.z.literal("").or(_zod.z.string().email()),
     phone: _zod.z.string(),
@@ -42,6 +43,7 @@ const basicsSchema = _zod.z.object({
 });
 const defaultBasics = {
     name: "",
+    profession: "",
     headline: "",
     email: "",
     phone: "",

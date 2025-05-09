@@ -1,6 +1,7 @@
 import { z } from "zod";
 export declare const basicsSchema: z.ZodObject<{
     name: z.ZodString;
+    profession: z.ZodString;
     headline: z.ZodString;
     email: z.ZodUnion<[z.ZodLiteral<"">, z.ZodString]>;
     phone: z.ZodString;
@@ -72,6 +73,7 @@ export declare const basicsSchema: z.ZodObject<{
     }>;
 }, "strip", z.ZodTypeAny, {
     name: string;
+    profession: string;
     headline: string;
     email: string;
     phone: string;
@@ -99,6 +101,7 @@ export declare const basicsSchema: z.ZodObject<{
     };
 }, {
     name: string;
+    profession: string;
     headline: string;
     email: string;
     phone: string;

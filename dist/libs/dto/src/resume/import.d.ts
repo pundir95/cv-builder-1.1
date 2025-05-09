@@ -6,6 +6,7 @@ export declare const importResumeSchema: z.ZodObject<{
     data: z.ZodObject<{
         basics: z.ZodObject<{
             name: z.ZodString;
+            profession: z.ZodString;
             headline: z.ZodString;
             email: z.ZodUnion<[z.ZodLiteral<"">, z.ZodString]>;
             phone: z.ZodString;
@@ -77,6 +78,7 @@ export declare const importResumeSchema: z.ZodObject<{
             }>;
         }, "strip", z.ZodTypeAny, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -104,6 +106,7 @@ export declare const importResumeSchema: z.ZodObject<{
             };
         }, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -2027,6 +2030,7 @@ export declare const importResumeSchema: z.ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -2366,6 +2370,7 @@ export declare const importResumeSchema: z.ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -2707,6 +2712,7 @@ export declare const importResumeSchema: z.ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3051,6 +3057,7 @@ export declare const importResumeSchema: z.ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3396,6 +3403,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3742,6 +3750,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     data: z.ZodObject<{
         basics: z.ZodObject<{
             name: z.ZodString;
+            profession: z.ZodString;
             headline: z.ZodString;
             email: z.ZodUnion<[z.ZodLiteral<"">, z.ZodString]>;
             phone: z.ZodString;
@@ -3813,6 +3822,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             }>;
         }, "strip", z.ZodTypeAny, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3840,6 +3850,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             };
         }, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -5763,6 +5774,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -6102,6 +6114,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -6443,6 +6456,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;

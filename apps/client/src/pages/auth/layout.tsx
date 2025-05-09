@@ -24,29 +24,26 @@ export const AuthLayout = () => {
   const hideDivider = !providers.includes("email") || providers.length === 1;
 
   return (
-    // eslint-disable-next-line tailwindcss/enforces-shorthand -- size-screen not implemented yet
     <GoogleOAuthProvider clientId={"48252327683-8asdmh85nur7uiunvo17dvgh0h3tpnmv.apps.googleusercontent.com"}>
-    <div className="flex h-screen w-screen">
-      <div className="relative flex w-full flex-col justify-center gap-y-8 px-12 sm:mx-auto sm:basis-[420px] sm:px-0 lg:basis-[480px] lg:px-12 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50">
+        <div className="relative w-full max-w-xl rounded-2xl bg-white p-12 shadow-2xl">
+          {/* Group login form and social auth together */}
+          <div className="flex flex-col">
+            <Outlet />
 
-        <Outlet />
-
-        {isAuthRoute && (
-          <>
-            <div className={cn("flex items-center gap-x-4", hideDivider && "hidden")}>
-              <hr className="flex-1" />
-              <span className="text-xs font-medium">
-              or continue with
-              </span>
-              <hr className="flex-1" />
-            </div>
-
-            <SocialAuth />
-          </>
-        )}
+            {isAuthRoute && (
+              <>
+                <div className={cn("flex items-center gap-x-4", hideDivider && "hidden")}> 
+                  <hr className="flex-1 border-gray-200" />
+                  <span className="text-base font-medium text-gray-400 p-3">or continue with</span>
+                  <hr className="flex-1 border-gray-200" />
+                </div>
+                <SocialAuth />
+              </>
+            )}
+          </div>
+        </div>
       </div>
-
-    </div>
     </GoogleOAuthProvider>
   );
 };

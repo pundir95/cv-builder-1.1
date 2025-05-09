@@ -42,7 +42,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
   };
 
   return (
-    <div className="flex bg-secondary-accent/30">
+    <div className="flex bg-secondary-accent/30  mt-5">
     {!showLeftSidebar &&  <div className="hidden basis-12 flex-col items-center justify-between bg-blue-500 py-4 sm:flex">
         <Button asChild size="icon" variant="ghost" className="size-8 rounded-full">
           <Link to="/dashboard">
@@ -201,7 +201,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
       </div>}
 
       <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
-        <div ref={containterRef} className={`grid gap-y-10 @container/left bg-[#a4abbbbd] mt-[64px] ${showLeftSidebar ? 'p-6' : ''}`}>
+        <div ref={containterRef} className={` grid gap-y-10 @container/left bg-[#ffffff] mt-[64px] border border-gray-200 ${showLeftSidebar ? 'p-6 mx-[70px]' : ''}`}>
           <BasicsSection />
           <Separator />
         
@@ -213,18 +213,21 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             id="profiles"
             title={(item) => item.network}
             description={(item) => item.username}
+            extraDescription="Add your professional social media profiles like LinkedIn, GitHub, or portfolio website. Make sure these are up-to-date and reflect your professional image."
           />
           <Separator />
           <SectionBase<Experience>
             id="experience"
             title={(item) => item.company}
             description={(item) => item.position}
+            extraDescription="Add your professional experience, including your job title, company name, and the dates of your employment. Use bullet points to note your achievements, if possible - use numbers/facts (Achieved X, measured by Y, by doing Z)."
           />
           <Separator />
           <SectionBase<Education>
             id="education"
             title={(item) => item.institution}
             description={(item) => item.area}
+            extraDescription="Add your professional education, including your degree, school name, and the dates of your enrollment. Use bullet points to note your achievements, if possible - use numbers/facts (Achieved X, measured by Y, by doing Z)."
           />
           <Separator />
           <SectionBase<Skill>
@@ -234,12 +237,14 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
               if (item.description) return item.description;
               if (item.keywords.length > 0) return `${item.keywords.length} keywords`;
             }}
-          />
+            extraDescription="Choose 5 important skills that show you fit the position. Make sure they match the key skills mentioned in the job listing (especially when applying via an online system)."
+            />
           <Separator />
           <SectionBase<Language>
             id="languages"
             title={(item) => item.name}
             description={(item) => item.description}
+            extraDescription="Choose 3 languages you are proficient in. Make sure they match the key languages mentioned in the job listing (especially when applying via an online system)."
           />
           {/* <Separator />
           <SectionBase<Award>
@@ -252,6 +257,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             id="certifications"
             title={(item) => item.name}
             description={(item) => item.issuer}
+            extraDescription="Add your certifications, including your certification name, and the dates of your employment. Use bullet points to note your achievements."
           />
           {/* <Separator />
           <SectionBase<Interest>
@@ -266,6 +272,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             id="projects"
             title={(item) => item.name}
             description={(item) => item.description}
+            extraDescription="Add your projects, including your project name, and the dates of your project. Use bullet points to note your achievements"
           />
           {/* <Separator />
           <SectionBase<Publication>
@@ -284,6 +291,8 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             id="references"
             title={(item) => item.name}
             description={(item) => item.description}
+            extraDescription="Add your references, including your reference name, and the dates of your employment. Use bullet points to note your achievements, if possible"
+
           />
 
           {/* Custom Sections */}
@@ -295,6 +304,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
                 id={`custom.${section.id}`}
                 title={(item) => item.name}
                 description={(item) => item.description}
+                extraDescription="Add your custom section, including your custom section name, and the dates of your employment. Use bullet points to note your achievements, if possible"
               />
             </Fragment>
           ))}

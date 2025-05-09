@@ -84,9 +84,9 @@ export const BuilderLayout = () => {
 
   return (
     <>
-      <div className="flex gap-4 p-4">
+      <div className="flex gap-4">
       </div>
-      <div ref={templateRef} data-template-ref className="overflow-y-auto h-screen">
+      <div ref={templateRef} data-template-ref className="overflow-y-auto h-screen bg-[#F4F5FF]">
         {layout.map((columns, pageIndex) => (
           <motion.div
             key={pageIndex}

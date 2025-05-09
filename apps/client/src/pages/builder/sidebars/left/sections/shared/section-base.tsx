@@ -33,9 +33,10 @@ type Props<T extends SectionItem> = {
   id: SectionKey;
   title: (item: T) => string;
   description?: (item: T) => string | undefined;
+  extraDescription: string;
 };
 
-export const SectionBase = <T extends SectionItem>({ id, title, description }: Props<T>) => {
+export const SectionBase = <T extends SectionItem>({ id, title, description, extraDescription }: Props<T>) => {
   const { open } = useDialog(id);
 
   const setValue = useResumeStore((state) => state.setValue);
@@ -108,14 +109,18 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
       </header>
 
       <main className={cn("grid transition-opacity", !section.visible && "opacity-50")}>
+      <div className="flex items-center gap-x-2 mb-2">
+        <p className="text-x text-black-400 mb-3">{extraDescription}</p>
+
+        </div>
         {section.items.length === 0 && (
           <Button
             variant="outline"
-            className="gap-x-2 border-dashed py-6 leading-relaxed hover:bg-secondary-accent"
+            className="gap-x-2  py-6 leading-relaxed bg-[#0D84F3] text-white hover:bg-[#0D66C2]"
             onClick={onCreate}
           >
-            <Plus size={14} />
-            <span className="font-medium">
+            <Plus color="#ffffff" size={20} />
+            <span className="font-medium text-white">
               {t({
                 message: "Add a new item",
                 context: "For example, add a new work experience, or add a new profile.",
@@ -162,7 +167,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
         <footer className="flex items-center justify-end">
           <Button
             variant="outline"
-            className="ml-auto gap-x-2 text-xs lg:text-sm"
+            className="ml-auto gap-x-2 text-xs lg:text-sm bg-[#0D84F3] text-white hover:bg-[#0D66C2] hover:text-white"
             onClick={onCreate}
           >
             <Plus />

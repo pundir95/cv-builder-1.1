@@ -5,6 +5,7 @@ export const resumeData = {
             "label": ""
         },
         "name": "",
+        "profession": "",
         "email": "",
         "phone": "",
         "picture": {

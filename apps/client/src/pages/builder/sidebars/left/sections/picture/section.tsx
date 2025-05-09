@@ -12,30 +12,45 @@ import {
 } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { z } from "zod";
 
 import { useUploadImage } from "@/client/services/storage";
 import { useResumeStore } from "@/client/stores/resume";
 
 import { PictureOptions } from "./options";
+import { useParams } from "react-router";
 
 export const PictureSection = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { uploadImage } = useUploadImage();
-
+  const [isUploading, setIsUploading] = useState(false);
+  const cv_id = window.location.pathname.split('/')[2];
   const setValue = useResumeStore((state) => state.setValue);
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user || "{}");
   const picture = useResumeStore((state) => state.resume.data.basics.picture);
 
   const isValidUrl = useMemo(() => z.string().url().safeParse(picture.url).success, [picture.url]);
 
   const onSelectImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const response = await uploadImage(file);
-      const url = response.data;
-
-      setValue("basics.picture.url", url);
+      setIsUploading(true);
+      try {
+        const file = event.target.files[0];
+        let payload = {
+          user_id: userData.id,
+          image: file,
+          cv_id: cv_id
+        }
+        const response = await uploadImage(payload);
+        const url = (response as any).data.data.cv_image;
+        setValue("basics.picture.url", url);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      } finally {
+        setIsUploading(false);
+      }
     }
   };
 
@@ -54,12 +69,16 @@ export const PictureSection = () => {
           <AvatarImage src={picture.url} />
         </Avatar>
 
-        {isValidUrl ? (
+        {isUploading ? (
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-background/30">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+          </div>
+        ) : isValidUrl ? (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-background/30 opacity-0 transition-opacity group-hover:opacity-100">
             <Trash size={16} weight="bold" />
           </div>
         ) : (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-background/30 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full">
             <UploadSimple size={16} weight="bold" />
           </div>
         )}

@@ -41,7 +41,7 @@ const Column = ({ id, name, items }: ColumnProps) => {
   return (
     <SortableContext id={id} items={items} strategy={verticalListSortingStrategy}>
       <div className="relative">
-        <div className="absolute inset-0 w-3/4 rounded bg-secondary/50" />
+        <div className="absolute inset-0 w-3/4 rounded bg-secondary/100" />
 
         <div className="relative z-10 p-3 pb-8">
           <p className="mb-3 text-xs font-bold">{name}</p>
@@ -244,7 +244,7 @@ export const LayoutSection = () => {
                 </div>
 
                 <div className="grid grid-cols-2 items-start gap-x-4">
-                  <Column id={mainIndex} name={t`Main`} items={main} />
+                  <Column id={mainIndex} name={t`Main`} items={main}  />
                   <Column id={sidebarIndex} name={t`Sidebar`} items={sidebar} />
                 </div>
               </div>
@@ -256,9 +256,9 @@ export const LayoutSection = () => {
           </Portal>
         </DndContext>
 
-        <Button variant="outline" className="ml-auto" onClick={onAddPage}>
+        <Button variant="outline" className="ml-auto bg-[#0D84F3] text-white" onClick={onAddPage}>
           <Plus />
-          <span className="ml-2 text-xs lg:text-sm">{t`Add New Page`}</span>
+          <span className="ml-2 text-xs lg:text-sm ">{t`Add New Page`}</span>
         </Button>
       </main>
     </section>

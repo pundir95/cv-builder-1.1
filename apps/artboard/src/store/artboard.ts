@@ -6,6 +6,7 @@ const defaultResume: ResumeData = {
   basics: {
     name: "New Resume",
     headline: "",
+    profession: "",
     email: "",
     phone: "",
     location: "",

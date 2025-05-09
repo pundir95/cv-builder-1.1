@@ -9,6 +9,7 @@ import { SectionIcon } from "../shared/section-icon";
 import { useGetTemplateList } from "@/client/services/template/template";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { LimitReachedModal } from "@/client/pages/select-template/LimitReachedModal";
 
 interface Template {
   id: number;
@@ -25,9 +26,12 @@ export const TemplateSection = ({selectedFilter,showTemplateButton}:{selectedFil
   console.log(templatesList,"templatesList")
   const [templatesItem, setTemplatesItem] = useState<Template[]>([]);
   const { getTemplateList, loading, templateData } = useGetTemplateList();
-  // const currentTemplate = useResumeStore((state) => state.resume.data.metadata.template);
-  // console.log(currentTemplate,"currentTemplate")
-  console.log(templateData,"templateData")
+  const [isLimitReachedModalOpen, setIsLimitReachedModalOpen] = useState(false);
+  const user = localStorage.getItem("user") || '{"isPlanReached":[],"count":0}';
+  const userData = JSON.parse(user);
+  let isSubscriptionHave = userData?.subscription_details;
+  let resumeCount=userData?.resume_count;
+  let resumeDetailsId=userData?.resume_details[0]?.id;
 
   const navigate = useNavigate()
 
@@ -60,22 +64,35 @@ useEffect(()=>{
 },[])
 
 const selectedTemplateId = (crrTemplate: string) => {
-  const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
-  if (templateId) {
+  // const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
+  // if (templateId) {
+  //   localStorage.setItem("templateId", templateId.id.toString())
+  //   navigate(`/onboard/upload-resume`)
+  // }
+
+  if(isSubscriptionHave.length==0 && resumeCount==1){
+    setIsLimitReachedModalOpen(true)
+  }else{
+     const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
+     if (templateId) {
     localStorage.setItem("templateId", templateId.id.toString())
-    navigate(`/onboard/upload-resume`)
+    open("create");
+
+    // navigate(`/onboard/upload-resume`)
   }
+  }
+
 }
  
   return (
     <section id="template" className="grid gap-y-6">
-      <header className="flex items-center justify-between">
+      {!showTemplateButton && <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <SectionIcon id="template" size={18} name={t`Template`} />
           <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{t`Template`}</h2>
         </div>
-      </header>
-      <main className="grid grid-cols-2 gap-8 @lg/right:grid-cols-3 @2xl/right:grid-cols-4">
+      </header>}
+      <main className="grid grid-cols-3 gap-8 @lg/right:grid-cols-3 @2xl/right:grid-cols-4">
         {templatesItem.map((template, index) => (
           <AspectRatio key={template.id} ratio={1 / 1.4142}>
             <motion.div
@@ -83,7 +100,7 @@ const selectedTemplateId = (crrTemplate: string) => {
               animate={{ opacity: 1, transition: { delay: index * 0.1 } }}
               whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
               className={cn(
-                "relative cursor-pointer rounded-sm ring-primary transition-all hover:ring-2"
+                "relative cursor-pointer rounded-sm ring-primary transition-all hover:ring-1"
                 // currentTemplate === template.name && "ring-2",
               )}
               onClick={() => {
@@ -98,8 +115,8 @@ const selectedTemplateId = (crrTemplate: string) => {
                 {/* <p className="font-bold capitalize text-primary bg-white/80 px-4 py-1 rounded">
                   {template.name}
                 </p> */}
-              { showTemplateButton && <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/50">
-                  <button 
+               <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/50 border-0">
+                  { showTemplateButton && <button 
                     className="bg-blue-500 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-600 transition-colors"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -111,13 +128,14 @@ const selectedTemplateId = (crrTemplate: string) => {
                     }}
                   >
                     Use This Template
-                  </button>
-                </div>}
+                  </button>}
+                </div>
               </div>
             </motion.div>
           </AspectRatio>
         ))}
       </main>
+      <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={() => setIsLimitReachedModalOpen(false)} resumeDetailsId={resumeDetailsId} />
     </section>
   );
 };

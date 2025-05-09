@@ -11,6 +11,7 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;

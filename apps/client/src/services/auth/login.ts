@@ -30,8 +30,15 @@ export const useLogin = () => {
       localStorage.setItem("token", data.data.access);
       localStorage.setItem("refresh_token", data.data.refresh);
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      console.log(data.data.user.subscription_details.length,"ppppppppp")
+       if(data.data.user.subscription_details.length>0){
+        navigate("/dashboard")
+       }else{
+        navigate("/onboard/experience-level")
+       }
+
       // setUser(data.data.user);
-      navigate("/onboard/experience-level")
+      
 
       
       queryClient.setQueryData(["user"], data.data.user);

@@ -4,7 +4,9 @@ import { OpenAI } from "openai";
 import { useOpenAiStore } from "@/client/stores/openai";
 
 export const openai = () => {
-  const { apiKey, baseURL } = useOpenAiStore.getState();
+  const {baseURL } = useOpenAiStore.getState();
+  let apiKey = import.meta.env.VITE_OPEN_API_KEY;
+
 
   if (!apiKey) {
     throw new Error(

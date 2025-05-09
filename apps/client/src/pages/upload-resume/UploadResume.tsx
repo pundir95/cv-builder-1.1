@@ -3,20 +3,17 @@ import { motion } from 'framer-motion';
 import { Upload, FileText, ArrowRight } from "@phosphor-icons/react";
 import { useDialog } from '@/client/stores/dialog';
 import { LimitReachedModal } from '../select-template/LimitReachedModal';
-
+import { useNavigate } from 'react-router';
 
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
-  const [isLimitReachedModalOpen, setIsLimitReachedModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedCard, setSelectedCard] = useState<'upload' | 'scratch' | null>(null);
   const { open } = useDialog("resume");
-  const user = localStorage.getItem("user") || '{"isPlanReached":[],"count":0}';
-  const userData = JSON.parse(user);
-  let isSubscriptionHave = userData?.subscription_details;
-  let resumeCount=userData?.resume_count;
-  let resumeDetailsId=userData?.resume_details[0]?.id;
+  const navigate = useNavigate()
+
+  
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -50,19 +47,18 @@ const UploadResume = () => {
   };
 
   const onStartFromScratch = () => {
-    if(isSubscriptionHave.length==0 && resumeCount==1){
-    setSelectedCard('scratch')
-    setIsLimitReachedModalOpen(true)
+  //   if(isSubscriptionHave.length==0 && resumeCount==1){
+  //   setSelectedCard('scratch')
+  //   setIsLimitReachedModalOpen(true)
     
-  }else{
-    open("create");
+  // }else{
+  //   open("create");
     
-  }
+  // }
+  navigate("/onboard/select-template")
 }
 
-  const onCloseLimitReached=()=>{
-    setIsLimitReachedModalOpen(false)
-  }
+ 
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -128,7 +124,7 @@ const UploadResume = () => {
           </div>
         </motion.div>
       </div>
-    <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} />
+    {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} /> */}
      
     </div>
   ); 

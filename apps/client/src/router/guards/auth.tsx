@@ -14,5 +14,5 @@ console.log(user,"ios")
     return <Outlet />;
   }
 
-  return <Navigate replace to={`/auth/login?redirect=${redirectTo}`} />;
+  return <Navigate replace to={`/auth/login`} />;
 };

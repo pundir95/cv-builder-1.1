@@ -52,6 +52,27 @@ const ImproveResume: React.FC = () => {
         'Match skills to job requirements'
       ]
     }
+    ,
+    {
+      name: 'Languages',
+      score: 92,
+      icon: '🌎',
+      recommendations: [
+        'Specify proficiency levels',
+        'Include certifications if any',
+        'Add relevant language skills'
+      ]
+    },
+    {
+      name: 'Profile',
+      score: 87,
+      icon: '👤',
+      recommendations: [
+        'Add professional social links',
+        'Include portfolio/website URL',
+        'Update contact information'
+      ]
+    }
   ];
 
   const overallScore = Math.round(

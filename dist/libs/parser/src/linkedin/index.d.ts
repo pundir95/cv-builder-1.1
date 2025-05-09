@@ -72,6 +72,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;

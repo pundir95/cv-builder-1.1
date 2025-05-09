@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { HouseSimple, Lock, SidebarSimple, ArrowLeft } from "@phosphor-icons/react";
+import { HouseSimple, Lock, SidebarSimple, ArrowLeft, ChartLine } from "@phosphor-icons/react";
 import { Button, Tooltip } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { Link, useNavigate } from "react-router";
@@ -8,7 +8,7 @@ import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
 import { useProgressStore } from "@/client/stores/progress";
 
-export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void,showLeftSidebar:boolean,setShowLeftSidebar:(show:boolean)=>void } ) => {
+export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftSidebar, setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void, showLeftSidebar: boolean, setShowLeftSidebar: (show: boolean) => void }) => {
   const navigate = useNavigate();
   const title = useResumeStore((state) => state.resume.title);
   const locked = useResumeStore((state) => state.resume.locked);
@@ -25,92 +25,96 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar,showLeftSi
     setShowRightSidebar(!showRightSidebar);
   };
 
+  const getProgressColor = (progress: number) => {
+    if (progress <= 20) return 'bg-red-500 hover:bg-red-600';
+    if (progress <= 50) return 'bg-yellow-500 hover:bg-yellow-600';
+    return 'bg-green-500 hover:bg-green-600';
+  };
+
   return (
     <div
-      // style={{ left: `${showLeftSidebar ? leftPanelSize : 3}%`, right: `${showRightSidebar ? rightPanelSize : 3}%` }}
-      // style={{ left: "0%", right: "1.7%" }}
-
       className={cn(
-        "fixed inset-x-0 top-0 z-[60] h-16  bg-blue-500 backdrop-blur-lg lg:z-20",
+        "fixed inset-x-0 top-0 z-[60] h-16 bg-[#0D84F3]  backdrop-blur-lg lg:z-20 shadow-lg",
         !isDragging && "transition-[left,right]",
       )}
     >
-      <div className="flex h-full items-center justify-between px-4">
-        <div className="flex items-center gap-2">
+      <div className="flex h-full items-center justify-between px-6">
+        {/* Left Section */}
+        <div className="flex items-center gap-3">
           <Button
             size="icon"
             variant="ghost"
-            className="flex lg:hidden"
-            onClick={() => {
-              onToggle("left");
-            }}
+            className="flex lg:hidden text-white hover:bg-blue-500"
+            onClick={() => onToggle("left")}
           >
-            <SidebarSimple />
+            <SidebarSimple size={24} />
           </Button>
 
           <Button
-            size="icon"
             variant="ghost"
             onClick={() => navigate('/dashboard/resumes')}
-            className="text-white mb-5"
+            className="text-white hover:bg-blue-500 flex items-center gap-2"
           >
-            <ArrowLeft />
-            Back
+            <ArrowLeft size={20} />
+            <span>Back</span>
           </Button>
         </div>
 
-        <div className="flex items-center justify-center gap-x-1 lg:mx-auto">
-          <Button asChild size="icon" variant="ghost">
+        {/* Center Section */}
+        <div className="flex items-center justify-center gap-x-2 lg:mx-auto">
+          <Button asChild size="icon" variant="ghost" className="text-white hover:bg-blue-500">
             <Link to="/dashboard/resumes">
-              <HouseSimple color="white" />
+              <HouseSimple size={22} />
             </Link>
           </Button>
 
-          <span className="mr-2 text-xs opacity-40 text-white">{"/"}</span>
+          <span className="text-white/40 text-sm">/</span>
 
-          <h1 className="font-medium text-white">{title}</h1>
+          <h1 className="font-medium text-white text-lg">{title}</h1>
 
           {locked && (
             <Tooltip content={t`This resume is locked, please unlock to make further changes.`}>
-              <Lock size={14} className="ml-2 opacity-75 text-white" />
+              <Lock size={16} className="ml-1 opacity-75 text-white" />
             </Tooltip>
           )}
         </div>
 
-        <Button
-          size="icon"
-          variant="ghost"
-          className="flex lg:hidden"
-          onClick={() => {
-            onToggle("right");
-          }}
-        >
-          <SidebarSimple className="-scale-x-100" />
-        </Button>
-        <div className="absolute bottom-5 left-0 h-2 w-full bg-muted">
-          <div className="mb-4 flex items-center justify-end gap-x-2">
-            <span className={`text-xl font-bold transition-colors ${
-              progress.progress <= 20 ? 'text-red-500 hover:text-red-400' :
-              progress.progress <= 50 ? 'text-yellow-500 hover:text-yellow-400' :
-              'text-white hover:text-green-400'
-            }`}>Resume Score</span>
-            <span className={`text-white  px-4 py-2 rounded-lg text-l font-bold transition-colors ${
-              progress.progress <= 20 ? 'bg-red-500 hover:bg-red-600' :
-              progress.progress <= 50 ? 'bg-yellow-500 hover:bg-yellow-600' : 
-              'bg-green-500 hover:bg-green-600'
-            }`}>{progress.progress}%</span>
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+          {/* Resume Score Card */}
+          <div className="hidden md:flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+            <ChartLine size={20} className="text-white" />
+            <div className="flex flex-col">
+              <span className="text-white/80 text-sm">Resume Score</span>
+              <div className="flex items-center gap-2">
+                <div className="w-24 h-2 bg-white/80 rounded-full overflow-hidden">
+                  <div 
+                    className={cn(
+                      "h-full transition-all duration-300",
+                      getProgressColor(progress.progress)
+                    )}
+                    style={{ width: `${progress.progress}%` }}
+                  />
+                </div>
+                <span className={cn(
+                  "text-sm font-semibold px-2 py-0.5 rounded",
+                  getProgressColor(progress.progress),
+                  "text-white"
+                )}>
+                  {progress.progress}%
+                </span>
+              </div>
+            </div>
           </div>
-        
-         
-          <div 
-            className={`h-full transition-[width] mb-2 ${
-              progress.progress <= 20 ? 'bg-red-500 hover:bg-red-600' :
-              progress.progress <= 50 ? 'bg-yellow-500 hover:bg-yellow-600' :
-              'bg-green-500 hover:bg-green-600'
-            }`}
-            style={{ width: `${progress.progress}%`,marginTop:"-27px" }}
+
+          <Button
+            size="icon"
+            variant="ghost"
+            className="flex lg:hidden text-white hover:bg-blue-500"
+            onClick={() => onToggle("right")}
           >
-          </div>
+            <SidebarSimple className="-scale-x-100" size={24} />
+          </Button>
         </div>
       </div>
     </div>

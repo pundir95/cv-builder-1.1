@@ -82,10 +82,13 @@ export const ResumeDialog = () => {
 
   const onSubmit = async (values: FormValues) => {
     if (isCreate) {
-      // const user = localStorage.getItem("user")
-      // const userData = JSON.parse(user)
-      // resumeData.basics.name = userData.full_name;
-      // resumeData.basics.email = userData.email;
+      const user = localStorage.getItem("user")
+      
+        const userData = JSON.parse(user)
+        resumeData.basics.name = userData.first_name;
+        resumeData.basics.email = userData.email;
+        console.log(resumeData,"resumeData")
+      
 
       const templateId = Number(localStorage.getItem("templateId") || 1)
       const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });

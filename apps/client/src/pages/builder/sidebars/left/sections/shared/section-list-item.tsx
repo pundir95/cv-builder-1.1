@@ -65,7 +65,7 @@ export const SectionListItem = ({
             !isDragging && "hover:bg-secondary",
           )}
         >
-          <DotsSixVertical weight="bold" size={12} />
+          <DotsSixVertical weight="bold" size={25} color="#0D84F3" />
         </div>
 
         {/* List Item */}
@@ -78,8 +78,8 @@ export const SectionListItem = ({
               )}
               onClick={onUpdate}
             >
-              <h4 className="font-medium leading-relaxed">{title}</h4>
-              {description && <p className="text-xs leading-relaxed opacity-50">{description}</p>}
+              <h4 className="font-medium leading-relaxed text-x">{title}</h4>
+              {description && <p className="text-xl leading-relaxed opacity-50">{description}</p>}
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent>

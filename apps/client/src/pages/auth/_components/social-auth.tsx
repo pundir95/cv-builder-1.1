@@ -27,7 +27,18 @@ export const SocialAuth = () => {
         console.log(res,"ress");
         localStorage.setItem("token",res.data.access);
         localStorage.setItem("refresh_token",res.data.refresh);
-        navigate("/onboard/experience-level");
+
+        axios.get("https://cvbuilder-api.rexett.com/api/v1/accounts/api/users/",{
+          headers:{
+            Authorization:`Bearer ${res.data.access}`
+          }
+         
+        }).then((res) => {
+          localStorage.setItem("user",JSON.stringify(res.data[0]));
+          navigate("/onboard/experience-level");
+        })
+
+        // navigate("/onboard/experience-level");
 
       });
       
@@ -53,19 +64,19 @@ export const SocialAuth = () => {
       <Button 
         onClick={handleLinkedInLogin}
         size="lg" 
-        className="w-full !bg-[#222] !text-white hover:!bg-[#222]/80"
+        className="w-full py-6 text-base font-semibold !bg-[#0077B5] !text-white hover:!bg-[#0077B5]/90 transition-all duration-200"
       >
-        <LinkedinLogo className="mr-3 size-4" />
-        Linkedin
+        <LinkedinLogo className="mr-3 size-5" weight="fill" />
+        LinkedIn
       </Button>
 
       {/* <GoogleLogin onSuccess={handleSuccess} /> */}
       <Button 
         onClick={() => login()}
         size="lg" 
-        className="w-full !bg-[#222] !text-white hover:!bg-[#222]/80"
+        className="w-full py-6 text-base font-semibold !bg-white !text-gray-700 hover:!bg-gray-50 transition-all duration-200 border border-gray-200"
       >
-        <GoogleLogo className="mr-3 size-4" />
+        <GoogleLogo className="mr-3 size-5" weight="fill" />
         Google
       </Button>
     </div>

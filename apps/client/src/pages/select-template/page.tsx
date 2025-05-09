@@ -19,9 +19,7 @@ const ChooseTemplate = () => {
     creative:false,
     contemporary:false,
   })
-  const [isLimitReachedModalOpen, setIsLimitReachedModalOpen] = useState(true);
-
-console.log(selectedFilter,"selectedFilter")
+ 
 
 const onChange=(value: keyof typeof selectedFilter)=>{
   setSelectedFilter((prev)=>({
@@ -37,7 +35,7 @@ const onChange=(value: keyof typeof selectedFilter)=>{
         <BuilderHeading headingValue="choose_template" />
         <div className="container mx-auto px-4 py-8">
           <div className="flex gap-8">
-            <div className="w-64 shrink-0">
+            <div className="w-72 shrink-0">
               <FilterPanel 
                 setHoveredColor={setHoveredColor}
                 setSelectedFilter={setSelectedFilter}
@@ -45,13 +43,15 @@ const onChange=(value: keyof typeof selectedFilter)=>{
               />
             </div>
 
-            <div className="flex-1">
-              <TemplateSection selectedFilter={selectedFilter} showTemplateButton={showTemplateButton}/>
+            <div className="w-full bg-gray-50 rounded-xl p-8 shadow-inner">
+              <div className="max-w-4xl mx-auto bg-[#F4F5FF] rounded-lg shadow-sm">
+                <TemplateSection selectedFilter={selectedFilter} showTemplateButton={showTemplateButton}/>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={() => setIsLimitReachedModalOpen(false)} /> */}
+      {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={() => setIsLimitReachedModalOpen(false)} resumeDetailsId={resumeDetailsId} /> */}
       {/* <ResumeDialog /> */}
     </>
   );

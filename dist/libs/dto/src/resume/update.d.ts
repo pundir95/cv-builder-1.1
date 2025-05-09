@@ -7,6 +7,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
     data: import("zod").ZodOptional<import("zod").ZodDefault<import("zod").ZodObject<{
         basics: import("zod").ZodObject<{
             name: import("zod").ZodString;
+            profession: import("zod").ZodString;
             headline: import("zod").ZodString;
             email: import("zod").ZodUnion<[import("zod").ZodLiteral<"">, import("zod").ZodString]>;
             phone: import("zod").ZodString;
@@ -78,6 +79,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             }>;
         }, "strip", import("zod").ZodTypeAny, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -105,6 +107,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             };
         }, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -2028,6 +2031,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -2367,6 +2371,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -2760,6 +2765,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3126,6 +3132,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3493,6 +3500,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3859,6 +3867,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     data: import("zod").ZodOptional<import("zod").ZodDefault<import("zod").ZodObject<{
         basics: import("zod").ZodObject<{
             name: import("zod").ZodString;
+            profession: import("zod").ZodString;
             headline: import("zod").ZodString;
             email: import("zod").ZodUnion<[import("zod").ZodLiteral<"">, import("zod").ZodString]>;
             phone: import("zod").ZodString;
@@ -3930,6 +3939,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             }>;
         }, "strip", import("zod").ZodTypeAny, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -3957,6 +3967,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             };
         }, {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -5880,6 +5891,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -6219,6 +6231,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;
@@ -6612,6 +6625,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
         id: number;
         basics: {
             name: string;
+            profession: string;
             headline: string;
             email: string;
             phone: string;

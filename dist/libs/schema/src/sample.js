@@ -12,6 +12,7 @@ const sampleResume = {
     id: 1,
     basics: {
         name: "John Doe",
+        profession: "Web Developer",
         headline: "Creative and Innovative Web Developer",
         email: "john.doe@gmail.com",
         phone: "(555) 123-4567",

@@ -154,20 +154,22 @@ export const SectionDialog = <T extends SectionItem>({
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>
-      <DialogContent className="z-50">
+      <DialogContent className="z-50 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-gray-200 dark:border-gray-700">
         <Form {...form}>
           <ScrollArea>
             <form
               className="max-h-[60vh] space-y-6 lg:max-h-fit"
               onSubmit={form.handleSubmit(onSubmit)}
             >
-              <DialogHeader>
+              <DialogHeader className="pb-4 border-b border-gray-200 dark:border-gray-700">
                 <DialogTitle>
-                  <div className="flex items-center space-x-2.5">
-                    {isCreate && <Plus />}
-                    {isUpdate && <PencilSimple />}
-                    {isDuplicate && <CopySimple />}
-                    <h2>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                      {isCreate && <Plus className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                      {isUpdate && <PencilSimple className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                      {isDuplicate && <CopySimple className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                    </div>
+                    <h2 className="text-xl font-semibold">
                       {isCreate && t`Create a new item`}
                       {isUpdate && t`Update an existing item`}
                       {isDuplicate && t`Duplicate an existing item`}
@@ -180,10 +182,15 @@ export const SectionDialog = <T extends SectionItem>({
                 </VisuallyHidden>
               </DialogHeader>
 
-              {children}
+              <div className="px-1">
+                {children}
+              </div>
 
-              <DialogFooter>
-                <Button type="submit">
+              <DialogFooter className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <Button 
+                  type="submit"
+                  className="min-w-[100px] bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
+                >
                   {isCreate && t`Create`}
                   {isUpdate && t`Save Changes`}
                   {isDuplicate && t`Duplicate`}

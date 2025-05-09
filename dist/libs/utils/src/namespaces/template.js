@@ -9,14 +9,7 @@ Object.defineProperty(exports, "templatesList", {
     }
 });
 const templatesList = [
-    {
-        name: "cv_template_1",
-        id: 1,
-        withPhoto: true,
-        withoutPhoto: false,
-        oneColumn: true,
-        twoColumn: false
-    },
+    // {name:"cv_template_1",id:1,withPhoto:true,withoutPhoto:false,oneColumn:true,twoColumn:false },
     {
         name: "cv_template_2",
         id: 2,

@@ -7535,8 +7535,8 @@ const O8 = sr(
       type: e,
       autoComplete: "off",
       className: H(
-        "flex h-9 w-full rounded border border-border bg-transparent px-3 py-0.5 !text-sm ring-0 ring-offset-transparent transition-colors [appearance:textfield] placeholder:opacity-80 hover:bg-secondary/20 focus:border-primary focus:bg-secondary/20 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
-        "file:border-0 file:bg-transparent file:pt-1 file:text-sm file:font-medium file:text-primary",
+        "flex h-11 w-full rounded border border-border bg-[#F5F5F5] px-3 py-1 !text-sm ring-0 ring-offset-transparent transition-colors [appearance:textfield] placeholder:opacity-80 hover:bg-secondary/20 focus:border-primary focus:bg-secondary/20 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
+        "file:border-0 file:bg-transparent file:pt-1 file:text-sm file:font-medium file:text-gray-600",
         t ? "border-error" : "border-border",
         n
       ),
@@ -8537,7 +8537,7 @@ function P4(n = !1) {
   return { value: e, setValue: t, setTrue: r, setFalse: s, toggle: i };
 }
 const L4 = sr(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-60"
+  "text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-60"
 ), uh = S(({ className: n, ...e }, t) => /* @__PURE__ */ b(Bu.Root, { ref: t, className: H(L4(), n), ...e }));
 uh.displayName = Bu.Root.displayName;
 const pd = ({

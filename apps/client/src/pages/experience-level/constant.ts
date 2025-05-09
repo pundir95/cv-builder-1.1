@@ -14,8 +14,8 @@ export const BUILDER_HEADING = {
         "para": "Your education background can help us guide you through relevant sections for your resume"
     },
     "choose_template": {
-        "main": "Choose a Template",
-        "para": "Select a template that best suits your needs"
+        "main": "Popular Templates for Jobseekers with Limited Experience",
+        "para": "Explore templates designed to highlight your skills and potential, even with minimal experience."
     }
 }   
 

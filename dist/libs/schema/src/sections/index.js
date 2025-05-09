@@ -55,59 +55,73 @@ const customSchema = sectionSchema.extend({
 const sectionsSchema = _zod.z.object({
     collapse: sectionSchema.extend({
         id: _zod.z.literal("collapse"),
-        items: _zod.z.array(_customsection.customSectionSchema)
+        items: _zod.z.array(_customsection.customSectionSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     summary: sectionSchema.extend({
         id: _zod.z.literal("summary"),
-        content: _zod.z.string().default("")
+        content: _zod.z.string().default(""),
+        extraDescription: _zod.z.string().default("")
     }),
     awards: sectionSchema.extend({
         id: _zod.z.literal("awards"),
-        items: _zod.z.array(_award.awardSchema)
+        items: _zod.z.array(_award.awardSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     certifications: sectionSchema.extend({
         id: _zod.z.literal("certifications"),
-        items: _zod.z.array(_certification.certificationSchema)
+        items: _zod.z.array(_certification.certificationSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     education: sectionSchema.extend({
         id: _zod.z.literal("education"),
-        items: _zod.z.array(_education.educationSchema)
+        items: _zod.z.array(_education.educationSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     experience: sectionSchema.extend({
         id: _zod.z.literal("experience"),
-        items: _zod.z.array(_experience.experienceSchema)
+        items: _zod.z.array(_experience.experienceSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     volunteer: sectionSchema.extend({
         id: _zod.z.literal("volunteer"),
-        items: _zod.z.array(_volunteer.volunteerSchema)
+        items: _zod.z.array(_volunteer.volunteerSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     interests: sectionSchema.extend({
         id: _zod.z.literal("interests"),
-        items: _zod.z.array(_interest.interestSchema)
+        items: _zod.z.array(_interest.interestSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     languages: sectionSchema.extend({
         id: _zod.z.literal("languages"),
-        items: _zod.z.array(_language.languageSchema)
+        items: _zod.z.array(_language.languageSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     profiles: sectionSchema.extend({
         id: _zod.z.literal("profiles"),
-        items: _zod.z.array(_profile.profileSchema)
+        items: _zod.z.array(_profile.profileSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     projects: sectionSchema.extend({
         id: _zod.z.literal("projects"),
-        items: _zod.z.array(_project.projectSchema)
+        items: _zod.z.array(_project.projectSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     publications: sectionSchema.extend({
         id: _zod.z.literal("publications"),
-        items: _zod.z.array(_publication.publicationSchema)
+        items: _zod.z.array(_publication.publicationSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     references: sectionSchema.extend({
         id: _zod.z.literal("references"),
-        items: _zod.z.array(_reference.referenceSchema)
+        items: _zod.z.array(_reference.referenceSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     skills: sectionSchema.extend({
         id: _zod.z.literal("skills"),
-        items: _zod.z.array(_skill.skillSchema)
+        items: _zod.z.array(_skill.skillSchema),
+        extraDescription: _zod.z.string().default("")
     }),
     custom: _zod.z.record(_zod.z.string(), customSchema)
 });
@@ -121,72 +135,86 @@ const defaultSections = {
     collapse: _extends._({}, defaultSection, {
         id: "collapse",
         name: "Collapse",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     summary: _extends._({}, defaultSection, {
         id: "summary",
         name: "Summary",
-        content: ""
+        content: "",
+        extraDescription: ""
     }),
     awards: _extends._({}, defaultSection, {
         id: "awards",
         name: "Awards",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     certifications: _extends._({}, defaultSection, {
         id: "certifications",
         name: "Certifications",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     education: _extends._({}, defaultSection, {
         id: "education",
         name: "Education",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     experience: _extends._({}, defaultSection, {
         id: "experience",
         name: "Experience",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     volunteer: _extends._({}, defaultSection, {
         id: "volunteer",
         name: "Volunteering",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     interests: _extends._({}, defaultSection, {
         id: "interests",
         name: "Interests",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     languages: _extends._({}, defaultSection, {
         id: "languages",
         name: "Languages",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     profiles: _extends._({}, defaultSection, {
         id: "profiles",
         name: "Profiles",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     projects: _extends._({}, defaultSection, {
         id: "projects",
         name: "Projects",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     publications: _extends._({}, defaultSection, {
         id: "publications",
         name: "Publications",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     references: _extends._({}, defaultSection, {
         id: "references",
         name: "References",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     skills: _extends._({}, defaultSection, {
         id: "skills",
         name: "Skills",
-        items: []
+        items: [],
+        extraDescription: ""
     }),
     custom: {}
 };

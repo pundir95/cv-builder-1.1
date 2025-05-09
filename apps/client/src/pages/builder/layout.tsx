@@ -58,9 +58,9 @@ export const BuilderLayout = () => {
       <div className="relative size-full overflow-hidden">
         <PanelGroup direction="horizontal">
          {showLeftSidebar? <Panel
-            minSize={45}
-            maxSize={65}
-            defaultSize={45}
+            minSize={50}
+            maxSize={55}
+            defaultSize={55}
             className={cn("z-10 bg-background", !leftHandle.isDragging && "transition-[flex]")}
             onResize={leftSetSize}
           >

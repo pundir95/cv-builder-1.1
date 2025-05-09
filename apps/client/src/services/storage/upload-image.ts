@@ -3,11 +3,13 @@ import type { AxiosResponse } from "axios";
 
 import { axios } from "@/client/libs/axios";
 
-export const uploadImage = (file: File) => {
+export const uploadImage = (payload: any) => {
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append("file", payload.image);
+  formData.append("user_id", payload.user_id);
+  formData.append("cv_id", payload.cv_id);
 
-  return axios.put<string, AxiosResponse<string>, FormData>("/storage/image", formData, {
+  return axios.patch<string, AxiosResponse<string>, FormData>("/cv-manager/cv-image-update/", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };

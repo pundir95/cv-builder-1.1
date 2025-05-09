@@ -12,6 +12,7 @@ import { useResumeStore } from "@/client/stores/resume";
 import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
 import { useState, useEffect } from "react";
+import { axios } from "@/client/libs/axios";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -39,7 +40,28 @@ export const ExportSection = () => {
     console.log("Template ref from shared state:", templateRef);
     
     if (templateRef) {
-      generatePDF(templateRef);
+      const templateString = templateRef.innerHTML;
+      axios.post(`cv-manager/cv-download/`, {
+        
+          "html_content": templateString,
+          "cv_name": "Dummy"
+      
+      }, { responseType: 'blob' })
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = 'resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+      })
+      .catch((error) => {
+        console.error("Error generating PDF:", error);
+      });
+      // generatePDF(templateRef);
     } else {
       console.error("Template reference is null. Please ensure the builder page is loaded.");
     }

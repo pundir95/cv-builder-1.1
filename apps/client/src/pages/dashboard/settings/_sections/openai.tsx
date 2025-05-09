@@ -23,7 +23,7 @@ const formSchema = z.object({
     .string()
     // eslint-disable-next-line lingui/no-unlocalized-strings
     .min(1, "API key cannot be empty.")
-    .default(""),
+    .default(import.meta.env.VITE_OPENAI_API_KEY),
   baseURL: z
     .string()
     // eslint-disable-next-line lingui/no-unlocalized-strings
@@ -55,8 +55,9 @@ export const OpenAISettings = () => {
 
   
 
-  const onSubmit = ({ apiKey, baseURL, model, maxTokens }: FormValues) => {
-    setApiKey("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");
+  const onSubmit = ({baseURL, model, maxTokens }: FormValues) => {
+    let apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    setApiKey(apiKey);
     if (baseURL) {
       setBaseURL(baseURL);
     }

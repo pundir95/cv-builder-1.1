@@ -1,5 +1,5 @@
 export const templatesList = [
-  {name:"cv_template_1",id:1,withPhoto:true,withoutPhoto:false,oneColumn:true,twoColumn:false },
+  // {name:"cv_template_1",id:1,withPhoto:true,withoutPhoto:false,oneColumn:true,twoColumn:false },
   {name:"cv_template_2",id:2,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true},
   {name:"cv_template_3",id:3,withPhoto:false,withoutPhoto:true,oneColumn:true,twoColumn:false},
   {name:"cv_template_4",id:4,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true},

@@ -36,8 +36,8 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
   };
 
   return (
-    <div className="flex bg-secondary-accent/30">
-      <ScrollArea orientation="vertical" className={`h-screen flex-1 pb-16 lg:pb-0 transition-all duration-300 bg-[#a4abbbbd] ${!showRightSidebar ? 'w-0 opacity-0' : 'w-full opacity-100'}`}>
+    <div className="flex bg-blue-100">
+      <ScrollArea orientation="vertical" className={`h-screen flex-1 pb-16 lg:pb-0 transition-all duration-300 bg-[#e0effd] ${!showRightSidebar ? 'w-0 opacity-0' : 'w-full opacity-100'}`}>
        <div 
          ref={containterRef} 
          className={`grid gap-y-6 p-6 @container/right transition-all duration-300 ${!showRightSidebar ? 'w-0 opacity-0 translate-x-full' : 'w-full opacity-100 translate-x-0'}`}

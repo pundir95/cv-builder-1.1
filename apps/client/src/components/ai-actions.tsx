@@ -36,9 +36,9 @@ type Props = {
 
 export const AiActions = ({ value, onChange, className }: Props) => {
   const [loading, setLoading] = useState<Action | false>(false);
-  const aiEnabled = useOpenAiStore((state) => !!state.apiKey);
+  // const aiEnabled = useOpenAiStore((state) => !!state.apiKey);
 
-  if (!aiEnabled) return null;
+  // if (!aiEnabled) return null;
 
   const onClick = async (action: Action, mood?: Mood) => {
     try {

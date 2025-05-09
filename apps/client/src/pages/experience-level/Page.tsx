@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { EDUCATION_LEVEL, EXPERIENCE_TIME, IS_STUDENT } from "./constant";
 import BuilderBox from "./BuilderBox";
 import { useNavigate } from "react-router";
+import { LimitReachedModal } from "../select-template/LimitReachedModal";
 
 interface ExperienceItem {
   id: string;
@@ -17,9 +18,15 @@ interface CheckState {
 }
 
 const ExperienceLevel = () => {
+  const [isLimitReachedModalOpen, setIsLimitReachedModalOpen] = useState(false);
   const [experienceLevel, setExperienceLevel] = useState<ExperienceItem[]>([]);
   const [studentData, setStudentData] = useState<ExperienceItem[]>([]);
   const navigate=useNavigate()
+  const user=localStorage.getItem("user")
+  const userData=JSON.parse(user || "{}")
+  let resumeDetailsId=userData?.resume_details[0]?.id;
+  let isSubscriptionHave = userData?.subscription_details;
+  let resumeCount=userData?.resume_count;
 
   useEffect(() => {
     const updatedData = EXPERIENCE_TIME?.map((item, index) => ({
@@ -35,6 +42,13 @@ const ExperienceLevel = () => {
       isSelected: false
     })));
   }, [EXPERIENCE_TIME]);
+
+
+  useEffect(() => {
+    if(isSubscriptionHave?.length==0 && resumeCount==1){
+      setIsLimitReachedModalOpen(true)
+    }
+  }, [])
 
   const [isCheck, setIsCheck] = useState<CheckState>({
     isStudent: false,
@@ -76,11 +90,11 @@ const ExperienceLevel = () => {
         if (item?.isStudent) {
             // navigate("/resume/choose-template");
         } else {
-          navigate("/onboard/select-template");
+          navigate("/onboard/upload-resume");
         }
       }
     } else {
-      navigate("/onboard/select-template");
+      navigate("/onboard/upload-resume");
     }
   };
 
@@ -109,6 +123,7 @@ const ExperienceLevel = () => {
       ) : (
         " "
       )}
+        <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={() => setIsLimitReachedModalOpen(false)} resumeDetailsId={resumeDetailsId} />
     </div>
   );
 };
