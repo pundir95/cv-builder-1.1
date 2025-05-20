@@ -1,16 +1,18 @@
 import { t } from "@lingui/macro";
 import { Helmet } from "react-helmet-async";
 import { ScrollArea, Button, Card, Separator, Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@reactive-resume/ui";
-import { Check, Shield, CreditCard, Bank, Money } from "@phosphor-icons/react";
+import { Check, Shield, CreditCard, Bank, Money, Trash } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { axios } from "@/client/libs/axios";
 
 export const PlanPricing = () => {
   const [plans,setPlans]=useState([])
   const [isYearly, setIsYearly] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
+    setIsAdmin(user.role === "admin");
     let api = user.reference_id ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
     axios.get(api).then((res)=>{
       console.log(res,"res")
@@ -28,13 +30,23 @@ export const PlanPricing = () => {
     })
   }
 
+  const handleDeletePlan = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this plan?")) {
+      axios.delete(`/subscription/subscription-plans/${id}/`).then((res) => {
+        setPlans(plans.filter((plan: any) => plan.id !== id));
+      }).catch((err) => {
+        console.error("Error deleting plan:", err);
+      });
+    }
+  };
+
   return (
     <ScrollArea orientation="vertical" className="h-screen">
       <Helmet>
         <title>{t`Pricing Plans`} - Resume Builder</title>
       </Helmet>
 
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto">
         <div className="py-12 px-4 max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-10">Subscription Plans</h2>
       <div className="flex items-center justify-center mb-8 gap-4">
@@ -57,8 +69,17 @@ export const PlanPricing = () => {
         {plans.map((product:any) => (
           <div
             key={product.name}
-            className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200"
+            className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative"
           >
+            {isAdmin && (
+              <button
+                onClick={() => handleDeletePlan(product.id)}
+                className="absolute top-4 right-4 p-2 text-red-500 hover:text-red-700 transition-colors"
+                title="Delete Plan"
+              >
+                <Trash size={20} />
+              </button>
+            )}
             <h3 className="text-xl font-semibold mb-2 text-center">{product.name}</h3>
             <div className="text-center mb-6">
               <span className="text-4xl font-bold text-gray-900">
@@ -68,14 +89,14 @@ export const PlanPricing = () => {
                 /{isYearly ? 'year' : 'month'}
               </span>
             </div>
-            {/* <ul className="mb-8 w-full">
-              {product.features.map((feature) => (
+            <ul className="mb-8 w-full">
+              {Array.isArray(product?.fetures) && product?.fetures?.map((feature:any) => (
                 <li key={feature} className="flex items-center gap-2 mb-3 text-gray-700">
                   <Check size={20} style={{ color: '#22c55e' }} />
                   <span>{feature}</span>
                 </li>
               ))}
-            </ul> */}
+            </ul>
             <button
               className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition-colors duration-200 shadow-md"
               onClick={()=>getThePlan(product?.id)}

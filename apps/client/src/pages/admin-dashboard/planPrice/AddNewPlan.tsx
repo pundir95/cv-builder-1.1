@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { axios } from '@/client/libs/axios';
 
 const planTypes = [
-  { label: 'One Time Purchase', value: 'one_time' },
-  { label: 'Monthly', value: 'monthly' },
-  { label: 'Annual', value: 'annual' },
+  { label: 'Monthly', value: 'month' },
+  { label: 'Annual', value: 'year' },
   { label: 'Offer', value: 'offer' },
 ];
 
@@ -16,6 +16,8 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
   const [planType, setPlanType] = useState('one_time');
   const [planPrice, setPlanPrice] = useState('');
   const [features, setFeatures] = useState<string[]>(['']);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFeatureChange = (index: number, value: string) => {
     const newFeatures = [...features];
@@ -29,6 +31,54 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
 
   const handleDeleteFeature = (index: number) => {
     setFeatures(features.filter((_, i) => i !== index));
+  };
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!planName.trim()) {
+      newErrors.planName = 'Plan name is required';
+    }
+
+    if (!planPrice.trim()) {
+      newErrors.planPrice = 'Plan price is required';
+    } else if (isNaN(Number(planPrice)) || Number(planPrice) <= 0) {
+      newErrors.planPrice = 'Please enter a valid price';
+    }
+
+    if (features.length === 0 || features.some(feature => !feature.trim())) {
+      newErrors.features = 'At least one feature is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const onSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post('/subscription/subscription-plans/', {
+        name: planName,
+        validity: planType,
+        price: Number(planPrice),
+        currency: 'USD',
+        fetures: features.filter(feature => feature.trim()),
+      });
+
+      if (response.status === 201 || response.status === 200) {
+        onBack(); // Go back to the plans list on success
+      }
+    } catch (error: any) {
+      setErrors({
+        submit: error.response?.data?.message || 'Failed to create plan. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -50,8 +100,11 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
           placeholder="E.g. Express Plan"
           value={planName}
           onChange={e => setPlanName(e.target.value)}
-          className="w-full bg-gray-100 rounded-lg px-4 py-3 outline-none placeholder-gray-400"
+          className={`w-full bg-gray-100 rounded-lg px-4 py-3 outline-none placeholder-gray-400 ${
+            errors.planName ? 'border-2 border-red-500' : ''
+          }`}
         />
+        {errors.planName && <p className="text-red-500 text-sm mt-1">{errors.planName}</p>}
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-medium">Plan Type</label>
@@ -81,9 +134,12 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
             placeholder="E.g. 9"
             value={planPrice}
             onChange={e => setPlanPrice(e.target.value)}
-            className="w-full bg-gray-100 rounded-r-lg px-4 py-3 outline-none placeholder-gray-400"
+            className={`w-full bg-gray-100 rounded-r-lg px-4 py-3 outline-none placeholder-gray-400 ${
+              errors.planPrice ? 'border-2 border-red-500' : ''
+            }`}
           />
         </div>
+        {errors.planPrice && <p className="text-red-500 text-sm mt-1">{errors.planPrice}</p>}
       </div>
       <div className="mb-8">
         <label className="block mb-2 font-medium">Features</label>
@@ -94,7 +150,9 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
               placeholder={`Feature ${idx + 1}`}
               value={feature}
               onChange={e => handleFeatureChange(idx, e.target.value)}
-              className="w-full bg-gray-100 rounded-lg px-4 py-3 outline-none placeholder-gray-400"
+              className={`w-full bg-gray-100 rounded-lg px-4 py-3 outline-none placeholder-gray-400 ${
+                errors.features ? 'border-2 border-red-500' : ''
+              }`}
             />
             <button
               type="button"
@@ -106,6 +164,7 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
             </button>
           </div>
         ))}
+        {errors.features && <p className="text-red-500 text-sm mt-1">{errors.features}</p>}
         <button
           type="button"
           onClick={handleAddFeature}
@@ -114,12 +173,21 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
           Add Feature
         </button>
       </div>
+      {errors.submit && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+          {errors.submit}
+        </div>
+      )}
       <div className="flex justify-center">
         <button
           type="button"
-          className="bg-lime-300 hover:bg-lime-400 text-black font-medium px-8 py-3 rounded-full transition-colors duration-150"
+          onClick={onSubmit}
+          disabled={isSubmitting}
+          className={`bg-lime-300 hover:bg-lime-400 text-black font-medium px-8 py-3 rounded-full transition-colors duration-150 ${
+            isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
-          Add New Plan
+          {isSubmitting ? 'Creating Plan...' : 'Add New Plan'}
         </button>
       </div>
     </div>

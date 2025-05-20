@@ -3,6 +3,7 @@ import { Pencil } from "@phosphor-icons/react";
 import { Button, Card, Checkbox, Input, Label, ScrollArea, Separator } from "@reactive-resume/ui";
 import { useState } from "react";
 import CompanySetting from "./CompanySetting";
+import { ActiveSubscription } from "./ActiveSubScription";
 
 export const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState('general');
@@ -63,21 +64,7 @@ export const AccountSettings = () => {
             </nav>
           </Card>
           {/* Subscription Section */}
-          <div className={`md:col-span-3 ${activeSection !== 'subscription' && 'hidden'}`}>
-            <Card className="p-6 bg-gray-300">
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <h2 className="text-xl font-semibold text-primary mb-2">{t`No Subscription Active`}</h2>
-                <p className="text-primary/70 mb-6">
-                  {t`You currently don't have an active subscription. Subscribe now to unlock exclusive features and benefits!`}
-                </p>
-                <Button 
-                  className="bg-primary text-white hover:bg-primary/90"
-                >
-                  {t`Get Subscription plan`}
-                </Button>
-              </div>
-            </Card>
-          </div>
+       <ActiveSubscription activeSection={activeSection} />
 
           {/* Communication Preferences Section */}
           <div className={`md:col-span-3 ${activeSection !== 'communication' && 'hidden'}`}>
