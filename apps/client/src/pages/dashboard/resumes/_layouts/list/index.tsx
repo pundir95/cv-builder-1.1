@@ -8,8 +8,8 @@ import { CreateResumeListItem } from "./_components/create-item";
 import { ImportResumeListItem } from "./_components/import-item";
 import { ResumeListItem } from "./_components/resume-item";
 
-export const ListView = () => {
-  const { resumes, loading } = useResumes();
+export const ListView = ({ resumes, loading }: { resumes: any[], loading: boolean } ) => {
+ 
 
   return (
     <div className="grid gap-y-2">
@@ -35,7 +35,7 @@ export const ListView = () => {
           </div>
         ))}
 
-      {/* {resumes && (
+      {resumes && (
         <AnimatePresence>
           {resumes
             .sort((a, b) => sortByDate(a, b, "updatedAt"))
@@ -50,7 +50,7 @@ export const ListView = () => {
               </motion.div>
             ))}
         </AnimatePresence>
-      )} */}
+      )}
     </div>
   );
 };

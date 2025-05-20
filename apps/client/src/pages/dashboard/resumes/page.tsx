@@ -62,9 +62,9 @@ export const ResumesPage = () => {
           <TabsContent value="grid">
             <GridView resumes={resumes} loading={loading} />
           </TabsContent>
-          {/* <TabsContent value="list">
-            <ListView />
-          </TabsContent> */}
+          <TabsContent value="list">
+            <ListView resumes={resumes || []} loading={loading} />
+          </TabsContent>
         </ScrollArea>
       </Tabs>
       

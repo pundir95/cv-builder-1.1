@@ -36,6 +36,7 @@ import SubscriptionStatus from "../pages/subscription-status/SubscriptionStatus"
 import AdminPlanPricing from "../pages/admin-dashboard/planPrice/AdminPlanPricing";
 import Products from "../pages/admin-dashboard/products/Products";
 import { LoginModal } from "../pages/auth/LoginModal";
+import CustomerOrganisation from "../pages/organistation-customer/CustomerOrganisation";
 
 
 export const routes = createRoutesFromElements(
@@ -101,6 +102,7 @@ export const routes = createRoutesFromElements(
             <Route path="dashboard/account" element={<AccountSettings />} />
             <Route path="dashboard/plan-pricing" element={<PlanPricing />} />
             <Route path="dashboard/subscription-status" element={<SubscriptionStatus />} />
+            <Route path="dashboard/organization-customer" element={<CustomerOrganisation />} />
           </Route>
         </Route>
       </Route>
