@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowLeft, ArrowRight, CloudArrowUp, File, Upload } from "@phosphor-icons/react";
 
-export default function UploadContainer({handleFileInput, selectedFile}) {
+export default function UploadContainer({ handleFileInput, selectedFile }: { handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, selectedFile: File | null }) {
   return (
     <div>
       <div className="bg-white rounded-3xl flex flex-row items-center justify-between gap-8 px-6 py-10 max-w-4xl w-full mb-8 animate-fade-in">

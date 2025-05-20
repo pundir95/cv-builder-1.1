@@ -21,7 +21,7 @@ const _zod = require("zod");
 const _user = require("../user");
 const loginSchema = _zod.z.object({
     email: _zod.z.string().transform((value)=>value.toLowerCase()),
-    password: _zod.z.string().min(6)
+    password: _zod.z.string()
 }).refine((value)=>{
     return value.email.includes("@") ? _zod.z.string().email().parse(value.email) : _user.usernameSchema.parse(value.email);
 }, {

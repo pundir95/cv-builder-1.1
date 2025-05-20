@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Upload, FileText } from '@phosphor-icons/react';
 
-const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, handleFileInput, selectedFile, onStartFromScratch }) => {
+const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, handleFileInput, selectedFile, onStartFromScratch }: { setSelectedCard: (card: 'upload' | 'scratch' | null) => void, selectedCard: 'upload' | 'scratch' | null, handleDrag: (e: React.DragEvent) => void, handleDrop: (e: React.DragEvent) => void, handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, selectedFile: File | null, onStartFromScratch: () => void }) => {
   return (
     <div className="grid md:grid-cols-2 gap-6">
     {/* Upload Option */}

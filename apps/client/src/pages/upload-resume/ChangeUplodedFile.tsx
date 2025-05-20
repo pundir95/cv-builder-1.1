@@ -63,7 +63,7 @@ const noteStyle: React.CSSProperties = {
   textAlign: 'center',
 };
 
-const ChangeUplodedFile: React.FC<{ selectedFile: File, handlePreviousStep: () => void }> = ({ selectedFile, handlePreviousStep }) => {
+const ChangeUplodedFile: React.FC<{ selectedFile: File | null, handlePreviousStep: () => void }> = ({ selectedFile, handlePreviousStep }) => {
   return (
     <div style={boxStyle}>
       <button style={closeStyle} aria-label="Close" onClick={()=>{
@@ -79,7 +79,7 @@ const ChangeUplodedFile: React.FC<{ selectedFile: File, handlePreviousStep: () =
       </div>
       <div style={fileNameStyle}>
         <span style={checkStyle}>✔</span>
-        {selectedFile.name}
+        {selectedFile?.name}
       </div>
       <button style={buttonStyle} onClick={()=>{
         handlePreviousStep()
