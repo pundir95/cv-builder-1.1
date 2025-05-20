@@ -70,7 +70,7 @@ const selectedTemplateId = (crrTemplate: string) => {
   //   navigate(`/onboard/upload-resume`)
   // }
 
-  if(isSubscriptionHave.length==0 && resumeCount==1){
+  if((isSubscriptionHave?.length==0|| isSubscriptionHave==null) && resumeCount==1){
     setIsLimitReachedModalOpen(true)
   }else{
      const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)

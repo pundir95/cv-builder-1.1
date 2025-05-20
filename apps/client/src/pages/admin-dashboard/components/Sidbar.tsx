@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { ChartLine, Users, Notepad, CurrencyDollar, Gear } from "@phosphor-icons/react";
+import { ChartLine, Users, Notepad, CurrencyDollar, Gear, ShoppingCart } from "@phosphor-icons/react";
 import { Button } from "@reactive-resume/ui";
 import { UserAvatar } from "@/client/components/user-avatar";
 import { UserOptions } from "@/client/components/user-options";
@@ -25,6 +25,11 @@ export const Sidebar = () => {
       label: `Template`,
       path: "/admin/templates"
     },
+    // {
+    //   icon: <ShoppingCart size={20} />,
+    //   label: `Products`,
+    //   path: "/admin/products"
+    // },
     {
       icon: <CurrencyDollar size={20} />,
       label: `Pricing and Plans`,

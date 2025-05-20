@@ -93,24 +93,25 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       shortcut: "⇧R",
       icon: <ReadCvLogo color="white" />,
     },
-    {
-      path: "/dashboard/account",
-      name: `Account`,
-      shortcut: "⇧S",
-      icon: <UserCircle color="white" />,
-    },
+  
     {
       path: "/dashboard/plan-pricing",
       name: `Plan Pricing`,
       shortcut: "⇧S",
       icon: <Money color="white" />,
     },
+    // {
+    //   path: "/dashboard/settings",
+    //   name: `Settings`,
+    //   shortcut: "⇧S",
+    //   icon: <FadersHorizontal color="white" />,
+    // }, 
     {
-      path: "/dashboard/settings",
-      name: `Settings`,
+      path: "/dashboard/account",
+      name: `Account Settings`,
       shortcut: "⇧S",
-      icon: <FadersHorizontal color="white" />,
-    },  
+      icon: <UserCircle color="white" />,
+    }, 
  
   ];
 

@@ -3,6 +3,7 @@ import { EDUCATION_LEVEL, EXPERIENCE_TIME, IS_STUDENT } from "./constant";
 import BuilderBox from "./BuilderBox";
 import { useNavigate } from "react-router";
 import { LimitReachedModal } from "../select-template/LimitReachedModal";
+import { LoginModal } from "../auth/LoginModal";
 
 interface ExperienceItem {
   id: string;

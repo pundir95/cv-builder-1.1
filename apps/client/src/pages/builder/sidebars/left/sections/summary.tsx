@@ -66,7 +66,7 @@ export const SummarySection = () => {
             className="bg-white text-blue-500 hover:text-blue-700 bg-white"
           >
             <Lightbulb className="bg-yellow-400" />
-            <span className="ml-2 text-base font-medium">Get help with writing</span>
+            <span className="ml-2 text-base font-medium">Summarize my experience</span>
           </Button>
           <SectionOptions id="summary" />
         </div>

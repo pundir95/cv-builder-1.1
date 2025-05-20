@@ -2,6 +2,7 @@ import { t } from "@lingui/macro";
 import { Pencil } from "@phosphor-icons/react";
 import { Button, Card, Checkbox, Input, Label, ScrollArea, Separator } from "@reactive-resume/ui";
 import { useState } from "react";
+import CompanySetting from "./CompanySetting";
 
 export const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState('general');
@@ -30,6 +31,13 @@ export const AccountSettings = () => {
                 onClick={() => handleSectionChange('general')}
               >
                 {t`General Settings`}
+              </Button>
+              <Button
+                variant="ghost" 
+                className={`w-full justify-start ${activeSection === 'company' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
+                onClick={() => handleSectionChange('company')}
+              >
+                {t`Company Settings`}
               </Button>
               <Button
                 variant="ghost"
@@ -227,6 +235,10 @@ export const AccountSettings = () => {
               </div>
             </Card>
           </div>
+          
+
+
+          <CompanySetting activeSection={activeSection} setIsEditing={setIsEditing} isEditing={isEditing}  />
         </div>
       </div>
     </ScrollArea>

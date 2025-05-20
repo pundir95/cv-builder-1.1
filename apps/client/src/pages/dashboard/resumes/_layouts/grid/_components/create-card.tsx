@@ -17,7 +17,7 @@ export const CreateResumeCard = ({setIsLimitReachedModalOpen}:{setIsLimitReached
   return (
     <BaseCard
       onClick={() => {
-        if(isSubscriptionHave.length==0 && resumeCount==1){
+        if((isSubscriptionHave?.length==0|| isSubscriptionHave==null) && resumeCount==1){
           setIsLimitReachedModalOpen(true)
           
         }else{

@@ -16,6 +16,14 @@ export const BUILDER_HEADING = {
     "choose_template": {
         "main": "Popular Templates for Jobseekers with Limited Experience",
         "para": "Explore templates designed to highlight your skills and potential, even with minimal experience."
+    },
+    "upload_resume": {
+        "main": "Are you uploading an existing resume?",
+        "para": "Just review, edit, and update it with new information"
+    },
+    "choose_file": {
+        "main": "How do you want to upload your resume?",
+        "para": ""
     }
 }   
 

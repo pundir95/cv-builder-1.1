@@ -22,7 +22,7 @@ import { cn } from "@reactive-resume/utils";
 import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link,useNavigate } from "react-router";
+import { data, Link,useNavigate } from "react-router";
 import type { z } from "zod";
 
 import { useLogin } from "@/client/services/auth";
@@ -65,6 +65,7 @@ export const LoginPage = () => {
     
     axios.post("https://cvbuilder-api.rexett.com/api/v1/accounts/guest-user/").then((res) => {
       console.log(res.data.data.reference_id,"ress");
+      localStorage.setItem("user", JSON.stringify(res.data.data));
       localStorage.setItem("reference_id",res.data.data.reference_id);
       navigate("/onboard/experience-level");
 

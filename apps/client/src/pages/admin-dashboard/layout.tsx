@@ -2,12 +2,18 @@ import { SidebarSimple } from "@phosphor-icons/react";
 import { Button, Sheet, SheetClose, SheetContent, SheetTrigger } from "@reactive-resume/ui";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 import { Sidebar } from "./components/Sidbar";
 
 export const AdminDashboardLayout = () => {
   const [open, setOpen] = useState(false);
+  const userData = localStorage.getItem("user");
+  const userDataJson = JSON.parse(userData || "{}");
+  const role = userDataJson.role;
+  if(role !== "admin"){
+    return <Navigate replace to={`/`} />
+  }
 
   return (
     <div>

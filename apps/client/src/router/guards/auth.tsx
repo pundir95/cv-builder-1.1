@@ -1,17 +1,19 @@
-import { Navigate, Outlet, useLocation } from "react-router";
+import { Navigate, Outlet} from "react-router";
 
 import { useUser } from "@/client/services/user";
 
 export const AuthGuard = () => {
-  const location = useLocation();
-  const redirectTo = location.pathname + location.search;
-
+  const userData = localStorage.getItem("user");
+  const userDataJson = JSON.parse(userData || "{}");
+  const role = userDataJson.role;
+  
   const { user, loading } = useUser();
-console.log(user,"ios")
   if (loading) return null;
 
-  if (user) {
+  if (user && role === "cv_user") {
     return <Outlet />;
+  }else{
+    return <Navigate replace to={`/admin`} />;
   }
 
   return <Navigate replace to={`/auth/login`} />;

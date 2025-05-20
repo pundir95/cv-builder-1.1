@@ -1,7 +1,7 @@
 import { BUILDER_HEADING } from "./constant";
 import { motion } from "framer-motion";
 
-const BuilderHeading = ({ headingValue }: { headingValue: 'experience_time' | 'is_student' | 'experience_level' | 'choose_template' }) => {
+const BuilderHeading = ({ headingValue }: { headingValue: 'experience_time' | 'is_student' | 'experience_level' | 'choose_template' | 'upload_resume' | 'choose_file' }) => {
     let headingItem = BUILDER_HEADING[headingValue] as { main: string; para?: string };
   return (
     <motion.div 

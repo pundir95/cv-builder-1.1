@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Upload, FileText, ArrowRight } from "@phosphor-icons/react";
+
+import { Upload, FileText, ArrowRight, ArrowLeft } from "@phosphor-icons/react";
 import { useDialog } from '@/client/stores/dialog';
 import { LimitReachedModal } from '../select-template/LimitReachedModal';
 import { useNavigate } from 'react-router';
-
+import { axios } from '@/client/libs/axios';
+import { resumeData } from '../dashboard/resumes/constant';
+import { createResume } from '@/client/services/resume';
+import FirstUploadUI from './FirstUploadUI';
+import UploadContainer from './UploadContainer';
+import BuilderHeading from '../experience-level/BuilderHeading';
+import ChangeUplodedFile from './ChangeUplodedFile';
+import EvaluateFeedback from './EvaluateFeedback';
+import LoadingResume from './LoadingResume';
+import { createId } from "@paralleldrive/cuid2";
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedCard, setSelectedCard] = useState<'upload' | 'scratch' | null>(null);
-  const { open } = useDialog("resume");
+  const [selectedStep, setSelectedStep] = useState<number>(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [newResume, setNewResume] = useState<any>(null);
   const navigate = useNavigate()
 
   
@@ -39,7 +50,8 @@ const UploadResume = () => {
     }
   };
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInput =async (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleNextStep()
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setSelectedFile(file);
@@ -58,72 +70,151 @@ const UploadResume = () => {
   navigate("/onboard/select-template")
 }
 
+const handleNextStep = () => {
+  if(selectedStep === 4){
+    navigate(`/builder/${newResume.data.id}`)// void navigate(`/builder/${newResume.data.id}`))
+  }else{
+    setSelectedStep(prev => prev + 1);
+  }
+}
+
+const handlePreviousStep = () => {
+  setSelectedStep(prev => prev - 1);
+}
+
+const selectedStepHeading: { [key: number]: string } = {
+  1: "upload_resume",
+  2: "choose_file",
+}
+
+console.log(selectedFile,"selectedFile")
+
+const uploadResume = () => {
+  if (selectedFile) {
+    handleNextStep()
+    console.log(selectedFile,"selectedFile")
+    const formData = new FormData();
+    formData.append("resume", selectedFile);
+    axios.post("/cv-manager/process-resume/", formData).then(async (res) => {
+      console.log(res.data.data);
+      setIsComplete(true)
+      localStorage.setItem("uploadCVName",res.data.data.personal_info.name)
+      resumeData.basics.name = res.data.data.personal_info.name;
+      resumeData.basics.email = res.data.data?.personal_info?.email;
+      resumeData.basics.phone = res.data.data?.personal_info?.phone;
+      resumeData.sections.summary.content = res.data.data.summary;
+      resumeData.sections.experience.items = res.data.data.work_experience?.map((ele:any)=>{
+        return {
+          company: ele?.company,
+          date:ele?.duration,
+          id:createId(),
+          location:"",
+          position: ele.position,
+          summary: Array.isArray(ele.responsibilities) ? ele.responsibilities.join('\n') : ele.responsibilities,
+          url:{label: "", href: ""},
+          visible:true
+        }
+      });
+      resumeData.sections.skills.items = res.data.data.skills?.technical
+      ?.map((ele:any)=>{
+        return {
+          id:createId(),
+          name: ele,
+          level: 2,
+          visible:true,
+          description:"",
+          keywords:[]
+
+        }
+      });
+      resumeData.sections.education.items = res.data.data.education?.map((ele:any)=>{
+        return {
+          area:ele?.area,
+          date:ele?.year,
+          id:createId(),
+          institution:ele?.institution,
+          score:"",
+          studyType:ele?.degree,
+          summary:ele?.summary,
+          url:{label: "", href: ""},
+          visible:true
+        }
+      });
+
+
+      console.log(resumeData,"resumeData")
+
+      const newResume = await createResume({ slug: "New Cv", title: "new-cv", cv_template:3, visibility: "private", cv_data:resumeData });
+      setNewResume(newResume)
+      axios.get(`/accounts/api/users/`).then((res)=>{
+        localStorage.setItem("user",JSON.stringify(res.data[0]))
+
+      })
+      handleNextStep()
+
+      // void navigate(`/builder/${newResume.data.id}`)
+
+    })
+ 
+    
+  }
+}
+
+console.log(selectedStep,"selectedStep")
  
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-4">
-        Are you uploading an existing resume?
-      </h1>
-      <p className="text-gray-600 text-center mb-8">
-        Just review, edit, and update it with new information
-      </p>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Upload Option */}
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          className={`relative border-2 ${selectedCard === 'upload' ? 'border-blue-500' : 'border-dashed'} rounded-xl p-6 bg-white shadow-sm cursor-pointer`}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-          onClick={() => setSelectedCard('upload')}
-        >
-          <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
-            Recommended option to save your time
-          </div>
-          
-          <div className="flex flex-col items-center justify-center min-h-[200px]">
-            <Upload className="w-12 h-12 text-blue-500 mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Yes, upload from my resume</h2>
-            <p className="text-gray-500 text-center text-sm mb-4">
-              We'll give you expert guidance to fill out your info and enhance your resume, from start to finish
-            </p>
-            
-            <label className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
-              Choose File
-              <input
-                type="file"
-                className="hidden"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileInput}
-              />
-            </label>
-            
-            {selectedFile && (
-              <p className="mt-2 text-sm text-gray-600">
-                Selected: {selectedFile.name}
-              </p>
-            )}
-          </div>
-        </motion.div>
+       <BuilderHeading headingValue={selectedStepHeading[selectedStep] as 'experience_time' | 'is_student' | 'experience_level' | 'choose_template' | 'upload_resume' | 'choose_file'} />
+      {
+        selectedStep === 0 && (
+          <FirstUploadUI setSelectedCard={setSelectedCard} selectedCard={selectedCard} handleDrag={handleDrag} handleDrop={handleDrop} handleFileInput={handleFileInput} selectedFile={selectedFile} onStartFromScratch={onStartFromScratch} />
+        )
+      }
+      {
+        selectedStep === 1 && (
+          <UploadContainer handleFileInput={handleFileInput} selectedFile={selectedFile}/>
+        )
+      }
+      {
+        selectedStep === 2 && (
+          <ChangeUplodedFile selectedFile={selectedFile} handlePreviousStep={handlePreviousStep}/>
+        )
+      }
+      {
+        selectedStep === 3 && (
+          <LoadingResume isComplete={isComplete}/>
+        )
+      }
 
-        {/* Start from Scratch Option */}
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          className={`border-2 ${selectedCard === 'scratch' ? 'border-blue-500' : ''} rounded-xl p-6 bg-white shadow-sm cursor-pointer`}
-          onClick={onStartFromScratch}
+      {
+        selectedStep === 4 && (
+          <EvaluateFeedback/>
+        )
+      }
+      
+     
+        
+      
+
+      {selectedCard === 'upload' && selectedStep !== 3 && <div className="flex justify-between items-center w-full mt-8">
+        <button 
+          onClick={handlePreviousStep}
+          className="flex items-center gap-2 border-2 border-blue-600 text-blue-700 rounded-full px-8 py-2 font-medium bg-white hover:bg-blue-50 transition-colors duration-200"
         >
-          <div className="flex flex-col items-center justify-center min-h-[200px]">
-            <FileText className="w-12 h-12 text-gray-500 mb-4" />
-            <h2 className="text-xl font-semibold mb-2">No, start from scratch</h2>
-            <p className="text-gray-500 text-center text-sm">
-              We'll guide you through the whole process so your skills can shine
-            </p>
-          </div>
-        </motion.div>
-      </div>
+          <ArrowLeft />
+          Back
+        </button>
+        <button 
+          onClick={selectedStep === 2 ? uploadResume : handleNextStep}
+          className="bg-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow hover:bg-yellow-400 transition-colors duration-200"
+        >
+          Next
+        </button>
+      </div>}
+  
+    
     {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} /> */}
      
     </div>

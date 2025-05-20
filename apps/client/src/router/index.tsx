@@ -33,6 +33,9 @@ import ChooseTemplate from "../pages/select-template/page";
 import { ExperienceGuard } from "./guards/experience";
 import UploadResume from "../pages/upload-resume/UploadResume";
 import SubscriptionStatus from "../pages/subscription-status/SubscriptionStatus";
+import AdminPlanPricing from "../pages/admin-dashboard/planPrice/AdminPlanPricing";
+import Products from "../pages/admin-dashboard/products/Products";
+import { LoginModal } from "../pages/auth/LoginModal";
 
 
 export const routes = createRoutesFromElements(
@@ -98,10 +101,11 @@ export const routes = createRoutesFromElements(
             <Route path="dashboard/account" element={<AccountSettings />} />
             <Route path="dashboard/plan-pricing" element={<PlanPricing />} />
             <Route path="dashboard/subscription-status" element={<SubscriptionStatus />} />
-
-            {/* <Route index element={<Navigate replace to="/dashboard/resumes" />} /> */}
           </Route>
         </Route>
+      </Route>
+      <Route element={<ExperienceGuard />}>
+      <Route path="plan-pricing/login" element={<LoginModal />} />
       </Route>
 
       <Route path="">
@@ -109,6 +113,8 @@ export const routes = createRoutesFromElements(
               <Route path="admin" element={<AdminDashboardPage />} />
               <Route path="admin/users" element={<Users />} />
               <Route path="admin/templates" element={<TemplatesPage />} />
+              <Route path="admin/pricing" element={<AdminPlanPricing />} />
+              <Route path="admin/products" element={<Products />} />
         </Route>
       </Route>
 

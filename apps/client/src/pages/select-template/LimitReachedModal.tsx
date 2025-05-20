@@ -12,6 +12,8 @@ interface LimitReachedModalProps {
 
 export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitReachedModalProps) => {
   const navigate=useNavigate();
+  const user=localStorage.getItem("user")
+  const userData=JSON.parse(user || "{}")
 
   const skipModal=()=>{
     navigate(`/builder/${resumeDetailsId}`)
@@ -97,7 +99,11 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={()=>{
-                  navigate("/dashboard/plan-pricing")
+                  if(userData?.is_verified){
+                    navigate("/dashboard/plan-pricing")
+                  }else{
+                    navigate("/plan-pricing/login")
+                  }
                 }}
                 className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
               >

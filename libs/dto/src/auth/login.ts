@@ -6,7 +6,7 @@ import { usernameSchema } from "../user";
 export const loginSchema = z
   .object({
     email: z.string().transform((value) => value.toLowerCase()),
-    password: z.string().min(6),
+    password: z.string(),
   })
   .refine(
     (value) => {

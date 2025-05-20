@@ -83,8 +83,8 @@ export const ResumeDialog = () => {
   const onSubmit = async (values: FormValues) => {
     if (isCreate) {
       const user = localStorage.getItem("user")
-      if (user) {
-        const userData = JSON.parse(user)
+      const userData = user ? JSON.parse(user) : null;
+      if (userData) {
         resumeData.basics.name = userData.first_name;
         resumeData.basics.email = userData.email;
         console.log(resumeData,"resumeData")
@@ -92,8 +92,11 @@ export const ResumeDialog = () => {
 
       const templateId = Number(localStorage.getItem("templateId") || 1)
       const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
-      axios.get(`/accounts/api/users/`).then((res)=>{
-        localStorage.setItem("user",JSON.stringify(res.data[0]))
+      let api= userData?.is_guest_user ? `/accounts/guest-user/${userData.reference_id}` : `/accounts/api/users/`
+        
+      axios.get(api).then((res)=>{
+        console.log(res,"res.data")
+        localStorage.setItem("user",JSON.stringify(res.data[0] || res.data.data))
 
       })
       void navigate(`/builder/${newResume.data.id}`)

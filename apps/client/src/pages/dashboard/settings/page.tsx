@@ -30,11 +30,11 @@ export const SettingsPage = () => (
         <div className="space-y-6">
           <AccountSettings />
           <Separator />
-          <SecuritySettings />
-          <Separator />
+          {/* <SecuritySettings /> */}
+          {/* <Separator /> */}
           {/* <ProfileSettings /> */}
           {/* <Separator /> */}
-          <OpenAISettings />
+          {/* <OpenAISettings /> */}
           {/* <Separator />
           <DangerZoneSettings /> */}
         </div>

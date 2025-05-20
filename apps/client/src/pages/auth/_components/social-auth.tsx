@@ -16,7 +16,7 @@ export const SocialAuth = () => {
   const { providers } = useAuthProviders();
   const navigate = useNavigate();
 
-  if (!providers || providers.length === 0) return null;
+  // if (!providers || providers.length === 0) return null;
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
