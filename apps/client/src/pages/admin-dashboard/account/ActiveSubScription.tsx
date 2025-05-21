@@ -19,6 +19,7 @@ interface SubscriptionDetails {
     name: string;
     price: string;
     validity: string;
+    fetures: string[];
   };
 }
 
@@ -85,7 +86,7 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
             <div className="w-full max-w-2xl mb-8">
               <h3 className="font-semibold text-gray-800 mb-4">{t`Your Premium Benefits`}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {subscription.features?.map((feature, index) => (
+                {subscription.plan_details?.fetures?.map((feature: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
                     <CheckCircle size={20} className="text-green-500" weight="fill" />
                     <span className="text-gray-700">{feature}</span>

@@ -1,5 +1,6 @@
 import { t } from "@lingui/macro";
 import {
+  CheckCircle,
   CopySimple,
   DotsThreeVertical,
   FolderOpen,
@@ -30,14 +31,17 @@ import { BaseListItem } from "./base-item";
 
 type Props = {
   resume: ResumeDto;
+  asTableRow?: boolean;
 };
 
-export const ResumeListItem = ({ resume }: Props) => {
+export const ResumeListItem = ({ resume, asTableRow }: Props) => {
   const navigate = useNavigate();
   const { open } = useDialog<ResumeDto>("resume");
   const { open: lockOpen } = useDialog<ResumeDto>("lock");
 
   const lastUpdated = dayjs().to(resume.updatedAt);
+  const createdAt = dayjs(resume.createdAt).format("DD/MM/YYYY");
+  const strength = resume.cv_data?.metadata?.template?.progress || 0;
 
   const onOpen = () => {
     void navigate(`/builder/${resume.id}`);
@@ -56,7 +60,13 @@ export const ResumeListItem = ({ resume }: Props) => {
   };
 
   const onDelete = () => {
-    open("delete", { id: "resume", item: resume });
+  };
+
+  const onDownload = () => {
+  };
+
+  const onCheck = () => {
+   void navigate(`/builder/${resume.id}?improve=true`);
   };
 
   const dropdownMenu = (
@@ -130,15 +140,54 @@ export const ResumeListItem = ({ resume }: Props) => {
     </DropdownMenu>
   );
 
+  if (asTableRow) {
+    return (
+      <>
+        <td className="px-6 py-4 align-middle">
+          <div className="font-medium text-gray-900">{resume.title}</div>
+          <div className="text-xs text-gray-500">{lastUpdated}</div>
+        </td>
+        <td className="px-6 py-4 align-middle text-gray-700">{createdAt}</td>
+        <td className="px-6 py-4 align-middle text-right">
+          <span className="inline-block rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700">
+            {strength}
+          </span>
+        </td>
+        <td className="px-6 py-4 align-middle text-right">
+          <div className="flex justify-end gap-2">
+            <Button size="sm" variant="primary" onClick={onOpen} title="Edit">
+              <PencilSimple size={16} />
+              <span className="ml-1 hidden sm:inline">Edit</span>
+            </Button>
+            <Button size="sm" variant="success" onClick={onDuplicate} title="Check">
+              <CheckCircle size={16} />
+              <span className="ml-1 hidden sm:inline" onClick={onCheck}>Check</span>
+            </Button>
+            <Button size="sm" variant="secondary" onClick={onDownload} title="Download">
+              <TrashSimple size={16} />
+              <span className="ml-1 hidden sm:inline">Download</span>
+            </Button>
+            {dropdownMenu}
+          </div>
+        </td>
+      </>
+    );
+  }
+
   return (
     <ContextMenu>
       <ContextMenuTrigger className="even:bg-secondary/20">
         <BaseListItem
           className="group"
           title={resume.title}
-          description={t`Last updated ${lastUpdated}`}
+          description={t`${lastUpdated}`}
+          created={createdAt}
+          strength={strength}
           end={dropdownMenu}
           onClick={onOpen}
+          onEdit={onUpdate}
+          // onCheck={onDuplicate}
+          onDownload={onDelete}
         />
       </ContextMenuTrigger>
 

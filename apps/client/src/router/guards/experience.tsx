@@ -2,7 +2,7 @@ import { Navigate, Outlet, useSearchParams } from "react-router";
 import { useAuthStore } from "@/client/stores/auth";
 import { Logo } from "@/client/components/logo";
 import { useLogout } from "@/client/services/auth";
-import { SignOut, User } from "@phosphor-icons/react";
+import { SignOut, User, ArrowLeft } from "@phosphor-icons/react";
 import { Button } from "@reactive-resume/ui";
 import {
   DropdownMenu,
@@ -21,8 +21,17 @@ const ExperienceHeader = () => {
   return (
     <div className="fixed inset-x-0 top-0 z-20 h-16 bg-[#0D84F3]">
       <div className="flex h-full items-center justify-between px-4">
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <Logo size={48} />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-white hover:text-white hover:bg-blue-600"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            Back
+          </Button>
         </div>
         {user && (
           <div className="flex items-center gap-4">

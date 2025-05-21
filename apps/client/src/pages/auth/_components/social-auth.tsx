@@ -35,7 +35,11 @@ export const SocialAuth = () => {
          
         }).then((res) => {
           localStorage.setItem("user",JSON.stringify(res.data[0]));
-          navigate("/onboard/experience-level");
+          if(res.data[0].subscription_details.length>0){
+            navigate("/dashboard")
+          }else{
+            navigate("/onboard/experience-level")
+          }
         })
 
         // navigate("/onboard/experience-level");
