@@ -52,7 +52,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export const ResumeDialog = () => {
   const { isOpen, mode, payload, close } = useDialog<ResumeDto>("resume");
-
+console.log(mode,"mode")
   const isCreate = mode === "create";
   const isUpdate = mode === "update";
   const isDelete = mode === "delete";
@@ -81,6 +81,7 @@ export const ResumeDialog = () => {
   }, [form.watch("title")]);
 
   const onSubmit = async (values: FormValues) => {
+    console.log("submit")
     if (isCreate) {
       const user = localStorage.getItem("user")
       const userData = user ? JSON.parse(user) : null;
@@ -123,6 +124,8 @@ export const ResumeDialog = () => {
     }
 
     if (isDelete) {
+      alert("delete")
+      console.log("payload")
       if (!payload.item?.id) return;
 
       await deleteResume({ id: payload.item.id });
@@ -159,6 +162,12 @@ export const ResumeDialog = () => {
     close();
   };
 
+  const deleteResumeData = async () => {
+    if (!payload.item?.id) return;
+    await deleteResume({ id: payload.item.id });
+    close();
+  }
+
   if (isDelete) {
     return (
       <AlertDialog open={isOpen} onOpenChange={close}>
@@ -174,7 +183,7 @@ export const ResumeDialog = () => {
 
               <AlertDialogFooter>
                 <AlertDialogCancel>{t`Cancel`}</AlertDialogCancel>
-                <AlertDialogAction variant="error" onClick={form.handleSubmit(onSubmit)}>
+                <AlertDialogAction variant="error" onClick={deleteResumeData}>
                   {t`Delete`}
                 </AlertDialogAction>
               </AlertDialogFooter>

@@ -63,19 +63,19 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
               <Crown size={32} className="text-blue-600" weight="fill" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">{t`Active Subscription`}</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Active Subscription</h2>
             <p className="text-blue-600 font-semibold mb-6">{subscription?.plan_details?.name}</p>
             
             <div className="bg-blue-50 p-6 rounded-xl w-full max-w-2xl mb-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">{t`Start Date`}</h3>
+                  <h3 className="text-sm font-medium text-gray-500 mb-1">Start Date</h3>
                   <p className="text-lg font-semibold text-gray-800">
                     {subscription?.plan_details?.price}
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-1">{t`End Date`}</h3>
+                  <h3 className="text-sm font-medium text-gray-500 mb-1">End Date</h3>
                   <p className="text-lg font-semibold text-gray-800">
                     {subscription?.plan_details?.validity}
                   </p>
@@ -84,7 +84,7 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
             </div>
 
             <div className="w-full max-w-2xl mb-8">
-              <h3 className="font-semibold text-gray-800 mb-4">{t`Your Premium Benefits`}</h3>
+              <h3 className="font-semibold text-gray-800 mb-4">Your Premium Benefits</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {subscription.plan_details?.fetures?.map((feature: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
@@ -99,7 +99,7 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
               onClick={() => navigate('/dashboard/plan-pricing')}
               className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold text-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
             >
-              {t`Manage Subscription`}
+              Manage Subscription
             </Button>
           </div>
         </Card>
@@ -116,42 +116,42 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
               <path fill="#F59E42" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/>
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-3">{t`No Subscription Active`}</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-3">No Subscription Active</h2>
           <p className="text-gray-600 mb-6 max-w-md">
-            {t`Upgrade your account to unlock premium features and take your resume building experience to the next level.`}
+            Upgrade your account to unlock premium features and take your resume building experience to the next level.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 w-full max-w-2xl">
             <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-gray-800 mb-2">{t`Free Plan Features`}</h3>
+              <h3 className="font-semibold text-gray-800 mb-2">Free Plan Features</h3>
               <ul className="text-sm text-gray-600 space-y-2">
                 <li className="flex items-center">
                   <span className="text-green-500 mr-2">✓</span>
-                  {t`Basic resume templates`}
+                  Basic resume templates
                 </li>
                 <li className="flex items-center">
                   <span className="text-green-500 mr-2">✓</span>
-                  {t`Limited resume creation`}
+                  Limited resume creation
                 </li>
                 <li className="flex items-center">
                   <span className="text-green-500 mr-2">✓</span>
-                  {t`Standard support`}
+                  Standard support
                 </li>
               </ul>
             </div>
             <div className="bg-blue-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-blue-800 mb-2">{t`Premium Features`}</h3>
+              <h3 className="font-semibold text-blue-800 mb-2">Premium Features</h3>
               <ul className="text-sm text-blue-600 space-y-2">
                 <li className="flex items-center">
                   <span className="text-blue-500 mr-2">★</span>
-                  {t`Unlimited resume creation`}
+                  Unlimited resume creation
                 </li>
                 <li className="flex items-center">
                   <span className="text-blue-500 mr-2">★</span>
-                  {t`Premium templates`}
+                  Premium templates
                 </li>
                 <li className="flex items-center">
                   <span className="text-blue-500 mr-2">★</span>
-                  {t`Priority support`}
+                  Priority support
                 </li>
               </ul>
             </div>
@@ -160,7 +160,7 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
             onClick={() => navigate('/dashboard/plan-pricing')}
             className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold text-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
           >
-            {t`Upgrade to Premium`}
+            Upgrade to Premium
           </Button>
         </div>
       </Card>

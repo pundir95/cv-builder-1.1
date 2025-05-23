@@ -12,6 +12,7 @@ interface Template {
   withoutPhoto: boolean;
   oneColumn: boolean;
   twoColumn: boolean;
+  progress?: number;
 }
 
 export const getTemplateList = async (data: GetTemplateListDto) => {

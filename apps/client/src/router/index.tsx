@@ -101,11 +101,17 @@ export const routes = createRoutesFromElements(
             <Route path="dashboard" element={<UserDashboardPage />} />
             <Route path="dashboard/account" element={<AccountSettings />} />
             <Route path="dashboard/plan-pricing" element={<PlanPricing />} />
-            <Route path="dashboard/subscription-status" element={<SubscriptionStatus />} />
             <Route path="dashboard/organization-customer" element={<CustomerOrganisation />} />
           </Route>
         </Route>
       </Route>
+
+      
+      <Route element={<AuthGuard />}>
+      <Route path="/subscription-status" element={<SubscriptionStatus />} />
+      </Route>
+
+
       <Route element={<ExperienceGuard />}>
       <Route path="plan-pricing/login" element={<LoginModal />} />
       </Route>

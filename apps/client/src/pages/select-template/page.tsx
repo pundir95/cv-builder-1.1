@@ -18,6 +18,7 @@ const ChooseTemplate = () => {
     traditional:false,
     creative:false,
     contemporary:false,
+    progress:0,
   })
  
 

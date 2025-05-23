@@ -16,7 +16,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_3",
@@ -24,7 +25,8 @@ const templatesList = [
         withPhoto: false,
         withoutPhoto: true,
         oneColumn: true,
-        twoColumn: false
+        twoColumn: false,
+        progress: 10
     },
     {
         name: "cv_template_4",
@@ -32,7 +34,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_5",
@@ -40,7 +43,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_6",
@@ -48,7 +52,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_7",
@@ -56,7 +61,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_8",
@@ -64,7 +70,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_9",
@@ -72,7 +79,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: true,
-        twoColumn: false
+        twoColumn: false,
+        progress: 10
     },
     {
         name: "cv_template_10",
@@ -80,7 +88,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     },
     {
         name: "cv_template_11",
@@ -88,7 +97,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: true,
-        twoColumn: false
+        twoColumn: false,
+        progress: 10
     },
     {
         name: "cv_template_12",
@@ -96,7 +106,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: true,
-        twoColumn: false
+        twoColumn: false,
+        progress: 10
     },
     {
         name: "cv_template_13",
@@ -104,7 +115,8 @@ const templatesList = [
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
-        twoColumn: true
+        twoColumn: true,
+        progress: 10
     }
 ];
 

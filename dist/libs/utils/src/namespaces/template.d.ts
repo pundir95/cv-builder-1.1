@@ -5,5 +5,6 @@ export declare const templatesList: {
     withoutPhoto: boolean;
     oneColumn: boolean;
     twoColumn: boolean;
+    progress: number;
 }[];
 export type Template = (typeof templatesList)[number];

@@ -4,19 +4,24 @@ import { ScrollArea, Button, Card, Separator, Accordion, AccordionContent, Accor
 import { Check, Shield, CreditCard, Bank, Money, Trash } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { axios } from "@/client/libs/axios";
+import { BaseListItem } from "../../dashboard/resumes/_layouts/list/_components/base-item";
+import { BaseCard } from "../../dashboard/resumes/_layouts/grid/_components/base-card";
 
 export const PlanPricing = () => {
   const [plans,setPlans]=useState([])
   const [isYearly, setIsYearly] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading,setLoading]=useState(false)
 
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
+    setLoading(true)
     setIsAdmin(user.role === "admin");
     let api = user.reference_id ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
     axios.get(api).then((res)=>{
       console.log(res,"res")
       setPlans(res.data.data)
+      setLoading(false)
     })
   },[])
   
@@ -39,6 +44,18 @@ export const PlanPricing = () => {
       });
     }
   };
+
+  const getTheOnetimePlan=(data:any)=>{
+    let newData = {
+      "product_name": data?.name,
+      "amount": +data?.price,
+      "currency": "usd"
+  }
+    axios.post(`/subscription/create-one-time-session/`,newData).then((res)=>{
+      console.log(res,"res")
+      window.location.href = res.data.data.checkout_url;
+    })
+  }
 
   return (
     <ScrollArea orientation="vertical" className="h-screen">
@@ -66,7 +83,20 @@ export const PlanPricing = () => {
         </span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {plans.map((product:any) => (
+        {
+          loading ?
+      Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className="animate-in fade-in slide-in-from-left-4 duration-500"
+            style={{ animationDelay: `${i * 400}ms` }}
+          >
+         <BaseCard/>
+          </div>
+        ))  
+        :
+        
+        plans.length > 0 && plans.map((product:any) => (
           <div
             key={product.name}
             className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative"
@@ -99,7 +129,13 @@ export const PlanPricing = () => {
             </ul>
             <button
               className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition-colors duration-200 shadow-md"
-              onClick={()=>getThePlan(product?.id)}
+              onClick={()=>{
+                if(product?.validity === "onetime"){
+                  getTheOnetimePlan(product)
+                }else{
+                  getThePlan(product?.id)
+                }
+              }}
             >
               Choose {product?.name}
             </button>

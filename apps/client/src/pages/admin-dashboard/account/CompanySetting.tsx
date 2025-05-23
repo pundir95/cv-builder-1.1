@@ -2,7 +2,7 @@ import { Label } from '@radix-ui/react-label';
 import { Pencil } from '@phosphor-icons/react';
 import { Button, Input } from '@reactive-resume/ui';
 import { Card } from '@reactive-resume/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from "@lingui/macro";
 import { axios } from '@/client/libs/axios';
 
@@ -12,9 +12,16 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   const [companyAddress, setCompanyAddress] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('https://www.google.com');
   const [organizationId, setOrganizationId] = useState('1234567890');
-
+  const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
   // State for errors
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+
+
+  useEffect(()=>{
+    axios.get(`/company/company-details/`).then((res)=>{
+      console.log(res);
+    })
+  },[])
 
   // Validation function
   const validate = () => {
@@ -46,7 +53,6 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
         "company_website":companyWebsite,
         "organisation_id":organizationId
     }
-      console.log(payload);
       axios.post('/company/company-details/', payload).then((res) => {
         console.log(res);
       }).catch((err) => {
@@ -65,7 +71,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
             <Card className="p-6">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-primary">{t`Company Settings`}</h2>
+                  <h2 className="text-xl font-semibold text-primary">Company Settings</h2>
                   <Button 
                     variant="outline"
                     className="flex items-center gap-2"
@@ -80,7 +86,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
 
                 <div className="grid gap-6">
                   <div className="space-y-2">
-                    <Label>{t`Company Name`}</Label>
+                      <Label>Company Name</Label>
                     <Input 
                       type="text"
                       value={companyName}
@@ -91,7 +97,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                   </div>
 
                   <div className="space-y-2">
-                    <Label>{t`Company Address`}</Label>
+                    <Label>Company Address</Label>
                     <Input
                       type="text"
                       value={companyAddress}
@@ -102,7 +108,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                   </div>
 
                   <div className="space-y-2">
-                    <Label>{t`Company Website`}</Label>
+                    <Label>Company Website</Label>
                     <Input
                       type="text"
                       value={companyWebsite}
@@ -113,7 +119,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                   </div>
 
                   <div className="space-y-2">
-                    <Label>{t`Organization Id`}</Label>
+                    <Label>Organization Id</Label>
                     <Input
                       type="text"
                       value={organizationId}

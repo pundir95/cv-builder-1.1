@@ -22,6 +22,7 @@ interface Template {
 
 export const TemplateSection = ({selectedFilter,showTemplateButton}:{selectedFilter:any,showTemplateButton:any}) => {
   const setValue = useResumeStore((state) => state.setValue);
+  const progress = useResumeStore((state) => state?.resume?.data?.metadata?.template);
   const { open } = useDialog("resume");
   console.log(templatesList,"templatesList")
   const [templatesItem, setTemplatesItem] = useState<Template[]>([]);
@@ -105,7 +106,13 @@ const selectedTemplateId = (crrTemplate: string) => {
               )}
               onClick={() => {
                 if(!showTemplateButton){
-                  setValue("metadata.template", template);
+                  let newData={
+                    ...template,
+                    progress:progress.progress
+                  }
+
+                  console.log(newData,"templateNew");
+                  setValue("metadata.template", newData);
                 }
               }}
             > 

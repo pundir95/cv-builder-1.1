@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { axios } from '@/client/libs/axios';
 
 const planTypes = [
+  { label: 'One Time Payment', value: 'onetime' },
   { label: 'Monthly', value: 'month' },
   { label: 'Annual', value: 'year' },
   { label: 'Offer', value: 'offer' },

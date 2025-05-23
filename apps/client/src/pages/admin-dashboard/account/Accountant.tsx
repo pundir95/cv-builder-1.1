@@ -13,11 +13,14 @@ export const AccountSettings = () => {
     setActiveSection(section);
   };
 
+  const user = localStorage.getItem("user") ?? ""
+  const userData = JSON.parse(user)
+
   return (
     <ScrollArea orientation="vertical" className="h-screen">
       <div className="container mx-auto py-10 ">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary">{t`Account Settings`}</h1>
+          <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
           <p className="text-primary/70 mt-2">
             {t`Manage your account information and preferences`}
           </p>
@@ -69,29 +72,29 @@ export const AccountSettings = () => {
           {/* Communication Preferences Section */}
           <div className={`md:col-span-3 ${activeSection !== 'communication' && 'hidden'}`}>
             <Card className="p-6 bg-gray-300">
-              <h2 className="text-xl font-semibold text-primary mb-4">{t`Communication Preferences`}</h2>
-              <p className="text-primary/70 mb-6">{t`Select which emails you would like to receive:`}</p>
+              <h2 className="text-xl font-semibold text-primary mb-4">Communication Preferences</h2>
+              <p className="text-primary/70 mb-6">Select which emails you would like to receive:</p>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Checkbox id="insider-tips" defaultChecked />
-                  <Label htmlFor="insider-tips">{t`Insider Tips & Tricks`}</Label>
+                  <Label htmlFor="insider-tips">Insider Tips & Tricks</Label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox id="new-features" defaultChecked />
-                  <Label htmlFor="new-features">{t`New Features & Announcements`}</Label>
+                  <Label htmlFor="new-features">New Features & Announcements</Label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox id="market-research" defaultChecked />
-                  <Label htmlFor="market-research">{t`Market Research`}</Label>
+                  <Label htmlFor="market-research">Market Research</Label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox id="unsubscribe-all" />
-                  <Label htmlFor="unsubscribe-all">{t`Unsubscribe from all Resume builder emails`}</Label>
+                  <Label htmlFor="unsubscribe-all">Unsubscribe from all Resume builder emails</Label>
                 </div>
                 <Button 
                   className="mt-6 bg-[#CDEA68] text-black hover:bg-[#CDEA68]/90"
                 >
-                  {t`Save Changes`}
+                  Save Changes
                 </Button>
               </div>
             </Card>
@@ -129,18 +132,18 @@ export const AccountSettings = () => {
             <Card className="p-6 mb-6 bg-gray-300">
               <div className="flex items-center gap-4">
                 <div className="size-20 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">JP</span>
+                  <span className="text-2xl font-bold text-primary">{userData?.first_name?.charAt(0)}</span>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-primary">John Patel</h3>
-                  <p className="text-primary/70">Premium Member</p>
-                  <p className="text-sm text-primary/50">Member since Jan 2024</p>
+                  <h3 className="text-lg font-semibold text-primary">{userData?.first_name} {userData?.last_name}</h3>
+                  <p className="text-primary/70">{userData.subscription_details.length>0? "Premium Member":"Free Member"}</p>
+                  <p className="text-sm text-primary/50">Member since {userData?.date_joined.split("T")[0]}</p>
                 </div>
                 <Button 
                   variant="outline" 
                   className="ml-auto"
                 >
-                  {t`Change Photo`}
+                  Change Photo
                 </Button>
               </div>
             </Card>
@@ -148,14 +151,14 @@ export const AccountSettings = () => {
             <Card className="p-6">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-primary">{t`General Settings`}</h2>
+                  <h2 className="text-xl font-semibold text-primary">General Settings</h2>
                   <Button 
                     variant="outline"
                     className="flex items-center gap-2"
                     onClick={() => setIsEditing(!isEditing)}
                   >
                     <Pencil size={16} />
-                    {isEditing ? t`Save Changes` : t`Edit Details`}
+                    {isEditing ? "Save Changes" : "Edit Details"}
                   </Button>
                 </div>
 
@@ -163,39 +166,28 @@ export const AccountSettings = () => {
 
                 <div className="grid gap-6">
                   <div className="space-y-2">
-                    <Label>{t`Account ID`}</Label>
+                    <Label>Account ID</Label>
                     <Input 
-                      value="SA498559"
+                      value={userData?.id}
                       disabled
                       className="bg-muted"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label>{t`Email Address`}</Label>
+                    <Label>Email Address</Label>
                     <Input
                       type="email"
-                      value="john@example.com"
+                      value={userData?.email}
                       disabled={!isEditing}
                       className={!isEditing ? "bg-muted" : ""}
                     />
                   </div>
-
                   <div className="space-y-2">
-                    <Label>{t`Password`}</Label>
-                    <Input
-                      type="password"
-                      value="••••••••••••"
-                      disabled={!isEditing}
-                      className={!isEditing ? "bg-muted" : ""}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>{t`Contact Number`}</Label>
+                    <Label>Contact Number</Label>
                     <Input
                       type="tel"
-                      value="+91 123457890"
+                      value={userData?.phone_number}
                       disabled={!isEditing}
                       className={!isEditing ? "bg-muted" : ""}
                     />
@@ -206,18 +198,18 @@ export const AccountSettings = () => {
 
             <Card className="mt-8 p-6">
               <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-primary">{t`Danger Zone`}</h2>
+                <h2 className="text-xl font-semibold text-primary">Danger Zone</h2>
                 
                 <Separator />
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-medium text-destructive">{t`Delete Account`}</h3>
+                    <h3 className="text-lg font-medium text-destructive">Delete Account</h3>
                     <p className="text-sm text-primary/70">
-                      {t`Permanently delete your account and all associated data`}
+                      Permanently delete your account and all associated data
                     </p>
                   </div>
-                  <Button>{t`Delete Account`}</Button>
+                  <Button>Delete Account</Button>
                 </div>
               </div>
             </Card>

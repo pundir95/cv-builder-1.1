@@ -63,7 +63,10 @@ export const resumeData = {
                 ]
             ]
         ],
-        "template": "rhyhorn",
+        "template": {
+            "name": "",
+            "progress": 10
+        },
         "typography": {
             "font": {
                 "size": 14,

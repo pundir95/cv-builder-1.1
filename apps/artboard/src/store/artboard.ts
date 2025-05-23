@@ -32,7 +32,7 @@ const defaultResume: ResumeData = {
       withoutPhoto: true,
       oneColumn: true,
       twoColumn: true,
-      progress: 0,
+      progress: 10,
     },
     layout: [[["summary"], ["experience"]], [["education"], ["skills"]]],
     css: { value: "", visible: false },

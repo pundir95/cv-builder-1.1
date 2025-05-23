@@ -26,9 +26,9 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
   };
 
   const getProgressColor = (progress: number) => {
-    if (progress <= 20) return 'bg-red-500 hover:bg-red-600';
     if (progress <= 50) return 'bg-yellow-500 hover:bg-yellow-600';
-    return 'bg-green-500 hover:bg-green-600';
+    if (progress <= 100) return 'bg-green-500 hover:bg-green-600';
+    return 'bg-red-500 hover:bg-red-600';
   };
 
   return (
@@ -93,7 +93,7 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
                       "h-full transition-all duration-300",
                       getProgressColor(progress.progress)
                     )}
-                    style={{ width: `${progress.progress}%` }}
+                    style={{ width: `${progress.progress || 0}%` }}
                   />
                 </div>
                 <span className={cn(
@@ -101,7 +101,7 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
                   getProgressColor(progress.progress),
                   "text-white"
                 )}>
-                  {progress.progress}%
+                  {progress.progress || 0}%
                 </span>
               </div>
             </div>

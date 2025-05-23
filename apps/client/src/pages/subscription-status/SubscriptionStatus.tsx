@@ -7,21 +7,33 @@ const SubscriptionStatus = () => {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const email = searchParams.get('email_id');
+  const session_id=searchParams.get("session_id")
+
+  console.log(session_id,"session_id")
 
   useEffect(() => {
     const checkSubscriptionStatus = async () => {
-      if (!email) {
+      if (!email || !session_id) {
         setStatus('error');
         return;
       }
 
       try {
-        const response = await axios.get(`/subscription/session-status/${email}/`);
+        let response;
+        if(session_id){
+             response = await axios.get(`/subscription/verify-one-time-payment/${session_id}/`);
+        }
+        else{
+           response = await axios.get(`/subscription/session-status/${email}/`);
+        }
+
         if (response.status === 200) {
           axios.get(`/accounts/api/users/`).then((res)=>{
             localStorage.setItem("user",JSON.stringify(res.data[0]))
     
-          }) 
+          })
+       
+     
 
           setStatus('success');
           // Redirect to dashboard after 5 seconds

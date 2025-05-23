@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ImproveResume.css';
+import { useResumeStore } from '../stores/resume';
 
 interface SectionScore {
   name: string;
@@ -10,6 +11,8 @@ interface SectionScore {
 
 const ImproveResume: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const resume = useResumeStore((state) => state.resume);
+  console.log(resume,"resumestore")
 
   const sectionScores: SectionScore[] = [
     {
