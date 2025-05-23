@@ -22,7 +22,7 @@ export const ResumesPage = () => {
     <>
       <Helmet>
         <title>
-          {t`Resumes`} - {t`Reactive Resume`}
+           Cv Builder
         </title>
       </Helmet>
 
@@ -59,7 +59,7 @@ export const ResumesPage = () => {
               onClick={() => navigate('/onboard/experience-level')}
             >
               <Plus className="mr-2" />
-              {t`Create New Resume`}
+              Create New Resume
             </Button>
           </div>
         </div>

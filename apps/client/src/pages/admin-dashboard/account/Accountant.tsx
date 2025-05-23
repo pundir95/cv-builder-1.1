@@ -22,7 +22,7 @@ export const AccountSettings = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
           <p className="text-primary/70 mt-2">
-            {t`Manage your account information and preferences`}
+            Manage your account information and preferences
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -34,35 +34,35 @@ export const AccountSettings = () => {
                 className={`w-full justify-start ${activeSection === 'general' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('general')}
               >
-                {t`General Settings`}
+                General Settings
               </Button>
               <Button
                 variant="ghost" 
                 className={`w-full justify-start ${activeSection === 'company' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('company')}
               >
-                {t`Company Settings`}
+                Company Settings
               </Button>
               <Button
                 variant="ghost"
                 className={`w-full justify-start ${activeSection === 'subscription' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('subscription')}
               >
-                {t`Subscription`}
+                Subscription
               </Button>
               <Button
                 variant="ghost"
                 className={`w-full justify-start ${activeSection === 'communication' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('communication')}
               >
-                {t`Communication Preferences`}
+                Communication Preferences
               </Button>
               <Button 
                 variant="ghost"
                 className={`w-full justify-start ${activeSection === 'privacy' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('privacy')}
               > 
-                {t`Privacy Settings`}
+                Privacy Settings
               </Button>
             </nav>
           </Card>
@@ -103,24 +103,24 @@ export const AccountSettings = () => {
           {/* Privacy Settings Section */}
           <div className={`md:col-span-3 ${activeSection !== 'privacy' && 'hidden'}`}>
             <Card className="p-6 bg-gray-300">
-              <h2 className="text-xl font-semibold text-primary mb-4">{t`Privacy Settings`}</h2>
+              <h2 className="text-xl font-semibold text-primary mb-4">Privacy Settings</h2>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Checkbox id="analytics" defaultChecked />
-                  <Label htmlFor="analytics">{t`Analytics`}</Label>
+                  <Label htmlFor="analytics">Analytics</Label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox id="advertising" defaultChecked />
-                  <Label htmlFor="advertising">{t`Advertising`}</Label>
+                  <Label htmlFor="advertising">Advertising</Label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox id="personalization" defaultChecked />
-                  <Label htmlFor="personalization">{t`Personalization`}</Label>
+                    <Label htmlFor="personalization">Personalization</Label>
                 </div>
                 <Button 
                   className="mt-6 bg-[#CDEA68] text-black hover:bg-[#CDEA68]/90"
                 >
-                  {t`Save Changes`}
+                  Save Changes
                 </Button>
               </div>
             </Card>
