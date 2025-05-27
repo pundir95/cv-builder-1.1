@@ -13,8 +13,7 @@ const SubscriptionStatus = () => {
 
   useEffect(() => {
     const checkSubscriptionStatus = async () => {
-     
-
+    
       try {
         let response;
         if(session_id){

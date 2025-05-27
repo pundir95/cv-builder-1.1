@@ -14,6 +14,8 @@ export const PlanPricing = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading,setLoading]=useState(false)
   const [isSubscribed,setIsSubscribed]=useState(false)
+  const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
+
 
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
@@ -75,7 +77,7 @@ export const PlanPricing = () => {
       <h2 className="text-3xl font-bold text-center mb-10">Subscription Plans</h2>
 
       {
-        isSubscribed ?
+        user.subscription_details.length > 0 ?
         <SubcribedPlan/>
         :
         <>
