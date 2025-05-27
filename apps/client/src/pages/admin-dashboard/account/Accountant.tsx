@@ -18,7 +18,7 @@ export const AccountSettings = () => {
 
   return (
     <ScrollArea orientation="vertical" className="h-screen">
-      <div className="container mx-auto py-10 ">
+      <div className="mx-auto py-10 ">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
           <p className="text-primary/70 mt-2">
@@ -34,14 +34,14 @@ export const AccountSettings = () => {
                 className={`w-full justify-start ${activeSection === 'general' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('general')}
               >
-                General Settings
+                Profile Setting
               </Button>
               <Button
                 variant="ghost" 
                 className={`w-full justify-start ${activeSection === 'company' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('company')}
               >
-                Company Settings
+                Organization Details
               </Button>
               <Button
                 variant="ghost"
@@ -57,13 +57,13 @@ export const AccountSettings = () => {
               >
                 Communication Preferences
               </Button>
-              <Button 
+              {/* <Button 
                 variant="ghost"
                 className={`w-full justify-start ${activeSection === 'privacy' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('privacy')}
               > 
                 Privacy Settings
-              </Button>
+              </Button> */}
             </nav>
           </Card>
           {/* Subscription Section */}
@@ -218,6 +218,7 @@ export const AccountSettings = () => {
 
 
           <CompanySetting activeSection={activeSection} setIsEditing={setIsEditing} isEditing={isEditing}  />
+          
         </div>
       </div>
     </ScrollArea>

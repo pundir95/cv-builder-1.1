@@ -10,7 +10,7 @@ export const updateResume = async (data: UpdateResumeDto) => {
   const referenceId = localStorage.getItem("reference_id");
   console.log(data,"data222")
   let payload ={
-    "cv_data":data.data,
+    "cv_data":data.data || data?.cv_data,
     "visibility":data.visibility,
     "title":data.title,
     "slug":data.slug,

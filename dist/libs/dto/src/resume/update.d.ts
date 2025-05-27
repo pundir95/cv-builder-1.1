@@ -2096,9 +2096,8 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
-        id: import("zod").ZodNumber;
+        id: import("zod").ZodOptional<import("zod").ZodNumber>;
     }, "strip", import("zod").ZodTypeAny, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -2451,8 +2450,8 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             };
             notes: string;
         };
+        id?: number | undefined;
     }, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -2805,6 +2804,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     }>>>;
     visibility: import("zod").ZodOptional<import("zod").ZodDefault<import("zod").ZodEnum<["private", "public"]>>>;
     locked: import("zod").ZodOptional<import("zod").ZodDefault<import("zod").ZodBoolean>>;
@@ -2860,7 +2860,6 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     data?: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -3213,6 +3212,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             };
             notes: string;
         };
+        id?: number | undefined;
     } | undefined;
     user?: {
         email: string;
@@ -3241,7 +3241,6 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
     createdAt?: string | Date | undefined;
     updatedAt?: string | Date | undefined;
     data?: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -3594,6 +3593,7 @@ export declare const updateResumeSchema: import("zod").ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     } | undefined;
     user?: {
         email: string;
@@ -3623,7 +3623,6 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     data?: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -3976,6 +3975,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             };
             notes: string;
         };
+        id?: number | undefined;
     } | undefined;
     user?: {
         email: string;
@@ -6096,9 +6096,8 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
-        id: import("zod").ZodNumber;
+        id: import("zod").ZodOptional<import("zod").ZodNumber>;
     }, "strip", import("zod").ZodTypeAny, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -6451,8 +6450,8 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             };
             notes: string;
         };
+        id?: number | undefined;
     }, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -6805,6 +6804,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     }>>>;
     visibility: import("zod").ZodOptional<import("zod").ZodDefault<import("zod").ZodEnum<["private", "public"]>>>;
     locked: import("zod").ZodOptional<import("zod").ZodDefault<import("zod").ZodBoolean>>;
@@ -6860,7 +6860,6 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     createdAt?: string | Date | undefined;
     updatedAt?: string | Date | undefined;
     data?: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -7213,6 +7212,7 @@ declare const UpdateResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     } | undefined;
     user?: {
         email: string;

@@ -3,6 +3,7 @@ import {
   CheckCircle,
   CopySimple,
   DotsThreeVertical,
+  Download,
   FolderOpen,
   Lock,
   LockOpen,
@@ -28,6 +29,9 @@ import { useNavigate } from "react-router";
 import { useDialog } from "@/client/stores/dialog";
 
 import { BaseListItem } from "./base-item";
+import { sharedState } from "@/artboard/utils/sharedState";
+import { axios } from "@/client/libs/axios";
+import { toast } from "@/client/hooks/use-toast";
 
 type Props = {
   resume: ResumeDto;
@@ -42,6 +46,20 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
   const lastUpdated = dayjs().to(resume.updatedAt);
   const createdAt = dayjs(resume.createdAt).format("DD/MM/YYYY");
   const strength = resume.cv_data?.metadata?.template?.progress || 0;
+  const user=localStorage.getItem("user");
+  const userData=JSON.parse(user || "{}");
+
+  const onCheck = () => {
+    if(userData.subscription_details.length == 0){
+      toast({
+        title: "You need to subscribe to check the resume",
+        description: "Please subscribe to check the improvement of your resume",
+        variant: "error",
+      });
+      return;
+    }
+    void navigate(`/builder/${resume.id}?improve=true`);
+   };
 
   const onOpen = () => {
     void navigate(`/builder/${resume.id}`);
@@ -52,6 +70,14 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
   };
 
   const onDuplicate = () => {
+    if(userData.subscription_details.length === 0){
+      toast({
+        title: "You need to subscribe to duplicate resumes",
+        description: "Please subscribe to duplicate resumes",
+        variant: "error",
+      });
+      return;   
+    }
     open("duplicate", { id: "resume", item: resume });
   };
 
@@ -60,14 +86,52 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
   };
 
   const onDelete = () => {
+    open("delete", { id: "resume", item: resume });
+    
   };
 
-  const onDownload = () => {
-  };
+    const onPdfExport = async () => {
+      if(userData.subscription_details.length == 0){
+        toast({
+          title: "You need to subscribe to download the resume",
+          description: "Please subscribe to download the resume",
+          variant: "error",
+        });
+        return;
+      }
 
-  const onCheck = () => {
-   void navigate(`/builder/${resume.id}?improve=true`);
-  };
+      const templateRef = sharedState.getTemplateRef();
+      
+      if (templateRef) {
+        const templateString = templateRef.innerHTML;
+        axios.post(`cv-manager/cv-download/`, {
+          
+            "html_content": templateString,
+            "cv_name": "Dummy"
+        
+        }, { responseType: 'blob' })
+        .then((response) => {
+          const blob = new Blob([response.data], { type: 'application/pdf' });
+          const downloadUrl = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = 'resume.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(downloadUrl);
+        })
+        .catch((error) => {
+          console.error("Error generating PDF:", error);
+        });
+        // generatePDF(templateRef);
+      } else {
+        console.error("Template reference is null. Please ensure the builder page is loaded.");
+      }
+    };
+  
+
+ 
 
   const dropdownMenu = (
     <DropdownMenu>
@@ -104,7 +168,7 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
           <CopySimple size={14} className="mr-2" />
           {t`Duplicate`}
         </DropdownMenuItem>
-        {resume.locked ? (
+        {/* {resume.locked ? (
           <DropdownMenuItem
             onClick={(event) => {
               event.stopPropagation();
@@ -124,7 +188,7 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
             <Lock size={14} className="mr-2" />
             {t`Lock`}
           </DropdownMenuItem>
-        )}
+        )} */}
         <ContextMenuSeparator />
         <DropdownMenuItem
           className="text-error"
@@ -163,8 +227,8 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
               <CheckCircle size={16} />
               <span className="ml-1 hidden sm:inline" onClick={onCheck}>Check</span>
             </Button>
-            <Button size="sm" variant="secondary" onClick={onDownload} title="Download">
-              <TrashSimple size={16} />
+            <Button size="sm" variant="secondary" className="bg-blue-500 text-white" onClick={onPdfExport} title="Download">
+              <Download size={16} />
               <span className="ml-1 hidden sm:inline">Download</span>
             </Button>
             {dropdownMenu}

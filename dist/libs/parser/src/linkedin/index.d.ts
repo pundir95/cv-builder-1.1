@@ -69,7 +69,6 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
         }[] | undefined;
     }>;
     convert(data: LinkedIn): {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -422,5 +421,6 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
             };
             notes: string;
         };
+        id?: number | undefined;
     };
 }

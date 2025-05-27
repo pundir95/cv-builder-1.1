@@ -25,7 +25,7 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
         fontFamily,
         width: `${pageSizeMap[page.format].width * MM_TO_PX}px`,
         minHeight: `${760}px`,
-        marginLeft: "140px",
+        marginLeft: "20px",
         marginRight: "200px",
         marginTop: "30px",
       }}

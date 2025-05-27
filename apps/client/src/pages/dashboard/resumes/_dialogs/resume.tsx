@@ -39,6 +39,7 @@ import slugify from "@sindresorhus/slugify";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { useCreateResume, useDeleteResume, useUpdateResume } from "@/client/services/resume";
 import { useImportResume } from "@/client/services/resume/import";
@@ -46,13 +47,14 @@ import { useDialog } from "@/client/stores/dialog";
 import { resumeData } from "../constant";
 import { useNavigate } from "react-router";
 import { axios } from "@/client/libs/axios";
-const formSchema = createResumeSchema.extend({ id: idSchema.optional(), slug: z.string() });
+const formSchema = createResumeSchema.extend({ id: idSchema.optional() || idSchema, slug: z.string() });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export const ResumeDialog = () => {
   const { isOpen, mode, payload, close } = useDialog<ResumeDto>("resume");
 console.log(mode,"mode")
+console.log(payload,"payload")
   const isCreate = mode === "create";
   const isUpdate = mode === "update";
   const isDelete = mode === "delete";
@@ -63,6 +65,7 @@ console.log(mode,"mode")
   const { deleteResume, loading: deleteLoading } = useDeleteResume();
   const { importResume: duplicateResume, loading: duplicateLoading } = useImportResume();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const loading = createLoading || updateLoading || deleteLoading || duplicateLoading;
 
@@ -80,8 +83,9 @@ console.log(mode,"mode")
     form.setValue("slug", slug);
   }, [form.watch("title")]);
 
+
   const onSubmit = async (values: FormValues) => {
-    console.log("submit")
+
     if (isCreate) {
       const user = localStorage.getItem("user")
       const userData = user ? JSON.parse(user) : null;
@@ -103,33 +107,35 @@ console.log(mode,"mode")
       void navigate(`/builder/${newResume.data.id}`)
     }
 
-    if (isUpdate) {
-      if (!payload.item?.id) return;
 
+    if(isUpdate){
       await updateResume({
-        id: payload.item.id,
+        id: payload.item?.id,
         title: values.title,
         slug: values.slug,
+        visibility: "private", 
+        cv_data: payload.item?.data || resumeData 
       });
+      queryClient.invalidateQueries({ queryKey: ["resumes"] });
     }
+    
 
     if (isDuplicate) {
+      
       if (!payload.item?.id) return;
+      const user = localStorage.getItem("user") 
+      const userData = user ? JSON.parse(user) : null;
+      const templateId = Number(localStorage.getItem("templateId") || 1)
+      const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
+      let api= userData?.is_guest_user ? `/accounts/guest-user/${userData.reference_id}` : `/accounts/api/users/`
+        
+      axios.get(api).then((res)=>{
+        console.log(res,"res.data")
+        localStorage.setItem("user",JSON.stringify(res.data[0] || res.data.data))
 
-      await duplicateResume({
-        title: values.title,
-        slug: values.slug,
-        data: payload.item.data,
-      });
+      })
     }
 
-    if (isDelete) {
-      alert("delete")
-      console.log("payload")
-      if (!payload.item?.id) return;
-
-      await deleteResume({ id: payload.item.id });
-    }
 
     close();
   };
@@ -137,11 +143,11 @@ console.log(mode,"mode")
   const onReset = () => {
     if (isCreate) form.reset({ title: "", slug: "" });
     if (isUpdate)
-      form.reset({ id: payload.item?.id, title: payload.item?.title, slug: payload.item?.slug });
+      form.reset({ id: payload.item?.id?.toString(), title: payload.item?.title, slug: payload.item?.slug });
     if (isDuplicate)
-      form.reset({ title: `${payload.item?.title} (Copy)`, slug: `${payload.item?.slug}-copy` });
+      form.reset({ title: `${payload.item?.title} (Copy)`, slug: `${payload.item?.slug}-copy`, id: payload.item?.id?.toString() });
     if (isDelete)
-      form.reset({ id: payload.item?.id, title: payload.item?.title, slug: payload.item?.slug });
+      form.reset({ id: payload.item?.id?.toString(), title: payload.item?.title, slug: payload.item?.slug });
   };
 
   const onGenerateRandomName = () => {
@@ -162,9 +168,21 @@ console.log(mode,"mode")
     close();
   };
 
+  // const updateResumeData = async () => {
+  //   if (!payload.item?.id) return;
+  //   await updateResume({
+  //     id: payload.item.id,
+  //     title: form.getValues().title,
+  //     slug: form.getValues().slug,
+  //     cv_data:resumeData 
+  //   });
+  // }
+  
+
   const deleteResumeData = async () => {
     if (!payload.item?.id) return;
     await deleteResume({ id: payload.item.id });
+    queryClient.invalidateQueries({ queryKey: ["resumes"] });
     close();
   }
 

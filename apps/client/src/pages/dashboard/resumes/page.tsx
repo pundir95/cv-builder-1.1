@@ -2,7 +2,7 @@ import { t } from "@lingui/macro";
 import { List, SquaresFour, Plus } from "@phosphor-icons/react";
 import { ScrollArea, Tabs, TabsContent, TabsList, TabsTrigger, Button } from "@reactive-resume/ui";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router";
 
@@ -10,6 +10,7 @@ import { GridView } from "./_layouts/grid";
 import { ListView } from "./_layouts/list";
 import { useResumes } from "@/client/services/resume";
 import { LimitReachedModal } from "../../select-template/LimitReachedModal";
+import { queryClient } from "@/client/libs/query-client";
 
 type Layout = "grid" | "list";
 
@@ -17,6 +18,12 @@ export const ResumesPage = () => {
   const [layout, setLayout] = useState<Layout>("list");
   const { resumes, loading } = useResumes();
   const navigate = useNavigate();
+
+
+  useEffect(()=>{
+    queryClient.invalidateQueries({ queryKey: ["resumes"] });
+  },[resumes])
+
 
   return (
     <>

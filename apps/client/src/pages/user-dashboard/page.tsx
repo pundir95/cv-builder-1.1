@@ -62,7 +62,7 @@ export const UserDashboardPage = () => {
           </div>
           {/* Edit/Download Buttons */}
           <div className="flex w-full justify-between mt-2 mb-4">
-            <Button size="sm" variant="ghost" className="flex items-center gap-1">
+            <Button size="sm" variant="ghost" className="flex items-center gap-1" onClick={() => navigate(`/builder/${selectedResume?.id}`)}>
               <PencilSimple size={16} /> Edit
             </Button>
             <Button size="sm" variant="ghost" className="flex items-center gap-1">

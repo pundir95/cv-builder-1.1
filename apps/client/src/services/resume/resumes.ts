@@ -7,9 +7,16 @@ import { axios } from "@/client/libs/axios";
 
 export const fetchResumes = async () => {
   const referenceId = localStorage.getItem("reference_id");
-  const response = await axios.get<{ data: ResumeDto[] }>(referenceId ? `/cv-manager/cvs/?reference_id=${referenceId}` : "/cv-manager/cvs/");
-  console.log(response.data.data, "response.data.data")
-  return response.data.data;
+  console.log("Fetching resumes with reference_id:", referenceId);
+  try {
+    const response = await axios.get<{ data: ResumeDto[] }>(referenceId ? `/cv-manager/cvs/?reference_id=${referenceId}` : "/cv-manager/cvs/");
+    console.log("API Response:", response);
+    console.log("Resumes data:", response.data.data);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching resumes:", error);
+    throw error;
+  }
 };
 
 export const useResumes = () => {
@@ -21,6 +28,8 @@ export const useResumes = () => {
     queryKey: RESUMES_KEY,
     queryFn: fetchResumes,
   });
+
+  console.log("useResumes hook state:", { resumes, loading, error });
 
   return { resumes, loading, error };
 };

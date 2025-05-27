@@ -19,6 +19,7 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
   const [features, setFeatures] = useState<string[]>(['']);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [description, setDescription] = useState('');
 
   const handleFeatureChange = (index: number, value: string) => {
     const newFeatures = [...features];
@@ -47,6 +48,10 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
       newErrors.planPrice = 'Please enter a valid price';
     }
 
+    if (!description.trim()) {
+      newErrors.description = 'Description is required';
+    }
+
     if (features.length === 0 || features.some(feature => !feature.trim())) {
       newErrors.features = 'At least one feature is required';
     }
@@ -67,6 +72,7 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
         validity: planType,
         price: Number(planPrice),
         currency: 'USD',
+        description: description,
         fetures: features.filter(feature => feature.trim()),
       });
 
@@ -106,6 +112,19 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
           }`}
         />
         {errors.planName && <p className="text-red-500 text-sm mt-1">{errors.planName}</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2 font-medium">Description</label>
+        <input
+          type="text"
+          placeholder="E.g. This plan is for the express plan"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          className={`w-full bg-gray-100 rounded-lg px-4 py-3 outline-none placeholder-gray-400 ${
+            errors.description ? 'border-2 border-red-500' : ''
+          }`}
+        />
+        {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-medium">Plan Type</label>

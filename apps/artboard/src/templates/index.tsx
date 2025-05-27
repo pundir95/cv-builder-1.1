@@ -2,8 +2,9 @@ import type { Template } from "@reactive-resume/utils";
 
 import { cv_template_1 } from "./cv_template_1";
 import { cv_template_2 } from "./cv_template_2";
-import { cv_template_3 } from "./cv_template_3";
 import { cv_template_4 } from "./cv_template_4";
+// import { cv_template_4 } from "./cv_template_4";
+// import { cv_template_42 } from "./cv_template_42";
 import { cv_template_5 } from "./cv_template_5";
 import { cv_template_6 } from "./cv_template_6";
 import { cv_template_7 } from "./cv_template_7";
@@ -13,7 +14,7 @@ import { cv_template_10 } from "./cv_template_10";
 import { cv_template_11 } from "./cv_template_11";
 import { cv_template_12 } from "./cv_template_12";
 import { cv_template_13 } from "./cv_template_13";
-
+import { cv_template_14 } from "./cv_template_14";
 
 export const getTemplate = (template: Template) => {
   console.log(template, "templatename");
@@ -24,12 +25,12 @@ export const getTemplate = (template: Template) => {
     case "cv_template_2": {
       return cv_template_2;
     }
-    case "cv_template_3": {
-      return cv_template_3;
-    }
     case "cv_template_4": {
       return cv_template_4;
     }
+    // case "cv_template_4": {
+    //   return cv_template_4;
+    // }
     case "cv_template_5": {
       return cv_template_5;
     }
@@ -56,6 +57,9 @@ export const getTemplate = (template: Template) => {
     }
     case "cv_template_13": {
       return cv_template_13;
+    }
+    case "cv_template_14": {
+      return cv_template_14;
     }
 
     default: {

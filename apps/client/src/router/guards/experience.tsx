@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useSearchParams } from "react-router";
+import { Navigate, Outlet, useLocation, useSearchParams } from "react-router";
 import { useAuthStore } from "@/client/stores/auth";
 import { Logo } from "@/client/components/logo";
 import { useLogout } from "@/client/services/auth";
@@ -17,13 +17,14 @@ const ExperienceHeader = () => {
   const user = useAuthStore((state) => state.user);
   const { logout } = useLogout();
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const isNew = location.pathname.includes("experience");
   return (
     <div className="fixed inset-x-0 top-0 z-20 h-16 bg-[#0D84F3]">
       <div className="flex h-full items-center justify-between px-4">
         <div className="flex items-center gap-4">
           <Logo size={48} />
-          <Button
+        { !isNew && <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate(-1)}
@@ -31,7 +32,7 @@ const ExperienceHeader = () => {
           >
             <ArrowLeft className="h-5 w-5" />
             Back
-          </Button>
+          </Button>}
         </div>
         {user && (
           <div className="flex items-center gap-4">

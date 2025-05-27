@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { axios } from "@/client/libs/axios";
 import { BaseListItem } from "../../dashboard/resumes/_layouts/list/_components/base-item";
 import { BaseCard } from "../../dashboard/resumes/_layouts/grid/_components/base-card";
+import SubcribedPlan from "./SubcribedPlan";
 
 export const PlanPricing = () => {
   const [plans,setPlans]=useState([])
   const [isYearly, setIsYearly] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading,setLoading]=useState(false)
+  const [isSubscribed,setIsSubscribed]=useState(false)
 
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
@@ -23,6 +25,11 @@ export const PlanPricing = () => {
       setPlans(res.data.data)
       setLoading(false)
     })
+  },[])
+
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
+    setIsSubscribed(user.subscription_details.length > 0)
   },[])
   
   const getThePlan=(id:string)=>{
@@ -63,10 +70,18 @@ export const PlanPricing = () => {
         <title>{t`Pricing Plans`} - Resume Builder</title>
       </Helmet>
 
-      <div className="container mx-auto">
-        <div className="py-12 px-4 max-w-6xl mx-auto">
+      <div className="w-full">
+        <div className="">
       <h2 className="text-3xl font-bold text-center mb-10">Subscription Plans</h2>
-      <div className="flex items-center justify-center mb-8 gap-4">
+
+      {
+        isSubscribed ?
+        <SubcribedPlan/>
+        :
+        <>
+
+
+        <div className="flex items-center justify-center mb-8 gap-4">
         <span className="text-gray-700 font-medium">Monthly</span>
         <button
           className={`relative w-14 h-7 rounded-full transition-colors duration-200 focus:outline-none ${isYearly ? 'bg-green-500' : 'bg-gray-300'}`}
@@ -111,6 +126,7 @@ export const PlanPricing = () => {
               </button>
             )}
             <h3 className="text-xl font-semibold mb-2 text-center">{product.name}</h3>
+            <p className="text-sm text-gray-500 mb-2 text-center">{product.description}</p>
             <div className="text-center mb-6">
               <span className="text-4xl font-bold text-gray-900">
                 ${isYearly ? product?.price : product?.price}
@@ -141,7 +157,11 @@ export const PlanPricing = () => {
             </button>
           </div>
         ))}
-      </div>
+        </div>
+        </>
+        }
+
+
     </div>
 
       

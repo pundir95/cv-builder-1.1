@@ -122,7 +122,10 @@ export const EducationDialog = () => {
             <FormItem className="sm:col-span-2">
               <FormLabel>{t`Date or Date Range`}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={t`March 2023 - Present`} />
+                <div className="flex gap-2">
+                <Input {...field} type="date" placeholder={t`March 2023 - Present`} />
+                <Input type="date" placeholder={t`End Date`} />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

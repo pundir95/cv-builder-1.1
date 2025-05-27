@@ -5,6 +5,8 @@ import { Card } from '@reactive-resume/ui';
 import React, { useEffect, useState } from 'react';
 import { t } from "@lingui/macro";
 import { axios } from '@/client/libs/axios';
+import OrganisationUsers from './OrganisationUsers';
+import OrganisationDetails from './OrganisationDetails';
 
 const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing: boolean) => void, isEditing: boolean}> = ({activeSection, setIsEditing, isEditing}) => {
   // State for form fields
@@ -15,11 +17,21 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
   // State for errors
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [showModal, setShowModal] = useState({
+    organisationDetails: true,
+    organisationUsers: false,
+    organisationDetailsEdit: false,
+    createAddOnUser: false
+  });
 
 
   useEffect(()=>{
     axios.get(`/company/company-details/`).then((res)=>{
       console.log(res);
+      setCompanyName(res.data.data[0].company_name);
+      setCompanyAddress(res.data.data[0].company_address);
+      setCompanyWebsite(res.data.data[0].company_website);
+      setOrganizationId(res.data.data[0].organisation_id);
     })
   },[])
 
@@ -69,9 +81,13 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
          
 
             <Card className="p-6">
-              <div className="space-y-6">
+              <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})}>
+                Back
+              </button>
+             { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} />}
+            {showModal.organisationDetailsEdit &&  <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-primary">Company Settings</h2>
+                  <h2 className="text-xl font-semibold text-primary">Organization Details</h2>
                   <Button 
                     variant="outline"
                     className="flex items-center gap-2"
@@ -129,7 +145,10 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                     {errors.organizationId && <div className="text-red-500 text-xs">{errors.organizationId}</div>}
                   </div>
                 </div>
-              </div>
+              </div>}
+            {showModal.organisationUsers && <div className="flex items-center justify-between">
+               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} />
+              </div>}
             </Card>
           </div>
   );

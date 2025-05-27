@@ -19,15 +19,7 @@ const templatesList = [
         twoColumn: true,
         progress: 10
     },
-    {
-        name: "cv_template_3",
-        id: 3,
-        withPhoto: false,
-        withoutPhoto: true,
-        oneColumn: true,
-        twoColumn: false,
-        progress: 10
-    },
+    // {name:"cv_template_3",id:3,withPhoto:false,withoutPhoto:true,oneColumn:true,twoColumn:false,progress:10},
     {
         name: "cv_template_4",
         id: 4,
@@ -37,9 +29,10 @@ const templatesList = [
         twoColumn: true,
         progress: 10
     },
+    // {name:"cv_template_5",id:5,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
     {
-        name: "cv_template_5",
-        id: 5,
+        name: "cv_template_6",
+        id: 6,
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,
@@ -47,8 +40,8 @@ const templatesList = [
         progress: 10
     },
     {
-        name: "cv_template_6",
-        id: 6,
+        name: "cv_template_14",
+        id: 14,
         withPhoto: true,
         withoutPhoto: false,
         oneColumn: false,

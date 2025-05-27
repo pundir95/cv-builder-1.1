@@ -6,7 +6,7 @@ import Products from '../products/Products';
 const AdminPlanPricing: React.FC = () => {
   const [showAddNewPlan, setShowAddNewPlan] = useState(false);
   return (
-    <div style={{ padding: '32px 0 0 0', maxWidth: 1600, margin: '0 auto' }}>
+    <div className='w-full' style={{ padding: '32px 0 0 0', maxWidth: 1600, margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <h4 style={{ fontWeight: 600, textDecoration: 'underline', fontSize: 16, margin: 0 }}>Pricing & Plans</h4>
         <button

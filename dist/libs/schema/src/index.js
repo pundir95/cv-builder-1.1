@@ -27,13 +27,13 @@ const resumeDataSchema = _zod.z.object({
     basics: _basics.basicsSchema,
     sections: _sections.sectionsSchema,
     metadata: _metadata.metadataSchema,
-    id: _zod.z.number()
+    id: _zod.z.number().optional() || _zod.z.number()
 });
 const defaultResumeData = {
     basics: _basics.defaultBasics,
     sections: _sections.defaultSections,
     metadata: _metadata.defaultMetadata,
-    id: 0
+    id: 0 || undefined
 };
 
 //# sourceMappingURL=index.js.map

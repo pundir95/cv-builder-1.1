@@ -2091,9 +2091,8 @@ export declare const resumeDataSchema: z.ZodObject<{
         layout?: string[][][] | undefined;
         notes?: string | undefined;
     }>;
-    id: z.ZodNumber;
+    id: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
-    id: number;
     basics: {
         name: string;
         profession: string;
@@ -2446,8 +2445,8 @@ export declare const resumeDataSchema: z.ZodObject<{
         };
         notes: string;
     };
+    id?: number | undefined;
 }, {
-    id: number;
     basics: {
         name: string;
         profession: string;
@@ -2800,6 +2799,7 @@ export declare const resumeDataSchema: z.ZodObject<{
         layout?: string[][][] | undefined;
         notes?: string | undefined;
     };
+    id?: number | undefined;
 }>;
 export type ResumeData = z.infer<typeof resumeDataSchema>;
 export declare const defaultResumeData: ResumeData;

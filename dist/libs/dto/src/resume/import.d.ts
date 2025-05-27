@@ -2095,9 +2095,8 @@ export declare const importResumeSchema: z.ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
-        id: z.ZodNumber;
+        id: z.ZodOptional<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -2450,8 +2449,8 @@ export declare const importResumeSchema: z.ZodObject<{
             };
             notes: string;
         };
+        id?: number | undefined;
     }, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -2804,10 +2803,10 @@ export declare const importResumeSchema: z.ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     }>;
 }, "strip", z.ZodTypeAny, {
     data: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -3160,13 +3159,13 @@ export declare const importResumeSchema: z.ZodObject<{
             };
             notes: string;
         };
+        id?: number | undefined;
     };
     title?: string | undefined;
     slug?: string | undefined;
     visibility?: "public" | "private" | undefined;
 }, {
     data: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -3519,6 +3518,7 @@ export declare const importResumeSchema: z.ZodObject<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     };
     title?: string | undefined;
     slug?: string | undefined;
@@ -3526,7 +3526,6 @@ export declare const importResumeSchema: z.ZodObject<{
 }>;
 declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
     data: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -3879,6 +3878,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             };
             notes: string;
         };
+        id?: number | undefined;
     };
     title?: string | undefined;
     slug?: string | undefined;
@@ -5979,9 +5979,8 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         }>;
-        id: z.ZodNumber;
+        id: z.ZodOptional<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -6334,8 +6333,8 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             };
             notes: string;
         };
+        id?: number | undefined;
     }, {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -6688,10 +6687,10 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     }>;
 }, "strip", z.ZodTypeAny>, {
     data: {
-        id: number;
         basics: {
             name: string;
             profession: string;
@@ -7044,6 +7043,7 @@ declare const ImportResumeDto_base: import("nestjs-zod/dto").ZodDto<{
             layout?: string[][][] | undefined;
             notes?: string | undefined;
         };
+        id?: number | undefined;
     };
     title?: string | undefined;
     slug?: string | undefined;

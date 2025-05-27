@@ -9,78 +9,155 @@ interface SectionScore {
   recommendations: string[];
 }
 
+interface ResumeSection {
+  id: string;
+  name: string;
+  items?: any[];
+  content?: string;
+  columns: number;
+  visible: boolean;
+  separateLinks: boolean;
+  progress?: number;
+}
+
 const ImproveResume: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const resume = useResumeStore((state) => state.resume);
-  console.log(resume,"resumestore")
+  const progress = useResumeStore((state) => state.resume.data.metadata.template);
 
-  const sectionScores: SectionScore[] = [
-    {
-      name: 'Summary',
-      score: 85,
-      icon: '📝',
-      recommendations: [
+  
+  console.log('Resume Data:', JSON.stringify(resume, null, 2));
+
+  const getSectionIcon = (sectionName: string): string => {
+    const icons: { [key: string]: string } = {
+      'Summary': '📝',
+      'Experience': '💼',
+      'Education': '🎓',
+      'Skills': '🎯',
+      'Languages': '🌎',
+      'Profiles': '👤',
+      'Projects': '🚀',
+      'Awards': '🏆',
+      'Certifications': '📜',
+      'Publications': '📚',
+      'Volunteering': '🤝',
+      'Interests': '🎨',
+      'References': '📞'
+    };
+    return icons[sectionName] || '📋';
+  };
+
+  const getSectionRecommendations = (sectionName: string): string[] => {
+    const recommendations: { [key: string]: string[] } = {
+      'Summary': [
         'Add more quantifiable achievements',
         'Include industry-specific keywords',
         'Highlight unique value proposition'
-      ]
-    },
-    {
-      name: 'Experience',
-      score: 90,
-      icon: '💼',
-      recommendations: [
+      ],
+      'Experience': [
         'Add more action verbs',
         'Include metrics and results',
         'Highlight leadership experience'
-      ]
-    },
-    {
-      name: 'Education',
-      score: 95,
-      icon: '🎓',
-      recommendations: [
+      ],
+      'Education': [
         'Add relevant coursework',
         'Include academic achievements',
         'List certifications'
-      ]
-    },
-    {
-      name: 'Skills',
-      score: 88,
-      icon: '🎯',
-      recommendations: [
+      ],
+      'Skills': [
         'Add more technical skills',
         'Include soft skills',
         'Match skills to job requirements'
-      ]
-    }
-    ,
-    {
-      name: 'Languages',
-      score: 92,
-      icon: '🌎',
-      recommendations: [
+      ],
+      'Languages': [
         'Specify proficiency levels',
         'Include certifications if any',
         'Add relevant language skills'
-      ]
-    },
-    {
-      name: 'Profile',
-      score: 87,
-      icon: '👤',
-      recommendations: [
+      ],
+      'Profiles': [
         'Add professional social links',
         'Include portfolio/website URL',
         'Update contact information'
+      ],
+      'Projects': [
+        'Add project outcomes and impact',
+        'Include technologies used',
+        'Highlight your role and contributions'
+      ],
+      'Awards': [
+        'Add dates and context',
+        'Include selection criteria',
+        'Highlight significance'
+      ],
+      'Certifications': [
+        'Add expiration dates if applicable',
+        'Include issuing organization',
+        'Add relevant certifications'
+      ],
+      'Publications': [
+        'Add publication dates',
+        'Include co-authors if any',
+        'Add citations or impact'
+      ],
+      'Volunteering': [
+        'Add duration and impact',
+        'Include responsibilities',
+        'Highlight transferable skills'
+      ],
+      'Interests': [
+        'Add relevance to career',
+        'Include unique interests',
+        'Show personality'
+      ],
+      'References': [
+        'Add professional titles',
+        'Include relationship context',
+        'Add contact information'
       ]
-    }
-  ];
+    };
+    return recommendations[sectionName] || ['Add more details', 'Include relevant information', 'Highlight key achievements'];
+  };
 
-  const overallScore = Math.round(
-    sectionScores.reduce((acc, section) => acc + section.score, 0) / sectionScores.length
-  );
+  const calculateSectionScore = (section: any): number => {
+    if (!section || typeof section !== 'object') return 0;
+    
+    // If section has items array
+    if ('items' in section && Array.isArray(section.items)) {
+      if (section.items.length === 0) return 0;
+      return Math.min(100, section.items.length * 20);
+    }
+    
+    // If section has content
+    if ('content' in section && typeof section.content === 'string' && section.content.length > 0) {
+      return 85;
+    }
+    
+    return 0;
+  };
+
+  const sectionScores: SectionScore[] = Object.entries(resume?.data?.sections || {})
+    .filter(([key, section]) => {
+      if (!section || typeof section !== 'object') return false;
+      
+      // Only include specific sections
+      const allowedSections = ['summary', 'skills', 'experience', 'education', 'languages', 'profiles'];
+      return allowedSections.includes(key.toLowerCase());
+    })
+    .map(([_, section]) => {
+      const sectionName = typeof section === 'object' && section !== null && 'name' in section 
+        ? (typeof section.name === 'string' ? section.name : 'Untitled Section')
+        : 'Untitled Section';
+      return {
+        name: sectionName,
+        score: calculateSectionScore(section),
+        icon: getSectionIcon(sectionName),
+        recommendations: getSectionRecommendations(sectionName)
+      };
+    });
+
+  const overallScore = sectionScores.length > 0
+    ? Math.round(sectionScores.reduce((acc, section) => acc + section.score, 0) / sectionScores.length)
+    : 0;
 
   if (!isOpen) {
     return (
@@ -92,6 +169,8 @@ const ImproveResume: React.FC = () => {
       </button>
     );
   }
+
+  console.log(sectionScores,"sectionScores")
 
   return (
     <div className="modal-overlay">
@@ -106,12 +185,12 @@ const ImproveResume: React.FC = () => {
           <div className="overall-score-card">
             <div className="score-header">
               <h3>Overall Resume Score</h3>
-              <span className="score-badge">{overallScore}%</span>
+              <span className="score-badge">{progress?.progress}%</span>
             </div>
             <div className="progress-bar">
               <div 
                 className="progress-fill" 
-                style={{ width: `${overallScore}%` }}
+                style={{ width: `${progress?.progress}%` }}
               />
             </div>
           </div>
@@ -119,7 +198,7 @@ const ImproveResume: React.FC = () => {
           {/* Section Analysis */}
           <div className="sections-grid">
             {sectionScores.map((section) => (
-              <div key={section.name} className="section-card" onClick={() => setIsOpen(false)}>
+              <div key={section.name} className="section-card">
                 <div className="section-header">
                   <h3>
                     <span className="section-icon">{section.icon}</span>
@@ -139,7 +218,7 @@ const ImproveResume: React.FC = () => {
                   </div>
                   
                   <div className="recommendations">
-                    <h4>🎯 AI Recommendations</h4>
+                    <h4>🎯  Recommendations</h4>
                     <ul>
                       {section.recommendations.map((rec, index) => (
                         <li key={index}>
@@ -162,9 +241,9 @@ const ImproveResume: React.FC = () => {
             >
               Close
             </button>
-            <button className="primary-button">
+            {/* <button className="primary-button">
               ✨ Apply AI Improvements
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

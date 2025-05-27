@@ -82,28 +82,19 @@ export const ExperienceDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t`Date or Date Range`}</FormLabel>
+              <FormLabel>{t`Date Range`}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={t`March 2023 - Present`} />
+                <div className="flex gap-2">
+                  <Input {...field} type="date" placeholder={t`Start Date`} />
+                  <Input type="date" placeholder={t`End Date`} />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
-          name="location"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t`Location`}</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
 
         <FormField
           name="url"
@@ -113,6 +104,20 @@ export const ExperienceDialog = () => {
               <FormLabel>{t`Website`}</FormLabel>
               <FormControl>
                 <URLInput {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+<FormField
+          name="location"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="sm:col-span-2">
+              <FormLabel>{t`Location`}</FormLabel>
+              <FormControl>
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
