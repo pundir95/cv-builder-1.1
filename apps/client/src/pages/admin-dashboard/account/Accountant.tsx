@@ -19,55 +19,58 @@ export const AccountSettings = () => {
   return (
     <ScrollArea orientation="vertical" className="h-screen">
       <div className="mx-auto py-10 ">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
-          <p className="text-primary/70 mt-2">
-            Manage your account information and preferences
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Sidebar */}
-          <Card className="p-4 md:col-span-1 bg-gray-300">
-            <nav className="space-y-2">
-              <Button
-                variant="ghost" 
-                className={`w-full justify-start ${activeSection === 'general' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
-                onClick={() => handleSectionChange('general')}
-              >
-                Profile Setting
-              </Button>
-              <Button
-                variant="ghost" 
-                className={`w-full justify-start ${activeSection === 'company' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
-                onClick={() => handleSectionChange('company')}
-              >
-                Organization Details
-              </Button>
-              <Button
-                variant="ghost"
-                className={`w-full justify-start ${activeSection === 'subscription' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
-                onClick={() => handleSectionChange('subscription')}
-              >
-                Subscription
-              </Button>
-              <Button
-                variant="ghost"
-                className={`w-full justify-start ${activeSection === 'communication' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
-                onClick={() => handleSectionChange('communication')}
-              >
-                Communication Preferences
-              </Button>
-              {/* <Button 
+        <div className="flex justify-between items-center">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
+            <p className="text-primary/70 mt-2">
+              Manage your account information and preferences
+            </p>
+          </div>
+          <div>
+            <Card className="p-0 bg-transparent border-0">
+              <nav className="space-x-2 flex">
+                <Button
+                  variant="ghost"
+                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'general' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  onClick={() => handleSectionChange('general')}
+                >
+                  Profile
+                </Button>
+                <Button
+                  variant="ghost"
+                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'company' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  onClick={() => handleSectionChange('company')}
+                >
+                  Organization
+                </Button>
+                <Button
+                  variant="ghost"
+                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'subscription' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  onClick={() => handleSectionChange('subscription')}
+                >
+                  Subscription
+                </Button>
+                <Button
+                  variant="ghost"
+                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'communication' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  onClick={() => handleSectionChange('communication')}
+                >
+                  Communication
+                </Button>
+                {/* <Button 
                 variant="ghost"
                 className={`w-full justify-start ${activeSection === 'privacy' ? 'bg-blue-300' : 'text-primary/70 hover:text-primary hover:bg-primary/10'}`}
                 onClick={() => handleSectionChange('privacy')}
               > 
                 Privacy Settings
               </Button> */}
-            </nav>
-          </Card>
-          {/* Subscription Section */}
-       <ActiveSubscription activeSection={activeSection} />
+              </nav>
+            </Card>
+          </div>
+          <div></div>
+        </div>
+        <div className="">
+          <ActiveSubscription activeSection={activeSection} />
 
           {/* Communication Preferences Section */}
           <div className={`md:col-span-3 ${activeSection !== 'communication' && 'hidden'}`}>
@@ -91,7 +94,7 @@ export const AccountSettings = () => {
                   <Checkbox id="unsubscribe-all" />
                   <Label htmlFor="unsubscribe-all">Unsubscribe from all Resume builder emails</Label>
                 </div>
-                <Button 
+                <Button
                   className="mt-6 bg-[#CDEA68] text-black hover:bg-[#CDEA68]/90"
                 >
                   Save Changes
@@ -115,9 +118,9 @@ export const AccountSettings = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox id="personalization" defaultChecked />
-                    <Label htmlFor="personalization">Personalization</Label>
+                  <Label htmlFor="personalization">Personalization</Label>
                 </div>
-                <Button 
+                <Button
                   className="mt-6 bg-[#CDEA68] text-black hover:bg-[#CDEA68]/90"
                 >
                   Save Changes
@@ -136,11 +139,11 @@ export const AccountSettings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-primary">{userData?.first_name} {userData?.last_name}</h3>
-                  <p className="text-primary/70">{userData.subscription_details.length>0? "Premium Member":"Free Member"}</p>
+                  <p className="text-primary/70">{userData.subscription_details.length > 0 ? "Premium Member" : "Free Member"}</p>
                   <p className="text-sm text-primary/50">Member since {userData?.date_joined.split("T")[0]}</p>
                 </div>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="ml-auto"
                 >
                   Change Photo
@@ -152,7 +155,7 @@ export const AccountSettings = () => {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-semibold text-primary">General Settings</h2>
-                  <Button 
+                  <Button
                     variant="outline"
                     className="flex items-center gap-2"
                     onClick={() => setIsEditing(!isEditing)}
@@ -167,7 +170,7 @@ export const AccountSettings = () => {
                 <div className="grid gap-6">
                   <div className="space-y-2">
                     <Label>Account ID</Label>
-                    <Input 
+                    <Input
                       value={userData?.id}
                       disabled
                       className="bg-muted"
@@ -199,7 +202,7 @@ export const AccountSettings = () => {
             <Card className="mt-8 p-6">
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-primary">Danger Zone</h2>
-                
+
                 <Separator />
 
                 <div className="flex items-center justify-between">
@@ -214,11 +217,11 @@ export const AccountSettings = () => {
               </div>
             </Card>
           </div>
-          
 
 
-          <CompanySetting activeSection={activeSection} setIsEditing={setIsEditing} isEditing={isEditing}  />
-          
+
+          <CompanySetting activeSection={activeSection} setIsEditing={setIsEditing} isEditing={isEditing} />
+
         </div>
       </div>
     </ScrollArea>

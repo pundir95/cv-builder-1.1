@@ -13,7 +13,7 @@ export const buttonVariants = cva(
         success: "bg-success text-success-foreground hover:bg-success/80",
         outline:
           "border border-secondary bg-transparent hover:bg-secondary hover:text-secondary-foreground",
-        ghost: "hover:bg-secondary hover:text-secondary-foreground",
+        ghost: "hover:bg-[#FFFFFF33] hover:text-secondary-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

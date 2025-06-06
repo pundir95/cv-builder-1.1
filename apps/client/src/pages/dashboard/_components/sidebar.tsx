@@ -47,8 +47,8 @@ const SidebarItem = ({ path, name, shortcut, icon, onClick }: SidebarItemProps) 
       size="lg"
       variant="ghost"
       className={cn(
-        "h-auto justify-start px-4 py-3",
-        isActive && "pointer-events-none bg-secondary/50 text-secondary-foreground",
+        "h-auto justify-start px-4 py-3 relative before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:w-1/2 before:h-[2px] before:opacity-0 before:duration-300 before:invisible before:bg-[#D6EF3C] before:rounded-full",
+        isActive && "pointer-events-none before:opacity-1 before:visible text-secondary-foreground",
       )}
       onClick={onClick}
     >
@@ -56,7 +56,7 @@ const SidebarItem = ({ path, name, shortcut, icon, onClick }: SidebarItemProps) 
         <div className="mr-3">{icon}</div>
         <span className="text-white">{name}</span>
         {!isActive && <KeyboardShortcut className="ml-auto">{shortcut}</KeyboardShortcut>}
-        {isActive && <ActiveIndicator className="ml-auto" />}
+        {/* {isActive && <ActiveIndicator className="ml-auto" />} */}
       </Link>
     </Button>
   );
@@ -116,7 +116,7 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
   ];
 
   return (
-    <div className="flex h-full flex-col gap-y-4 bg-blue-500">
+    <div className="flex h-full gap-y-4 bg-blue-500 p-3">
       <div className="ml-12 flex justify-center lg:ml-0">
         <Button asChild size="icon" variant="ghost" className="size-10 p-0">
           <Link to="/">
@@ -126,20 +126,20 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
         </Button>
       </div>
 
-      <Separator className="opacity-50" />
+      {/* <Separator className="opacity-50" /> */}
 
-      <div className="grid gap-y-2">
+      <div className="flex gap-x-2 w-full justify-center">
         {sidebarItems.map((item) => (
           <SidebarItem {...item} key={item.path} onClick={() => setOpen?.(false)} />
         ))}
       </div>
 
-      <div className="flex-1" />
+      {/* <div className="flex-1" /> */}
 
-      <Separator className="opacity-50" />
+      {/* <Separator className="opacity-50" /> */}
 
       <UserOptions>
-        <Button size="lg" variant="ghost" className="w-full justify-start px-3">
+        <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
           <UserAvatar size={24} className="mr-3" />
           <span>{user?.name}</span>
         </Button>

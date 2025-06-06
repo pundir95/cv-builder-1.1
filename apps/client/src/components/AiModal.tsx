@@ -3,6 +3,8 @@ import { improveWriting } from '../services/openai/improve-writing';
 import { summaryGenerator } from '../services/openai/summary-generator';
 import { useResumeStore } from '../stores/resume';
 import { Editor } from '@tiptap/react';
+import AiAnimation from '../assets/ai-animation.gif'
+import StarAiWhite from '../assets/star-ai-white.svg'
 
 const preWrittenPhrases = [
   'Experienced software developer with a passion for building scalable applications.',
@@ -18,16 +20,16 @@ type AiModalProps = {
 };
 
 const AiModal = ({ hasWorkExperience = false, onClose, anchorRef, editorRef }: AiModalProps) => {
-    const experience = useResumeStore((state) => state.resume.data.sections.experience);
-    const setValue = useResumeStore((state) => state.setValue);
-const [aiSummary, setAiSummary] = useState<string[]>([]);
+  const experience = useResumeStore((state) => state.resume.data.sections.experience);
+  const setValue = useResumeStore((state) => state.setValue);
+  const [aiSummary, setAiSummary] = useState<string[]>([]);
   const [showAiWriter, setShowAiWriter] = useState(false);
   const [showPreWritten, setShowPreWritten] = useState(false);
   const [aiGenerated, setAiGenerated] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{ top: number; left: number }>({ top: 100, left: 100 });
-  
+
   console.log(experience, "experience");
 
   const scrollIntoView = (selector: string) => {
@@ -40,8 +42,8 @@ const [aiSummary, setAiSummary] = useState<string[]>([]);
     if (anchorRef && anchorRef.current) {
       const rect = anchorRef.current.getBoundingClientRect();
       setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.right + window.scrollX - 340, // popover width is 340px
+        top: '150%',
+        left: '-50%', // popover width is 340px
       });
     }
   }, [anchorRef]);
@@ -162,6 +164,7 @@ const [aiSummary, setAiSummary] = useState<string[]>([]);
           top: 12px;
           right: 20px;
           transition: color 0.15s;
+          z-index: 3;
         }
         .ai-close-btn:hover { color: #ef4444; }
         .ai-phrase-item {
@@ -190,30 +193,34 @@ const [aiSummary, setAiSummary] = useState<string[]>([]);
       </svg>
       <button className="ai-close-btn" onClick={onClose} title="Close">&times;</button>
       <div style={{ padding: '24px 24px 0 24px' }}>
-        <div className='flex flex-col gap-y-2 bg-blue-50 p-3'>
-        <div className="ai-header">
-          <span role="img" aria-label="AI">🤖</span> AI Writer
+        <div className='flex flex-col gap-y-2 bg-blue-50 p-3 relative'>
+          <div>
+            <img src={AiAnimation} className='absolute top-[-50px] left-[-50px] w-[90px]' />
+            <img src={AiAnimation} className='absolute bottom-[-50px] right-[-50px] w-[90px]' />
+          </div>
+          <div className="ai-header">
+            <span role="img" aria-label="AI">🤖</span> AI Writer
+          </div>
+          <div className='text-red-500 '>
+            {!aiSummary.length && <p className='text-[15px]'>Add at least one piece of work experience to generate a profile summary.</p>}
+          </div>
+          <div className="text-center text-base font-normal leading-[1.4] bg-gradient-to-r from-[#ff8383] to-[#7463ff] mt-3 cursor-pointer text-white p-2 rounded-md relative z-3 flex justify-center gap-2" onClick={() => {
+            if (experience?.items[0]?.position) {
+              setShowPreWritten(false);
+              setAiLoading(true);
+              aiAction();
+            } else {
+              onClose();
+              scrollIntoView("#profiles");
+            }
+          }}>
+            {aiLoading ? 'Generating...' : 'Generate'} <img src={StarAiWhite} className='w-5 h-5 object-contain' />
+          </div>
         </div>
-        <div className='text-red-500 '>
-        {!aiSummary.length && <p className='text-[15px]'>Add at least one piece of work experience to generate a profile summary.</p>}
-        </div>
-        <div className="text-center text-2xl font-bold mt-3 cursor-pointer text-blue-400 hover:bg-blue-200 hover:text-white p-2 rounded-md" onClick={() => {
-        if(experience?.items[0]?.position) {
-          setShowPreWritten(false); 
-          setAiLoading(true); 
-          aiAction();
-        } else {
-          onClose();
-          scrollIntoView("#profiles");
-        }
-      }}>
-           {aiLoading ? 'Generating...' : 'Generate'} 
-        </div>
-        </div>
-        
+
         <div style={{ display: 'flex', flexDirection: 'row', gap: 16, margin: '18px 0 14px 0', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'flex-start' }}>
           {/* <button className="ai-btn" style={{ minWidth: 150 }} onClick={() => { setShowAiWriter(true); setShowPreWritten(false); aiAction() }}>AI Writer</button> */}
-          <button className='text-black hover:bg-blue-300 hover:text-white p-2 rounded-md text-[20px]' onClick={() => { setShowPreWritten(true); setShowAiWriter(false); }}>Add pre-written phrases</button>
+          <button className='text-black border border-blue-700 text-blue-700 text-base font-normal w-full text-center p-2 rounded-md text-[20px] bg-white relative z-3' onClick={() => { setShowPreWritten(true); setShowAiWriter(false); }}>Add pre-written phrases</button>
         </div>
         {showAiWriter && (
           <div className="ai-section">
@@ -236,7 +243,7 @@ const [aiSummary, setAiSummary] = useState<string[]>([]);
                   Click generate to get an AI-powered profile summary suggestion.
                 </div>
                 <button className="ai-btn" onClick={handleGenerate} disabled={aiLoading} style={{ marginBottom: 12, minWidth: 120 }}>
-                  {aiLoading ? 'Generating...' : 'Generate'}
+                   {aiLoading ? 'Generating...' : 'Generate'}
                 </button>
                 {aiGenerated && <div style={{ background: '#eef2ff', borderRadius: 6, padding: 10, marginTop: 8 }}>{aiGenerated}</div>}
               </>

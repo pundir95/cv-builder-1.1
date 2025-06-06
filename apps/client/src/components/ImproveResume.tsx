@@ -199,11 +199,12 @@ const ImproveResume: React.FC = () => {
           <div className="sections-grid">
             {sectionScores.map((section) => (
               <div key={section.name} className="section-card">
-                <div className="section-header">
+                <div className="section-header flex items-center gap-3">
                   <h3>
                     <span className="section-icon">{section.icon}</span>
                     {section.name}
                   </h3>
+                  <span className='inline-block py-[2px] px-3 bg-[#e0ffe4] rounded-[30px] text-[12px] font-semibold text-[#009d15]'>+10</span>
                 </div>
                 <div className="section-content">
                   <div className="section-score">

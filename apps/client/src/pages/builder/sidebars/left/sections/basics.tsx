@@ -14,7 +14,7 @@ export const BasicsSection = () => {
   const basics = useResumeStore((state) => state.resume.data.basics);
 
   return (
-    <section id="basics" className="grid gap-y-6">
+    <section id="basics" className="grid gap-y-6 px-6">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <div className="bg-[#0D84F3] p-1 rounded-full">
