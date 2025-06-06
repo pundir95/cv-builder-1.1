@@ -8,6 +8,7 @@ const SubscriptionStatus = () => {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const email = searchParams.get('email_id');
   const session_id=searchParams.get("session_id")
+  const payment_type=searchParams.get("payment_type")
 
   console.log(session_id,"session_id")
 
@@ -16,11 +17,14 @@ const SubscriptionStatus = () => {
     
       try {
         let response;
-        if(session_id){
+        if(payment_type=="one_time"){
              response = await axios.get(`/subscription/verify-one-time-payment/${session_id}/`);
         }
-        else{
-           response = await axios.get(`/subscription/session-status/${email}/`);
+        else if(payment_type=="super_user"){
+           response = await axios.get(`/subscription/session-status/${email}/${session_id}`);
+        }else{
+
+          response = await axios.get(`/company/employees-subscription-status/${email}/${session_id}`);
         }
 
         if (response.status === 200) {

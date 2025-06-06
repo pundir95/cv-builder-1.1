@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Select, SelectTrigger, SelectContent, SelectItem, Button } from '@reactive-resume/ui';
+import { axios } from '@/client/libs/axios';
+import { toast } from '@/client/hooks/use-toast';
 
 const modalStyles: React.CSSProperties = {
   position: 'fixed',
@@ -84,15 +86,14 @@ const halfWidth: React.CSSProperties = {
 
 const roles = [
   { value: 'manager', label: 'Manager' },
-  { value: 'admin', label: 'Admin' },
-  { value: 'user', label: 'User' },
+  { value: 'member', label: 'Member' },
 ];
 
-const CreateAddOnUser = ({ isOpen, onClose, onAdd }: { isOpen: boolean; onClose: () => void; onAdd: (data: any) => void }) => {
+const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => void; }) => {
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    role: 'manager',
+    first_name: '',
+    last_name: '',
+    designation: 'manager',
     phone: '',
     email: '',
     countryCode: '+91',
@@ -105,12 +106,32 @@ const CreateAddOnUser = ({ isOpen, onClose, onAdd }: { isOpen: boolean; onClose:
   };
 
   const handleRoleChange = (value: string) => {
-    setForm({ ...form, role: value });
+      setForm({ ...form, designation: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAdd(form);
+    console.log(form,"formm")
+    axios.post("/company/organization-employees/",form)
+    .then((res)=>{
+        axios.get(`/accounts/api/users/`).then((res)=>{
+          localStorage.setItem("user",JSON.stringify(res.data[0]))
+          onClose()
+        })
+        axios.get(`/company/organization-employees/`).then((res)=>{
+          console.log(res,"res")
+        })
+    })
+    
+
+    .catch((err)=>{
+      console.log(err,"err")
+      toast({
+        title: err.message,
+        description: err.message,
+        variant: "error",
+      })
+    })
   };
 
   return (
@@ -122,24 +143,34 @@ const CreateAddOnUser = ({ isOpen, onClose, onAdd }: { isOpen: boolean; onClose:
           <div style={rowStyle}>
             <div style={{ ...halfWidth, ...fieldBox }}>
               <label style={labelStyle}>First Name*</label>
-              <Input name="firstName" placeholder="Enter the user's First Name" value={form.firstName} onChange={handleChange} required />
+                <Input name="first_name" placeholder="Enter the user's First Name" value={form.first_name} onChange={handleChange} required />
             </div>
             <div style={{ ...halfWidth, ...fieldBox }}>
               <label style={labelStyle}>Last Name*</label>
-              <Input name="lastName" placeholder="Enter the user's Last Name" value={form.lastName} onChange={handleChange} required />
+              <Input name="last_name" placeholder="Enter the user's Last Name" value={form.last_name} onChange={handleChange} required />
             </div>
           </div>
           <div style={rowStyle}>
             <div style={{ ...halfWidth, ...fieldBox }}>
               <label style={labelStyle}>Role*</label>
-              <Select value={form.role} onValueChange={handleRoleChange}>
-                <SelectTrigger>{roles.find(r => r.value === form.role)?.label}</SelectTrigger>
-                <SelectContent>
-                  {roles.map(role => (
-                    <SelectItem key={role.value} value={role.value}>{role.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select 
+                value={form.designation} 
+                onChange={(e) => handleRoleChange(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #ddd',
+                  backgroundColor: '#fff',
+                  fontSize: '16px'
+                }}
+              >
+                {roles.map(role => (
+                  <option key={role.value} value={role.value}>
+                    {role.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div style={{ ...halfWidth, ...fieldBox }}>
               <label style={labelStyle}>Phone*</label>

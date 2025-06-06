@@ -20,6 +20,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import type { z } from "zod";
 
 import { useResetPassword } from "@/client/services/auth";
+import axios from "axios";
 
 type FormValues = z.infer<typeof resetPasswordSchema>;
 
@@ -27,6 +28,7 @@ export const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") ?? "";
+  const email=searchParams.get("email_id") ?? "";
 
   const { resetPassword, loading } = useResetPassword();
 
@@ -35,23 +37,36 @@ export const ResetPasswordPage = () => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(resetPasswordSchema),
-    defaultValues: { token, password: "" },
+    defaultValues: { password: "", confirm_password: "", email: "" },
   });
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await resetPassword(data);
+      let newdata={
+        new_password:data.password,
+        confirm_password:data.confirm_password,
+        email:email,
+      }
+
+      await axios.post(`https://cvbuilder-api.rexett.com/api/v1/accounts/change-email-password/`,newdata,
+        {
+          headers:{
+            "Authorization":`Bearer ${token}`
+          }
+        }
+      );
 
       void navigate("/auth/login");
-    } catch {
+    } catch (error) {
+      console.log(error);
       form.reset();
     }
   };
 
   // Redirect the user to the forgot password page if the token is not present.
-  useEffect(() => {
-    if (!token) void navigate("/auth/forgot-password");
-  }, [token, navigate]);
+  // useEffect(() => {
+  //   if (!token) void navigate("/auth/forgot-password");
+  // }, [token, navigate]);
 
   return (
     <div className="space-y-8">
@@ -81,6 +96,26 @@ export const ResetPasswordPage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t`Password`}</FormLabel>
+                  <FormControl>
+                    <Input type="password" autoComplete="new-password" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    <Trans>
+                      Hold <code className="text-xs font-bold">Ctrl</code> to display your password
+                      temporarily.
+                    </Trans>
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="confirm_password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <Input type="password" autoComplete="new-password" {...field} />
                   </FormControl>

@@ -12,14 +12,23 @@ import { axios } from "@/client/libs/axios";
 export const AdminDashboardPage = () => {
   const { i18n } = useLingui();
   const [data,setData] = useState<any>(null);
+  const [usersData,setUsersData] = useState<any>(null);
 
   useEffect(()=>{
    axios.get("/admin/api/admin-dashbord/").then((res:any)=>{
-    console.log(res);
     setData(res.data.data);
    })
 
+
   },[])
+
+  useEffect(() => {
+    axios.get('/accounts/api/users/').then((res) => {
+      setUsersData(res.data);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
   return (
     <div className="flex h-screen">
 
@@ -65,32 +74,29 @@ export const AdminDashboardPage = () => {
               <table className="w-full">
                 <thead className="bg-primary/10">
                   <tr>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">{t`Name`}</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">{t`Email`}</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">{t`Status`}</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">{t`Joined Date`}</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">S.No</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">Name</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">Email</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">Status</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-primary">Last Login</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-primary/10">
-                  {/* Sample user rows - replace with actual data */}
-                  <tr className="hover:bg-primary/5">
-                    <td className="px-6 py-4 text-sm font-medium text-primary">John Doe</td>
-                    <td className="px-6 py-4 text-sm text-primary/80">john@example.com</td>
+           {
+            usersData?.slice(0,5).map((user:any,idx:number)=>(
+              <tr className="hover:bg-primary/5">
+                <td className="px-6 py-4 text-sm font-medium text-primary">{idx+1}</td>
+                <td className="px-6 py-4 text-sm font-medium text-primary">{user.first_name} {user.last_name}</td>
+                    <td className="px-6 py-4 text-sm text-primary/80">{user.email}</td>
                     <td className="px-6 py-4 text-sm">
-                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Active</span>
+                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">{user.is_email_verified?"Active":"Inactive"}</span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-primary/80">Jan 15, 2024</td>
+                    <td className="px-6 py-4 text-sm text-primary/80">{user.last_login}</td>
                   
-                  </tr>
-                  <tr className="hover:bg-primary/5">
-                    <td className="px-6 py-4 text-sm font-medium text-primary">Jane Smith</td>
-                    <td className="px-6 py-4 text-sm text-primary/80">jane@example.com</td>
-                    <td className="px-6 py-4 text-sm">
-                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">Pending</span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-primary/80">Jan 14, 2024</td>
-                  
-                  </tr>
+                    </tr>
+            ))
+            }
+               
                 </tbody>
               </table>
             </div>

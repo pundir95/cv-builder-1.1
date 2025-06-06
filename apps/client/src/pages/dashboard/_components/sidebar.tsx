@@ -100,12 +100,12 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       shortcut: "⇧S",
       icon: <Money color="white" />,
     },
-    // {
-    //   path: "/dashboard/organization-customer",
-    //   name: `Organization Customer`,
-    //   shortcut: "⇧S",
-    //   icon: <FadersHorizontal color="white" />,
-    // }, 
+    {
+      path: "/dashboard/organization-customer",
+      name: `Shared Resume List`,
+      shortcut: "⇧S",
+      icon: <FadersHorizontal color="white" />,
+    }, 
     {
       path: "/dashboard/account",
       name: `Account Settings`,

@@ -3,16 +3,17 @@ import type { ResumeDto } from "@reactive-resume/dto";
 import { useCallback, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import type { LoaderFunction } from "react-router";
-import { redirect } from "react-router";
+import { redirect, useLocation, useParams } from "react-router";
 
 import { queryClient } from "@/client/libs/query-client";
-import { findResumeById } from "@/client/services/resume";
+import { findResumeById, findSahredResumeById } from "@/client/services/resume";
 import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
 
 export const BuilderPage = () => {
   const frameRef = useBuilderStore((state) => state.frame.ref);
   const setFrameRef = useBuilderStore((state) => state.frame.setRef);
+
 
   const resume = useResumeStore((state) => state.resume);
   const title = useResumeStore((state) => state.resume.title);
@@ -77,27 +78,72 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const id = params.id!;
 
+
     const resume = await queryClient.fetchQuery({
       queryKey: ["resume", { id }],
       queryFn: () => findResumeById({ id }),
     });
 
     const data1 = resume;
+
+     const resumeDto = {
+        id: data1.id,
+        title: data1?.title,
+        slug: data1.slug,
+        data1: data1.data,
+        visibility: data1.visibility,
+        userId: data1.user?.id ?? '',
+        createdAt: data1.createdAt,
+        updatedAt: data1.updatedAt,
+        created_at: data1.createdAt,
+        updated_at: data1.updatedAt,
+        locked: data1.locked,
+        data: data1?.cv_data,
+        cv_template: data1.cv_template,
+      };
+    
+
+    useResumeStore.setState({ resume: resumeDto });
+    useResumeStore.temporal.getState().clear();
+
+    return resumeDto;
+  } catch {
+    return redirect("/dashboard");
+  }
+};
+
+
+
+export const sharedBuilderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const id = params.id!;
+    const isShared = window.location.search.includes('sahredcv=true')
+    console.log(isShared,"isShared")
+
+    const resume = await queryClient.fetchQuery({
+      queryKey: ["resume", { id }],
+      queryFn: () => findSahredResumeById({ id })
+    });
+
+    const data1 = resume;
     console.log(data1, "data1333")
 
-    const resumeDto = {
-      id: data1.id,
-      title: data1.title,
-      slug: data1.slug,
-      data1: data1.data,
-      visibility: data1.visibility,
-      userId: data1.user?.id ?? '',
-      createdAt: data1.createdAt,
-      updatedAt: data1.updatedAt,
-      locked: data1.locked,
-      data: data1.cv_data,
-      cv_template: data1.cv_template,
-    };
+      const resumeDto = {
+        id: data1.id,
+        title: data1?.data?.cv?.title,
+        slug: data1.slug,
+        data1: data1.data,
+        visibility: data1.visibility,
+        userId: data1.user?.id ?? '',
+        createdAt: data1.createdAt,
+        updatedAt: data1.updatedAt,
+        created_at: data1.createdAt,
+        updated_at: data1.updatedAt,
+        locked: data1.locked,
+        data: data1?.data?.cv?.cv_data,
+        cv_template: data1.cv_template,
+      };
 
     useResumeStore.setState({ resume: resumeDto });
     useResumeStore.temporal.getState().clear();

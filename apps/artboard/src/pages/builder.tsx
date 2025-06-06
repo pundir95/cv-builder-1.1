@@ -58,7 +58,6 @@ export const BuilderLayout = () => {
   // Update shared state when template ref changes
   useEffect(() => {
     const updateTemplateRef = () => {
-      console.log("Template ref updated:", templateRef.current);
       if (templateRef.current) {
         sharedState.setTemplateRef(templateRef.current);
       }
@@ -81,6 +80,8 @@ export const BuilderLayout = () => {
       observer.disconnect();
     };
   }, [templateRef.current]);
+
+  console.log(layout,"layout")
 
   return (
     <>

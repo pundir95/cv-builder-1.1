@@ -7,18 +7,28 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const updateResume = async (data: UpdateResumeDto) => {
+  const isShared = window.location.search.includes('sahredcv=true')
+  
   const referenceId = localStorage.getItem("reference_id");
   console.log(data,"data222")
   let payload ={
-    "cv_data":data.data || data?.cv_data,
-    "visibility":data.visibility,
-    "title":data.title,
-    "slug":data.slug,
+    "cv_data":data.data || data?.cv_data || data?.data1?.cv_data,
+    "visibility":data.visibility || data?.data1?.cv?.visibility,
+    "title":data.title || data?.data1?.cv?.title,
+    "slug":data.slug || data?.data1?.cv?.slug,
   }
-  const response = await axios.patch<ResumeDto, AxiosResponse<ResumeDto>, UpdateResumeDto>(
-    referenceId ? `/cv-manager/cvs/${data.id}/?reference_id=${referenceId}` : `/cv-manager/cvs/${data.id}/`,
-    payload,
-  );
+  let response; 
+  if(isShared){
+    response = await axios.patch<ResumeDto, AxiosResponse<ResumeDto>, UpdateResumeDto>(
+      `/cv-manager/share-cv/${data?.data1?.id}/`,
+      payload,
+    );
+  }else{
+    response = await axios.patch<ResumeDto, AxiosResponse<ResumeDto>, UpdateResumeDto>(
+      referenceId ? `/cv-manager/cvs/${data.id}/?reference_id=${referenceId}` : `/cv-manager/cvs/${data.id}/`,
+      payload,
+    );
+  }
 
   queryClient.setQueryData<ResumeDto>(["resume", { id: response.data.id }], response.data);
 

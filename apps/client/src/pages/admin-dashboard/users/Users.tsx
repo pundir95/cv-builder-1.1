@@ -16,39 +16,6 @@ export const Users = () => {
     })
   }, [])
 
-  // Mock data - replace with actual API call
-  const users = [
-    {
-      id: 1,
-      name: "John Williams", 
-      email: "john.w@example.com",
-      createdAt: "03-12-2024",
-      lastActive: "03-15-2024",
-      plan: "Premium Monthly Plan",
-      amount: "$15/month",
-      userType: "premium"
-    },
-    {
-      id: 2,
-      name: "Pankaj Pundir", 
-      email: "pankaj.pundir@example.com",
-      createdAt: "03-12-2024",
-      lastActive: "03-15-2024",
-      plan: "Premium Monthly Plan",
-      amount: "$25/month",
-      userType: "registered"
-    },
-    {
-      id: 3,
-      name: "Guest User", 
-      email: "-",
-      createdAt: "-",
-      lastActive: "-",
-      plan: "-",
-      amount: "-",
-      userType: "non-registered"
-    },
-  ];
 
   // Filter users based on selected tab
   const filteredUsers = usersData.filter((user: any) => {

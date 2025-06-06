@@ -1,3 +1,6 @@
+// @ts-ignore
+declare module 'html2pdf.js';
+
 import { t } from "@lingui/macro";
 import { CircleNotch, FileJs, FilePdf } from "@phosphor-icons/react";
 import { buttonVariants, Card, CardContent, CardDescription, CardTitle } from "@reactive-resume/ui";
@@ -6,13 +9,12 @@ import { saveAs } from "file-saver";
 import { generatePDF } from "@/artboard/constants/download";
 import { eventBus } from "@/artboard/utils/eventBus";
 import { sharedState } from "@/artboard/utils/sharedState";
+import html2pdf from 'html2pdf.js';
 
 import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
 import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
-import { useState, useEffect } from "react";
-import { axios } from "@/client/libs/axios";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -32,36 +34,46 @@ export const ExportSection = () => {
   const { printResume, loading } = usePrintResume();
 
   const onPdfExport = async () => {
-    console.log("Window parent:", window.parent);
-    console.log("Current window:", window);
-    console.log("Shared state:", window.__RESUME_BUILDER__);
-    
     const templateRef = sharedState.getTemplateRef();
-    console.log("Template ref from shared state:", templateRef);
     
     if (templateRef) {
       const templateString = templateRef.innerHTML;
-      axios.post(`cv-manager/cv-download/`, {
-        
-          "html_content": templateString,
-          "cv_name": "Dummy"
       
-      }, { responseType: 'blob' })
-      .then((response) => {
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = 'resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(downloadUrl);
-      })
-      .catch((error) => {
+      // Configure PDF options
+      const options = {
+        margin: 10,
+        filename: 'resume.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          imageTimeout: 0,
+          logging: true
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      try {
+        // Create a temporary div to hold the HTML content
+        const element = document.createElement('div');
+        element.innerHTML = templateString;
+        
+        // Wait for images to load
+        const images = element.getElementsByTagName('img');
+        await Promise.all(Array.from(images).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }));
+        
+        // Generate PDF
+        await html2pdf().set(options).from(element).save();
+      } catch (error) {
         console.error("Error generating PDF:", error);
-      });
-      // generatePDF(templateRef);
+      }
     } else {
       console.error("Template reference is null. Please ensure the builder page is loaded.");
     }

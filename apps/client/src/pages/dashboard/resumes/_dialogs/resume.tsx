@@ -87,16 +87,18 @@ console.log(payload,"payload")
   const onSubmit = async (values: FormValues) => {
 
     if (isCreate) {
+      const templateId = JSON.parse(localStorage.getItem("templatedata") || "{id:1,internal_name:'cv_template_8'}")
       const user = localStorage.getItem("user")
       const userData = user ? JSON.parse(user) : null;
       if (userData) {
         resumeData.basics.name = userData.first_name;
         resumeData.basics.email = userData.email;
+        resumeData.metadata.template.name = templateId?.internal_name;
         console.log(resumeData,"resumeData")
       }
 
-      const templateId = Number(localStorage.getItem("templateId") || 1)
-      const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId, visibility: "private", cv_data:resumeData });
+
+      const newResume = await createResume({ slug: values.slug, title: values.title, cv_template:templateId?.id, visibility: "private", cv_data:resumeData });
       let api= userData?.is_guest_user ? `/accounts/guest-user/${userData.reference_id}` : `/accounts/api/users/`
         
       axios.get(api).then((res)=>{

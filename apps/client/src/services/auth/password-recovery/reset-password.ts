@@ -6,7 +6,7 @@ import { axios } from "@/client/libs/axios";
 
 export const resetPassword = async (data: ResetPasswordDto) => {
   return axios.post<undefined, AxiosResponse<undefined>, ResetPasswordDto>(
-    "/auth/reset-password",
+    "/accounts/change-email-password/",
     data,
   );
 };

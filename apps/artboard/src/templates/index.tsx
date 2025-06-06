@@ -63,7 +63,7 @@ export const getTemplate = (template: Template) => {
     }
 
     default: {
-      return cv_template_4;
+      return cv_template_8;
     }
   }
 };

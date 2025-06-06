@@ -185,7 +185,7 @@ export const cv_template_14 = () => {
         {/* Experience */}
         {experience.length > 0 && (
           <div style={{ marginBottom: 24 }}>
-            <SectionHeader>EXPERIENCE</SectionHeader>
+            <h3>EXPERIENCE</h3>
             <ExperienceList experiences={experience} />
           </div>
         )}

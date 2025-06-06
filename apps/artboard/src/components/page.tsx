@@ -16,10 +16,16 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
 
   const page = useArtboardStore((state) => state.resume.metadata.page);
   const fontFamily = useArtboardStore((state) => state.resume.metadata.typography.font.family);
+  
+  console.log(page.options.breakLine,"breakLine")
+  console.log(pageSizeMap,"pageSizeMap")
+  console.log(page,"page.format")
+  console.log(pageSizeMap[page.format].height * MM_TO_PX,"oppp")
+
 
   return (
     <div
-      data-page={pageNumber}
+      data-page={pageNumber}  
       className={cn("relative bg-background text-foreground", mode === "builder" && "shadow-2xl")}
       style={{
         fontFamily,

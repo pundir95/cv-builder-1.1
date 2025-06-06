@@ -28,24 +28,31 @@ const Header = () => {
   const basics = useArtboardStore((state) => state.resume.basics);
 
   return (
-    <div className="flex items-center space-x-4">
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
       <Picture />
 
-      <div className="space-y-2">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <div>
-          <div className="text-2xl font-bold">{basics.name}</div>
-          <div className="text-base">{basics.headline}</div>
+          <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{basics.name}</div>
+          <div style={{ fontSize: '1rem' }}>{basics.headline}</div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
+        <div style={{ 
+          display: 'flex', 
+          flexWrap: 'wrap', 
+          alignItems: 'center', 
+          columnGap: '0.5rem',
+          rowGap: '0.125rem',
+          fontSize: '0.875rem'
+        }}>
           {basics.location && (
-            <div className="flex items-center gap-x-1.5">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <i className="ph ph-bold ph-map-pin text-primary" />
               <div>{basics.location}</div>
             </div>
           )}
           {basics.phone && (
-            <div className="flex items-center gap-x-1.5">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <i className="ph ph-bold ph-phone text-primary" />
               <a href={`tel:${basics.phone}`} target="_blank" rel="noreferrer">
                 {basics.phone}
@@ -53,7 +60,7 @@ const Header = () => {
             </div>
           )}
           {basics.email && (
-            <div className="flex items-center gap-x-1.5">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <i className="ph ph-bold ph-at text-primary" />
               <a href={`mailto:${basics.email}`} target="_blank" rel="noreferrer">
                 {basics.email}
@@ -62,7 +69,7 @@ const Header = () => {
           )}
           <Link url={basics.url} />
           {basics.customFields.map((item) => (
-            <div key={item.id} className="flex items-center gap-x-1.5">
+            <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <i className={cn(`ph ph-bold ph-${item.icon}`, "text-primary")} />
               {isUrl(item.value) ? (
                 <a href={item.value} target="_blank" rel="noreferrer noopener nofollow">
@@ -86,12 +93,23 @@ const Summary = () => {
 
   return (
     <section id={section.id}>
-      <h4 className="mb-2 border-b pb-0.5 text-sm font-bold">{section.name}</h4>
+      <h4 style={{ 
+        marginBottom: '0.5rem', 
+        borderBottom: '1px solid', 
+        paddingBottom: '0.125rem', 
+        fontSize: '0.875rem', 
+        fontWeight: 'bold' 
+      }}>
+        {section.name}
+      </h4>
 
       <div
         dangerouslySetInnerHTML={{ __html: sanitize(section.content) }}
-        style={{ columns: section.columns }}
-        className="wysiwyg"
+        style={{ 
+          columns: section.columns,
+          lineHeight: '1.5',
+          wordBreak: 'break-word'
+        }}
       />
     </section>
   );
@@ -99,19 +117,34 @@ const Summary = () => {
 
 type RatingProps = { level: number };
 
-const Rating = ({ level }: RatingProps) => (
-  <div className="flex items-center gap-x-1.5">
-    {Array.from({ length: 5 }).map((_, index) => (
-      <div
-        key={index}
-        className={cn(
-          "size-2 rounded-full border border-primary group-[.sidebar]:border-background",
-          level > index && "bg-primary group-[.sidebar]:bg-background",
-        )}
-      />
-    ))}
-  </div>
-);
+const Rating = ({ level }: RatingProps) => {
+  // Get the parent element's class to determine if we're in sidebar
+  const isInSidebar = document.querySelector('.sidebar')?.contains(document.activeElement);
+
+  return (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      gap: '0.375rem' 
+    }}>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div
+          key={index}
+          style={{
+            width: '0.5rem',
+            height: '0.5rem',
+            borderRadius: '9999px',
+            border: '1px solid',
+            borderColor: isInSidebar ? 'var(--background)' : 'var(--primary)',
+            backgroundColor: level > index 
+              ? (isInSidebar ? 'var(--background)' : 'var(--primary)')
+              : 'transparent'
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 type LinkProps = {
   url: URL;
@@ -119,25 +152,31 @@ type LinkProps = {
   iconOnRight?: boolean;
   label?: string;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-const Link = ({ url, icon, iconOnRight, label, className }: LinkProps) => {
+const Link = ({ url, icon, iconOnRight, label, className, style }: LinkProps) => {
   if (!isUrl(url.href)) return null;
 
+  const isInSidebar = document.querySelector('.sidebar')?.contains(document.activeElement);
+  const iconStyle = {
+    color: isInSidebar ? 'white' : 'var(--primary)'
+  };
+
   return (
-    <div className="flex items-center gap-x-1.5">
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
       {!iconOnRight &&
-        (icon ?? <i className="ph ph-bold ph-link text-primary group-[.sidebar]:text-white" />)}
+        (icon ?? <i className="ph ph-bold ph-link" style={iconStyle} />)}
       <a
         href={url.href}
         target="_blank"
         rel="noreferrer noopener nofollow"
-        className={cn("inline-block", className)}
+        style={{ display: 'inline-block', ...style }}
       >
         {label ?? (url.label || url.href)}
       </a>
       {iconOnRight &&
-        (icon ?? <i className="ph ph-bold ph-link text-primary group-[.sidebar]:text-white" />)}
+        (icon ?? <i className="ph ph-bold ph-link" style={iconStyle} />)}
     </div>
   );
 };
@@ -147,19 +186,20 @@ type LinkedEntityProps = {
   url: URL;
   separateLinks: boolean;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-const LinkedEntity = ({ name, url, separateLinks, className }: LinkedEntityProps) => {
+const LinkedEntity = ({ name, url, separateLinks, className, style }: LinkedEntityProps) => {
   return !separateLinks && isUrl(url.href) ? (
     <Link
       url={url}
       label={name}
       icon={<i className="ph ph-bold ph-globe text-primary" />}
       iconOnRight={true}
-      className={className}
+      style={{ fontWeight: style?.fontWeight }}
     />
   ) : (
-    <div className={className}>{name}</div>
+    <div style={style}>{name}</div>
   );
 };
 
@@ -185,12 +225,24 @@ const Section = <T,>({
   if (!section.visible || section.items.length === 0) return null;
 
   return (
-    <section id={section.id} className="grid">
-      <h4 className="mb-2 border-b pb-0.5 text-sm font-bold">{section.name}</h4>
+    <section id={section.id} style={{ display: 'grid' }}>
+      <h4 style={{ 
+        marginBottom: '0.5rem', 
+        borderBottom: '1px solid', 
+        paddingBottom: '0.125rem', 
+        fontSize: '0.875rem', 
+        fontWeight: 'bold' 
+      }}>
+        {section.name}
+      </h4>
 
       <div
-        className="grid gap-x-6 gap-y-3"
-        style={{ gridTemplateColumns: `repeat(${section.columns}, 1fr)` }}
+        style={{ 
+          display: 'grid',
+          columnGap: '1.5rem',
+          rowGap: '0.75rem',
+          gridTemplateColumns: `repeat(${section.columns}, 1fr)`
+        }}
       >
         {section.items
           .filter((item) => item.visible)
@@ -201,7 +253,7 @@ const Section = <T,>({
             const keywords = (keywordsKey && get(item, keywordsKey, [])) as string[] | undefined;
 
             return (
-              <div key={item.id} className={cn("space-y-2", className)}>
+              <div key={item.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <div>
                   {children?.(item as T)}
                   {url !== undefined && section.separateLinks && <Link url={url} />}
@@ -210,14 +262,17 @@ const Section = <T,>({
                 {summary !== undefined && !isEmptyString(summary) && (
                   <div
                     dangerouslySetInnerHTML={{ __html: sanitize(summary) }}
-                    className="wysiwyg group-[.sidebar]:prose-invert"
+                    style={{ 
+                      lineHeight: '1.5',
+                      wordBreak: 'break-word'
+                    }}
                   />
                 )}
 
                 {level !== undefined && level > 0 && <Rating level={level} />}
 
                 {keywords !== undefined && keywords.length > 0 && (
-                  <p className="text-sm">{keywords.join(", ")}</p>
+                  <p style={{ fontSize: '0.875rem' }}>{keywords.join(", ")}</p>
                 )}
               </div>
             );
@@ -229,23 +284,35 @@ const Section = <T,>({
 
 const Experience = () => {
   const section = useArtboardStore((state) => state.resume.sections.experience);
+  const isInSidebar = document.querySelector('.sidebar')?.contains(document.activeElement);
 
   return (
     <Section<Experience> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
-        <div className="flex items-start justify-between group-[.sidebar]:flex-col group-[.sidebar]:items-start">
-          <div className="text-left">
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'flex-start', 
+          justifyContent: 'space-between',
+          ...(isInSidebar && {
+            flexDirection: 'column',
+            alignItems: 'flex-start'
+          })
+        }}>
+          <div style={{ textAlign: 'left' }}>
             <LinkedEntity
               name={item.company}
               url={item.url}
               separateLinks={section.separateLinks}
-              className="font-bold"
+              style={{ fontWeight: 'bold' }}
             />
             <div>{item.position}</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+          <div style={{ 
+            flexShrink: 0,
+            textAlign: 'right'
+          }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
             <div>{item.location}</div>
           </div>
         </div>
@@ -256,24 +323,36 @@ const Experience = () => {
 
 const Education = () => {
   const section = useArtboardStore((state) => state.resume.sections.education);
+  const isInSidebar = document.querySelector('.sidebar')?.contains(document.activeElement);
 
   return (
     <Section<Education> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
-        <div className="flex items-start justify-between group-[.sidebar]:flex-col group-[.sidebar]:items-start">
-          <div className="text-left">
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'flex-start', 
+          justifyContent: 'space-between',
+          ...(isInSidebar && {
+            flexDirection: 'column',
+            alignItems: 'flex-start'
+          })
+        }}>
+          <div style={{ textAlign: 'left' }}>
             <LinkedEntity
               name={item.institution}
               url={item.url}
               separateLinks={section.separateLinks}
-              className="font-bold"
+              style={{ fontWeight: 'bold' }}
             />
             <div>{item.area}</div>
             <div>{item.score}</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+          <div style={{ 
+            flexShrink: 0,
+            textAlign: 'right'
+          }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
             <div>{item.studyType}</div>
           </div>
         </div>
@@ -290,11 +369,15 @@ const Profiles = () => {
       {(item) => (
         <div>
           {isUrl(item.url.href) ? (
-            <Link url={item.url} label={item.username} icon={<BrandIcon slug={item.icon} />} />
+            <Link 
+              url={item.url} 
+              label={item.username} 
+              icon={<BrandIcon slug={item.icon} />} 
+            />
           ) : (
             <p>{item.username}</p>
           )}
-          {!item.icon && <p className="text-sm">{item.network}</p>}
+          {!item.icon && <p style={{ fontSize: '0.875rem' }}>{item.network}</p>}
         </div>
       )}
     </Section>
@@ -566,14 +649,22 @@ const mapSectionToComponent = (section: SectionKey) => {
 
 export const cv_template_4 = ({ columns, isFirstPage = false }: TemplateProps) => {
   const [main, sidebar] = columns;
+  const primaryColor = useArtboardStore((state) => state.resume.metadata.theme.primary);
 
   return (
-    <div className="grid min-h-[inherit] grid-cols-3">
+    <div style={{ 
+      display: 'grid',
+      minHeight: 'inherit',
+      gridTemplateColumns: 'repeat(3, 1fr)'
+    }}>
       <div
-        className={cn(
-          "main p-custom group space-y-4",
-          sidebar.length > 0 ? "col-span-2" : "col-span-3",
-        )}
+        style={{
+          padding: '4px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          gridColumn: sidebar.length > 0 ? 'span 2' : 'span 3',
+        }}
       >
         {isFirstPage && <Header />}
 
@@ -583,10 +674,16 @@ export const cv_template_4 = ({ columns, isFirstPage = false }: TemplateProps) =
       </div>
 
       <div
-        className={cn(
-          "sidebar p-custom group h-full space-y-4 bg-primary text-background",
-          sidebar.length === 0 && "hidden",
-        )}
+        style={{
+          padding: '4px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          height: '100%',
+          backgroundColor: primaryColor,
+          color: '#ffffff',
+          visibility: sidebar.length === 0 ? 'hidden' : 'visible',
+        }}
       >
         {sidebar.map((section) => (
           <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>

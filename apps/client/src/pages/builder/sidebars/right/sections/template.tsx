@@ -75,8 +75,9 @@ const selectedTemplateId = (crrTemplate: string) => {
     setIsLimitReachedModalOpen(true)
   }else{
      const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
+     console.log(templateId,"templateId")
      if (templateId) {
-    localStorage.setItem("templateId", templateId.id.toString())
+    localStorage.setItem("templatedata", JSON.stringify(templateId))
     open("create");
 
     // navigate(`/onboard/upload-resume`)

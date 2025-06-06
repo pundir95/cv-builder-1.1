@@ -7,13 +7,17 @@ import { axios } from "@/client/libs/axios";
 import { BaseListItem } from "../../dashboard/resumes/_layouts/list/_components/base-item";
 import { BaseCard } from "../../dashboard/resumes/_layouts/grid/_components/base-card";
 import SubcribedPlan from "./SubcribedPlan";
+import { useNavigate } from "react-router";
+import  {ArrowLeft} from "@phosphor-icons/react";
 
 export const PlanPricing = () => {
   const [plans,setPlans]=useState([])
+  const navigate = useNavigate();
+  const [filteredPlans,setFilteredPlans]=useState([])
   const [isYearly, setIsYearly] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading,setLoading]=useState(false)
-  const [isSubscribed,setIsSubscribed]=useState(false)
+  const [subscribed,setSubscribed]=useState(false)
   const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
 
 
@@ -23,18 +27,27 @@ export const PlanPricing = () => {
     setIsAdmin(user.role === "admin");
     let api = user.reference_id ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
     axios.get(api).then((res)=>{
-      console.log(res,"res")
-      setPlans(res.data.data)
+      setPlans(res?.data?.data)
       setLoading(false)
     })
   },[])
 
-  useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
-    setIsSubscribed(user.subscription_details.length > 0)
-  },[])
+  useEffect(()=>{ 
+    let filteredDataList=plans.filter((item:any)=>item.validity==(isYearly ? "year" : "month"))
+    console.log(filteredDataList,"filteredDataList")
+    setFilteredPlans(filteredDataList)
+  },[isYearly,plans])
+
   
   const getThePlan=(id:string)=>{
+    if(user.subscription_details.length > 0){
+      axios.post(`/subscription/update-subscription-plan/${id}/`).then((res)=>{
+        console.log(res,"res9999")
+        // if (res.data.data.approve_link) {
+        //   window.location.href = res.data.data.approve_link;
+        // }
+      })
+    }else{
     axios.post(`/subscription/subscription-details/`,{
       plan_id:id
     }).then((res)=>{
@@ -42,6 +55,7 @@ export const PlanPricing = () => {
       window.location.href = res.data.data.approve_link;
     }
     })
+  }
   }
 
   const handleDeletePlan = (id: string) => {
@@ -74,11 +88,19 @@ export const PlanPricing = () => {
 
       <div className="w-full">
         <div className="">
+         {subscribed && <div className="flex items-center mb-6 cursor-pointer" onClick={()=>{
+            setSubscribed(false)
+          }}>
+
+              <ArrowLeft size={20} className="mr-2" />
+              <span>Back to Dashboard</span>            
+          </div>}
+          
       <h2 className="text-3xl font-bold text-center mb-10">Subscription Plans</h2>
 
       {
-        user.subscription_details.length > 0 ?
-        <SubcribedPlan/>
+        user.subscription_details.length > 0 && !subscribed ?
+        <SubcribedPlan data={user.subscription_details} setSubscribed={setSubscribed} />
         :
         <>
 
@@ -87,7 +109,9 @@ export const PlanPricing = () => {
         <span className="text-gray-700 font-medium">Monthly</span>
         <button
           className={`relative w-14 h-7 rounded-full transition-colors duration-200 focus:outline-none ${isYearly ? 'bg-green-500' : 'bg-gray-300'}`}
-          onClick={() => setIsYearly((v) => !v)}
+          onClick={() =>{
+            setIsYearly((v) => !v)
+          }}
           aria-label="Toggle yearly pricing"
         >
           <span
@@ -113,7 +137,7 @@ export const PlanPricing = () => {
         ))  
         :
         
-        plans.length > 0 && plans.map((product:any) => (
+          filteredPlans.length > 0 && filteredPlans.map((product:any) => (
           <div
             key={product.name}
             className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative"

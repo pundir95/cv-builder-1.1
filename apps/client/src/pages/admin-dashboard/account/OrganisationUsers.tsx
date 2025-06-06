@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Button, Input, Select, SelectTrigger, SelectContent, Badge, Switch, SelectItem } from "@reactive-resume/ui";
 import { Trash } from "@phosphor-icons/react";
 import AddOnUserModal from "./AddOnUserModal";
 import CreateAddOnUser from "./CreateAddOnUser";
+import { toast } from "@/client/hooks/use-toast";
+import { axios } from "@/client/libs/axios";
+import { DeleteSubscriptionUser } from "./DeleteSubscriptionUser";
 
 // Mock data for demonstration
 const mockUsers = [
@@ -16,16 +19,26 @@ const mockUsers = [
   // Add more users as needed
 ];
 
-export default function OrganisationUsers({showModal, setShowModal}: {showModal: any, setShowModal: any}) {
+export default function OrganisationUsers({showModal, setShowModal, employees}: {showModal: any, setShowModal: any, employees: any}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [users, setUsers] = useState(mockUsers);
+  const [isDeleteORDisable, setIsDeleteORDisable] = useState({
+    delete: false,
+    deletedId: "",
+    disable: false
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const userData=localStorage.getItem("user")||"";
+  const userDataObj=JSON.parse(userData)
 
-  // Filtered users based on search
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase()) ||
-    user.email.toLowerCase().includes(search.toLowerCase())
-  );
+
+  
+  // // Filtered users based on search
+  // const filteredUsers = employees.filter((user: any) =>
+  //   user.name.toLowerCase().includes(search.toLowerCase()) ||
+  //   user.email.toLowerCase().includes(search.toLowerCase())
+  // );
 
   // Handle status toggle
   const handleStatusChange = (id: number) => {
@@ -34,11 +47,26 @@ export default function OrganisationUsers({showModal, setShowModal}: {showModal:
         user.id === id ? { ...user, status: !user.status } : user
       )
     );
+    setIsDeleteORDisable({...isDeleteORDisable, disable: true, deletedId: id.toString()})
   };
 
   // Handle delete
   const handleDelete = (id: number) => {
+    setIsDeleteORDisable({...isDeleteORDisable, delete: true, deletedId: id.toString()})
     setUsers((prev) => prev.filter((user) => user.id !== id));
+
+  };
+
+  const handleConfirm = async () => {
+    try {
+      setIsLoading(true);
+      await axios.delete(`company/organization-employees/${isDeleteORDisable.deletedId}/`);
+      setIsDeleteORDisable({...isDeleteORDisable, delete: false})
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,7 +95,20 @@ export default function OrganisationUsers({showModal, setShowModal}: {showModal:
               </SelectContent>
             </Select>
           </div>
-          <Button className="bg-blue-500 text-white px-6" onClick={() => setShowModal({...showModal, addOnUser: false,createAddOnUser: true})}>Add-On User</Button>
+          <Button className="bg-blue-500 text-white px-6" onClick={() =>{
+            if(userDataObj.subscription_details.length>0){
+              if(userDataObj.limit==0){
+                setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
+              }else{
+                setShowModal({...showModal, addOnUser: false,createAddOnUser: true})
+              }
+            }else{
+              toast({
+                title: "You are not subscribed to any plan",
+                variant: "error",
+              })
+            }
+          }}>Add-On User</Button>
         </div>
         {/* Table */}
         <div className="overflow-x-auto rounded-lg border border-gray-100">
@@ -83,23 +124,23 @@ export default function OrganisationUsers({showModal, setShowModal}: {showModal:
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.length === 0 ? (
+              {employees.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="p-6 text-center text-gray-400">No users found.</td>
                 </tr>
               ) : (
-                filteredUsers.map((user, idx) => (
+                employees?.length>0 && employees?.map((user: any, idx: any) => (
                   <tr key={user.id} className="border-b last:border-0 hover:bg-gray-50">
                     <td className="p-4">{idx + 1}</td>
-                    <td className="p-4 font-medium">{user.name}</td>
-                    <td className="p-4">{user.email}</td>
+                    <td className="p-4 font-medium">{user.organization_user?.first_name} {user.organization_user?.last_name}</td>
+                    <td className="p-4">{user.organization_user?.email}</td>
                     <td className="p-4">
                       <Badge variant="secondary">{user.role}</Badge>
                     </td>
                     <td className="p-4">
                       <span className="flex items-center gap-2">
-                        <span>{user.status ? "Active" : "Inactive"}</span>
-                        <Switch checked={user.status} onCheckedChange={() => handleStatusChange(user.id)} />
+                        <span>{user.is_active ? "Active" : "Inactive"}</span>
+                        <Switch checked={user.is_active} onCheckedChange={() => handleStatusChange(user.id)} />
                       </span>
                     </td>
                     <td className="p-4">
@@ -117,9 +158,29 @@ export default function OrganisationUsers({showModal, setShowModal}: {showModal:
             </tbody>
           </table>
         </div>
-        <AddOnUserModal isOpen={showModal.addOnUser} onClose={() => setShowModal({...showModal, addOnUser: false})} onPay={() => {}} />
-        <CreateAddOnUser isOpen={showModal.createAddOnUser} onClose={() => setShowModal({...showModal, createAddOnUser: false})} onAdd={() => {}} />
+        <AddOnUserModal isOpen={showModal.addOnUser} onClose={() => setShowModal({...showModal, addOnUser: false})}
+          price={userDataObj.subscription_details[0]?.plan_details?.price}
+          plan_id={userDataObj.subscription_details[0]?.plan_id}
+          onPay={() => {
+            setIsDeleteORDisable({...isDeleteORDisable, delete: true})
+          }}
+          />
+        <CreateAddOnUser isOpen={showModal.createAddOnUser} onClose={() => setShowModal({...showModal, createAddOnUser: false})} />
       </Card>
+      {isDeleteORDisable.delete && <DeleteSubscriptionUser isOpen={isDeleteORDisable.delete}  onClose={() => setIsDeleteORDisable({...isDeleteORDisable, delete: false})} id={isDeleteORDisable.deletedId}
+      text="Delete"
+      onConfirm={() => {
+        handleConfirm()
+      }}
+      isLoading={isLoading}
+      />}
+      {isDeleteORDisable.disable && <DeleteSubscriptionUser isOpen={isDeleteORDisable.disable}  onClose={() => setIsDeleteORDisable({...isDeleteORDisable, disable: false})} id={isDeleteORDisable.deletedId}
+      text="Disable"
+      onConfirm={() => {
+        handleConfirm()
+      }}
+      isLoading={isLoading}
+      />}
     </div>
   );
 }

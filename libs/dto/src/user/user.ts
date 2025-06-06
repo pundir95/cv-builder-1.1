@@ -32,6 +32,8 @@ export const userSchema = z.object({
   provider: z.enum(["email", "github", "google", "openid"]).default("email"),
   createdAt: dateSchema,
   updatedAt: dateSchema,
+  created_at: dateSchema,
+  updated_at: dateSchema,
 });
 
 export class UserDto extends createZodDto(userSchema) {}

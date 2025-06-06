@@ -14,7 +14,7 @@ import type {
   Skill,
   URL,
 } from "@reactive-resume/schema";
-import { Education, Experience, Volunteer } from "@reactive-resume/schema";
+import { Education, Experience } from "@reactive-resume/schema";
 import { cn, isEmptyString, isUrl, sanitize } from "@reactive-resume/utils";
 import get from "lodash.get";
 import { Fragment } from "react";
@@ -28,23 +28,48 @@ const Header = () => {
   const basics = useArtboardStore((state) => state.resume.basics);
 
   return (
-    <div className="flex flex-col items-center space-y-2 text-center">
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.5rem',
+      textAlign: 'center'
+    }}>
       <Picture />
 
       <div>
-        <div className="text-2xl font-bold">{basics.name}</div>
-        <div className="text-base">{basics.headline}</div>
+        <div style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold'
+        }}>{basics.name}</div>
+        <div style={{
+          fontSize: '1rem'
+        }}>{basics.headline}</div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: '0.5rem 0.125rem',
+        fontSize: '0.875rem'
+      }}>
         {basics.location && (
-          <div className="flex items-center gap-x-1.5">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.375rem'
+          }}>
             <i className="ph ph-bold ph-map-pin text-primary" />
             <div>{basics.location}</div>
           </div>
         )}
         {basics.phone && (
-          <div className="flex items-center gap-x-1.5">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.375rem'
+          }}>
             <i className="ph ph-bold ph-phone text-primary" />
             <a href={`tel:${basics.phone}`} target="_blank" rel="noreferrer">
               {basics.phone}
@@ -52,7 +77,11 @@ const Header = () => {
           </div>
         )}
         {basics.email && (
-          <div className="flex items-center gap-x-1.5">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.375rem'
+          }}>
             <i className="ph ph-bold ph-at text-primary" />
             <a href={`mailto:${basics.email}`} target="_blank" rel="noreferrer">
               {basics.email}
@@ -61,7 +90,11 @@ const Header = () => {
         )}
         <Link url={basics.url} />
         {basics.customFields.map((item) => (
-          <div key={item.id} className="flex items-center gap-x-1.5">
+          <div key={item.id} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.375rem'
+          }}>
             <i className={cn(`ph ph-bold ph-${item.icon}`, "text-primary")} />
             {isUrl(item.value) ? (
               <a href={item.value} target="_blank" rel="noreferrer noopener nofollow">
@@ -83,15 +116,28 @@ const Summary = () => {
   if (!section.visible || isEmptyString(section.content)) return null;
 
   return (
-    <section id={section.id} className="grid grid-cols-5 border-t pt-2.5">
+    <section id={section.id}
+     style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+      borderTop: '1px solid',
+      paddingTop: '0.625rem'
+    }}
+    >
       <div>
-        <h4 className="text-base font-bold">{section.name}</h4>
+        <h4 style={{
+          fontSize: '1rem',
+          fontWeight: 'bold'
+        }}>{section.name}</h4>
       </div>
 
       <div
         dangerouslySetInnerHTML={{ __html: sanitize(section.content) }}
-        style={{ columns: section.columns }}
-        className="wysiwyg col-span-4"
+        style={{ 
+          columns: section.columns,
+          gridColumn: 'span 4 / span 4'
+        }}
+        className="wysiwyg"
       />
     </section>
   );
@@ -104,7 +150,13 @@ const Rating = ({ level }: RatingProps) => (
     {Array.from({ length: 5 }).map((_, index) => (
       <div
         key={index}
-        className={cn("size-2 rounded-full border border-primary", level > index && "bg-primary")}
+        style={{
+          width: '10px',
+          height: '10px',
+          borderRadius: '50%',
+          border: '1px solid var(--primary)',
+          backgroundColor: level > index ? 'var(--primary)' : 'transparent'
+        }}
       />
     ))}
   </div>
@@ -122,13 +174,20 @@ const Link = ({ url, icon, iconOnRight, label, className }: LinkProps) => {
   if (!isUrl(url.href)) return null;
 
   return (
-    <div className="flex items-center gap-x-1.5">
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.375rem'
+    }}>
       {!iconOnRight && (icon ?? <i className="ph ph-bold ph-link text-primary" />)}
       <a
         href={url.href}
         target="_blank"
         rel="noreferrer noopener nofollow"
-        className={cn("inline-block", className)}
+        style={{
+          display: 'inline-block',
+          ...(className ? { className } : {})
+        }}
       >
         {label ?? (url.label || url.href)}
       </a>
@@ -180,14 +239,26 @@ const Section = <T,>({
   if (!section.visible || section.items.length === 0) return null;
 
   return (
-    <section id={section.id} className="grid grid-cols-5 border-t pt-2.5">
+    <section id={section.id} style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+      borderTop: '1px solid',
+      paddingTop: '0.625rem'
+    }}>
       <div>
-        <h4 className="text-base font-bold">{section.name}</h4>
+        <h4 style={{
+          fontSize: '1rem',
+          fontWeight: 'bold'
+        }}>{section.name}</h4>
       </div>
 
       <div
-        className="col-span-4 grid gap-x-6 gap-y-3"
-        style={{ gridTemplateColumns: `repeat(${section.columns}, 1fr)` }}
+        style={{
+          gridColumn: 'span 4 / span 4',
+          display: 'grid',
+          gap: '1.5rem',
+          gridTemplateColumns: `repeat(${section.columns}, 1fr)`
+        }}
       >
         {section.items
           .filter((item) => item.visible)
@@ -198,7 +269,11 @@ const Section = <T,>({
             const keywords = (keywordsKey && get(item, keywordsKey, [])) as string[] | undefined;
 
             return (
-              <div key={item.id} className={cn("space-y-2", className)}>
+              <div key={item.id} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem'
+              }}>
                 <div>
                   {children?.(item as T)}
                   {url !== undefined && section.separateLinks && <Link url={url} />}
@@ -207,6 +282,10 @@ const Section = <T,>({
                 {summary !== undefined && !isEmptyString(summary) && (
                   <div
                     dangerouslySetInnerHTML={{ __html: sanitize(summary) }}
+                    style={{
+                      columns: section.columns,
+                      gridColumn: 'span 4 / span 4'
+                    }}
                     className="wysiwyg"
                   />
                 )}
@@ -214,7 +293,7 @@ const Section = <T,>({
                 {level !== undefined && level > 0 && <Rating level={level} />}
 
                 {keywords !== undefined && keywords.length > 0 && (
-                  <p className="text-sm">{keywords.join(", ")}</p>
+                  <p style={{ fontSize: '0.875rem' }}>{keywords.join(", ")}</p>
                 )}
               </div>
             );
@@ -236,7 +315,7 @@ const Profiles = () => {
           ) : (
             <p>{item.username}</p>
           )}
-          {!item.icon && <p className="text-sm">{item.network}</p>}
+          {!item.icon && <p style={{ fontSize: '0.875rem' }}>{item.network}</p>}
         </div>
       )}
     </Section>
@@ -249,8 +328,12 @@ const Experience = () => {
   return (
     <Section<Experience> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ textAlign: 'left' }}>
             <LinkedEntity
               name={item.company}
               url={item.url}
@@ -260,8 +343,8 @@ const Experience = () => {
             <div>{item.position}</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+            <div style={{ textAlign: 'right' }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
             <div>{item.location}</div>
           </div>
         </div>
@@ -276,8 +359,12 @@ const Education = () => {
   return (
     <Section<Education> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ textAlign: 'left' }}>
             <LinkedEntity
               name={item.institution}
               url={item.url}
@@ -288,34 +375,9 @@ const Education = () => {
             <div>{item.score}</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
             <div>{item.studyType}</div>
-          </div>
-        </div>
-      )}
-    </Section>
-  );
-};
-
-const Awards = () => {
-  const section = useArtboardStore((state) => state.resume.sections.awards);
-
-  return (
-    <Section<Award> section={section} urlKey="url" summaryKey="summary">
-      {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
-            <div className="font-bold">{item.title}</div>
-            <LinkedEntity
-              name={item.awarder}
-              url={item.url}
-              separateLinks={section.separateLinks}
-            />
-          </div>
-
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
           </div>
         </div>
       )}
@@ -329,14 +391,18 @@ const Certifications = () => {
   return (
     <Section<Certification> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
-            <div className="font-bold">{item.name}</div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontWeight: 'bold' }}>{item.name}</div>
             <LinkedEntity name={item.issuer} url={item.url} separateLinks={section.separateLinks} />
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
           </div>
         </div>
       )}
@@ -350,8 +416,12 @@ const Skills = () => {
   return (
     <Section<Skill> section={section} levelKey="level" keywordsKey="keywords">
       {(item) => (
-        <div className="space-y-0.5">
-          <div className="font-bold">{item.name}</div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          <div style={{ fontWeight: 'bold' }}>{item.name}</div>
           <div>{item.description}</div>
         </div>
       )}
@@ -364,60 +434,7 @@ const Interests = () => {
 
   return (
     <Section<Interest> section={section} keywordsKey="keywords" className="space-y-0.5">
-      {(item) => <div className="font-bold">{item.name}</div>}
-    </Section>
-  );
-};
-
-const Publications = () => {
-  const section = useArtboardStore((state) => state.resume.sections.publications);
-
-  return (
-    <Section<Publication> section={section} urlKey="url" summaryKey="summary">
-      {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
-            <LinkedEntity
-              name={item.name}
-              url={item.url}
-              separateLinks={section.separateLinks}
-              className="font-bold"
-            />
-            <div>{item.publisher}</div>
-          </div>
-
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
-          </div>
-        </div>
-      )}
-    </Section>
-  );
-};
-
-const Volunteer = () => {
-  const section = useArtboardStore((state) => state.resume.sections.volunteer);
-
-  return (
-    <Section<Volunteer> section={section} urlKey="url" summaryKey="summary">
-      {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
-            <LinkedEntity
-              name={item.organization}
-              url={item.url}
-              separateLinks={section.separateLinks}
-              className="font-bold"
-            />
-            <div>{item.position}</div>
-          </div>
-
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
-            <div>{item.location}</div>
-          </div>
-        </div>
-      )}
+      {(item) => <div style={{ fontWeight: 'bold' }}>{item.name}</div>}
     </Section>
   );
 };
@@ -428,8 +445,12 @@ const Languages = () => {
   return (
     <Section<Language> section={section} levelKey="level">
       {(item) => (
-        <div className="space-y-0.5">
-          <div className="font-bold">{item.name}</div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          <div style={{ fontWeight: 'bold' }}>{item.name}</div>
           <div>{item.description}</div>
         </div>
       )}
@@ -443,8 +464,12 @@ const Projects = () => {
   return (
     <Section<Project> section={section} urlKey="url" summaryKey="summary" keywordsKey="keywords">
       {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ textAlign: 'left' }}>
             <LinkedEntity
               name={item.name}
               url={item.url}
@@ -454,8 +479,8 @@ const Projects = () => {
             <div>{item.description}</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
           </div>
         </div>
       )}
@@ -494,8 +519,12 @@ const Custom = ({ id }: { id: string }) => {
       keywordsKey="keywords"
     >
       {(item) => (
-        <div className="flex items-start justify-between">
-          <div className="text-left">
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between'
+        }}>
+          <div style={{ textAlign: 'left' }}>
             <LinkedEntity
               name={item.name}
               url={item.url}
@@ -505,8 +534,8 @@ const Custom = ({ id }: { id: string }) => {
             <div>{item.description}</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="font-bold">{item.date}</div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontWeight: 'bold' }}>{item.date}</div>
             <div>{item.location}</div>
           </div>
         </div>
@@ -529,9 +558,6 @@ const mapSectionToComponent = (section: SectionKey) => {
     case "education": {
       return <Education />;
     }
-    case "awards": {
-      return <Awards />;
-    }
     case "certifications": {
       return <Certifications />;
     }
@@ -540,12 +566,6 @@ const mapSectionToComponent = (section: SectionKey) => {
     }
     case "interests": {
       return <Interests />;
-    }
-    case "publications": {
-      return <Publications />;
-    }
-    case "volunteer": {
-      return <Volunteer />;
     }
     case "languages": {
       return <Languages />;
@@ -568,10 +588,19 @@ export const cv_template_2 = ({ columns, isFirstPage = false }: TemplateProps) =
   const [main, sidebar] = columns;
 
   return (
-    <div className="p-custom space-y-4">
+    <div style={{
+      padding: '0.5rem',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1rem'
+    }}>
       {isFirstPage && <Header />}
 
-      <div className="space-y-4">
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+      }}>
         {main.map((section) => (
           <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>
         ))}

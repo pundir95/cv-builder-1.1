@@ -14,6 +14,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   const [companyAddress, setCompanyAddress] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('https://www.google.com');
   const [organizationId, setOrganizationId] = useState('1234567890');
+  const [employees, setEmployees] = useState([]);
   const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
   // State for errors
   const [errors, setErrors] = useState<{[key: string]: string}>({});
@@ -33,7 +34,13 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
       setCompanyWebsite(res.data.data[0].company_website);
       setOrganizationId(res.data.data[0].organisation_id);
     })
+    axios.get(`/company/organization-employees/`).then((res)=>{
+      console.log(res);
+      setEmployees(res.data.data || []);
+    })
   },[])
+
+  console.log(employees,"employees");
 
   // Validation function
   const validate = () => {
@@ -84,7 +91,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
               <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})}>
                 Back
               </button>
-             { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} />}
+             { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} employees={employees} />}
             {showModal.organisationDetailsEdit &&  <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-semibold text-primary">Organization Details</h2>
@@ -147,7 +154,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                 </div>
               </div>}
             {showModal.organisationUsers && <div className="flex items-center justify-between">
-               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} />
+               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} />
               </div>}
             </Card>
           </div>

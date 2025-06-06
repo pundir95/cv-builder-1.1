@@ -32,6 +32,7 @@ import { BaseListItem } from "./base-item";
 import { sharedState } from "@/artboard/utils/sharedState";
 import { axios } from "@/client/libs/axios";
 import { toast } from "@/client/hooks/use-toast";
+import html2pdf from "html2pdf.js";
 
 type Props = {
   resume: ResumeDto;
@@ -43,8 +44,8 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
   const { open } = useDialog<ResumeDto>("resume");
   const { open: lockOpen } = useDialog<ResumeDto>("lock");
 
-  const lastUpdated = dayjs().to(resume.updatedAt);
-  const createdAt = dayjs(resume.createdAt).format("DD/MM/YYYY");
+  const lastUpdated = dayjs().to(resume.updated_at);
+  const createdAt = dayjs(resume.created_at).format("DD/MM/YYYY");
   const strength = resume.cv_data?.metadata?.template?.progress || 0;
   const user=localStorage.getItem("user");
   const userData=JSON.parse(user || "{}");
@@ -100,35 +101,116 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
         return;
       }
 
-      const templateRef = sharedState.getTemplateRef();
+      // First try to get template reference from shared state
+      let templateRef = sharedState.getTemplateRef();
+      console.log("Initial template ref:", templateRef);
+      
+      // If not available, try to get it from the builder iframe
+      if (!templateRef) {
+        console.log("Template ref not found in shared state, loading builder iframe...");
+        // Create a temporary iframe to load the builder
+        const tempIframe = document.createElement('iframe');
+        tempIframe.style.display = 'none';
+        tempIframe.src = `/builder/${resume.id}`;
+        document.body.appendChild(tempIframe);
+
+        // Wait for the iframe to load and request template reference
+      
+      }
+
+      console.log("go to here", templateRef);
       
       if (templateRef) {
+        console.log("Got template ref, preparing to generate PDF...");
         const templateString = templateRef.innerHTML;
-        axios.post(`cv-manager/cv-download/`, {
-          
-            "html_content": templateString,
-            "cv_name": "Dummy"
+        console.log("Template content length:", templateString.length);
         
-        }, { responseType: 'blob' })
-        .then((response) => {
-          const blob = new Blob([response.data], { type: 'application/pdf' });
-          const downloadUrl = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = downloadUrl;
-          link.download = 'resume.pdf';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(downloadUrl);
-        })
-        .catch((error) => {
+        // Configure PDF options
+        const options = {
+          margin: 10,
+          filename: `${resume.title || 'resume'}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { 
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            imageTimeout: 0,
+            logging: true,
+            onclone: (clonedDoc: Document) => {
+              // Ensure all styles are properly applied in the cloned document
+              const styleSheets = document.styleSheets;
+              for (let i = 0; i < styleSheets.length; i++) {
+                try {
+                  const rules = styleSheets[i].cssRules;
+                  for (let j = 0; j < rules.length; j++) {
+                    clonedDoc.styleSheets[i].insertRule(rules[j].cssText);
+                  }
+                } catch (e) {
+                  console.warn('Could not copy stylesheet:', e);
+                }
+              }
+            }
+          },
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait',
+            compress: true
+          }
+        };
+  
+        try {
+          // Create a temporary div to hold the HTML content
+          const element = document.createElement('div');
+          element.innerHTML = templateString;
+          
+          // Copy all styles from the original template
+          const originalStyles = templateRef.getAttribute('style');
+          if (originalStyles) {
+            element.setAttribute('style', originalStyles);
+          }
+          
+          // Wait for images to load
+          const images = element.getElementsByTagName('img');
+          console.log("Found images to load:", images.length);
+          await Promise.all(Array.from(images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+              img.onload = resolve;
+              img.onerror = resolve;
+            });
+          }));
+          
+          // Add a small delay to ensure everything is properly rendered
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          console.log("Generating PDF...");
+          // Generate PDF
+          await html2pdf().set(options).from(element).save();
+          console.log("PDF generation completed");
+        } catch (error) {
           console.error("Error generating PDF:", error);
-        });
-        // generatePDF(templateRef);
+          toast({
+            title: "Error generating PDF",
+            description: "There was an error generating your PDF. Please try again.",
+            variant: "error",
+          });
+        }
       } else {
-        console.error("Template reference is null. Please ensure the builder page is loaded.");
+        console.error("Could not get template reference. Please try again.");
+        toast({
+          title: "Error",
+          description: "Could not generate PDF. Please try again.",
+          variant: "error",
+        });
       }
     };
+
+
+
+   
+     
+    
   
 
  
@@ -223,9 +305,9 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
               <PencilSimple size={16} />
               <span className="ml-1 hidden sm:inline">Edit</span>
             </Button>
-            <Button size="sm" variant="success" onClick={onDuplicate} title="Check">
+            <Button size="sm" variant="success"  title="Check" onClick={onCheck}>
               <CheckCircle size={16} />
-              <span className="ml-1 hidden sm:inline" onClick={onCheck}>Check</span>
+              <span className="ml-1 hidden sm:inline" id="check">Check</span>
             </Button>
             <Button size="sm" variant="secondary" className="bg-blue-500 text-white" onClick={onPdfExport} title="Download">
               <Download size={16} />
@@ -250,7 +332,6 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
           end={dropdownMenu}
           onClick={onOpen}
           onEdit={onUpdate}
-          // onCheck={onDuplicate}
           onDownload={onDelete}
         />
       </ContextMenuTrigger>

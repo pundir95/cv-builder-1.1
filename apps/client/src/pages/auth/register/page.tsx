@@ -28,6 +28,8 @@ import { useFeatureFlags } from "@/client/services/feature";
 import { useToast } from "@/client/components/ToastProvider";
 import { ErrorMessage } from "@reactive-resume/utils";
 import { translateError } from "@/client/services/errors/translate-error";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 type FormValues = z.infer<typeof registerSchema>;
 
@@ -175,15 +177,18 @@ export const RegisterPage = () => {
             />
 
             <FormField
-              name="phone_number"
+              name="phone_number" 
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <PhoneInput
+                      country="IN"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                    />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}

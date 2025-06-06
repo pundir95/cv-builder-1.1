@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { axios } from '@/client/libs/axios';
 
-const planTypes = [
+const planValidityList = [
   { label: 'One Time Payment', value: 'onetime' },
   { label: 'Monthly', value: 'month' },
   { label: 'Annual', value: 'year' },
   { label: 'Offer', value: 'offer' },
+];
+
+const planTypeList = [
+  { label: 'Personal', value: 'personal' },
+  { label: 'Premium', value: 'premium' },
+  { label: 'Organization', value: 'organization' },
+  { label: 'Enterprise', value: 'enterprise' },
+  { label: 'Team', value: 'team' },
 ];
 
 interface AddNewPlanProps {
@@ -14,7 +22,8 @@ interface AddNewPlanProps {
 
 const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
   const [planName, setPlanName] = useState('');
-  const [planType, setPlanType] = useState('one_time');
+  const [planType, setPlanType] = useState('personal');
+  const [planValidity, setPlanValidity] = useState('onetime');
   const [planPrice, setPlanPrice] = useState('');
   const [features, setFeatures] = useState<string[]>(['']);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -69,10 +78,11 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
     try {
       const response = await axios.post('/subscription/subscription-plans/', {
         name: planName,
-        validity: planType,
+        validity: planValidity,
         price: Number(planPrice),
         currency: 'USD',
         description: description,
+        plan_type:planType,
         fetures: features.filter(feature => feature.trim()),
       });
 
@@ -126,16 +136,37 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
         />
         {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
       </div>
+
       <div className="mb-4">
         <label className="block mb-2 font-medium">Plan Type</label>
         <div className="flex gap-4">
-          {planTypes.map(type => (
+          {planTypeList.map(type => (
             <button
               key={type.value}
               type="button"
               onClick={() => setPlanType(type.value)}
               className={`px-6 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none ${
                 planType === type.value
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-100 text-gray-400'
+              }`} 
+            >
+              {type.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2 font-medium">Plan Validity</label>
+        <div className="flex gap-4">
+          {planValidityList.map(type => (
+            <button
+              key={type.value}
+              type="button"
+              onClick={() => setPlanValidity(type.value)}
+              className={`px-6 py-2 rounded-lg font-medium transition-colors duration-150 focus:outline-none ${
+                planValidity === type.value
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-400'
               }`}

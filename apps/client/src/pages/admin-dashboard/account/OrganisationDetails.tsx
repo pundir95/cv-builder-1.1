@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // Heroicons (install @heroicons/react if not already)
         import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
 
-    const OrganisationDetails: React.FC<{showModal: any, setShowModal: any}> = ({showModal, setShowModal}) => {
+    const OrganisationDetails: React.FC<{showModal: any, setShowModal: any, employees: any}> = ({showModal, setShowModal, employees}) => {
     const [copied, setCopied] = useState(false);
   const org = {
     name: 'Avio',
@@ -44,7 +44,7 @@ import React, { useState } from 'react';
               Organization ID
             </div>
             <div className="flex items-center gap-2 mt-1">
-              <span className="font-mono text-sm break-all">{org.id}</span>
+              <span className="font-mono text-sm break-all">{employees[0]?.org_id}</span>
               <button onClick={handleCopy} className="text-gray-400 hover:text-gray-600" title="Copy">
                 <Clipboard size={16} />
               </button>
@@ -58,7 +58,7 @@ import React, { useState } from 'react';
               Users
             </div>
             <div className="flex items-center gap-2 mt-1">
-              <span className="font-semibold">{org.users} users</span>
+              <span className="font-semibold">{employees.length} users</span>
               <button className="ml-auto text-gray-400 hover:text-gray-600" title="View Users">
                 <Eye size={16} onClick={() => setShowModal({...showModal, organisationUsers: true, organisationDetailsEdit: false, organisationDetails: false})} />
               </button>

@@ -2,7 +2,7 @@ import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@reactive-resume/ui";
-import { Warning, PencilSimple, Download, Plus } from "@phosphor-icons/react";
+import { Warning, PencilSimple, Download, Plus, Bank, CreditCard, Shield, Check, Money } from "@phosphor-icons/react";
 import { useNavigate } from "react-router";
 import { useResumes } from "@/client/services/resume";
 import { useState, useEffect } from "react";
@@ -13,12 +13,16 @@ export const UserDashboardPage = () => {
   const { i18n } = useLingui();
   const { resumes, loading } = useResumes();
   const [selectedResume, setSelectedResume] = useState<ResumeDto | null>(null);
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  console.log(userData,"userData")
+
 
   useEffect(() => {
     if (resumes && resumes.length > 0) {
       setSelectedResume(resumes[0]);
     }
   }, [resumes]);
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,25 +149,68 @@ export const UserDashboardPage = () => {
           </div>
 
           {/* Action Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* Upgrade Subscription Plan Card */}
-            <div className="bg-white rounded-xl shadow p-8 flex flex-col items-center justify-center col-span-1 md:col-span-2">
-              <div className="flex items-center mb-4">
-                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-100 mr-4">
-                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path fill="#F59E42" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/></svg>
-                </span>
-                <h2 className="text-2xl font-bold text-yellow-700">Upgrade to Premium</h2>
+
+          {
+            userData?.subscription_details?.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {/* Current Plan Card */}
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-8 text-white col-span-1 md:col-span-2">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">{userData?.subscription_details[0]?.plan_details?.name}</h2>
+                    <p className="text-blue-100 text-sm">Your current subscription</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold">${userData?.subscription_details[0]?.plan_details?.price}</div>
+                    <div className="text-blue-100">{userData?.subscription_details[0]?.plan_details?.validity}</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <h3 className="font-semibold mb-3 text-blue-100">Current Features</h3>
+                    <ul className="space-y-2">
+                      {
+                        userData?.subscription_details[0]?.plan_details?.fetures?.map((feature:any)=>(
+                          <li className="flex items-center gap-2">
+                            <Check size={20} weight="bold" />
+                            <span>{feature}</span>
+                          </li>
+                        ))
+                      }
+
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <p className="text-gray-700 text-center mb-4 max-w-xl">Unlock all features and create unlimited resumes. Enjoy premium templates, advanced analytics, and priority support to boost your job search success!</p>
-              <ul className="text-gray-600 text-sm mb-6 list-disc list-inside text-left max-w-md">
-                <li>Unlimited resume creation</li>
-                <li>Access to all premium templates</li>
-                <li>Advanced resume analytics</li>
-                <li>Priority customer support</li>
-              </ul>
-              <Button onClick={() => navigate('/dashboard/plan-pricing')} className="bg-yellow-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-yellow-600 transition">Upgrade Now</Button>
             </div>
-          </div>
+              
+            )
+            :
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {/* Upgrade Subscription Plan Card */}
+              <div className="bg-white rounded-xl shadow p-8 flex flex-col items-center justify-center col-span-1 md:col-span-2">
+                <div className="flex items-center mb-4">
+                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-100 mr-4">
+                    <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path fill="#F59E42" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/></svg>
+                  </span>
+                  <h2 className="text-2xl font-bold text-yellow-700">Upgrade to Premium</h2>
+                </div>
+                <p className="text-gray-700 text-center mb-4 max-w-xl">Unlock all features and create unlimited resumes. Enjoy premium templates, advanced analytics, and priority support to boost your job search success!</p>
+                <ul className="text-gray-600 text-sm mb-6 list-disc list-inside text-left max-w-md">
+                  <li>Unlimited resume creation</li>
+                  <li>Access to all premium templates</li>
+                  <li>Advanced resume analytics</li>
+                  <li>Priority customer support</li>
+                </ul>
+                <Button onClick={() => navigate('/dashboard/plan-pricing')} className="bg-yellow-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-yellow-600 transition">Upgrade Now</Button>
+              </div>
+            </div>
+                
+            
+          }
+
+        
         </main>
       </div>
     </div>
