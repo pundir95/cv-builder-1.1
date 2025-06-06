@@ -5,13 +5,19 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/libs/dto",
-        "main": "libs/dto/src/index.ts",
-        "tsConfig": "libs/dto/tsconfig.lib.json",
-        "assets": ["libs/dto/*.md"]
+        "outputPath": "dist/libs/dto"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
       }
     },
     "lint": {

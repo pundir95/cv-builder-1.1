@@ -5,13 +5,19 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/libs/parser",
-        "main": "libs/parser/src/index.ts",
-        "tsConfig": "libs/parser/tsconfig.lib.json",
-        "assets": ["libs/parser/*.md"]
+        "outputPath": "dist/libs/parser"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
       }
     },
     "lint": {
