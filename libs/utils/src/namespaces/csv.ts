@@ -1,4 +1,4 @@
-import * as Papa from "papaparse";
+import Papa from 'papaparse';
 
 import type { Json } from "./types";
 
@@ -24,3 +24,23 @@ export const parseCSV = async (string: string) => {
  */
 export const parseArrayLikeCSVEntry = (csvEntry: string) =>
   csvEntry.replace(/^\[/, "").replace(/$]/, "").split(",");
+
+export const csv = {
+  parse: <T = any>(csv: string, options?: Papa.ParseConfig<T>): Papa.ParseResult<T> => {
+    return Papa.parse(csv, options);
+  },
+
+  unparse: <T = any>(data: T[], options?: Papa.UnparseConfig): string => {
+    return Papa.unparse(data, options);
+  },
+
+  parseFile: <T = any>(file: File, options?: Papa.ParseConfig<T>): Promise<Papa.ParseResult<T>> => {
+    return new Promise((resolve, reject) => {
+      Papa.parse(file, {
+        ...options,
+        complete: (results) => resolve(results),
+        error: (error) => reject(error),
+      });
+    });
+  },
+};
