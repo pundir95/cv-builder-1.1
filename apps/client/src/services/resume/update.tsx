@@ -6,16 +6,16 @@ import debounce from "lodash.debounce";
 import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
-export const updateResume = async (data: UpdateResumeDto) => {
+export const updateResume = async (data:any) => {
   const isShared = window.location.search.includes('sahredcv=true')
   
   const referenceId = localStorage.getItem("reference_id");
   console.log(data,"data222")
   let payload ={
-    "cv_data":data.data || data?.cv_data || data?.data1?.cv_data,
-    "visibility":data.visibility || data?.data1?.cv?.visibility,
-    "title":data.title || data?.data1?.cv?.title,
-    "slug":data.slug || data?.data1?.cv?.slug,
+    "cv_data":data.data || data?.cv_data || (data?.data1 as any)?.cv?.cv_data,
+    "visibility":data.visibility || (data?.data1 as any)?.cv?.visibility,
+    "title":data.title || (data?.data1 as any)?.cv?.title,
+    "slug":data.slug || (data?.data1 as any)?.cv?.slug,
   }
   let response; 
   if(isShared){
