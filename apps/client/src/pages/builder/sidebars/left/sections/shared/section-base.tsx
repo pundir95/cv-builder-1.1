@@ -95,7 +95,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description, ext
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="grid gap-y-6"
+      className="grid px-6 gap-y-6 section-resume relative before:content-[''] before:absolute before:w-full before:h-full before:bg-[#0000001A] before:top-0 before:left-0"
     >
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">

@@ -201,7 +201,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
       </div>}
 
       <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
-        <div ref={containterRef} className={` grid gap-y-10 @container/left bg-[#ffffff] mt-[64px] border border-gray-200 ${showLeftSidebar ? 'p-6 mx-[70px]' : ''}`}>
+        <div ref={containterRef} className={` grid gap-y-10 @container/left bg-[#ffffff] mt-[64px] border border-gray-200 ${showLeftSidebar ? 'py-6 mx-[70px]' : ''}`}>
           <BasicsSection />
           <Separator />
         

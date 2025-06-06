@@ -13,6 +13,7 @@ import { SectionIcon } from "./shared/section-icon";
 import { SectionOptions } from "./shared/section-options";
 import { Lightbulb } from "@phosphor-icons/react";
 import AiModal from "@/client/components/AiModal";
+import StarAi from '../../../../../assets/star-ai.svg'
 
 export const SummarySection = () => {
   const setValue = useResumeStore((state) => state.setValue);
@@ -42,7 +43,7 @@ export const SummarySection = () => {
 
 
   return (
-    <section id="summary" className="grid gap-y-6">
+    <section id="summary" className="grid gap-y-6 px-6">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
         <div className="bg-[#0D84F3] p-1 rounded-full">
@@ -59,26 +60,28 @@ export const SummarySection = () => {
        
 
         <div className="flex items-center gap-x-2">
-          <Button
-            ref={buttonRef}
-            size="sm"
-            onClick={() => setShowSuggestions(!showSuggestions)}
-            className="bg-white text-blue-500 hover:text-blue-700 bg-white"
-          >
-            <Lightbulb className="bg-yellow-400" />
-            <span className="ml-2 text-base font-medium">Summarize my experience</span>
-          </Button>
+          <div  className="relative">
+            <Button
+              ref={buttonRef}
+              size="sm"
+              onClick={() => setShowSuggestions(!showSuggestions)}
+              className="bg-white text-blue-500 hover:text-blue-700 bg-white"
+            >
+              <img src={StarAi} />
+              <span className="ml-2 text-base font-medium">Summarize my experience</span>
+            </Button>
+            {showSuggestions && (
+              <AiModal
+                onClose={() => setShowSuggestions(false)}
+                anchorRef={buttonRef}
+                editorRef={editorRef}
+              />
+            )}
+          </div>
           <SectionOptions id="summary" />
         </div>
         
       </header>
-      {showSuggestions && (
-        <AiModal
-          onClose={() => setShowSuggestions(false)}
-          anchorRef={buttonRef}
-          editorRef={editorRef}
-        />
-      )}
 
       <main
         className={cn(
