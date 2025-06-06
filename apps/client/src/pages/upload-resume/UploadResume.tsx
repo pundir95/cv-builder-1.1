@@ -201,14 +201,14 @@ console.log(selectedStep,"selectedStep")
       {selectedCard === 'upload' && selectedStep !== 3 && <div className="flex justify-between items-center w-full mt-8">
         <button 
           onClick={handlePreviousStep}
-          className="flex items-center gap-2 border-2 border-blue-600 text-blue-700 rounded-full px-8 py-2 font-medium bg-white hover:bg-blue-50 transition-colors duration-200"
+          className="flex items-center gap-2 border-2 border-blue-600 text-blue-700 rounded-full px-8 py-3 text-lg font-medium bg-white hover:bg-blue-50 transition-colors duration-200"
         >
           <ArrowLeft />
           Back
         </button>
         <button 
           onClick={selectedStep === 2 ? uploadResume : handleNextStep}
-          className="bg-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow hover:bg-yellow-400 transition-colors duration-200"
+          className="bg-yellow-300 border-2 border-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow hover:bg-yellow-400 transition-colors duration-200"
         >
           Next
         </button>
