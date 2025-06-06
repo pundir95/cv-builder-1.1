@@ -12,7 +12,7 @@ import {
 } from "@reactive-resume/schema";
 import type { Json } from "@reactive-resume/utils";
 import { extractUrl, parseArrayLikeCSVEntry, parseCSV } from "@reactive-resume/utils";
-import * as JSZip from "jszip";
+import JSZip from "jszip";
 import type { Schema } from "zod";
 
 import type { Parser } from "../interfaces/parser";
@@ -40,7 +40,7 @@ export class LinkedInParser implements Parser<JSZip, LinkedIn> {
       throw new Error("ParserError: There were no files found inside the zip archive.");
     }
 
-    return data;
+    return data as JSZip;
   }
 
   async validate(data: JSZip) {

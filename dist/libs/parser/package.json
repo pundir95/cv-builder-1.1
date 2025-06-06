@@ -16,6 +16,5 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "jszip": "^3.10.1",
     "@swc/helpers": "~0.5.11"
-  },
-  "types": "./src/index.d.ts"
+  }
 }
