@@ -41,7 +41,7 @@ export const SharingSection = () => {
 
 
   useEffect(()=>{
-    if(sharedCvs && employees) {
+    if(sharedCvs?.length > 0 || employees?.length > 0) {
       // Filter out employees whose emails already exist in sharedCvs
       const filteredEmployees = employees?.filter((employee: any) => {
         // Check if employee exists and has organization_user
