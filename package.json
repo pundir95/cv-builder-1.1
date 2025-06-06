@@ -29,6 +29,9 @@
     "@nx/web": "^19.8.14",
     "@nx/webpack": "^19.8.14",
     "@nx/workspace": "^19.8.14",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.31",
+    "@swc/helpers": "^0.5.17",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
@@ -240,10 +243,12 @@
       "@parcel/watcher",
       "@prisma/client",
       "@prisma/engines",
+      "@swc/core",
       "core-js",
       "esbuild",
       "nx",
       "prisma",
+      "puppeteer",
       "sharp",
       "vite"
     ]

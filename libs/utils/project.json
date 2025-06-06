@@ -5,13 +5,19 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/libs/utils",
-        "main": "libs/utils/src/index.ts",
-        "tsConfig": "libs/utils/tsconfig.lib.json",
-        "assets": ["libs/utils/*.md"]
+        "outputPath": "dist/libs/utils"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
       }
     },
     "lint": {
