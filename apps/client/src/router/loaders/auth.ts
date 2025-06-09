@@ -29,7 +29,13 @@ export const authLoader: LoaderFunction<UserDto> = async ({ request }) => {
   }
 
   if (status === "authenticated") {
-    useAuthStore.setState({ user });
+    useAuthStore.setState({ 
+      user: {
+        ...user,
+        created_at: user.createdAt,
+        updated_at: user.updatedAt
+      }
+    });
 
     return redirect("/dashboard");
   }

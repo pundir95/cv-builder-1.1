@@ -23,6 +23,8 @@ export const fetchUser = async () => {
     emailVerified: true,
     twoFactorEnabled: false,
     provider: (userData.provider ?? "github") as "github" | "email" | "google" | "openid",
+    created_at: userData.created_at,
+    updated_at: userData.updated_at,
     createdAt: userData.created_at,
     updatedAt: userData.updated_at
   };

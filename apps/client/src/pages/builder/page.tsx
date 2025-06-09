@@ -114,7 +114,7 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
 
 
 
-export const sharedBuilderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
+export const sharedBuilderLoader: LoaderFunction<any> = async ({ params }) => {
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const id = params.id!;
@@ -131,7 +131,7 @@ export const sharedBuilderLoader: LoaderFunction<ResumeDto> = async ({ params })
 
       const resumeDto = {
         id: data1.id,
-        title: data1?.data?.cv?.title,
+        title: (data1?.data as any)?.cv?.title,
         slug: data1.slug,
         data1: data1.data,
         visibility: data1.visibility,
@@ -141,7 +141,7 @@ export const sharedBuilderLoader: LoaderFunction<ResumeDto> = async ({ params })
         created_at: data1.createdAt,
         updated_at: data1.updatedAt,
         locked: data1.locked,
-        data: data1?.data?.cv?.cv_data,
+        data: (data1?.data as any)?.cv?.cv_data,
         cv_template: data1.cv_template,
       };
 
