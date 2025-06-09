@@ -19,7 +19,7 @@ import React, { useState } from 'react';
   };
 
   return (
-    <div>
+    <div className='w-full'>
       {/* <h2 className="text-2xl font-semibold mb-4">Organisation Details</h2> */}
       <div className="bg-white rounded-xl shadow-md p-6 relative flex flex-col gap-6">
         {/* Edit Icon */}

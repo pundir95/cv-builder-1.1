@@ -41,3 +41,15 @@
     visibility: hidden;
   }
 }
+.phonefield-wrapper .flag-dropdown
+{
+  width: 50px;
+}
+.phonefield-wrapper.react-tel-input .selected-flag
+{
+  width: 50px;
+}
+.phonefield-wrapper.react-tel-input .selected-flag .arrow
+{
+  left: 30px;
+}

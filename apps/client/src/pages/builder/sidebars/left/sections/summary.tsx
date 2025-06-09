@@ -65,7 +65,7 @@ export const SummarySection = () => {
               ref={buttonRef}
               size="sm"
               onClick={() => setShowSuggestions(!showSuggestions)}
-              className="bg-white text-blue-500 hover:text-blue-700 bg-white"
+              className="bg-white text-blue-500 hover:bg-transparent hover:text-blue-700 bg-white"
             >
               <img src={StarAi} />
               <span className="ml-2 text-base font-medium">Summarize my experience</span>

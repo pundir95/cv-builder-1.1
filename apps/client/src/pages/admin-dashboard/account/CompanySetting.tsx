@@ -87,7 +87,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
             {/* Profile Card */}
          
 
-            <Card className="p-6">
+            <Card className="p-6 items-start">
               <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})}>
                 Back
               </button>

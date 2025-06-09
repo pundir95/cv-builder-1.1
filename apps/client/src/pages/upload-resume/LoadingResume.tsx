@@ -1,9 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { FileText, Upload, CheckCircle, Spinner } from '@phosphor-icons/react';
+import iconAnim from '../../assets/resume-loading-anim.gif';
 
 interface IconItem {
-  Icon: React.ElementType;
   text: string;
 }
 
@@ -14,15 +13,15 @@ interface LoadingResumeProps {
 const LoadingResume = ({ isComplete }: LoadingResumeProps) => {
   const [currentIcon, setCurrentIcon] = useState(0);
   const icons: IconItem[] = [
-    { Icon: FileText, text: 'Reading your resume...' },
-    { Icon: Upload, text: 'Processing content...' },
-    { Icon: Spinner, text: 'Analyzing skills...' },
-    { Icon: CheckCircle, text: 'Almost done...' },
+    { text: 'Reading your resume...' },
+    { text: 'Processing content...' },
+    { text: 'Analyzing skills...' },
+    { text: 'Almost done...' },
   ];
 
   useEffect(() => {
     if (isComplete) return;
-    
+
     const interval = setInterval(() => {
       setCurrentIcon((prev) => (prev + 1) % icons.length);
     }, 2000);
@@ -30,30 +29,13 @@ const LoadingResume = ({ isComplete }: LoadingResumeProps) => {
     return () => clearInterval(interval);
   }, [isComplete]);
 
-  const CurrentIcon = icons[currentIcon].Icon;
-
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8">
       <div className="relative w-32 h-32 mb-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIcon}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl" />
-              <CurrentIcon 
-                className="w-20 h-20 text-primary relative z-10" 
-                weight="duotone"
-                style={{ filter: 'drop-shadow(0 0 8px rgba(var(--color-primary), 0.3))' }}
-              />
-            </div>
-          </motion.div>
-        </AnimatePresence>
+        <div className="relative w-[120px] h-[120px] flex justify-center items-center bg-[#f3f9ff] rounded-full">
+          <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl" />
+          <img src={iconAnim} className='w-[80px] h-[80px]' />
+        </div>
       </div>
 
       <motion.div
@@ -61,8 +43,8 @@ const LoadingResume = ({ isComplete }: LoadingResumeProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.5 }}
-        className="text-xl font-medium text-gray-700"
+        transition={{ duration: 0.1 }}
+        className="text-xl font-medium text-[#0D84F3]"
       >
         {icons[currentIcon].text}
       </motion.div>
