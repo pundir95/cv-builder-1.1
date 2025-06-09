@@ -132,10 +132,10 @@ export const AccountSettings = () => {
           {/* Main Content Area */}
           <div className={`md:col-span-3 ${activeSection !== 'general' && 'hidden'}`}>
             {/* Profile Card */}
-            <Card className="p-6 mb-6 bg-gray-300">
+            <Card className="p-6 mb-6 bg-[#e7f0ff]">
               <div className="flex items-center gap-4">
-                <div className="size-20 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">{userData?.first_name?.charAt(0)}</span>
+                <div className="size-20 rounded-full bg-[#3b82f6] flex items-center justify-center">
+                  <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-primary">{userData?.first_name} {userData?.last_name}</h3>

@@ -187,6 +187,8 @@ export const RegisterPage = () => {
                       country="IN"
                       value={field.value}
                       onChange={(value) => field.onChange(value)}
+                      inputClass="!w-full !h-11 !pl-16"
+                      containerClass="phonefield-wrapper"
                     />
                   </FormControl>
                   <FormMessage />
