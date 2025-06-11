@@ -153,7 +153,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                   </div>
                 </div>
               </div>}
-            {showModal.organisationUsers && <div className="flex items-center justify-between">
+            {showModal.organisationUsers && <div className='w-full'>
                <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} />
               </div>}
             </Card>
