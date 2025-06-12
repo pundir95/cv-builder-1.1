@@ -29,8 +29,7 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
       style={{
         fontFamily,
         width: '40%',
-        // minHeight: `${960}px`,
-        height: "100%",
+        minHeight: `${100}vh`,
         marginLeft: "20px",
         marginRight: "200px",
         marginTop: "30px",

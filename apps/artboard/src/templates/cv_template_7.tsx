@@ -116,7 +116,7 @@ const Rating = ({ level }: RatingProps) => {
         style={{ backgroundColor: hexToRgb(primaryColor, 0.4) }}
       />
       <div
-        className="absolute inset-y-0 left-0 h-2.5 w-full rounded-sm bg-primary"
+        className="absolute inset-y-0 left-0 h-2.5 w-full rounded-sm bg-[#57534e]"
         style={{ width: `${linearTransform(level, 0, 5, 0, 100)}%` }}
       />
     </div>
@@ -196,9 +196,10 @@ const Section = <T,>({
 
   return (
     <section id={section.id} className="grid">
-      <h4 className="mb-2 border-b pb-0.5 text-sm font-bold group-[.sidebar]:text-primary">
+      <h4 className="pb-0.5 text-sm font-bold group-[.sidebar]:text-primary">
         {section.name}
       </h4>
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
 
       <div
         className="grid gap-x-6 gap-y-3"
@@ -585,10 +586,10 @@ export const cv_template_7 = ({ columns, isFirstPage = false }: TemplateProps) =
   const primaryColor = useArtboardStore((state) => state.resume.metadata.theme.primary);
 
   return (
-    <div className="grid min-h-[inherit] grid-cols-3">
+    <div className="grid min-h-[100vh] grid-cols-3">
       <div
-        className={cn("sidebar p-custom group space-y-4", sidebar.length === 0 && "hidden")}
-        style={{ backgroundColor: hexToRgb(primaryColor, 0.2) }}
+        className={cn("sidebar group space-y-4", sidebar.length === 0 && "hidden")}
+        style={{ backgroundColor: hexToRgb(primaryColor, 0.2) , "height" : "100%" , "padding" : "18px" }}
       >
         {isFirstPage && <Header />}
 
@@ -602,6 +603,7 @@ export const cv_template_7 = ({ columns, isFirstPage = false }: TemplateProps) =
           "main p-custom group space-y-4",
           sidebar.length > 0 ? "col-span-2" : "col-span-3",
         )}
+        style={{"height" : "100%" , "padding" : "18px"}}
       >
         {main.map((section) => (
           <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>

@@ -654,15 +654,16 @@ export const cv_template_4 = ({ columns, isFirstPage = false }: TemplateProps) =
   return (
     <div style={{ 
       display: 'grid',
-      minHeight: 'inherit',
+      minHeight: '100vh',
       gridTemplateColumns: 'repeat(3, 1fr)'
     }}>
       <div
         style={{
-          padding: '4px',
+          padding: '18px',
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',
+          height: "100%",
           gridColumn: sidebar.length > 0 ? 'span 2' : 'span 3',
         }}
       >
@@ -675,7 +676,7 @@ export const cv_template_4 = ({ columns, isFirstPage = false }: TemplateProps) =
 
       <div
         style={{
-          padding: '4px',
+          padding: '18px',
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',

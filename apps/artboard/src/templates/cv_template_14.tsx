@@ -14,7 +14,6 @@ const SectionHeader: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       fontWeight: 700,
       fontSize: 16,
       color: "#fff",
-      borderBottom: `2px solid ${orange}`,
       marginBottom: 8,
       marginTop: 24,
       letterSpacing: 0.5,
@@ -28,7 +27,7 @@ const SectionHeader: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 const SidebarItem: React.FC<{ icon: React.ReactNode; children: React.ReactNode }> = ({ icon, children }) => (
   <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
     <span style={{ marginRight: 8 }}>{icon}</span>
-    <span>{children}</span>
+    <span style={{'overflowWrap' : 'anywhere'}}>{children}</span>
   </div>
 );
 
@@ -103,8 +102,9 @@ export const cv_template_14 = () => {
         overflow: "hidden",
         fontFamily: "Segoe UI, Arial, sans-serif",
         color: darkGray,
-        minHeight: 900,
+        minHeight: "100vh",
         border: `1px solid ${primaryColor}`,
+        borderRadius: borderRadius
       }}
     >
       {/* Sidebar */}
@@ -113,7 +113,7 @@ export const cv_template_14 = () => {
           background: primaryColor,
           color: "#fff",
           width: 220,
-          padding: 32,
+          padding: 18,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -151,6 +151,7 @@ export const cv_template_14 = () => {
         {summary.visible && summary.content && (
           <div style={{ width: "100%", marginBottom: 24 }}>
             <SectionHeader>SUMMARY</SectionHeader>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
             <div
               style={{ fontSize: 13, marginTop: 8, color: "#fff" }}
               dangerouslySetInnerHTML={{ __html: sanitize(summary.content) }}
@@ -170,7 +171,7 @@ export const cv_template_14 = () => {
         style={{
           flex: 1,
           background: "#fff",
-          padding: 40,
+          padding: 25,
           borderTopRightRadius: borderRadius,
           borderBottomRightRadius: borderRadius,
           display: "flex",
@@ -185,14 +186,15 @@ export const cv_template_14 = () => {
         {/* Experience */}
         {experience.length > 0 && (
           <div style={{ marginBottom: 24 }}>
-            <h3>EXPERIENCE</h3>
+            <SectionHeader><span style={{"color" : "black"}}>EXPERIENCE</span></SectionHeader>
             <ExperienceList experiences={experience} />
           </div>
         )}
         {/* Education */}
         {education.length > 0 && (
           <div style={{ marginBottom: 24 }}>
-            <SectionHeader>EDUCATION AND TRAINING</SectionHeader>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>EDUCATION AND TRAINING</span></SectionHeader>
             <EducationList education={education} />
           </div>
         )}

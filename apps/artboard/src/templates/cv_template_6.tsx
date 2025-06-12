@@ -28,7 +28,7 @@ const Header = () => {
   const basics = useArtboardStore((state) => state.resume.basics);
 
   return (
-    <div className="p-custom space-y-4 bg-primary text-background">
+    <div className="space-y-4 text-background" style={{"padding" : "18px" , "background" : "#57534e"}}>
       <Picture className="border-background" />
 
       <div>
@@ -86,7 +86,7 @@ const Summary = () => {
   if (!section.visible || isEmptyString(section.content)) return null;
 
   return (
-    <div className="p-custom space-y-4" style={{ backgroundColor: hexToRgb(primaryColor, 0.2) }}>
+    <div className="space-y-4" style={{ "backgroundColor" : "#d4d5dc" , "padding" : "18px" }}>
       <section id={section.id}>
         <div
           dangerouslySetInnerHTML={{ __html: sanitize(section.content) }}
@@ -105,7 +105,7 @@ const Rating = ({ level }: RatingProps) => (
     {Array.from({ length: 5 }).map((_, index) => (
       <div
         key={index}
-        className={cn("h-2.5 w-5 border border-primary", level > index && "bg-primary")}
+        className={cn("h-2.5 w-5 border border-[#57534e]", level > index && "bg-[#57534e]")}
       />
     ))}
   </div>
@@ -188,7 +188,8 @@ const Section = <T,>({
 
   return (
     <section id={section.id} className="grid">
-      <h4 className="mb-2 border-b border-primary text-base font-bold">{section.name}</h4>
+      <h4 className="text-base font-bold">{section.name}</h4>
+      <hr style={{"margin" : "10px 0" , "border" : "none" , "height" : "1px" , "background" : "#000"}} />
 
       <div
         className="grid gap-x-6 gap-y-3"
@@ -572,18 +573,19 @@ export const cv_template_6 = ({ columns, isFirstPage = false }: TemplateProps) =
   const primaryColor = useArtboardStore((state) => state.resume.metadata.theme.primary);
 
   return (
-    <div className="grid min-h-[inherit] grid-cols-3">
+    <div className="grid grid-cols-3" style={{'minHeight' : '100vh'}}>
       <div
         className={cn(
           "sidebar group flex flex-col",
           !(isFirstPage || sidebar.length > 0) && "hidden",
         )}
+        style={{'height' : '100%'}}
       >
         {isFirstPage && <Header />}
 
         <div
-          className="p-custom flex-1 space-y-4"
-          style={{ backgroundColor: hexToRgb(primaryColor, 0.2) }}
+          className="flex-1 space-y-4"
+          style={{ "backgroundColor" : "#d4d5dc" , "padding" : "18px" }}
         >
           {sidebar.map((section) => (
             <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>
@@ -591,10 +593,11 @@ export const cv_template_6 = ({ columns, isFirstPage = false }: TemplateProps) =
         </div>
       </div>
 
-      <div className={cn("main group", sidebar.length > 0 ? "col-span-2" : "col-span-3")}>
+      <div className={cn("main group", sidebar.length > 0 ? "col-span-2" : "col-span-3")} 
+        style={{'height' : '100%'}}>
         {isFirstPage && <Summary />}
 
-        <div className="p-custom space-y-4">
+        <div className="space-y-4" style={{"padding" : "18px"}}>
           {main.map((section) => (
             <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>
           ))}
