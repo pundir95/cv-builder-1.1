@@ -87,7 +87,9 @@ const Summary = () => {
 
   return (
     <section id={section.id}>
-      <h4 style={{ marginBottom: '0.5rem', borderBottom: '1px solid', paddingBottom: '0.125rem', fontSize: '0.875rem', fontWeight: 'bold' }}>{section.name}</h4>
+      <h4 style={{ marginBottom: '0.5rem', paddingBottom: '0.125rem', fontSize: '0.875rem', fontWeight: 'bold' }}>{section.name}</h4>
+
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
 
       <div
         dangerouslySetInnerHTML={{ __html: sanitize(section.content) }}
@@ -182,7 +184,9 @@ const Section = <T,>({
 
   return (
     <section id={section.id} className="grid">
-      <h4 style={{ marginBottom: '0.5rem', borderBottom: '1px solid', paddingBottom: '0.125rem', fontSize: '0.875rem', fontWeight: 'bold' }}>{section.name}</h4>
+      <h4 style={{ marginBottom: '0.5rem', paddingBottom: '0.125rem', fontSize: '0.875rem', fontWeight: 'bold' }}>{section.name}</h4>
+
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
 
       <div
         className="grid gap-x-6 gap-y-3"

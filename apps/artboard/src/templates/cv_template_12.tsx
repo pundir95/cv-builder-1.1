@@ -30,7 +30,7 @@ const Header = () => {
 
   return (
     <div
-      className="summary group bg-primary px-6 pb-7 pt-6 text-background"
+      className="summary group bg-[#57534e] px-6 pb-7 pt-6 text-background"
       style={{ borderRadius: `calc(${borderRadius}px - 2px)` }}
     >
       <div className="col-span-2 space-y-2.5">
@@ -107,7 +107,8 @@ const Summary = () => {
 
   return (
     <section id={section.id}>
-      <h4 className="mb-2 border-b border-primary text-base font-bold">{section.name}</h4>
+      <h4 className="mb-2 text-base font-bold">{section.name}</h4>
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
 
       <div
         dangerouslySetInnerHTML={{ __html: sanitize(section.content) }}
@@ -216,7 +217,8 @@ const Section = <T,>({
 
   return (
     <section id={section.id} className="grid">
-      <h4 className="mb-2 border-b border-primary text-base font-bold">{section.name}</h4>
+      <h4 className="mb-2 text-base font-bold">{section.name}</h4>
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
 
       <div
         className="grid gap-x-6 gap-y-3"
@@ -601,7 +603,7 @@ export const cv_template_12 = ({ columns, isFirstPage = false }: TemplateProps) 
   const [main, sidebar] = columns;
 
   return (
-    <div className="p-custom grid grid-cols-3 space-x-6">
+    <div className="grid grid-cols-3 space-x-6" style={{"padding" : "18px"}}>
       <div className="sidebar group space-y-4">
         {isFirstPage && <Picture className="w-full !max-w-none" />}
 

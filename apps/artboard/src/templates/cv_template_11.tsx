@@ -28,74 +28,77 @@ const Header = () => {
   const profiles = useArtboardStore((state) => state.resume.sections.profiles);
 
   return (
-    <div className="flex items-center justify-between space-x-4 border-b border-primary pb-5">
-      <Picture />
+    <>
+      <div className="flex items-center justify-between space-x-4 pb-5">
+        <Picture />
 
-      <div className="flex-1 space-y-2">
-        <div>
-          <div className="text-2xl font-bold">{basics.name}</div>
-          <div className="text-base">{basics.headline}</div>
-        </div>
+        <div className="flex-1 space-y-2">
+          <div>
+            <div className="text-2xl font-bold">{basics.name}</div>
+            <div className="text-base">{basics.headline}</div>
+          </div>
 
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
-          {basics.location && (
-            <div className="flex items-center gap-x-1.5">
-              <i className="ph ph-bold ph-map-pin text-primary" />
-              <div>{basics.location}</div>
-            </div>
-          )}
-          {basics.phone && (
-            <div className="flex items-center gap-x-1.5">
-              <i className="ph ph-bold ph-phone text-primary" />
-              <a href={`tel:${basics.phone}`} target="_blank" rel="noreferrer">
-                {basics.phone}
-              </a>
-            </div>
-          )}
-          {basics.email && (
-            <div className="flex items-center gap-x-1.5">
-              <i className="ph ph-bold ph-at text-primary" />
-              <a href={`mailto:${basics.email}`} target="_blank" rel="noreferrer">
-                {basics.email}
-              </a>
-            </div>
-          )}
-          <Link url={basics.url} />
-          {basics.customFields.map((item) => (
-            <div key={item.id} className="flex items-center gap-x-1.5">
-              <i className={cn(`ph ph-bold ph-${item.icon}`, "text-primary")} />
-              {isUrl(item.value) ? (
-                <a href={item.value} target="_blank" rel="noreferrer noopener nofollow">
-                  {item.name || item.value}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
+            {basics.location && (
+              <div className="flex items-center gap-x-1.5">
+                <i className="ph ph-bold ph-map-pin text-primary" />
+                <div>{basics.location}</div>
+              </div>
+            )}
+            {basics.phone && (
+              <div className="flex items-center gap-x-1.5">
+                <i className="ph ph-bold ph-phone text-primary" />
+                <a href={`tel:${basics.phone}`} target="_blank" rel="noreferrer">
+                  {basics.phone}
                 </a>
-              ) : (
-                <span>{[item.name, item.value].filter(Boolean).join(": ")}</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {profiles.visible && profiles.items.length > 0 && (
-        <div
-          className="grid gap-x-4 gap-y-1 text-right"
-          style={{ gridTemplateColumns: `repeat(${profiles.columns}, auto)` }}
-        >
-          {profiles.items
-            .filter((item) => item.visible)
-            .map((item) => (
-              <div key={item.id} className="flex items-center gap-x-2">
-                <Link
-                  url={item.url}
-                  label={item.username}
-                  className="text-sm"
-                  icon={<BrandIcon slug={item.icon} />}
-                />
+              </div>
+            )}
+            {basics.email && (
+              <div className="flex items-center gap-x-1.5">
+                <i className="ph ph-bold ph-at text-primary" />
+                <a href={`mailto:${basics.email}`} target="_blank" rel="noreferrer">
+                  {basics.email}
+                </a>
+              </div>
+            )}
+            <Link url={basics.url} />
+            {basics.customFields.map((item) => (
+              <div key={item.id} className="flex items-center gap-x-1.5">
+                <i className={cn(`ph ph-bold ph-${item.icon}`, "text-primary")} />
+                {isUrl(item.value) ? (
+                  <a href={item.value} target="_blank" rel="noreferrer noopener nofollow">
+                    {item.name || item.value}
+                  </a>
+                ) : (
+                  <span>{[item.name, item.value].filter(Boolean).join(": ")}</span>
+                )}
               </div>
             ))}
+          </div>
         </div>
-      )}
-    </div>
+
+        {profiles.visible && profiles.items.length > 0 && (
+          <div
+            className="grid gap-x-4 gap-y-1 text-right"
+            style={{ gridTemplateColumns: `repeat(${profiles.columns}, auto)` }}
+          >
+            {profiles.items
+              .filter((item) => item.visible)
+              .map((item) => (
+                <div key={item.id} className="flex items-center gap-x-2">
+                  <Link
+                    url={item.url}
+                    label={item.username}
+                    className="text-sm"
+                    icon={<BrandIcon slug={item.icon} />}
+                  />
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
+    </>
   );
 };
 
@@ -564,7 +567,7 @@ export const cv_template_11 = ({ columns, isFirstPage = false }: TemplateProps) 
   const [main, sidebar] = columns;
 
   return (
-    <div className="p-custom space-y-4">
+    <div className="space-y-4" style={{"padding" : "18px"}}>
       {isFirstPage && <Header />}
 
       {main.map((section) => (
