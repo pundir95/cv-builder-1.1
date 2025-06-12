@@ -84,6 +84,8 @@ export const SectionDialog = <T extends SectionItem>({
     }
 
     if (isUpdate) {
+      console.log(values,"values1")
+     
       if (!payload.item?.id) return;
 
       if (pendingKeyword && "keywords" in values) {
@@ -98,6 +100,29 @@ export const SectionDialog = <T extends SectionItem>({
           draft[index] = values;
         }),
       );
+
+      // Update date format for experience section
+      if (id === "experience" && "date" in values && "startDate" in values && "endDate" in values) {
+      
+        if (values.startDate && values.endDate) {
+          const formatDate = (dateStr: string) => {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            }); 
+          };
+
+          const formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
+          console.log(formattedDate,"formattedDate")
+          const index = section.items.findIndex((item) => item.id === payload.item?.id);
+          if (index !== -1) {
+            setValue(`sections.${id}.items.${index}.date`, formattedDate);
+          }
+          console.log(values.date,"values.date")
+        }
+      }
     }
 
     if (isDelete) {

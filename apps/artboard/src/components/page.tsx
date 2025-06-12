@@ -26,14 +26,20 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
   return (
     <div
       data-page={pageNumber}  
-      className={cn("relative bg-background text-foreground", mode === "builder" && "shadow-2xl")}
       style={{
         fontFamily,
-        width: `${pageSizeMap[page.format].width * MM_TO_PX}px`,
-        minHeight: `${760}px`,
+        width: '40%',
+        // minHeight: `${960}px`,
+        height: "100%",
         marginLeft: "20px",
         marginRight: "200px",
         marginTop: "30px",
+        position: "relative",
+        backgroundColor: "var(--background)",
+        color: "var(--foreground)",
+        ...(mode === "builder" && {
+          boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+        })
       }}
     >
       {mode === "builder" && page.options.pageNumbers && (
@@ -41,6 +47,7 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
           Page {pageNumber}
         </div>
       )}
+      
 
       {children}
 

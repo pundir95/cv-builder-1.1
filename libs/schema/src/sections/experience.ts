@@ -8,6 +8,8 @@ export const experienceSchema = itemSchema.extend({
   position: z.string(),
   location: z.string(),
   date: z.string(),
+  startDate: z.string(),
+  endDate: z.string().optional(),
   summary: z.string(),
   url: urlSchema,
 });
@@ -22,6 +24,8 @@ export const defaultExperience: Experience = {
   position: "",
   location: "",
   date: "",
+  startDate: "",
+  endDate: "",
   summary: "",
   url: defaultUrl,
 };

@@ -38,26 +38,38 @@ export const ExportSection = () => {
     
     if (templateRef) {
       const templateString = templateRef.innerHTML;
+      // Replace width: 40% with width: 100% in the template string
+      const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "85%"');
+      console.log(modifiedTemplateString,"templateString");
       
       // Configure PDF options
       const options = {
-        margin: 10,
+        margin: 0,
         filename: 'resume.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
+          margin: 15,
           scale: 2,
           useCORS: true,
           allowTaint: true,
           imageTimeout: 0,
-          logging: true
+          logging: true,
+          paddingOffsetY: 0,
+          paddingOffsetX: 0,
+        
         },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true
+        }
       };
 
       try {
         // Create a temporary div to hold the HTML content
         const element = document.createElement('div');
-        element.innerHTML = templateString;
+        element.innerHTML = modifiedTemplateString;
         
         // Wait for images to load
         const images = element.getElementsByTagName('img');
