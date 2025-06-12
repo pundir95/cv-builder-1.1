@@ -16,7 +16,7 @@ export const SharingSection = () => {
   const { user } = useUser();
   const { toast } = useToast();
   const username = user?.username;
-  console.log(user,"user22");
+  console.log(user, "user22");
 
   const setValue = useResumeStore((state) => state.setValue);
   const slug = useResumeStore((state) => state.resume.slug);
@@ -25,41 +25,41 @@ export const SharingSection = () => {
   const [sharedCvs, setSharedCvs] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const location = useLocation();
-  const {id} = useParams();
+  const { id } = useParams();
 
-  useEffect(()=>{
-    axios.get(`/company/organization-employees/`).then((res)=>{
+  useEffect(() => {
+    axios.get(`/company/organization-employees/`).then((res) => {
       console.log(res);
 
-      setEmployees(res?.data?.data || [] );
+      setEmployees(res?.data?.data || []);
     })
-    axios.get(`/cv-manager/cv-shared-with/${id}/`).then((res)=>{
-      console.log(res,"new");
+    axios.get(`/cv-manager/cv-shared-with/${id}/`).then((res) => {
+      console.log(res, "new");
       setSharedCvs(res?.data?.data || []);
     })
-  },[])
+  }, [])
 
 
-  useEffect(()=>{
-    if(sharedCvs?.length > 0 || employees?.length > 0) {
+  useEffect(() => {
+    if (sharedCvs?.length > 0 || employees?.length > 0) {
       // Filter out employees whose emails already exist in sharedCvs
       const filteredEmployees = employees?.filter((employee: any) => {
         // Check if employee exists and has organization_user
         if (!employee?.organization_user?.id) return false;
-        
+
         // Don't include current user
         if (employee.organization_user.id === user?.id) return false;
 
         // Check if this employee is already shared with
-        const isAlreadyShared = sharedCvs.some((sharedCv: any) => 
+        const isAlreadyShared = sharedCvs.some((sharedCv: any) =>
           sharedCv?.organization_user?.id === employee.organization_user.id
         );
 
         return !isAlreadyShared;
       });
-    setEmployees(filteredEmployees);
+      setEmployees(filteredEmployees);
     }
-  },[sharedCvs])
+  }, [sharedCvs])
 
 
   // Constants
@@ -78,15 +78,15 @@ export const SharingSection = () => {
 
   const handleShareWithUser = () => {
     axios.post(`/cv-manager/share-cv/`, {
-      "share_user":selectedUserId,
-      "cv":location.pathname.split("/")[2]
-    }).then((res)=>{
+      "share_user": selectedUserId,
+      "cv": location.pathname.split("/")[2]
+    }).then((res) => {
       console.log(res);
     })
   }
 
   const handleUnshare = (id: any) => {
-    axios.delete(`/cv-manager/share-cv/${id}/`).then((res)=>{
+    axios.delete(`/cv-manager/share-cv/${id}/`).then((res) => {
       console.log(res);
     })
   }
@@ -104,6 +104,47 @@ export const SharingSection = () => {
 
       <main className="grid gap-y-4">
         <div className="space-y-1.5">
+          <div className="flex gap-x-4">
+            <Switch
+              id="visibility"
+              checked={isPublic}
+              onCheckedChange={(checked) => {
+                setValue("visibility", checked ? "public" : "private");
+              }}
+            />
+            <div>
+              <Label htmlFor="visibility" className="space-y-1 mb-3 block">
+                <p>Anyone</p>
+                <p className="text-xs opacity-60">
+                  {t`Anyone, even those outside your organization will be able this.`}
+                </p>
+              </Label>
+            </div>
+          </div>
+
+          <div className="sharing-actions">
+            <p className="mb-3">What they can do</p>
+            <div className="mb-3">
+              <select className="w-full rounded-md border border-input bg-background px-3 py-2">
+                <option value="view">View</option>
+                <option value="edit">Edit</option>
+              </select>
+            </div>
+            <div className="mb-5">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={() => {
+                  // Copy URL to clipboard
+                  onCopy();
+                }}
+              >
+                <Link className="h-4 w-4" />
+                Copy Link
+              </Button>
+            </div>
+          </div>
+
           <div className="flex items-center gap-x-4">
             <Switch
               id="visibility"
@@ -135,22 +176,22 @@ export const SharingSection = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <Label>Share with users</Label>
-                  <select 
+                  <select
                     className="w-full rounded-md border border-input bg-background px-3 py-2"
                     onChange={(e) => setSelectedUserId(e.target.value)}
                   >
                     <option value="" disabled selected>Select users to share with</option>
                     {
-                      employees?.map((employee: any) => (
-                        <option value={employee?.id}>{employee?.organization_user?.first_name  } ({employee?.organization_user?.email})</option>
+                      [].map((employee: any) => (
+                        <option value={employee?.id}>{employee?.organization_user?.first_name} ({employee?.organization_user?.email})</option>
                       ))
                     }
-                  
+
                   </select>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Button 
+                  <Button
                     className="flex items-center gap-2"
                     onClick={() => handleShareWithUser()}
                   >
@@ -180,13 +221,13 @@ export const SharingSection = () => {
                       return (
                         <div className="flex items-center justify-between rounded-lg border p-2">
                           <div className="flex items-center gap-2">
-                          <Avatar className="h-6 w-6">
-                          <AvatarImage src="https://github.com/shadcn.png" />
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <span>{cv?.organization_user?.first_name} {cv?.organization_user?.email}</span>
-                      </div>
-                          <Button variant="ghost" size="sm" onClick={()=>handleUnshare(cv?.id)}>
+                            <Avatar className="h-6 w-6">
+                              <AvatarImage src="https://github.com/shadcn.png" />
+                              <AvatarFallback>JD</AvatarFallback>
+                            </Avatar>
+                            <span>{cv?.organization_user?.first_name} {cv?.organization_user?.email}</span>
+                          </div>
+                          <Button variant="ghost" size="sm" onClick={() => handleUnshare(cv?.id)}>
                             <X className="h-4 w-4" />
                           </Button>
                         </div>
