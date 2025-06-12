@@ -32,8 +32,8 @@ const Header = () => {
   return (
     <div>
       <div
-        className="p-custom flex items-center space-x-8"
-        style={{ backgroundColor: hexToRgb(primaryColor, 0.2) }}
+        className="flex items-center space-x-8"
+        style={{ backgroundColor: hexToRgb(primaryColor, 0.2) , "padding" : "18px" }}
       >
         <div className="space-y-3">
           <div>
@@ -51,7 +51,7 @@ const Header = () => {
         <Picture />
       </div>
 
-      <div className="p-custom space-y-3" style={{ backgroundColor: hexToRgb(primaryColor, 0.4) }}>
+      <div className="space-y-3" style={{ backgroundColor: hexToRgb(primaryColor, 0.4) , "padding" : "18px" }}>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-sm">
           {basics.location && (
             <div className="flex items-center gap-x-1.5">
@@ -195,9 +195,11 @@ const Section = <T,>({
 
   return (
     <section id={section.id} className="grid">
-      <h4 className="mb-2 border-b border-primary text-left font-bold text-primary">
+      <h4 className="mb-2 text-left font-bold text-primary">
         {section.name}
       </h4>
+
+      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
 
       <div
         className="grid gap-x-6 gap-y-3"
@@ -519,7 +521,7 @@ export const cv_template_9 = ({ columns, isFirstPage = false }: TemplateProps) =
     <div>
       {isFirstPage && <Header />}
 
-      <div className="p-custom grid grid-cols-2 items-start space-x-6">
+      <div className="grid grid-cols-2 items-start space-x-6" style={{"padding" : "18px"}}>
         <div className={cn("grid gap-y-4", sidebar.length === 0 && "col-span-2")}>
           {main.map((section) => (
             <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>

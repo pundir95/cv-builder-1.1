@@ -575,7 +575,7 @@ export const cv_template_10 = ({ columns, isFirstPage = false }: TemplateProps) 
   const [main, sidebar] = columns;
 
   return (
-    <div className="p-custom space-y-6">
+    <div className="space-y-6" style={{"padding" : "18px"}}>
       <div className="flex items-center justify-between">
         <img alt="Europass Logo" className="h-[42px]" src="/assets/europass.png" />
 
