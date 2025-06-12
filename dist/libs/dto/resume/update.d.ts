@@ -462,6 +462,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         label: string;
                         href: string;
                     }>;
+                    startDate: import('zod').ZodString;
+                    endDate: import('zod').ZodString;
                 }>, "strip", import('zod').ZodTypeAny, {
                     date: string;
                     id: string;
@@ -475,6 +477,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }, {
                     date: string;
                     visible: boolean;
@@ -487,6 +491,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }>, "many">;
                 extraDescription: import('zod').ZodDefault<import('zod').ZodString>;
@@ -509,6 +515,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             }, {
@@ -526,6 +534,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -548,6 +558,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     position: import('zod').ZodString;
                     location: import('zod').ZodString;
                     date: import('zod').ZodString;
+                    startDate: import('zod').ZodString;
+                    endDate: import('zod').ZodOptional<import('zod').ZodString>;
                     summary: import('zod').ZodString;
                     url: import('zod').ZodObject<{
                         label: import('zod').ZodString;
@@ -569,8 +581,10 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }, {
                     date: string;
                     visible: boolean;
@@ -580,9 +594,11 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }>, "many">;
                 extraDescription: import('zod').ZodDefault<import('zod').ZodString>;
             }>, "strip", import('zod').ZodTypeAny, {
@@ -601,8 +617,10 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             }, {
@@ -617,9 +635,11 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -1398,8 +1418,10 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -1422,6 +1444,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
@@ -1675,9 +1699,11 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -1699,6 +1725,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -2193,8 +2221,10 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -2217,6 +2247,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
@@ -2543,9 +2575,11 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -2567,6 +2601,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -2961,8 +2997,10 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -2985,6 +3023,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
@@ -3342,9 +3382,11 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -3366,6 +3408,8 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -3732,8 +3776,10 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -3756,6 +3802,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
@@ -4482,6 +4530,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         label: string;
                         href: string;
                     }>;
+                    startDate: import('zod').ZodString;
+                    endDate: import('zod').ZodString;
                 }>, "strip", import('zod').ZodTypeAny, {
                     date: string;
                     id: string;
@@ -4495,6 +4545,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }, {
                     date: string;
                     visible: boolean;
@@ -4507,6 +4559,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }>, "many">;
                 extraDescription: import('zod').ZodDefault<import('zod').ZodString>;
@@ -4529,6 +4583,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             }, {
@@ -4546,6 +4602,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -4568,6 +4626,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     position: import('zod').ZodString;
                     location: import('zod').ZodString;
                     date: import('zod').ZodString;
+                    startDate: import('zod').ZodString;
+                    endDate: import('zod').ZodOptional<import('zod').ZodString>;
                     summary: import('zod').ZodString;
                     url: import('zod').ZodObject<{
                         label: import('zod').ZodString;
@@ -4589,8 +4649,10 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }, {
                     date: string;
                     visible: boolean;
@@ -4600,9 +4662,11 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }>, "many">;
                 extraDescription: import('zod').ZodDefault<import('zod').ZodString>;
             }>, "strip", import('zod').ZodTypeAny, {
@@ -4621,8 +4685,10 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             }, {
@@ -4637,9 +4703,11 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -5418,8 +5486,10 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -5442,6 +5512,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
@@ -5695,9 +5767,11 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -5719,6 +5793,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -6213,8 +6289,10 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -6237,6 +6315,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
@@ -6563,9 +6643,11 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -6587,6 +6669,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
@@ -6977,9 +7061,11 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
                     id?: string | undefined;
+                    endDate?: string | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -7001,6 +7087,8 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                     id?: string | undefined;
                 }[];
                 visible?: boolean | undefined;

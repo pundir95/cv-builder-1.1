@@ -93,17 +93,17 @@ export declare const jsonResumeSchema: z.ZodObject<{
         name?: string | undefined;
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
         highlights?: string[] | undefined;
     }, {
         name?: string | undefined;
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
         highlights?: string[] | undefined;
     }>, "many">>;
     volunteer: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -117,18 +117,18 @@ export declare const jsonResumeSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
-        organization?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
+        organization?: string | undefined;
         highlights?: string[] | undefined;
     }, {
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
-        organization?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
+        organization?: string | undefined;
         highlights?: string[] | undefined;
     }>, "many">>;
     education: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -267,10 +267,10 @@ export declare const jsonResumeSchema: z.ZodObject<{
     volunteer?: {
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
-        organization?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
+        organization?: string | undefined;
         highlights?: string[] | undefined;
     }[] | undefined;
     references?: {
@@ -328,9 +328,9 @@ export declare const jsonResumeSchema: z.ZodObject<{
         name?: string | undefined;
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
         highlights?: string[] | undefined;
     }[] | undefined;
     certificates?: {
@@ -353,10 +353,10 @@ export declare const jsonResumeSchema: z.ZodObject<{
     volunteer?: {
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
-        organization?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
+        organization?: string | undefined;
         highlights?: string[] | undefined;
     }[] | undefined;
     references?: {
@@ -414,9 +414,9 @@ export declare const jsonResumeSchema: z.ZodObject<{
         name?: string | undefined;
         url?: string | undefined;
         summary?: string | undefined;
-        position?: string | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
+        position?: string | undefined;
         highlights?: string[] | undefined;
     }[] | undefined;
     certificates?: {

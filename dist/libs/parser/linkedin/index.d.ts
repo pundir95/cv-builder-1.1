@@ -164,8 +164,10 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -188,6 +190,8 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };

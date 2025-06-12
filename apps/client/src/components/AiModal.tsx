@@ -42,8 +42,8 @@ const AiModal = ({ hasWorkExperience = false, onClose, anchorRef, editorRef }: A
     if (anchorRef && anchorRef.current) {
       const rect = anchorRef.current.getBoundingClientRect();
       setPosition({
-        top: '150%',
-        left: '-50%', // popover width is 340px
+        top: rect.top + rect.height + 10,
+        left: rect.left - (380 / 2),
       });
     }
   }, [anchorRef]);

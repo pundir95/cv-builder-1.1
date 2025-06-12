@@ -457,6 +457,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                     label: string;
                     href: string;
                 }>;
+                startDate: z.ZodString;
+                endDate: z.ZodString;
             }>, "strip", z.ZodTypeAny, {
                 id: string;
                 visible: boolean;
@@ -470,6 +472,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
             }, {
                 visible: boolean;
                 date: string;
@@ -482,6 +486,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
                 id?: string | undefined;
             }>, "many">;
             extraDescription: z.ZodDefault<z.ZodString>;
@@ -504,6 +510,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
             }[];
             extraDescription: string;
         }, {
@@ -521,6 +529,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
                 id?: string | undefined;
             }[];
             visible?: boolean | undefined;
@@ -543,6 +553,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 position: z.ZodString;
                 location: z.ZodString;
                 date: z.ZodString;
+                startDate: z.ZodString;
+                endDate: z.ZodOptional<z.ZodString>;
                 summary: z.ZodString;
                 url: z.ZodObject<{
                     label: z.ZodString;
@@ -564,8 +576,10 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
+                endDate?: string | undefined;
             }, {
                 visible: boolean;
                 date: string;
@@ -575,9 +589,11 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
                 id?: string | undefined;
+                endDate?: string | undefined;
             }>, "many">;
             extraDescription: z.ZodDefault<z.ZodString>;
         }>, "strip", z.ZodTypeAny, {
@@ -596,8 +612,10 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
+                endDate?: string | undefined;
             }[];
             extraDescription: string;
         }, {
@@ -612,9 +630,11 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
                 id?: string | undefined;
+                endDate?: string | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -1393,8 +1413,10 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
+                endDate?: string | undefined;
             }[];
             extraDescription: string;
         };
@@ -1417,6 +1439,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
             }[];
             extraDescription: string;
         };
@@ -1670,9 +1694,11 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
                 id?: string | undefined;
+                endDate?: string | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -1694,6 +1720,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
                 id?: string | undefined;
             }[];
             visible?: boolean | undefined;
@@ -2188,8 +2216,10 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
+                endDate?: string | undefined;
             }[];
             extraDescription: string;
         };
@@ -2212,6 +2242,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
             }[];
             extraDescription: string;
         };
@@ -2538,9 +2570,11 @@ export declare const resumeDataSchema: z.ZodObject<{
                     href: string;
                 };
                 summary: string;
+                startDate: string;
                 company: string;
                 position: string;
                 id?: string | undefined;
+                endDate?: string | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -2562,6 +2596,8 @@ export declare const resumeDataSchema: z.ZodObject<{
                 studyType: string;
                 area: string;
                 score: string;
+                startDate: string;
+                endDate: string;
                 id?: string | undefined;
             }[];
             visible?: boolean | undefined;

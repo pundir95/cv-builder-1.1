@@ -3573,7 +3573,9 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
   score: i.string(),
   date: i.string(),
   summary: i.string(),
-  url: V
+  url: V,
+  startDate: i.string(),
+  endDate: i.string()
 }), ys = {
   ...P,
   id: "",
@@ -3583,12 +3585,16 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
   score: "",
   date: "",
   summary: "",
-  url: U
+  url: U,
+  startDate: "",
+  endDate: ""
 }, Qr = M.extend({
   company: i.string().min(1),
   position: i.string(),
   location: i.string(),
   date: i.string(),
+  startDate: i.string(),
+  endDate: i.string().optional(),
   summary: i.string(),
   url: V
 }), _s = {
@@ -3597,6 +3603,8 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
   position: "",
   location: "",
   date: "",
+  startDate: "",
+  endDate: "",
   summary: "",
   url: U
 }, es = M.extend({
@@ -3904,6 +3912,8 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
           score: "",
           date: "August 2012 to May 2016",
           summary: "",
+          startDate: "2012-08-01",
+          endDate: "2016-05-01",
           url: {
             label: "",
             href: ""
@@ -3926,6 +3936,8 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
           position: "Senior Web Developer",
           location: "San Francisco, CA",
           date: "January 2019 to Present",
+          startDate: "2019-01-01",
+          endDate: "2025-01-01",
           summary: "<ul><li><p>Spearheaded the redesign of the main product website, resulting in a 40% increase in user engagement.</p></li><li><p>Developed and implemented a new responsive framework, improving cross-device compatibility.</p></li><li><p>Mentored a team of four junior developers, fostering a culture of technical excellence.</p></li></ul>",
           url: {
             label: "",
@@ -3939,6 +3951,8 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
           position: "Web Developer",
           location: "San Jose, CA",
           date: "June 2016 to December 2018",
+          startDate: "2016-06-01",
+          endDate: "2018-12-01",
           summary: "<ul><li><p>Collaborated in a team of 10 to develop high-quality web applications using React.js and Node.js.</p></li><li><p>Managed the integration of third-party services such as Stripe for payments and Twilio for SMS services.</p></li><li><p>Optimized application performance, achieving a 30% reduction in load times.</p></li></ul>",
           url: {
             label: "",

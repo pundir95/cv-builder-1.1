@@ -3563,12 +3563,16 @@ const Ue = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   score: i.string(),
   date: i.string(),
   summary: i.string(),
-  url: we
+  url: we,
+  startDate: i.string(),
+  endDate: i.string()
 }), Vs = ge.extend({
   company: i.string().min(1),
   position: i.string(),
   location: i.string(),
   date: i.string(),
+  startDate: i.string(),
+  endDate: i.string().optional(),
   summary: i.string(),
   url: we
 }), Hs = ge.extend({

@@ -103,8 +103,10 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                         href: string;
                     };
                     summary: string;
+                    startDate: string;
                     company: string;
                     position: string;
+                    endDate?: string | undefined;
                 }[];
                 extraDescription: string;
             };
@@ -127,6 +129,8 @@ export declare class ReactiveResumeParser implements Parser<Json, ResumeData> {
                     studyType: string;
                     area: string;
                     score: string;
+                    startDate: string;
+                    endDate: string;
                 }[];
                 extraDescription: string;
             };
