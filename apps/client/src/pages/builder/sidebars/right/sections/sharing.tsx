@@ -16,7 +16,6 @@ export const SharingSection = () => {
   const { user } = useUser();
   const { toast } = useToast();
   const username = user?.username;
-  console.log(user, "user22");
 
   const setValue = useResumeStore((state) => state.setValue);
   const slug = useResumeStore((state) => state.resume.slug);
@@ -24,57 +23,44 @@ export const SharingSection = () => {
   const [employees, setEmployees] = useState([]);
   const [sharedCvs, setSharedCvs] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
+  const [isAnyoneEnabled, setIsAnyoneEnabled] = useState(false);
+  const [isOrgEnabled, setIsOrgEnabled] = useState(false);
   const location = useLocation();
   const { id } = useParams();
 
   useEffect(() => {
     axios.get(`/company/organization-employees/`).then((res) => {
-      console.log(res);
-
       setEmployees(res?.data?.data || []);
     })
     axios.get(`/cv-manager/cv-shared-with/${id}/`).then((res) => {
-      console.log(res, "new");
       setSharedCvs(res?.data?.data || []);
     })
   }, [])
 
-
   useEffect(() => {
     if (sharedCvs?.length > 0 || employees?.length > 0) {
-      // Filter out employees whose emails already exist in sharedCvs
       const filteredEmployees = employees?.filter((employee: any) => {
-        // Check if employee exists and has organization_user
         if (!employee?.organization_user?.id) return false;
-
-        // Don't include current user
         if (employee.organization_user.id === user?.id) return false;
-
-        // Check if this employee is already shared with
         const isAlreadyShared = sharedCvs.some((sharedCv: any) =>
           sharedCv?.organization_user?.id === employee.organization_user.id
         );
-
         return !isAlreadyShared;
       });
       setEmployees(filteredEmployees);
     }
   }, [sharedCvs])
 
-
-  // Constants
   const url = `${window.location.origin}/${username}/${slug}`;
 
   const onCopy = async () => {
     await navigator.clipboard.writeText(url);
-
     toast({
       variant: "success",
       title: t`A link has been copied to your clipboard.`,
       description: t`Anyone with this link can view and download the resume. Share it on your profile or with recruiters.`,
     });
   };
-
 
   const handleShareWithUser = () => {
     axios.post(`/cv-manager/share-cv/`, {
@@ -91,7 +77,15 @@ export const SharingSection = () => {
     })
   }
 
-
+  const handleCvsahreAnyone = (value: any) => {
+    axios.post(`/share-resume/api/resume/share/`, {
+      "shared_by_user": user?.id,
+      cv: location.pathname.split("/")[2],
+      permission: value
+    }).then((res) => {
+      console.log(res);
+    })
+  }
 
   return (
     <section id="sharing" className="grid gap-y-6">
@@ -106,14 +100,16 @@ export const SharingSection = () => {
         <div className="space-y-1.5">
           <div className="flex gap-x-4">
             <Switch
-              id="visibility"
-              checked={isPublic}
+              id="anyone-visibility"
+              checked={isAnyoneEnabled}
               onCheckedChange={(checked) => {
+                setIsAnyoneEnabled(checked);
+                if (checked) setIsOrgEnabled(false);
                 setValue("visibility", checked ? "public" : "private");
               }}
             />
             <div>
-              <Label htmlFor="visibility" className="space-y-1 mb-3 block">
+              <Label htmlFor="anyone-visibility" className="space-y-1 mb-3 block">
                 <p>Anyone</p>
                 <p className="text-xs opacity-60">
                   {t`Anyone, even those outside your organization will be able this.`}
@@ -122,39 +118,49 @@ export const SharingSection = () => {
             </div>
           </div>
 
-          <div className="sharing-actions">
-            <p className="mb-3">What they can do</p>
-            <div className="mb-3">
-              <select className="w-full rounded-md border border-input bg-background px-3 py-2">
-                <option value="view">View</option>
-                <option value="edit">Edit</option>
-              </select>
-            </div>
-            <div className="mb-5">
-              <Button
-                variant="outline"
-                className="flex items-center gap-2"
-                onClick={() => {
-                  // Copy URL to clipboard
-                  onCopy();
-                }}
+          <AnimatePresence presenceAffectsLayout>
+            {isAnyoneEnabled && (
+              <motion.div
+                layout
+                className="sharing-actions"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
               >
-                <Link className="h-4 w-4" />
-                Copy Link
-              </Button>
-            </div>
-          </div>
+                <p className="mb-3">What they can do</p>
+                <div className="mb-3">
+                  <select className="w-full rounded-md border border-input bg-background px-3 py-2" 
+                  onChange={(e) => handleCvsahreAnyone(e.target.value)}>
+                    <option value="view">View</option>
+                    <option value="edit">Edit</option>
+                  </select>
+                </div>
+                <div className="mb-5">
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2"
+                    onClick={onCopy}
+                  >
+                    <Link className="h-4 w-4" />
+                    Copy Link
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div className="flex items-center gap-x-4">
             <Switch
-              id="visibility"
-              checked={isPublic}
+              id="org-visibility"
+              checked={isOrgEnabled}
               onCheckedChange={(checked) => {
+                setIsOrgEnabled(checked);
+                if (checked) setIsAnyoneEnabled(false);
                 setValue("visibility", checked ? "public" : "private");
               }}
             />
             <div>
-              <Label htmlFor="visibility" className="space-y-1">
+              <Label htmlFor="org-visibility" className="space-y-1">
                 <p>Share with Organization Users</p>
                 <p className="text-xs opacity-60">
                   {t`Only users in your organization can view and download the resume.`}
@@ -162,64 +168,58 @@ export const SharingSection = () => {
               </Label>
             </div>
           </div>
-        </div>
 
-        <AnimatePresence presenceAffectsLayout>
-          {isPublic && (
-            <motion.div
-              layout
-              className="space-y-1.5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                  <Label>Share with users</Label>
-                  <select
-                    className="w-full rounded-md border border-input bg-background px-3 py-2"
-                    onChange={(e) => setSelectedUserId(e.target.value)}
-                  >
-                    <option value="" disabled selected>Select users to share with</option>
-                    {
-                      [].map((employee: any) => (
-                        <option value={employee?.id}>{employee?.organization_user?.first_name} ({employee?.organization_user?.email})</option>
-                      ))
-                    }
+          <AnimatePresence presenceAffectsLayout>
+            {isOrgEnabled && (
+              <motion.div
+                layout
+                className="space-y-1.5"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <Label>Share with users</Label>
+                    <select
+                      className="w-full rounded-md border border-input bg-background px-3 py-2"
+                      onChange={(e) => setSelectedUserId(e.target.value)}
+                    >
+                      <option value="" disabled selected>Select users to share with</option>
+                      {employees.map((employee: any) => (
+                        <option key={employee?.id} value={employee?.id}>
+                          {employee?.organization_user?.first_name} ({employee?.organization_user?.email})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                  </select>
-                </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      className="flex items-center gap-2"
+                      onClick={handleShareWithUser}
+                    >
+                      <Share className="h-4 w-4" />
+                      Share with selected users
+                    </Button>
 
-                <div className="flex items-center gap-2">
-                  <Button
-                    className="flex items-center gap-2"
-                    onClick={() => handleShareWithUser()}
-                  >
-                    <Share className="h-4 w-4" />
-                    Share with selected users
-                  </Button>
+                    <Button
+                      variant="outline"
+                      className="flex items-center gap-2"
+                      onClick={onCopy}
+                    >
+                      <Link className="h-4 w-4" />
+                      Copy Link
+                    </Button>
+                  </div>
 
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-2"
-                    onClick={() => {
-                      // Copy URL to clipboard
-                      onCopy();
-                    }}
-                  >
-                    <Link className="h-4 w-4" />
-                    Copy Link
-                  </Button>
-                </div>
-
-                <div className="mt-4">
-                  <Label className="text-sm text-muted-foreground">
-                    Currently shared with:
-                  </Label>
-                  <div className="mt-2 space-y-2">
-                    {sharedCvs?.map((cv: any) => {
-                      return (
-                        <div className="flex items-center justify-between rounded-lg border p-2">
+                  <div className="mt-4">
+                    <Label className="text-sm text-muted-foreground">
+                      Currently shared with:
+                    </Label>
+                    <div className="mt-2 space-y-2">
+                      {sharedCvs?.map((cv: any) => (
+                        <div key={cv?.id} className="flex items-center justify-between rounded-lg border p-2">
                           <div className="flex items-center gap-2">
                             <Avatar className="h-6 w-6">
                               <AvatarImage src="https://github.com/shadcn.png" />
@@ -231,14 +231,14 @@ export const SharingSection = () => {
                             <X className="h-4 w-4" />
                           </Button>
                         </div>
-                      )
-                    })}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </main>
     </section>
   );

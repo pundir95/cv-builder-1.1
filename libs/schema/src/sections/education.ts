@@ -11,6 +11,8 @@ export const educationSchema = itemSchema.extend({
   date: z.string(),
   summary: z.string(),
   url: urlSchema,
+  startDate: z.string(),
+  endDate: z.string(),
 });
 
 // Type
@@ -25,6 +27,8 @@ export const defaultEducation: Education = {
   area: "",
   score: "",
   date: "",
-  summary: "",
+  summary: "",  
   url: defaultUrl,
+  startDate: "",
+  endDate: "",
 };

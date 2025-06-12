@@ -35,7 +35,9 @@ export const EducationDialog = () => {
     formValues.institution &&
     formValues.studyType &&
     formValues.area &&
-    formValues.date
+    formValues.date &&
+    formValues.startDate &&
+    formValues.endDate
   );
 
   // Use the progress hook
@@ -115,17 +117,54 @@ export const EducationDialog = () => {
           )}
         />
 
-        <FormField
-          name="date"
+      
+<FormField
+          name="startDate"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel>{t`Date or Date Range`}</FormLabel>
+            <FormItem>
+              <FormLabel>
+              <FormLabel>Start Date</FormLabel>
+              </FormLabel>
               <FormControl>
                 <div className="flex gap-2">
-                <Input {...field} type="date" placeholder={t`March 2023 - Present`} />
-                <Input type="date" placeholder={t`End Date`} />
+                  <Input 
+                    {...field} 
+                    type="date" 
+                    placeholder={t`Start Date`}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      const endDate = form.getValues("endDate");
+                      if (endDate && e.target.value > endDate) {
+                        form.setValue("endDate", e.target.value);
+                      }
+                    }}
+                  />
                 </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="endDate"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>End Date</FormLabel>
+              <FormControl>
+                <Input 
+                  {...field} 
+                  type="date" 
+                  placeholder={t`End Date`}
+                  min={form.getValues("startDate")}
+                  onChange={(e) => {
+                    const startDate = form.getValues("startDate");
+                    if (!startDate || e.target.value >= startDate) {
+                      field.onChange(e);
+                    }
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

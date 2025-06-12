@@ -72,6 +72,35 @@ export const SectionDialog = <T extends SectionItem>({
         values.keywords.push(pendingKeyword);
       }
 
+    
+      if ((id === "experience" || id === "education") && "date" in values && "startDate" in values && "endDate" in values) {
+      
+        if (values.startDate && values.endDate) {
+          const formatDate = (dateStr: string) => {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            }); 
+          };
+
+          const formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
+          console.log(formattedDate,"formattedDate")
+          
+          if (isCreate) {
+            // For new items, we'll add the formatted date directly to the values
+            values.date = formattedDate;
+          } else {
+            // For existing items, we'll update using the index
+            const index = section.items.findIndex((item) => item.id === payload.item?.id);
+            if (index !== -1) {
+              setValue(`sections.${id}.items.${index}.date`, formattedDate);
+            }
+          }
+        }
+      }
+
       setValue(
         `sections.${id}.items`,
         produce(section.items, (draft: T[]): void => {
@@ -102,7 +131,7 @@ export const SectionDialog = <T extends SectionItem>({
       );
 
       // Update date format for experience section
-      if (id === "experience" && "date" in values && "startDate" in values && "endDate" in values) {
+      if ((id === "experience" || id === "education") && "date" in values && "startDate" in values && "endDate" in values) {
       
         if (values.startDate && values.endDate) {
           const formatDate = (dateStr: string) => {
@@ -116,7 +145,7 @@ export const SectionDialog = <T extends SectionItem>({
 
           const formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
           console.log(formattedDate,"formattedDate")
-          const index = section.items.findIndex((item) => item.id === payload.item?.id);
+          const index = section.items.findIndex((item) => item.id === (isCreate ? payload?.id : payload.item?.id));
           if (index !== -1) {
             setValue(`sections.${id}.items.${index}.date`, formattedDate);
           }
