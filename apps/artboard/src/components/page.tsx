@@ -16,13 +16,8 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
 
   const page = useArtboardStore((state) => state.resume.metadata.page);
   const fontFamily = useArtboardStore((state) => state.resume.metadata.typography.font.family);
+  console.log(page,"page")
   
-  console.log(page.options.breakLine,"breakLine")
-  console.log(pageSizeMap,"pageSizeMap")
-  console.log(page,"page.format")
-  console.log(pageSizeMap[page.format].height * MM_TO_PX,"oppp")
-
-
   return (
     <div
       data-page={pageNumber}  
@@ -41,23 +36,23 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
         })
       }}
     >
-      {mode === "builder" && page.options.pageNumbers && (
+      {/* {mode === "builder" && page.options.pageNumbers && (
         <div className={cn("absolute -top-7 left-0 font-bold", isDarkMode && "text-white")}>
           Page {pageNumber}
         </div>
-      )}
+      )} */}
       
 
       {children}
 
-      {mode === "builder" && page.options.breakLine && (
+      {/* {mode === "builder" && page.options.breakLine && (
         <div
           className="absolute inset-x-0 border-b border-dashed"
           style={{
             top: `${pageSizeMap[page.format].height * MM_TO_PX}px`,
           }}
         />
-      )}
+      )} */}
     </div>
   );
 };

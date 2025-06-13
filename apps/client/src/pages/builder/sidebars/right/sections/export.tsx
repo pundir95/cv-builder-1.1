@@ -37,7 +37,17 @@ export const ExportSection = () => {
     const templateRef = sharedState.getTemplateRef();
     
     if (templateRef) {
-      const templateString = templateRef.innerHTML;
+      let templateString = templateRef.innerHTML;
+
+      // Inject print-specific CSS
+      const printCSS = `
+        <style>
+          .card, .section { page-break-inside: avoid; break-inside: avoid; }
+          .page-break { page-break-before: always; break-before: always; }
+        </style>
+      `;
+      templateString = printCSS + templateString;
+
       // Replace width: 40% with width: 100% in the template string
       const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "85%"');
       console.log(modifiedTemplateString,"templateString");
@@ -63,7 +73,8 @@ export const ExportSection = () => {
           format: 'a4', 
           orientation: 'portrait',
           compress: true
-        }
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       try {
