@@ -21,3 +21,8 @@ export const findResumeByUsernameSlug = async (data: { username: string; slug: s
 
   return response.data;
 };
+
+export const findResumeWithAnyone = async (data: { id: string,shared_id: string }) => {
+  const response = await axios.get<ResumeDto>(`/share-resume/shared/${data.shared_id}/ref_id/${data.id}`);
+  return response.data;
+};

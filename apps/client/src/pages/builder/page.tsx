@@ -6,7 +6,7 @@ import type { LoaderFunction } from "react-router";
 import { redirect, useLocation, useParams } from "react-router";
 
 import { queryClient } from "@/client/libs/query-client";
-import { findResumeById, findSahredResumeById } from "@/client/services/resume";
+import { findResumeById, findResumeWithAnyone, findSahredResumeById } from "@/client/services/resume";
 import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
 
@@ -131,7 +131,7 @@ export const sharedBuilderLoader: LoaderFunction<any> = async ({ params }) => {
 
       const resumeDto = {
         id: data1.id,
-        title: (data1?.data as any)?.cv?.title,
+        title: data1.title,
         slug: data1.slug,
         data1: data1.data,
         visibility: data1.visibility,
@@ -141,9 +141,55 @@ export const sharedBuilderLoader: LoaderFunction<any> = async ({ params }) => {
         created_at: data1.createdAt,
         updated_at: data1.updatedAt,
         locked: data1.locked,
-        data: (data1?.data as any)?.cv?.cv_data,
+        data: data1.cv_data,
         cv_template: data1.cv_template,
       };
+
+    useResumeStore.setState({ resume: resumeDto });
+    useResumeStore.temporal.getState().clear();
+
+    return resumeDto;
+  } catch {
+    return redirect("/dashboard");
+  }
+};
+
+export const sharedWithAnyone: LoaderFunction<any> = async ({ params }) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const id = window.location.search.split('ref_id=')[1]
+    const shared_id = window.location.search.split('shared_id=')[1].split('&')[0]
+    console.log(id,"refIdValue")
+    console.log(shared_id,"shared_id")
+
+    const resume = await queryClient.fetchQuery({
+      queryKey: ["resume", { id }],
+      queryFn: () => findResumeWithAnyone({ id,shared_id })
+    });
+
+    const data1 = resume;
+    console.log(data1, "nesScucss")
+    const cv_details = data1?.cv_detail as any
+    console.log(cv_details, "cv_details")
+
+      const resumeDto = {
+        id: cv_details?.id ?? '',
+        title: cv_details?.title ?? '',
+        slug: cv_details?.slug ?? '',
+        data1: cv_details?.cv_data ?? '',
+        visibility: cv_details?.visibility ?? '',
+        userId: cv_details?.user?.id ?? '',
+        createdAt: cv_details?.created_at,
+        updatedAt: cv_details?.updated_at,
+        created_at: cv_details?.created_at,
+        updated_at: cv_details?.updated_at,
+        locked: cv_details?.locked,
+        data: cv_details?.cv_data,
+        cv_template: cv_details?.cv_template,
+      };
+      localStorage.setItem("user", JSON.stringify(cv_details?.user))
+
+      console.log(resumeDto, "resumeDto")
 
     useResumeStore.setState({ resume: resumeDto });
     useResumeStore.temporal.getState().clear();

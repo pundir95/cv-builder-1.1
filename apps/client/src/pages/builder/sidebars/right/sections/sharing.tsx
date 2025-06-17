@@ -27,6 +27,7 @@ export const SharingSection = () => {
   const [isOrgEnabled, setIsOrgEnabled] = useState(false);
   const location = useLocation();
   const { id } = useParams();
+  const [sharedUrl, setSharedUrl] = useState("");
 
   useEffect(() => {
     axios.get(`/company/organization-employees/`).then((res) => {
@@ -51,10 +52,10 @@ export const SharingSection = () => {
     }
   }, [sharedCvs])
 
-  const url = `${window.location.origin}/${username}/${slug}`;
+  
 
   const onCopy = async () => {
-    await navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(sharedUrl);
     toast({
       variant: "success",
       title: t`A link has been copied to your clipboard.`,
@@ -68,6 +69,7 @@ export const SharingSection = () => {
       "cv": location.pathname.split("/")[2]
     }).then((res) => {
       console.log(res);
+   
     })
   }
 
@@ -81,9 +83,12 @@ export const SharingSection = () => {
     axios.post(`/share-resume/api/resume/share/`, {
       "shared_by_user": user?.id,
       cv: location.pathname.split("/")[2],
-      permission: value
+      permission: value,
+      "expiry_day": "7"
     }).then((res) => {
       console.log(res);
+      let url=  `${window.location.origin}/builder/anyone/${id}?shared_id=${res?.data?.id}&ref_id=${res?.data?.ref_id}`;
+      setSharedUrl(url);
     })
   }
 
@@ -142,7 +147,7 @@ export const SharingSection = () => {
                     onClick={onCopy}
                   >
                     <Link className="h-4 w-4" />
-                    Copy Link
+                   {sharedUrl ? sharedUrl : "Copy Link"}
                   </Button>
                 </div>
               </motion.div>

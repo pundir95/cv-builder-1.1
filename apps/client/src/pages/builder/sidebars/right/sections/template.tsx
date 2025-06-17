@@ -28,11 +28,11 @@ export const TemplateSection = ({selectedFilter,showTemplateButton}:{selectedFil
   const [templatesItem, setTemplatesItem] = useState<Template[]>([]);
   const { getTemplateList, loading, templateData } = useGetTemplateList();
   const [isLimitReachedModalOpen, setIsLimitReachedModalOpen] = useState(false);
-  const user = localStorage.getItem("user") || '{"isPlanReached":[],"count":0}';
+  const user = localStorage.getItem("user") || '{"isPlanReached":[],"count":0,"subscription_details":[],"resume_count":0,"resume_details":[]}';
   const userData = JSON.parse(user);
-  let isSubscriptionHave = userData?.subscription_details;
-  let resumeCount=userData?.resume_count;
-  let resumeDetailsId=userData?.resume_details[0]?.id;
+  let isSubscriptionHave = userData?.subscription_details || [];
+  let resumeCount=userData?.resume_count || 0;
+  let resumeDetailsId=userData?.resume_details && userData?.resume_details[0]?.id || null;
 
   const navigate = useNavigate()
 

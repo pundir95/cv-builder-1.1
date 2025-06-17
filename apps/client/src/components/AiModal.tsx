@@ -28,7 +28,7 @@ const AiModal = ({ hasWorkExperience = false, onClose, anchorRef, editorRef }: A
   const [aiGenerated, setAiGenerated] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<{ top: number; left: number }>({ top: 100, left: 100 });
+  const [position, setPosition] = useState<{ top: string; left: string }>({ top: "150%", left: "-50%" });
 
   console.log(experience, "experience");
 
@@ -42,8 +42,8 @@ const AiModal = ({ hasWorkExperience = false, onClose, anchorRef, editorRef }: A
     if (anchorRef && anchorRef.current) {
       const rect = anchorRef.current.getBoundingClientRect();
       setPosition({
-        top: rect.top + rect.height + 10,
-        left: rect.left - (380 / 2),
+        top: "150%",
+        left: "-50%", // popover width is 340px
       });
     }
   }, [anchorRef]);

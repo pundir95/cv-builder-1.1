@@ -9,7 +9,7 @@ import { ResetPasswordPage } from "../pages/auth/reset-password/page";
 import { VerifyEmailPage } from "../pages/auth/verify-email/page";
 import { VerifyOtpPage } from "../pages/auth/verify-otp/page";
 import { BuilderLayout } from "../pages/builder/layout";
-import { builderLoader, BuilderPage, sharedBuilderLoader } from "../pages/builder/page";
+import { builderLoader, BuilderPage, sharedBuilderLoader, sharedWithAnyone } from "../pages/builder/page";
 import { DashboardLayout } from "../pages/dashboard/layout";
 import { ResumesPage } from "../pages/dashboard/resumes/page";
 import { SettingsPage } from "../pages/dashboard/settings/page";
@@ -75,7 +75,7 @@ export const routes = createRoutesFromElements(
           </Route>
 
           {/* OAuth Callback */}
-          <Route path="callback" loader={authLoader} element={<div />} />
+          {/* <Route path="callback" loader={authLoader} element={<div />} /> */}
         </Route>
 
         <Route index element={<Navigate replace to="/auth/login" />} />
@@ -136,6 +136,7 @@ export const routes = createRoutesFromElements(
           <Route element={<BuilderLayout />}>
             <Route path=":id" loader={builderLoader} element={<BuilderPage />} />
             <Route path="shared/:id" loader={sharedBuilderLoader} element={<BuilderPage />} />
+            <Route path="anyone/:id" loader={sharedWithAnyone} element={<BuilderPage />} />
 
             <Route index element={<Navigate replace to="/dashboard/resumes" />} />
           </Route>

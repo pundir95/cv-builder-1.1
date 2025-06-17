@@ -15,6 +15,7 @@ import { cv_template_11 } from "./cv_template_11";
 import { cv_template_12 } from "./cv_template_12";
 import { cv_template_13 } from "./cv_template_13";
 import { cv_template_14 } from "./cv_template_14";
+import { cv_template_15 } from "./cv_template_15";
 
 export const getTemplate = (template: Template) => {
   console.log(template, "templatename");
@@ -60,6 +61,9 @@ export const getTemplate = (template: Template) => {
     }
     case "cv_template_14": {
       return cv_template_14;
+    }
+    case "cv_template_15": {
+      return cv_template_15;
     }
 
     default: {
