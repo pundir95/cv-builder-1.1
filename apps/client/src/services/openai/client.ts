@@ -5,7 +5,7 @@ import { useOpenAiStore } from "@/client/stores/openai";
 
 export const openai = () => {
   const {baseURL } = useOpenAiStore.getState();
-  let apiKey = "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";
+  let apiKey = "";
   console.log(apiKey);
 
 
