@@ -60,14 +60,14 @@ export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: V
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else {
-      const cleanPhone = formData.phone.replace(/\s/g, '');
-      if (!/^[\+]?[1-9][\d]{0,15}$/.test(cleanPhone)) {
-        newErrors.phone = "Please enter a valid phone number";
-      }
-    }
+    // if (!formData.phone.trim()) {
+    //   newErrors.phone = "Phone number is required";
+    // } else {
+    //   const cleanPhone = formData.phone.replace(/\s/g, '');
+    //   if (!/^[\+]?[1-9][\d]{0,15}$/.test(cleanPhone)) {
+    //     newErrors.phone = "Please enter a valid phone number";
+    //   }
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

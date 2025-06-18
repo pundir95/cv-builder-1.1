@@ -2,7 +2,7 @@ import { t } from "@lingui/macro";
 import { HouseSimple, Lock, SidebarSimple, ArrowLeft, ChartLine } from "@phosphor-icons/react";
 import { Button, Tooltip } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
@@ -10,6 +10,7 @@ import { useProgressStore } from "@/client/stores/progress";
 
 export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftSidebar, setShowLeftSidebar }: { showRightSidebar: boolean, setShowRightSidebar: (show: boolean) => void, showLeftSidebar: boolean, setShowLeftSidebar: (show: boolean) => void }) => {
   const navigate = useNavigate();
+  const location=useLocation();
   const title = useResumeStore((state) => state.resume.title);
   const locked = useResumeStore((state) => state.resume.locked);
   const progress = useResumeStore((state) => state.resume.data.metadata.template);
@@ -43,32 +44,36 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
         <div className="flex items-center gap-3">
           <Button
             size="icon"
-            variant="ghost"
+            variant="ghost"s
             className="flex lg:hidden text-white hover:bg-blue-500"
             onClick={() => onToggle("left")}
           >
             <SidebarSimple size={24} />
           </Button>
 
-          <Button
+          {!location.pathname.includes('/anyone/') && <Button
             variant="ghost"
             onClick={() => navigate('/dashboard/resumes')}
             className="text-white hover:bg-blue-500 flex items-center gap-2"
           >
             <ArrowLeft size={20} />
             <span>Back</span>
-          </Button>
+          </Button>}
         </div>
 
         {/* Center Section */}
         <div className="flex items-center justify-center gap-x-2 lg:mx-auto">
-          <Button asChild size="icon" variant="ghost" className="text-white hover:bg-blue-500">
+         {!location.pathname.includes('/anyone/') && 
+         <>
+         <Button asChild size="icon" variant="ghost" className="text-white hover:bg-blue-500">
             <Link to="/dashboard/resumes">
               <HouseSimple size={22} />
             </Link>
           </Button>
 
           <span className="text-white/40 text-sm">/</span>
+          </>
+          }
 
           <h1 className="font-medium text-white text-lg">{title}</h1>
 

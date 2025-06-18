@@ -70,8 +70,8 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
           <Separator /> */}
           {/* <PageSection />
           <Separator /> */}
-          { !window.location.search.includes('sahredcv=true') && <SharingSection /> }
-          {/* <Separator /> */}
+        { !window.location.search.includes('sahredcv=true') && !window.location.search.includes('shared_id') && <SharingSection /> }
+        {/* <Separator /> */}
           {/* <StatisticsSection /> */}
           <Separator />
           {/* <ExportSection /> */}

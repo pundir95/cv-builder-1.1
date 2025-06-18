@@ -48,8 +48,8 @@ export const BuilderLayout = () => {
   useEffect(() => {
     // Check if URL contains 'anyone'
     if (location.pathname.includes('/anyone/')) {
-      // const isVerified = localStorage.getItem('resume_verified') === 'true';
-      if (true) {
+      const isVerified = localStorage.getItem('resume_verified') === 'true';
+      if (!isVerified) {
         setShowVerificationModal(true);
       }
     }
@@ -106,7 +106,7 @@ export const BuilderLayout = () => {
       <VerificationModal 
         isOpen={showVerificationModal}
         onClose={() =>setShowVerificationModal(false)}
-        onVerificationComplete={() => {}}
+        onVerificationComplete={handleVerificationComplete}
       />
       </>
     );
