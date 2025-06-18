@@ -10,8 +10,9 @@ import {
   SheetTitle,
   VisuallyHidden,
 } from "@reactive-resume/ui";
+import { VerificationModal } from "../builder/_components/verification-modal";
 import { cn } from "@reactive-resume/utils";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 import { useBuilderStore } from "@/client/stores/builder";
 
@@ -19,7 +20,7 @@ import { BuilderHeader } from "./_components/header";
 import { BuilderToolbar } from "./_components/toolbar";
 import { LeftSidebar } from "./sidebars/left";
 import { RightSidebar } from "./sidebars/right";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImproveResume from "@/client/components/ImproveResume";
 
 const onOpenAutoFocus = (event: Event) => {
@@ -41,6 +42,24 @@ const OutletSlot = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setS
 
 export const BuilderLayout = () => {
   const { isDesktop } = useBreakpoint();
+  const location=useLocation()
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+
+  useEffect(() => {
+    // Check if URL contains 'anyone'
+    if (location.pathname.includes('/anyone/')) {
+      // const isVerified = localStorage.getItem('resume_verified') === 'true';
+      if (true) {
+        setShowVerificationModal(true);
+      }
+    }
+  }, [location]);
+
+  const handleVerificationComplete = (userData: { name: string; email: string; phone: string }) => {
+    localStorage.setItem('resume_verified', 'true');
+    localStorage.setItem('user_verification_data', JSON.stringify(userData));
+    setShowVerificationModal(false);
+  };
 
   const sheet = useBuilderStore((state) => state.sheet);
 
@@ -55,6 +74,7 @@ export const BuilderLayout = () => {
 
   if (isDesktop) {
     return (
+      <>
       <div className="relative size-full overflow-hidden">
         <PanelGroup direction="horizontal">
          {showLeftSidebar? <Panel
@@ -83,6 +103,12 @@ export const BuilderLayout = () => {
           </Panel> : <RightSidebar showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} setShowLeftSidebar={setShowLeftSidebar} showLeftSidebar={showLeftSidebar} />}
         </PanelGroup>
       </div>
+      <VerificationModal 
+        isOpen={showVerificationModal}
+        onClose={() =>setShowVerificationModal(false)}
+        onVerificationComplete={() => {}}
+      />
+      </>
     );
   }
 
