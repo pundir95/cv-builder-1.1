@@ -3,6 +3,7 @@ export const templatesList = [
   {name:"cv_template_2",id:2,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
   // {name:"cv_template_3",id:3,withPhoto:false,withoutPhoto:true,oneColumn:true,twoColumn:false,progress:10},
   {name:"cv_template_15",id:15,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
+  {name:"cv_template_16",id:16,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
   {name:"cv_template_4",id:4,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
   // {name:"cv_template_5",id:5,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
   {name:"cv_template_6",id:6,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
