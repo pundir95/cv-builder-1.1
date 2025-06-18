@@ -22,6 +22,7 @@ const fontSuggestions = [
   "Merriweather",
   "Open Sans",
   "Plus Jakarta Sans",
+  "Montserrat",
   "Playfair Display",
   "PT Sans",
   "PT Serif",
