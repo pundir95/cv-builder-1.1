@@ -21,6 +21,7 @@ const fontSuggestions = [
   "Lora",
   "Merriweather",
   "Open Sans",
+  "Plus Jakarta Sans",
   "Playfair Display",
   "PT Sans",
   "PT Serif",
