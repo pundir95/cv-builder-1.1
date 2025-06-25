@@ -44,7 +44,7 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
         <div className="flex items-center gap-3">
           <Button
             size="icon"
-            variant="ghost"s
+            variant="ghost"
             className="flex lg:hidden text-white hover:bg-blue-500"
             onClick={() => onToggle("left")}
           >

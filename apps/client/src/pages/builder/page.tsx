@@ -126,22 +126,22 @@ export const sharedBuilderLoader: LoaderFunction<any> = async ({ params }) => {
       queryFn: () => findSahredResumeById({ id })
     });
 
-    const data1 = resume;
+    const data1 = resume?.data as any;
     console.log(data1, "data1333")
 
       const resumeDto = {
         id: data1.id,
-        title: data1.title,
+        title: data1.cv?.title ,
         slug: data1.slug,
-        data1: data1.data,
+        data1: data1.cv?.cv_data,
         visibility: data1.visibility,
         userId: data1.user?.id ?? '',
-        createdAt: data1.createdAt,
-        updatedAt: data1.updatedAt,
-        created_at: data1.createdAt,
-        updated_at: data1.updatedAt,
+        createdAt: data1.created_at,
+        updatedAt: data1.updated_at,
+        created_at: data1.created_at,
+        updated_at: data1.updated_at,
         locked: data1.locked,
-        data: data1.cv_data,
+        data: data1.cv?.cv_data,
         cv_template: data1.cv_template,
       };
 
@@ -169,8 +169,15 @@ export const sharedWithAnyone: LoaderFunction<any> = async ({ params }) => {
 
     const data1 = resume;
     console.log(data1, "nesScucss")
-    const cv_details = data1?.cv_detail as any
-    console.log(cv_details, "cv_details")
+    
+    // Type the response properly since the API returns a different structure
+    const responseData = data1 as any;
+    const cv_details = responseData?.cv_detail;
+    
+    if (!cv_details) {
+      throw new Error("CV details not found");
+    }
+    
 
       const resumeDto = {
         id: cv_details?.id ?? '',

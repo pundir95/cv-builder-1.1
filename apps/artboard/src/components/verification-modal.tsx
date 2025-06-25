@@ -87,11 +87,10 @@ export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: V
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       onVerificationComplete(formData);
+      setIsSubmitting(false);
     } catch (error) {
       console.error('Verification failed:', error);
       setErrors({ submit: "Verification failed. Please try again." });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
