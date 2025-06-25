@@ -27,7 +27,7 @@ export const BuilderLayout = () => {
   const Template = useMemo(() => getTemplate(template), [template]);
 
   useEffect(() => {
-    console.log(templateRef,"useEffect")
+    console.log(templateRef, "useEffect")
     const handleMessage = (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return;
 
@@ -43,9 +43,9 @@ export const BuilderLayout = () => {
       }
       if (event.data.type === "GET_TEMPLATE_REF") {
         // Send the template reference back
-        window.parent.postMessage({ 
-          type: "TEMPLATE_REF_RESPONSE", 
-          templateRef: templateRef.current 
+        window.parent.postMessage({
+          type: "TEMPLATE_REF_RESPONSE",
+          templateRef: templateRef.current
         }, window.location.origin);
       }
       if (event.data.type === "SHOW_VERIFICATION_MODAL") {
@@ -74,10 +74,10 @@ export const BuilderLayout = () => {
     // Set up a mutation observer to watch for changes
     const observer = new MutationObserver(updateTemplateRef);
     if (templateRef.current) {
-      observer.observe(templateRef.current, { 
-        childList: true, 
+      observer.observe(templateRef.current, {
+        childList: true,
         subtree: true,
-        attributes: true 
+        attributes: true
       });
     }
 
@@ -86,44 +86,19 @@ export const BuilderLayout = () => {
     };
   }, [templateRef.current]);
 
-  // Check if this is a shared resume view and show verification modal
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const isShared = urlParams.get('shared') === 'true';
-  //   const isVerified = localStorage.getItem('resume_verified') === 'true';
-    
-  //   if (isShared && !isVerified) {
-  //     setShowVerificationModal(true);
-  //   }
-  // }, []);
-
-  // const handleVerificationComplete = (userData: { name: string; email: string; phone: string }) => {
-  //   // Store verification data
-  //   localStorage.setItem('resume_verified', 'true');
-  //   localStorage.setItem('user_verification_data', JSON.stringify(userData));
-    
-  //   // Close modal
-  //   setShowVerificationModal(false);
-    
-  //   // You can also send this data to your backend here
-  //   console.log('User verified:', userData);
-  // };
-
-  // console.log(layout,"layout")
-
   return (
     <>
-     
-   
-          <div 
-            ref={templateRef} 
-            data-template-ref 
-            style={{
-              overflowY: "auto",
-              height: "100vh",
-              backgroundColor: "#F4F5FF",
-            }}
-          >
+
+
+      <div
+        ref={templateRef}
+        data-template-ref
+        style={{
+          overflowY: "auto",
+          height: "100vh",
+          backgroundColor: "#F4F5FF",
+        }}
+      >
         {layout.map((columns, pageIndex) => (
           <motion.div
             key={pageIndex}
@@ -139,16 +114,7 @@ export const BuilderLayout = () => {
         ))}
       </div>
 
-      {/* Test button for demonstration - remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <button
-          onClick={() => setShowVerificationModal(true)}
-          className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors z-40"
-          style={{ zIndex: 40 }}
-        >
-          Test Verification Modal
-        </button>
-      )}
+
     </>
   );
 };

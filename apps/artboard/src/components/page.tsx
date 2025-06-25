@@ -7,11 +7,12 @@ type Props = {
   mode?: "preview" | "builder";
   pageNumber: number;
   children: React.ReactNode;
+  height?: string | number;
 };
 
 export const MM_TO_PX = 2.78;
 
-export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
+export const Page = ({ mode = "builder", pageNumber, children, height = "120vh" }: Props) => {
   const { isDarkMode } = useTheme();
 
   const page = useArtboardStore((state) => state.resume.metadata.page);
@@ -24,7 +25,6 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
       style={{
         fontFamily,
         width: '40%',
-        minHeight: `${100}vh`,
         marginLeft: "20px",
         marginRight: "200px",
         marginTop: "30px",

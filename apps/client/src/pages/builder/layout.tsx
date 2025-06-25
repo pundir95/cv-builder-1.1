@@ -22,6 +22,9 @@ import { LeftSidebar } from "./sidebars/left";
 import { RightSidebar } from "./sidebars/right";
 import { useEffect, useState } from "react";
 import ImproveResume from "@/client/components/ImproveResume";
+import {axios} from "@/client/libs/axios";
+import { OTPVerificationModal } from "../../../../artboard/src/components/otp-verification";
+
 
 const onOpenAutoFocus = (event: Event) => {
   event.preventDefault();
@@ -44,7 +47,8 @@ export const BuilderLayout = () => {
   const { isDesktop } = useBreakpoint();
   const location=useLocation()
   const [showVerificationModal, setShowVerificationModal] = useState(false);
-
+  const [showOTPVerificationModal, setShowOTPVerificationModal] = useState(false);
+  const [email, setEmail] = useState("");
   useEffect(() => {
     // Check if URL contains 'anyone'
     if (location.pathname.includes('/anyone/')) {
@@ -55,11 +59,52 @@ export const BuilderLayout = () => {
     }
   }, [location]);
 
-  const handleVerificationComplete = (userData: { name: string; email: string; phone: string }) => {
-    localStorage.setItem('resume_verified', 'true');
-    localStorage.setItem('user_verification_data', JSON.stringify(userData));
-    setShowVerificationModal(false);
+  const handleVerificationComplete = async (userData: { name: string; email: string; phone: string }) => {
+    // Extract resume ID from URL
+    const resumeId = location.pathname.split('/anyone/')[1]?.split('?')[0];
+    // Extract ref_id from URL query parameters
+    const urlParams = new URLSearchParams(location.search);
+    const shreId = urlParams.get('shared_id');
+    
+    if (!resumeId) {
+      console.error('Resume ID not found in URL');
+      return;
+    }
+    try {
+      const response = await axios.post('/share-resume/share-resume/', {
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
+        cv:resumeId,
+        share_resume_to_anyone_rec:shreId
+
+      });
+      setEmail(userData.email)
+      setShowOTPVerificationModal(true)
+      setShowVerificationModal(false);
+      console.log(response,"response")
+    } catch (error) {
+      console.error('Verification failed:', error);
+    }
+    // localStorage.setItem('resume_verified', 'true');
+    // localStorage.setItem('user_verification_data', JSON.stringify(userData));
+    // setShowVerificationModal(false);
   };
+
+  const handleOTPVerificationComplete = async (otp: string) => {
+    try {
+      const response = await axios.post('/share-resume/verify-email/', {
+        otp: otp,
+        email:email,
+      });
+      console.log(response,"response")
+      setShowOTPVerificationModal(false)
+      setShowVerificationModal(false)
+      localStorage.setItem('resume_verified', 'true');
+    } catch (error) {
+      console.log(error,"error")
+    }
+  }
 
   const sheet = useBuilderStore((state) => state.sheet);
 
@@ -107,6 +152,11 @@ export const BuilderLayout = () => {
         isOpen={showVerificationModal}
         onClose={() =>setShowVerificationModal(false)}
         onVerificationComplete={handleVerificationComplete}
+      />
+      <OTPVerificationModal
+        isOpen={showOTPVerificationModal}
+        onClose={() => setShowOTPVerificationModal(false)}
+        onVerificationComplete={handleOTPVerificationComplete}
       />
       </>
     );
