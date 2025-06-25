@@ -96,7 +96,7 @@ export default function OrganisationUsers({showModal, setShowModal, employees}: 
             </Select>
           </div>
           <Button className="bg-blue-500 text-white px-6" onClick={() =>{
-            if(userDataObj.subscription_details.length>0){
+            if(userDataObj?.subscription_details?.length>0){
               if(userDataObj.limit==0){
                 setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
               }else{
@@ -159,8 +159,8 @@ export default function OrganisationUsers({showModal, setShowModal, employees}: 
           </table>
         </div>
         <AddOnUserModal isOpen={showModal.addOnUser} onClose={() => setShowModal({...showModal, addOnUser: false})}
-          price={userDataObj.subscription_details[0]?.plan_details?.price}
-          plan_id={userDataObj.subscription_details[0]?.plan_id}
+          price={userDataObj && userDataObj?.subscription_details?.[0]?.plan_details?.price}
+          plan_id={userDataObj && userDataObj?.subscription_details?.[0]?.plan_id}
           onPay={() => {
             setIsDeleteORDisable({...isDeleteORDisable, delete: true})
           }}

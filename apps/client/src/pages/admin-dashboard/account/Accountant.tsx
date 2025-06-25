@@ -139,7 +139,7 @@ export const AccountSettings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-primary">{userData?.first_name} {userData?.last_name}</h3>
-                  <p className="text-primary/70">{userData.subscription_details.length > 0 ? "Premium Member" : "Free Member"}</p>
+                  <p className="text-primary/70">{userData?.subscription_details?.length > 0 ? "Premium Member" : "Free Member"}</p>
                   <p className="text-sm text-primary/50">Member since {userData?.date_joined.split("T")[0]}</p>
                 </div>
                 <Button

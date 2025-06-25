@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { ChartLine, ChartLineDown, FadersHorizontal, Money, ReadCvLogo, UserCircle } from "@phosphor-icons/react";
+import { ChartLine, ChartLineDown, CheckCircle, FadersHorizontal, Money, ReadCvLogo, UserCircle } from "@phosphor-icons/react";
 import { Button, KeyboardShortcut, Separator } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
@@ -85,7 +85,7 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       path: "/dashboard",
       name: `Dashboard`,
       shortcut: "⇧R",
-      icon: <ChartLineDown color="white" />,
+      icon: <ChartLineDown color="white" size={24} />,
     },
     {
       path: "/dashboard/resumes",
@@ -93,24 +93,29 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       shortcut: "⇧R",
       icon: <ReadCvLogo color="white" />,
     },
-  
+    {
+      path: "/dashboard/resumes-checker",
+      name: `Resumes Checker`,
+      shortcut: "⇧R",
+      icon: <CheckCircle color="white" size={24} />,
+    },
     {
       path: "/dashboard/plan-pricing",
       name: `Plan Pricing`,
       shortcut: "⇧S",
-      icon: <Money color="white" />,
+      icon: <Money color="white" size={24} />,
     },
     {
       path: "/dashboard/organization-customer",
       name: `Shared Resume List`,
       shortcut: "⇧S",
-      icon: <FadersHorizontal color="white" />,
+      icon: <FadersHorizontal color="white" size={24} />,
     }, 
     {
       path: "/dashboard/account",
       name: `Account Settings`,
       shortcut: "⇧S",
-      icon: <UserCircle color="white" />,
+      icon: <UserCircle color="white" size={24} />,
     }, 
  
   ];

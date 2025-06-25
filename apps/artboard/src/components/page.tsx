@@ -29,6 +29,8 @@ export const Page = ({ mode = "builder", pageNumber, children, height = "120vh" 
         marginRight: "200px",
         marginTop: "30px",
         position: "relative",
+        // height: height,
+        // minHeight: height,
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
         ...(mode === "builder" && {

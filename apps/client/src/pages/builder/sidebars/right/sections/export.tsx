@@ -37,9 +37,19 @@ export const ExportSection = () => {
     const templateRef = sharedState.getTemplateRef();
     
     if (templateRef) {
-      const templateString = templateRef.innerHTML;
+      let templateString = templateRef.innerHTML;
+
+      // Inject print-specific CSS
+      const printCSS = `
+        <style>
+          .card, .section { page-break-inside: avoid; break-inside: avoid; }
+          .page-break { page-break-before: always; break-before: always; }
+        </style>
+      `;
+      templateString = printCSS + templateString;
+
       // Replace width: 40% with width: 100% in the template string
-      const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "85%"');
+      const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "100%"');
       console.log(modifiedTemplateString,"templateString");
       
       // Configure PDF options
@@ -64,7 +74,7 @@ export const ExportSection = () => {
           orientation: 'portrait',
           compress: true
         },
-        pagebreak: { mode: ['avoid-all', 'legacy'] }
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       try {
