@@ -183,7 +183,7 @@ const Section = <T,>({
   if (!section.visible || section.items.length === 0) return null;
 
   return (
-    <section id={section.id} className={cn("grid", dateKey !== undefined && "gap-y-4")}>
+    <>
       <div className="grid grid-cols-4 gap-x-6">
         <div className="text-right">
           <h4 className="font-medium text-primary">{section.name}</h4>
@@ -198,7 +198,7 @@ const Section = <T,>({
       </div>
 
       {dateKey !== undefined && (
-        <div className="grid grid-cols-4 gap-x-6 gap-y-4">
+        <>
           {section.items
             .filter((item) => item.visible)
             .map((item) => {
@@ -209,9 +209,8 @@ const Section = <T,>({
 
               return (
                 <Fragment key={item.id}>
-                  <div className="text-right font-medium text-primary">{date}</div>
-
-                  <div className="col-span-3 space-y-1">
+                  <div className="text-right font-medium text-primary w-[23%] float-left">{date}</div>
+                  <div className="col-span-3 space-y-1 w-[77%] pl-[21px] float-left">
                     {children?.(item as T)}
 
                     {url !== undefined && section.separateLinks && <Link url={url} />}
@@ -227,10 +226,11 @@ const Section = <T,>({
                       <p className="text-sm">{keywords.join(", ")}</p>
                     )}
                   </div>
+                  <div className="clear-both" />
                 </Fragment>
               );
             })}
-        </div>
+          </>
       )}
 
       {dateKey === undefined && (
@@ -270,7 +270,7 @@ const Section = <T,>({
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 };
 
@@ -575,7 +575,7 @@ export const cv_template_10 = ({ columns, isFirstPage = false }: TemplateProps) 
   const [main, sidebar] = columns;
 
   return (
-    <div className="space-y-6" style={{"padding" : "18px"}}>
+    <div className="space-y-6" style={{ "padding": "18px" }}>
       <div className="flex items-center justify-between">
         <img alt="Europass Logo" className="h-[42px]" src="/assets/europass.png" />
 
