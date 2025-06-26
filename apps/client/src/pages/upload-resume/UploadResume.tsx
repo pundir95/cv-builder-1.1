@@ -14,6 +14,8 @@ import ChangeUplodedFile from './ChangeUplodedFile';
 import EvaluateFeedback from './EvaluateFeedback';
 import LoadingResume from './LoadingResume';
 import { createId } from "@paralleldrive/cuid2";
+import { ErrorPage } from '../public/error';
+import UploadPageError from './UploadPageError';
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -155,6 +157,9 @@ const uploadResume = () => {
       // void navigate(`/builder/${newResume.data.id}`)
 
     })
+    .catch((err)=>{
+      setSelectedStep(5)
+    })
  
     
   }
@@ -186,7 +191,14 @@ console.log(selectedStep,"selectedStep")
         selectedStep === 3 && (
           <LoadingResume isComplete={isComplete}/>
         )
-      }
+    }
+    {
+      selectedStep === 5 && (
+        <UploadPageError/>
+      )
+    }
+    
+    
 
       {
         selectedStep === 4 && (
@@ -198,7 +210,7 @@ console.log(selectedStep,"selectedStep")
         
       
 
-      {selectedCard === 'upload' && selectedStep !== 3 && <div className="flex justify-between items-center w-full mt-8">
+      {selectedCard === 'upload' && selectedStep !== 3 && selectedStep !== 5 && <div className="flex justify-between items-center w-full mt-8">
         <button 
           onClick={handlePreviousStep}
           className="flex items-center gap-2 border-2 border-blue-600 text-blue-700 rounded-full px-8 py-3 text-lg font-medium bg-white hover:bg-blue-50 transition-colors duration-200"

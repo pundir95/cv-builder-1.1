@@ -26,6 +26,8 @@ export const BuilderLayout = () => {
   const template = useArtboardStore((state) => state.resume.metadata.template as unknown as Template);
   const Template = useMemo(() => getTemplate(template), [template]);
 
+  
+
   useEffect(() => {
     console.log(templateRef, "useEffect")
     const handleMessage = (event: MessageEvent) => {
@@ -85,6 +87,8 @@ export const BuilderLayout = () => {
       observer.disconnect();
     };
   }, [templateRef.current]);
+
+  console.log(layout,"layout")
 
   return (
     <>

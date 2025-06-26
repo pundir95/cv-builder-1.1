@@ -7,30 +7,33 @@ type Props = {
   mode?: "preview" | "builder";
   pageNumber: number;
   children: React.ReactNode;
-  height?: string | number;
 };
 
 export const MM_TO_PX = 2.78;
 
-export const Page = ({ mode = "builder", pageNumber, children, height = "120vh" }: Props) => {
+export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
   const { isDarkMode } = useTheme();
 
   const page = useArtboardStore((state) => state.resume.metadata.page);
   const fontFamily = useArtboardStore((state) => state.resume.metadata.typography.font.family);
-  console.log(page,"page")
   
+  console.log(page.options.breakLine,"breakLine")
+  console.log(pageSizeMap,"pageSizeMap")
+  console.log(page,"page.format")
+  console.log(pageSizeMap[page.format].height * MM_TO_PX,"oppp")
+
+
   return (
     <div
-      data-page={pageNumber}  
+      // data-page={pageNumber} 
       style={{
         fontFamily,
         width: '40%',
+        minHeight: `${100}vh`,
         marginLeft: "20px",
         marginRight: "200px",
         marginTop: "30px",
         position: "relative",
-        // height: height,
-        // minHeight: height,
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
         ...(mode === "builder" && {
@@ -38,11 +41,11 @@ export const Page = ({ mode = "builder", pageNumber, children, height = "120vh" 
         })
       }}
     >
-      {/* {mode === "builder" && page.options.pageNumbers && (
+      {mode === "builder" && page.options.pageNumbers && (
         <div className={cn("absolute -top-7 left-0 font-bold", isDarkMode && "text-white")}>
           Page {pageNumber}
         </div>
-      )} */}
+      )}
       
 
       {children}
