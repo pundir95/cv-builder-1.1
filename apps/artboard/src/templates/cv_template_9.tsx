@@ -33,7 +33,7 @@ const Header = () => {
     <div>
       <div
         className="flex items-center space-x-8"
-        style={{ backgroundColor: hexToRgb(primaryColor, 0.2) , "padding" : "18px" }}
+        style={{ backgroundColor: hexToRgb(primaryColor, 0.2), "padding": "18px" }}
       >
         <div className="space-y-3">
           <div>
@@ -51,7 +51,7 @@ const Header = () => {
         <Picture />
       </div>
 
-      <div className="space-y-3" style={{ backgroundColor: hexToRgb(primaryColor, 0.4) , "padding" : "18px" }}>
+      <div className="space-y-3" style={{ backgroundColor: hexToRgb(primaryColor, 0.4), "padding": "18px" }}>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-sm">
           {basics.location && (
             <div className="flex items-center gap-x-1.5">
@@ -194,48 +194,43 @@ const Section = <T,>({
   if (!section.visible || section.items.length === 0) return null;
 
   return (
-    <section id={section.id} className="grid">
+    <>
       <h4 className="mb-2 text-left font-bold text-primary">
         {section.name}
       </h4>
 
-      <hr style={{ "height" : "1px" , "background" : "#000" , "border" : "none" , "margin" : "10px 0px" }} />
+      <hr style={{ "height": "1px", "background": "#000", "border": "none", "margin": "0px 0px" }} />
 
-      <div
-        className="grid gap-x-6 gap-y-3"
-        style={{ gridTemplateColumns: `repeat(${section.columns}, 1fr)` }}
-      >
-        {section.items
-          .filter((item) => item.visible)
-          .map((item) => {
-            const url = (urlKey && get(item, urlKey)) as URL | undefined;
-            const level = (levelKey && get(item, levelKey, 0)) as number | undefined;
-            const summary = (summaryKey && get(item, summaryKey, "")) as string | undefined;
-            const keywords = (keywordsKey && get(item, keywordsKey, [])) as string[] | undefined;
+      {section.items
+        .filter((item) => item.visible)
+        .map((item) => {
+          const url = (urlKey && get(item, urlKey)) as URL | undefined;
+          const level = (levelKey && get(item, levelKey, 0)) as number | undefined;
+          const summary = (summaryKey && get(item, summaryKey, "")) as string | undefined;
+          const keywords = (keywordsKey && get(item, keywordsKey, [])) as string[] | undefined;
 
-            return (
-              <div key={item.id} className={cn("space-y-2", className)}>
-                <div>{children?.(item as T)}</div>
+          return (
+            <>
+              <div>{children?.(item as T)}</div>
 
-                {summary !== undefined && !isEmptyString(summary) && (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: sanitize(summary) }}
-                    className="wysiwyg"
-                  />
-                )}
+              {summary !== undefined && !isEmptyString(summary) && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: sanitize(summary) }}
+                  className="wysiwyg"
+                />
+              )}
 
-                {level !== undefined && level > 0 && <Rating level={level} />}
+              {level !== undefined && level > 0 && <Rating level={level} />}
 
-                {keywords !== undefined && keywords.length > 0 && (
-                  <p className="text-sm">{keywords.join(", ")}</p>
-                )}
+              {keywords !== undefined && keywords.length > 0 && (
+                <p className="text-sm">{keywords.join(", ")}</p>
+              )}
 
-                {url !== undefined && section.separateLinks && <Link url={url} />}
-              </div>
-            );
-          })}
-      </div>
-    </section>
+              {url !== undefined && section.separateLinks && <Link url={url} />}
+            </>
+          );
+        })}
+    </>
   );
 };
 
@@ -521,7 +516,7 @@ export const cv_template_9 = ({ columns, isFirstPage = false }: TemplateProps) =
     <div>
       {isFirstPage && <Header />}
 
-      <div className="grid grid-cols-2 items-start space-x-6" style={{"padding" : "18px"}}>
+      <div className="grid grid-cols-2 items-start space-x-6" style={{ "padding": "18px" }}>
         <div className={cn("grid gap-y-4", sidebar.length === 0 && "col-span-2")}>
           {main.map((section) => (
             <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>

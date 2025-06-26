@@ -579,12 +579,12 @@ export const cv_template_6 = ({ columns, isFirstPage = false }: TemplateProps) =
           "sidebar group flex flex-col",
           !(isFirstPage || sidebar.length > 0) && "hidden",
         )}
-        style={{'height' : '100%'}}
+        style={{'height' : '100%' , 'backgroundColor' : '#d4d5dc'}}
       >
         {isFirstPage && <Header />}
 
         <div
-          className="flex-1 space-y-4"
+          className="space-y-4"
           style={{ "backgroundColor" : "#d4d5dc" , "padding" : "18px" }}
         >
           {sidebar.map((section) => (
