@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-// Heroicons (install @heroicons/react if not already)
-        import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
+import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
 
     const OrganisationDetails: React.FC<{showModal: any, setShowModal: any, employees: any}> = ({showModal, setShowModal, employees}) => {
     const [copied, setCopied] = useState(false);
@@ -18,14 +17,17 @@ import React, { useState } from 'react';
     setTimeout(() => setCopied(false), 1200);
   };
 
+  const userData = JSON.parse(localStorage.getItem("user") || "{}")
+  console.log(userData,"userData")
+
   return (
     <div className='w-full'>
       {/* <h2 className="text-2xl font-semibold mb-4">Organisation Details</h2> */}
       <div className="bg-white rounded-xl shadow-md p-6 relative flex flex-col gap-6">
         {/* Edit Icon */}
-        <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-          <Pencil size={16} onClick={() => setShowModal({...showModal, organisationDetailsEdit: true, organisationDetails: false})} />
-        </button>
+       {userData?.role !== "employee" && <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+            <Pencil size={16} onClick={() => setShowModal({...showModal, organisationDetailsEdit: true, organisationDetails: false})} />
+          </button>}
         <div className="flex items-center gap-4">
           {/* Avatar */}
           <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-600">
@@ -59,9 +61,9 @@ import React, { useState } from 'react';
             </div>
             <div className="flex items-center gap-2 mt-1">
               <span className="font-semibold">{employees.length} users</span>
-              <button className="ml-auto text-gray-400 hover:text-gray-600" title="View Users">
+             {userData?.role !== "employee" && <button className="ml-auto text-gray-400 hover:text-gray-600" title="View Users">
                 <Eye size={16} onClick={() => setShowModal({...showModal, organisationUsers: true, organisationDetailsEdit: false, organisationDetails: false})} />
-              </button>
+              </button>}
             </div>
           </div>
         </div>

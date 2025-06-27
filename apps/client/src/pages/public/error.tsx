@@ -28,18 +28,15 @@ const getErrorMessage = (status: number) => {
     case 400: {
       return t`The request was invalid.`;
     }
-    case 901: {
-      return "Opps Not able to generate resume Please try again later";
-    }
     default: {
       return t`An unexpected error occurred.`;
     }
   }
 };
 
-export const ErrorPage = (status: number) => {
+export const ErrorPage = () => {
   const error = useRouteError() as RouterError;
-  const statusCode = status;
+  const statusCode = error.status;
 
   return (
     <LocaleProvider>
@@ -51,11 +48,11 @@ export const ErrorPage = (status: number) => {
           </h4>
 
           <p className="break-words text-sm text-gray-500">
-            {error.data || error.message || getErrorMessage(statusCode || status)}
+            {error.data || error.message || getErrorMessage(statusCode)}
           </p>
 
           <Button asChild className="inline-block pt-2">
-            <Link to="/dashboard">{t`Go to home`}</Link>
+            <Link to="/">{t`Go to home`}</Link>
           </Button>
         </div>
       </main>

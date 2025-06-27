@@ -94,7 +94,7 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       icon: <ReadCvLogo color="white" />,
     },
     {
-      path: "/dashboard/resumes-checker",
+      path: "/onboard/upload-resume?true=resume-checker",
       name: `Resumes Checker`,
       shortcut: "⇧R",
       icon: <CheckCircle color="white" size={24} />,

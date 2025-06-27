@@ -7,6 +7,7 @@ interface SectionScore {
   score: number;
   icon: string;
   recommendations: string[];
+  sectionKey: string;
 }
 
 interface ResumeSection {
@@ -28,6 +29,60 @@ const ImproveResume: React.FC = () => {
   
   console.log('Resume Data:', JSON.stringify(resume, null, 2));
 
+  // Function to navigate to a section in the resume builder
+  const navigateToSection = (sectionKey: string) => {
+    // Close the modal first
+    setIsOpen(false);
+    
+    // Wait a bit for the modal to close, then navigate
+    setTimeout(() => {
+      // Find the section element in the left sidebar
+      const sectionElement = document.querySelector(`[id="${sectionKey}"]`) as HTMLElement;
+      
+      if (sectionElement) {
+        // Scroll to the section
+        sectionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Add a subtle highlight effect
+        sectionElement.style.transition = 'background-color 0.3s ease';
+        sectionElement.style.backgroundColor = '#e3f2fd';
+        
+        // Remove the highlight after 2 seconds
+        setTimeout(() => {
+          sectionElement.style.backgroundColor = '';
+        }, 2000);
+      } else {
+        // If section not found, try to find it by name
+        const sectionName = sectionScores.find(s => s.sectionKey === sectionKey)?.name;
+        if (sectionName) {
+          const sectionByName = Array.from(document.querySelectorAll('section')).find(
+            section => section.textContent?.includes(sectionName)
+          ) as HTMLElement;
+          if (sectionByName) {
+            sectionByName.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+      
+      // Ensure the left sidebar is visible and expanded
+      const leftSidebar = document.querySelector('.bg-secondary-accent') || 
+                         document.querySelector('[data-panel-id="left"]') ||
+                         document.querySelector('.left-sidebar');
+      
+      if (leftSidebar) {
+        // Try to expand the left sidebar if it's collapsed
+        const collapseButton = document.querySelector('[id="collapse"]') as HTMLElement;
+        if (collapseButton) {
+          const leftSidebarContainer = leftSidebar.closest('.flex');
+          if (leftSidebarContainer && leftSidebarContainer.classList.contains('basis-12')) {
+            // Sidebar is collapsed, try to expand it
+            collapseButton.click();
+          }
+        }
+      }
+    }, 300);
+  };
+
   const getSectionIcon = (sectionName: string): string => {
     const icons: { [key: string]: string } = {
       'Summary': '📝',
@@ -37,10 +92,7 @@ const ImproveResume: React.FC = () => {
       'Languages': '🌎',
       'Profiles': '👤',
       'Projects': '🚀',
-      'Awards': '🏆',
       'Certifications': '📜',
-      'Publications': '📚',
-      'Volunteering': '🤝',
       'Interests': '🎨',
       'References': '📞'
     };
@@ -84,36 +136,13 @@ const ImproveResume: React.FC = () => {
         'Include technologies used',
         'Highlight your role and contributions'
       ],
-      'Awards': [
-        'Add dates and context',
-        'Include selection criteria',
-        'Highlight significance'
-      ],
+     
       'Certifications': [
         'Add expiration dates if applicable',
         'Include issuing organization',
         'Add relevant certifications'
       ],
-      'Publications': [
-        'Add publication dates',
-        'Include co-authors if any',
-        'Add citations or impact'
-      ],
-      'Volunteering': [
-        'Add duration and impact',
-        'Include responsibilities',
-        'Highlight transferable skills'
-      ],
-      'Interests': [
-        'Add relevance to career',
-        'Include unique interests',
-        'Show personality'
-      ],
-      'References': [
-        'Add professional titles',
-        'Include relationship context',
-        'Add contact information'
-      ]
+      
     };
     return recommendations[sectionName] || ['Add more details', 'Include relevant information', 'Highlight key achievements'];
   };
@@ -139,11 +168,11 @@ const ImproveResume: React.FC = () => {
     .filter(([key, section]) => {
       if (!section || typeof section !== 'object') return false;
       
-      // Only include specific sections
-      const allowedSections = ['summary', 'skills', 'experience', 'education', 'languages', 'profiles'];
-      return allowedSections.includes(key.toLowerCase());
+      // Include all main sections and custom sections
+      const allowedSections = ['summary', 'skills', 'experience', 'education', 'languages', 'profiles', 'projects', 'certifications', 'interests', 'references'];
+      return allowedSections.includes(key.toLowerCase()) || key.startsWith('custom.');
     })
-    .map(([_, section]) => {
+    .map(([key, section]) => {
       const sectionName = typeof section === 'object' && section !== null && 'name' in section 
         ? (typeof section.name === 'string' ? section.name : 'Untitled Section')
         : 'Untitled Section';
@@ -151,7 +180,8 @@ const ImproveResume: React.FC = () => {
         name: sectionName,
         score: calculateSectionScore(section),
         icon: getSectionIcon(sectionName),
-        recommendations: getSectionRecommendations(sectionName)
+        recommendations: getSectionRecommendations(sectionName),
+        sectionKey: key // Add the section key for navigation
       };
     });
 
@@ -161,12 +191,14 @@ const ImproveResume: React.FC = () => {
 
   if (!isOpen) {
     return (
-      <button 
-        className="improve-button"
-        onClick={() => setIsOpen(true)}
-      >
-        ✨ Improve Resume
-      </button>
+      <div className="floating-improve-button">
+        <button 
+          className="improve-button"
+          onClick={() => setIsOpen(true)}
+        >
+          ✨ Improve Resume
+        </button>
+      </div>
     );
   }
 
@@ -198,7 +230,13 @@ const ImproveResume: React.FC = () => {
           {/* Section Analysis */}
           <div className="sections-grid">
             {sectionScores.map((section) => (
-              <div key={section.name} className="section-card">
+              <div 
+                key={section.name} 
+                className="section-card"
+                onClick={() => navigateToSection(section.sectionKey)}
+                style={{ cursor: 'pointer' }}
+                title={`Click to navigate to ${section.name} section`}
+              >
                 <div className="section-header flex items-center gap-3">
                   <h3>
                     <span className="section-icon">{section.icon}</span>

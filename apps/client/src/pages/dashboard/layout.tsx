@@ -10,7 +10,7 @@ export const DashboardLayout = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <div className="sticky top-0 z-50 flex items-center justify-between p-4 pb-0 lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -41,9 +41,21 @@ export const DashboardLayout = () => {
         </div>
       </motion.div>
 
-      <main className="mx-6 my-4 lg:mx-8 lg:pt-[68px]">
+      <main className="flex-1 mx-6 my-4 lg:mx-8 lg:pt-[68px]">
         <Outlet />
       </main>
+
+      <footer className="w-full flex justify-center items-center py-4 border-t text-xs text-neutral-900">
+        <nav className="flex gap-4">
+          <a href="#" className="font-semibold hover:underline">TERMS AND CONDITIONS</a>
+          <span>|</span>
+          <a href="#" className="font-semibold hover:underline">PRIVACY POLICY</a>
+          <span>|</span>
+          <a href="#" className="font-semibold hover:underline">ACCESSIBILITY</a>
+          <span>|</span>
+          <a href="#" className="font-semibold hover:underline">CONTACT US</a>
+        </nav>
+      </footer>
     </div>
   );
 };

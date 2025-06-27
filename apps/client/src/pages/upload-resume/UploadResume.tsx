@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Upload, FileText, ArrowRight, ArrowLeft } from "@phosphor-icons/react";
 import { useDialog } from '@/client/stores/dialog';
 import { LimitReachedModal } from '../select-template/LimitReachedModal';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { axios } from '@/client/libs/axios';
 import { resumeData } from '../dashboard/resumes/constant';
 import { createResume } from '@/client/services/resume';
@@ -25,6 +25,9 @@ const UploadResume = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [newResume, setNewResume] = useState<any>(null);
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const isResumeChecker = searchParams.get("true") === "resume-checker"
+
 
   
 
@@ -74,7 +77,11 @@ const UploadResume = () => {
 
 const handleNextStep = () => {
   if(selectedStep === 4){
-    navigate(`/builder/${newResume.data.id}`)// void navigate(`/builder/${newResume.data.id}`))
+    if(isResumeChecker){
+      navigate(`/builder/${newResume.data.id}?improve=true`)
+    }else{
+      navigate(`/builder/${newResume.data.id}`)
+    }
   }else{
     setSelectedStep(prev => prev + 1);
   }
@@ -85,8 +92,9 @@ const handlePreviousStep = () => {
 }
 
 const selectedStepHeading: { [key: number]: string } = {
-  1: "upload_resume",
-  2: "choose_file",
+  0: isResumeChecker? "checker" : "upload_resume",
+  1: "choose_file",
+  2:"choose_file"
 }
 
 console.log(selectedFile,"selectedFile")
@@ -146,7 +154,7 @@ const uploadResume = () => {
 
       console.log(resumeData,"resumeData")
 
-      const newResume = await createResume({ slug: "New Cv", title: "new-cv", cv_template:3, visibility: "private", cv_data:resumeData });
+      const newResume = await createResume({ slug: "New Cv", title: res.data.data.personal_info.name, cv_template:3, visibility: "private", cv_data:resumeData });
       setNewResume(newResume)
       axios.get(`/accounts/api/users/`).then((res)=>{
         localStorage.setItem("user",JSON.stringify(res.data[0]))

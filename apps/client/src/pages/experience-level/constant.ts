@@ -24,6 +24,10 @@ export const BUILDER_HEADING = {
     "choose_file": {
         "main": "How do you want to upload your resume?",
         "para": ""
+    },
+    "checker":{
+        "main": "Upload your resume to get a detailed analysis and feedback",
+        "para": "We'll review your resume and provide you with a detailed analysis and feedback"
     }
 }   
 

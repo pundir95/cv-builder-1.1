@@ -66,6 +66,69 @@
   background: #e0e0e0;
 }
 
+.floating-improve-button {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+  z-index: 1000;
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+.floating-improve-button .improve-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.floating-improve-button .improve-button:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  animation: none;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .floating-improve-button {
+    top: 10px;
+    left: 10px;
+  }
+  
+  .floating-improve-button .improve-button {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
+
 .overall-score-card {
   background: linear-gradient(to right, #f8f9ff, #f0f4ff);
   padding: 20px;
@@ -119,13 +182,36 @@
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
 .section-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #1a73e8;
+}
+
+.section-card:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-card::after {
+  content: "Click to navigate →";
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 11px;
+  color: #1a73e8;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-weight: 500;
+}
+
+.section-card:hover::after {
+  opacity: 1;
 }
 
 .section-header {

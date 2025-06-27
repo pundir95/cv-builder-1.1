@@ -46,7 +46,7 @@ export const routes = createRoutesFromElements(
         <Route path="/" element={<HomePage />} />
       </Route>
 
-    <Route errorElement={<ErrorPage />}>
+    <Route errorElement={<ErrorPage/>}>
       
 
       <Route path="auth">

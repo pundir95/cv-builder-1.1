@@ -86,6 +86,8 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
 
     const data1 = resume;
 
+    console.log(data1,"data1")
+
      const resumeDto = {
         id: data1.id,
         title: data1?.title,

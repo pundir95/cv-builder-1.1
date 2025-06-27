@@ -98,6 +98,17 @@ export const ExperienceGuard = () => {
       <div className="pt-16">
         <Outlet />
       </div>
+      {/* <footer className="w-full flex justify-center items-center py-4 border-t text-xs text-neutral-900">
+        <nav className="flex gap-4">
+          <a href="#" className="font-semibold hover:underline">TERMS AND CONDITIONS</a>
+          <span>|</span>
+          <a href="#" className="font-semibold hover:underline">PRIVACY POLICY</a>
+          <span>|</span>
+          <a href="#" className="font-semibold hover:underline">ACCESSIBILITY</a>
+          <span>|</span>
+          <a href="#" className="font-semibold hover:underline">CONTACT US</a>
+        </nav>
+      </footer> */}
     </>
   );
 };
