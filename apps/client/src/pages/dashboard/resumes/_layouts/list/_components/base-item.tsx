@@ -39,7 +39,7 @@ export const BaseListItem = ({ title, description, created, strength, start, end
         )}
         
         {strength && (
-          <div className="hidden rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 sm:block">
+          <div className="hidden rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-500 sm:block">
             {strength}
           </div>
         )}

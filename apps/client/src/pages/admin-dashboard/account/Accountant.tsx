@@ -212,7 +212,7 @@ export const AccountSettings = () => {
                       Permanently delete your account and all associated data
                     </p>
                   </div>
-                  <Button>Delete Account</Button>
+                  <Button className="bg-red-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-800">Delete Account</Button>
                 </div>
               </div>
             </Card>

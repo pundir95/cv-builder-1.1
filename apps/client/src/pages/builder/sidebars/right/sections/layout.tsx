@@ -256,7 +256,7 @@ export const LayoutSection = () => {
           </Portal>
         </DndContext>
 
-        <Button variant="outline" className="ml-auto bg-[#0D84F3] text-white" onClick={onAddPage}>
+        <Button variant="outline" className="ml-auto h-auto hover:text-white bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800" onClick={onAddPage}>
           <Plus />
           <span className="ml-2 text-xs lg:text-sm ">{t`Add New Page`}</span>
         </Button>

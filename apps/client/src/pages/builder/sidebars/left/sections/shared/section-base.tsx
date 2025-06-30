@@ -116,7 +116,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description, ext
         {section.items.length === 0 && (
           <Button
             variant="outline"
-            className="gap-x-2  py-6 leading-relaxed bg-[#0D84F3] text-white hover:bg-[#0D66C2]"
+            className="bg-blue-500 text-white px-6 py-2 hover:textw-white h-auto rounded-full font-semibold hover:bg-blue-800"
             onClick={onCreate}
           >
             <Plus color="#ffffff" size={20} />
@@ -167,7 +167,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description, ext
         <footer className="flex items-center justify-end">
           <Button
             variant="outline"
-            className="ml-auto gap-x-2 text-xs lg:text-sm bg-[#0D84F3] text-white hover:bg-[#0D66C2] hover:text-white"
+            className="bg-blue-500 text-white px-6 py-2 h-auto hover:text-white rounded-full font-semibold hover:bg-blue-800"
             onClick={onCreate}
           >
             <Plus />

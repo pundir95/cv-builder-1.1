@@ -220,7 +220,7 @@ const AiModal = ({ hasWorkExperience = false, onClose, anchorRef, editorRef }: A
 
         <div style={{ display: 'flex', flexDirection: 'row', gap: 16, margin: '18px 0 14px 0', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'flex-start' }}>
           {/* <button className="ai-btn" style={{ minWidth: 150 }} onClick={() => { setShowAiWriter(true); setShowPreWritten(false); aiAction() }}>AI Writer</button> */}
-          <button className='text-black border border-blue-700 text-blue-700 text-base font-normal w-full text-center p-2 rounded-md text-[20px] bg-white relative z-3' onClick={() => { setShowPreWritten(true); setShowAiWriter(false); }}>Add pre-written phrases</button>
+          <button className='text-black border border-blue-500 text-blue-500 text-base font-normal w-full text-center p-2 rounded-md text-[20px] bg-white relative z-3' onClick={() => { setShowPreWritten(true); setShowAiWriter(false); }}>Add pre-written phrases</button>
         </div>
         {showAiWriter && (
           <div className="ai-section">

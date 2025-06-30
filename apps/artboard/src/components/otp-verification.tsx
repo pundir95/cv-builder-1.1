@@ -281,7 +281,7 @@ export const OTPVerificationModal = ({
                           onPaste={handlePaste}
                           className={`w-12 h-12 text-center text-lg font-semibold border-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
                             digit 
-                              ? 'border-blue-500 bg-blue-50 text-blue-700' 
+                              ? 'border-blue-500 bg-blue-50 text-blue-500' 
                               : 'border-gray-300 hover:border-gray-400 focus:border-blue-500'
                           }`}
                           autoComplete="one-time-code"
@@ -302,7 +302,7 @@ export const OTPVerificationModal = ({
                         type="button"
                         onClick={handleResendOTP}
                         disabled={isResending}
-                        className="text-blue-600 hover:text-blue-700 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="text-blue-600 hover:text-blue-500 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isResending ? (
                           <div className="flex items-center gap-2">
@@ -321,7 +321,7 @@ export const OTPVerificationModal = ({
                     <button
                       type="submit"
                       disabled={isSubmitting || otp.join('').length !== 6}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:from-blue-500 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <div className="flex items-center justify-center gap-2">

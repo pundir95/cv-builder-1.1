@@ -243,7 +243,7 @@ export const SectionDialog = <T extends SectionItem>({
               <DialogFooter className="pt-4 border-t border-gray-200 dark:border-gray-700">
                 <Button 
                   type="submit"
-                  className="min-w-[100px] bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
+                  className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800"
                 >
                   {isCreate && t`Create`}
                   {isUpdate && t`Save Changes`}

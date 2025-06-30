@@ -93,7 +93,7 @@ const FilterPanel = ({ setHoveredColor, setSelectedFilter, onChange }: { setHove
 
         <div className="mt-6 text-center">
           <button
-            className="text-blue-500 hover:text-blue-700 font-medium transition-colors px-4 py-2 rounded-lg hover:bg-blue-50 flex items-center gap-2 mx-auto"
+            className="text-blue-500 hover:text-blue-500 font-medium transition-colors px-4 py-2 rounded-lg hover:bg-blue-50 flex items-center gap-2 mx-auto"
             onClick={() => {
               setSelectedFilter({
                 withPhoto: false,

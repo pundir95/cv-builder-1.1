@@ -68,7 +68,7 @@ export const SocialAuth = () => {
       <Button 
         onClick={handleLinkedInLogin}
         size="lg" 
-        className="w-full py-6 text-base font-semibold !bg-[#0077B5] !text-white hover:!bg-[#0077B5]/90 transition-all duration-200"
+        className="w-full py-6 text-base font-semibold !bg-[#0077B5] !text-white hover:!bg-[#0077B5]/90 transition-all duration-200 rounded-full"
       >
         <LinkedinLogo className="mr-3 size-5" weight="fill" />
         LinkedIn
@@ -78,7 +78,7 @@ export const SocialAuth = () => {
       <Button 
         onClick={() => login()}
         size="lg" 
-        className="w-full py-6 text-base font-semibold !bg-white !text-gray-700 hover:!bg-gray-50 transition-all duration-200 border border-gray-200"
+        className="w-full py-6 text-base font-semibold !bg-white !text-gray-700 hover:!bg-gray-50 transition-all duration-200 border border-gray-200 rounded-full"
       >
         <GoogleLogo className="mr-3 size-5" weight="fill" />
         Google

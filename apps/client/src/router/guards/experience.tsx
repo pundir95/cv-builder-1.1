@@ -95,10 +95,10 @@ export const ExperienceGuard = () => {
   return (
     <>
       <ExperienceHeader />
-      <div className="pt-16">
+      <div className="pt-16 flex-1">
         <Outlet />
       </div>
-      {/* <footer className="w-full flex justify-center items-center py-4 border-t text-xs text-neutral-900">
+      <footer className="w-full flex justify-center items-center py-4 border-t text-xs text-neutral-900">
         <nav className="flex gap-4">
           <a href="#" className="font-semibold hover:underline">TERMS AND CONDITIONS</a>
           <span>|</span>
@@ -108,7 +108,7 @@ export const ExperienceGuard = () => {
           <span>|</span>
           <a href="#" className="font-semibold hover:underline">CONTACT US</a>
         </nav>
-      </footer> */}
+      </footer>
     </>
   );
 };

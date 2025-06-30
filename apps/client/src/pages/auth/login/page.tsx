@@ -168,12 +168,12 @@ export const LoginPage = () => {
                   )}
                 />
 
-                <Button type="submit" disabled={loading} className="w-full py-6 text-base font-semibold" loading={loading}>
+                <Button type="submit" disabled={loading} className="text-white px-6 py-6 rounded-full font-semibold" loading={loading}>
                   Log in
                 </Button>
 
                 <div className="mt-4 flex items-center gap-x-4">
-                  <Button type="button" disabled={loading} className="flex-1 py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
+                  <Button type="button" disabled={loading} className="rounded-full flex-1 py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
                     Do it Later
                   </Button>
 

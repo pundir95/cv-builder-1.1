@@ -101,14 +101,14 @@ const CustomerOrganisation = () => {
           {data?.map((resume: any, idx: any) => (
             <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-100 transition">
               <td className="py-3 px-4 font-medium">{idx + 1}</td>
-              <td className="py-3 px-4 text-blue-700 font-semibold hover:underline cursor-pointer">{resume?.cv?.title}</td>
+              <td className="py-3 px-4 text-blue-500 font-semibold hover:underline cursor-pointer">{resume?.cv?.title}</td>
              {activeTab === 'sharedByMe' && <td className="py-3 px-4">{`(${resume?.shared_user?.first_name})`} {resume?.shared_user?.email}</td>}
              {activeTab === 'sharedWithMe' && <td className="py-3 px-4">{`(${resume?.user?.first_name})`} {resume?.user?.email}</td>}
               <td className="py-3 px-4 flex gap-3 items-center">
-                <button className="text-blue-500 hover:text-blue-700" onClick={() => {
+                <button className="text-blue-500 hover:text-blue-500" onClick={() => {
                   navigate(`/builder/shared/${resume?.id}?sahredcv=true`)
                 }}><span role="img" aria-label="edit">✏️</span> Edit</button>
-               {activeTab === 'sharedByMe'?  <button className="text-blue-500 hover:text-blue-700" onClick={() => deleteSharedCv(resume?.id,"isSharedByMe")}><span role="img" aria-label="delete">🗑️</span>Delete</button>:""}
+               {activeTab === 'sharedByMe'?  <button className="text-blue-500 hover:text-blue-500" onClick={() => deleteSharedCv(resume?.id,"isSharedByMe")}><span role="img" aria-label="delete">🗑️</span>Delete</button>:""}
               </td>
             </tr>
           ))}
@@ -137,7 +137,7 @@ const CustomerOrganisation = () => {
           {data?.map((resume: any, idx: any) => (
             <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-100 transition">
               <td className="py-3 px-4 font-medium">{idx + 1}</td>
-              <td className="py-3 px-4 text-blue-700 font-semibold hover:underline cursor-pointer">
+              <td className="py-3 px-4 text-blue-500 font-semibold hover:underline cursor-pointer">
                 {resume?.cv?.title}
               </td>
               <td className="py-3 px-4 font-mono text-sm text-gray-600">
@@ -177,7 +177,7 @@ const CustomerOrganisation = () => {
                   <div className="flex items-center gap-2">
                     {resume?.expiry_day} days
                     <button
-                      className="text-blue-500 hover:text-blue-700"
+                      className="text-blue-500 hover:text-blue-500"
                       onClick={() => {
                         setEditingExpiryId(resume?.cv);
                         setNewExpiry(resume?.expiry_day);
@@ -191,7 +191,7 @@ const CustomerOrganisation = () => {
               </td>
               <td className="py-3 px-4">
                 <button 
-                  className="text-blue-500 hover:text-blue-700 font-medium underline"
+                  className="text-blue-500 hover:text-blue-500 font-medium underline"
                   onClick={() => {
                     setSelectedResume(resume.edit_users);
                     setShowEditModal(true);
@@ -202,7 +202,7 @@ const CustomerOrganisation = () => {
               </td>
               <td className="py-3 px-4 flex gap-3 items-center">
                 <button 
-                  className="text-blue-500 hover:text-blue-700 font-medium" 
+                  className="text-blue-500 hover:text-blue-500 font-medium" 
                   onClick={() => {
                     navigate(`/builder/${resume?.cv}`)
                   }}
@@ -210,7 +210,7 @@ const CustomerOrganisation = () => {
                   <span role="img" aria-label="edit">✏️</span> View CV
                 </button>
                 <button 
-                  className="text-blue-500 hover:text-blue-700 font-medium underline"
+                  className="text-blue-500 hover:text-blue-500 font-medium underline"
                   onClick={() => {
                     deleteSharedCv(resume?.cv,"isAnyone")
                   }}
@@ -230,7 +230,7 @@ const CustomerOrganisation = () => {
       <div className="p-8 bg-gray-50 min-h-screen">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Shared CVs</h2>
-          <button className="bg-lime-300 hover:bg-lime-400 text-black font-semibold py-2 px-6 rounded-full shadow">
+          <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800">
             Create New Resume
           </button>
         </div>

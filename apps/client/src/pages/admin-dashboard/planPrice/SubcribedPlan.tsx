@@ -34,18 +34,18 @@ const statusBadge = (status: string) => {
   return <span className="bg-red-200 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">Inactive</span>;
 };
 
-const SubcribedPlan: React.FC<{data: any,setSubscribed:any}> = ({data,setSubscribed}) => {
-  const [subscriptionHistory,setSubscriptionHistory]=useState([])
+const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setSubscribed }) => {
+  const [subscriptionHistory, setSubscriptionHistory] = useState([])
   const [activeTab, setActiveTab] = useState<'history' | 'method' | 'overview'>('history');
-  const {plan_details:{name,price,validity,fetures},end_date}=data[0]
+  const { plan_details: { name, price, validity, fetures }, end_date } = data[0]
 
-  useEffect(()=>{
-    axios.get(`/subscription/subscription-history/`).then((res)=>{
+  useEffect(() => {
+    axios.get(`/subscription/subscription-history/`).then((res) => {
       setSubscriptionHistory(res?.data)
     })
-  },[])
+  }, [])
 
-  console.log(subscriptionHistory,"subscriptionHistory")
+  console.log(subscriptionHistory, "subscriptionHistory")
 
 
 
@@ -59,12 +59,12 @@ const SubcribedPlan: React.FC<{data: any,setSubscribed:any}> = ({data,setSubscri
           <h2 className="text-2xl font-bold">{name}</h2>
           <div className="text-right">
             <span className="text-3xl font-bold">${price}</span>
-            <div className="text-base font-medium">{validity=="month"?"Monthly":"Yearly"}</div>
+            <div className="text-base font-medium">{validity == "month" ? "Monthly" : "Yearly"}</div>
           </div>
         </div>
-        <div className="text-sm mb-4">Expire Date: {end_date?new Date(end_date).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):""}</div>
+        <div className="text-sm mb-4">Expire Date: {end_date ? new Date(end_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</div>
         <div className="space-y-2 mb-4">
-          {fetures?.map((f:any) => (
+          {fetures?.map((f: any) => (
             <div key={f} className="flex justify-between">
               <span>{f}</span>
               {/* <span className="font-bold">{f.value}</span> */}
@@ -79,19 +79,19 @@ const SubcribedPlan: React.FC<{data: any,setSubscribed:any}> = ({data,setSubscri
       <div className="bg-white rounded-xl shadow p-6">
         <div className="flex space-x-6 mb-4">
           <button
-            className={`px-4 py-2 rounded-full font-semibold focus:outline-none ${activeTab === 'history' ? 'bg-indigo-200 text-indigo-700' : 'text-gray-500'}`}
+            className={`px-4 py-2 rounded-full font-semibold focus:outline-none ${activeTab === 'history' ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}
             onClick={() => setActiveTab('history')}
           >
             Payment History
           </button>
           <button
-            className={`px-4 py-2 rounded-full font-semibold focus:outline-none ${activeTab === 'method' ? 'bg-indigo-200 text-indigo-700' : 'text-gray-500'}`}
+            className={`px-4 py-2 rounded-full font-semibold focus:outline-none ${activeTab === 'method' ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}
             onClick={() => setActiveTab('method')}
           >
             Payment Method
           </button>
           <button
-            className={`px-4 py-2 rounded-full font-semibold focus:outline-none ${activeTab === 'overview' ? 'bg-indigo-200 text-indigo-700' : 'text-gray-500'}`}
+            className={`px-4 py-2 rounded-full font-semibold focus:outline-none ${activeTab === 'overview' ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}
             onClick={() => setActiveTab('overview')}
           >
             Overview
@@ -100,34 +100,34 @@ const SubcribedPlan: React.FC<{data: any,setSubscribed:any}> = ({data,setSubscri
 
         {/* Tab Content */}
         {activeTab === 'history' && (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg border border-secondary/20">
             <table className="min-w-full text-sm">
               <thead>
-                <tr className="text-left text-gray-600 border-b">
-                  <th className="py-2 px-2">S.No</th>
-                  <th className="py-2 px-2">Subscription Plan</th>
-                  <th className="py-2 px-2">Start Date</th>
-                  <th className="py-2 px-2">Expire Date</th>
-                  <th className="py-2 px-2">Amount</th>
-                  <th className="py-2 px-2">Status</th>
-                  <th className="py-2 px-2">Download</th>
+                <tr className="border-b bg-blue-500 hover:bg-blue-600 text-white">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">S.No</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Subscription Plan</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Start Date</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Expire Date</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Amount</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Status</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-white">Download</th>
                 </tr>
               </thead>
               <tbody>
-                {subscriptionHistory?.length > 0 && subscriptionHistory?.map((item:any,index:number) => (
+                {subscriptionHistory?.length > 0 && subscriptionHistory?.map((item: any, index: number) => (
                   <tr key={item.id} className="border-b last:border-b-0">
-                    <td className="py-2 px-2">{index+1}</td>
-                    <td className="py-2 px-2">{item?.new_plan?.name}</td>
-                    <td className="py-2 px-2">{item.billing_period_start?new Date(item.billing_period_start).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):""}</td>
-                    <td className="py-2 px-2">{item.billing_period_end?new Date(item.billing_period_end).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):""}</td>
-                    <td className="py-2 px-2">{item.new_plan.price}</td>
-                    <td className="py-2 px-2">{statusBadge(item.payment_status)}</td>
-                    <td className="py-2 px-2">
+                    <td className="px-6 py-4 align-middle">{index + 1}</td>
+                    <td className="px-6 py-4 align-middle">{item?.new_plan?.name}</td>
+                    <td className="px-6 py-4 align-middle">{item.billing_period_start ? new Date(item.billing_period_start).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</td>
+                    <td className="px-6 py-4 align-middle">{item.billing_period_end ? new Date(item.billing_period_end).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</td>
+                    <td className="px-6 py-4 align-middle">{item.new_plan.price}</td>
+                    <td className="px-6 py-4 align-middle">{statusBadge(item.payment_status)}</td>
+                    <td className="px-6 py-4 align-middle">
                       {item.invoice_pdf_url ? (
                         <a href={item.invoiceLink} className="text-indigo-600 underline flex items-center gap-1 cursor-pointer">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 4h6a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                           {/* {item.invoice_pdf_url} */}
-                          <p onClick={()=>window.open(item.invoice_pdf_url,"_blank")}>Invoice</p>
+                          <p onClick={() => window.open(item.invoice_pdf_url, "_blank")}>Invoice</p>
                         </a>
                       ) : null}
                     </td>
@@ -142,7 +142,7 @@ const SubcribedPlan: React.FC<{data: any,setSubscribed:any}> = ({data,setSubscri
           <div className="w-full">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Payment Methods</h2>
-              <button className="bg-indigo-500 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">Add Payment Method</button>
+              <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800">Add Payment Method</button>
             </div>
             <div className="max-w-md bg-blue-50 border border-blue-300 rounded-xl p-6 mb-4 flex flex-col gap-2 shadow-sm">
               <div className="flex items-center justify-between mb-2">
@@ -167,30 +167,34 @@ const SubcribedPlan: React.FC<{data: any,setSubscribed:any}> = ({data,setSubscri
         )}
 
         {activeTab === 'overview' && (
-          <div className="bg-white rounded-xl p-6 max-w-2xl mx-auto">
+          <div className="bg-white rounded-xl flex gap-3 p-6 mx-auto w-full">
             {/* Plan Details */}
-            <h2 className="text-2xl font-bold mb-2">Plan Details</h2>
-            <p className="mb-4">Your plan's validity will expire in <span className="font-bold">{end_date?new Date(end_date).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):""}.</span></p>
-            <div className="border-l-4 border-gray-200 pl-4 mb-8">
-              <p className="mb-4">You are using <span className="font-bold">{name}</span>, billed <span className="font-bold">{validity=="month"?"Monthly":"Yearly"}</span> for <span className="font-bold">${price}</span>.</p>
-              <div className="flex items-center gap-4 mb-4 flex-wrap">
-                <span>Do you want to update subscription?</span>
-                <button className="bg-indigo-500 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition" onClick={()=>{
-                  setSubscribed(true)
-                }}>Update</button>
-              </div>
-              <div className="flex items-center gap-4 flex-wrap">
-                <span>Do you want to cancel the subscription?</span>
-                <button className="border border-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
+            <div className='w-1/2'>
+              <h2 className="text-2xl font-bold mb-2">Plan Details</h2>
+              <p className="mb-4">Your plan's validity will expire in <span className="font-bold">{end_date ? new Date(end_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}.</span></p>
+              <div className="border-l-4 border-gray-200 pl-4 mb-8">
+                <p className="mb-4">You are using <span className="font-bold">{name}</span>, billed <span className="font-bold">{validity == "month" ? "Monthly" : "Yearly"}</span> for <span className="font-bold">${price}</span>.</p>
+                <div className="flex items-center gap-4 mb-4 flex-wrap">
+                  <span>Do you want to update subscription?</span>
+                  <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800" onClick={() => {
+                    setSubscribed(true)
+                  }}>Update</button>
+                </div>
+                <div className="flex items-center gap-4 flex-wrap">
+                  <span>Do you want to cancel the subscription?</span>
+                  <button className="border border-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</button>
+                </div>
               </div>
             </div>
 
             {/* Account Status */}
-            <h2 className="text-2xl font-bold mb-2">Account Status</h2>
-            <div className="border-l-4 border-gray-200 pl-4">
-              <p className="mb-2">You have remaining add-on user limit is <span className="font-bold">5</span>.</p>
-              <p className="mb-2">Click on Add-on User to pay for adding a user</p>
-              <a href="#" className="text-indigo-600 font-medium hover:underline">Add-On User</a>
+            <div className='w-1/2'>
+              <h2 className="text-2xl font-bold mb-2">Account Status</h2>
+              <div className="border-l-4 border-gray-200 pl-4">
+                <p className="mb-2">You have remaining add-on user limit is <span className="font-bold">5</span>.</p>
+                <p className="mb-2">Click on Add-on User to pay for adding a user</p>
+                <a href="#" className="text-indigo-600 font-medium hover:underline">Add-On User</a>
+              </div>
             </div>
           </div>
         )}

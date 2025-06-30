@@ -23,7 +23,7 @@ export default function UploadContainer({ handleFileInput, selectedFile }: { han
             Selected: {selectedFile.name}
           </p>
         )}
-          {/* <button className="bg-blue-700 text-white rounded-full px-8 py-3 text-lg font-semibold hover:bg-blue-800 transition-colors duration-200">
+          {/* <button className="bg-blue-500 text-white rounded-full px-8 py-3 text-lg font-semibold hover:bg-blue-800 transition-colors duration-200">
             Browse
           </button> */}
         </div>
@@ -32,11 +32,11 @@ export default function UploadContainer({ handleFileInput, selectedFile }: { han
           <div className="w-12 h-0.5 bg-gray-200"></div>
         </div>
         <div className="flex flex-col gap-4">
-          <button className="flex items-center gap-3 border-2 border-blue-600 text-blue-700 rounded-full px-8 py-3 font-semibold bg-white hover:bg-blue-600 hover:text-white transition-colors duration-200 w-64">
+          <button className="flex items-center gap-3 border-2 border-blue-600 text-blue-500 rounded-full px-8 py-3 font-semibold bg-white hover:bg-blue-600 hover:text-white transition-colors duration-200 w-64">
             <CloudArrowUp className="text-xl" />
             Google Drive
           </button>
-          <button className="flex items-center gap-3 border-2 border-blue-600 text-blue-700 rounded-full px-8 py-3 font-semibold bg-white hover:bg-blue-600 hover:text-white transition-colors duration-200 w-64">
+          <button className="flex items-center gap-3 border-2 border-blue-600 text-blue-500 rounded-full px-8 py-3 font-semibold bg-white hover:bg-blue-600 hover:text-white transition-colors duration-200 w-64">
             <CloudArrowUp className="text-xl" />
             Dropbox
           </button>

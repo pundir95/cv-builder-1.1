@@ -25,7 +25,7 @@ export const UserDashboardPage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
       <Helmet prioritizeSeoTags>
         <html lang={i18n.locale} />
         <title>{t`Dashboard`} - Resume</title>
@@ -80,10 +80,10 @@ export const UserDashboardPage = () => {
             <a href="#" className="text-blue-600 text-sm ml-2 hover:underline">Improve</a>
           </div>
           {/* Create New Resume */}
-          <Button className="w-full mt-6 flex items-center gap-2 bg-blue-100 text-blue-700 hover:bg-blue-200" 
+          <Button  size="sm" variant="success" className="text-white px-6 h-auto !py-2 rounded-full font-semibold mt-4"
           onClick={() => navigate("/onboard/experience-level")}
           >
-            <Plus size={18} /> Create New Resume
+            <Plus size={18} className="mr-2" /> Create New Resume
           </Button>
         </aside>
 
@@ -93,8 +93,8 @@ export const UserDashboardPage = () => {
           {/* Resume Strength & Fix Resume */}
           <div className="bg-blue-50 rounded-xl p-6 flex items-center mb-8">
             <div className="bg-white rounded-lg shadow p-6 mr-8 flex flex-col items-center min-w-[220px]">
-              <span className="text-blue-700 font-bold text-lg mb-2">Resume Strength</span>
-              <span className="bg-blue-100 text-blue-700 rounded-full px-4 py-2 text-xl font-bold mb-2">{selectedResume?.cv_data?.metadata?.template?.progress || 0}</span>
+              <span className="text-blue-500 font-bold text-lg mb-2">Resume Strength</span>
+              <span className="bg-blue-100 text-blue-500 rounded-full px-4 py-2 text-xl font-bold mb-2">{selectedResume?.cv_data?.metadata?.template?.progress || 0}</span>
               <ul className="text-left text-sm text-gray-700 space-y-1">
                 {selectedResume?.cv_data?.sections?.education?.items?.length === 0 && (
                   <li className="flex items-center gap-2">
@@ -140,7 +140,7 @@ export const UserDashboardPage = () => {
                 We found missing sections in your resume.<br />
                 Use our Resume Check tool to complete them.
               </p>
-              <Button className="bg-blue-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800"
+              <Button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800"
               onClick={() => navigate(`/builder/${selectedResume?.id}?improve=true`)}
               >
                 Improve Resume

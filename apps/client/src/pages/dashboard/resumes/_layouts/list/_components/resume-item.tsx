@@ -295,21 +295,21 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
         </td>
         <td className="px-6 py-4 align-middle text-gray-700">{createdAt}</td>
         <td className="px-6 py-4 align-middle text-right">
-          <span className="inline-block rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700">
+          <span className="inline-block rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-500">
             {strength}
           </span>
         </td>
         <td className="px-6 py-4 align-middle text-right">
           <div className="flex justify-end gap-2">
-            <Button size="sm" variant="primary" onClick={onOpen} title="Edit">
+            <Button size="sm" variant="primary" className="text-white px-4 py-2 rounded-full" onClick={onOpen} title="Edit">
               <PencilSimple size={16} />
               <span className="ml-1 hidden sm:inline">Edit</span>
             </Button>
-            <Button size="sm" variant="success"  title="Check" onClick={onCheck}>
+            <Button size="sm" variant="success" className="text-white px-4 py-2 rounded-full"  title="Check" onClick={onCheck}>
               <CheckCircle size={16} />
               <span className="ml-1 hidden sm:inline" id="check">Improve Resume</span>
             </Button>
-            <Button size="sm" variant="secondary" className="bg-blue-500 text-white" onClick={onPdfExport} title="Download">
+            <Button size="sm" className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-800" onClick={onPdfExport} title="Download">
               <Download size={16} />
               <span className="ml-1 hidden sm:inline">Download</span>
             </Button>
