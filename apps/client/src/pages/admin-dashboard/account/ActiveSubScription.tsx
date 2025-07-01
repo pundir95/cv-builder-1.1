@@ -97,7 +97,7 @@ export const ActiveSubscription = ({ activeSection }: ActiveSubscriptionProps) =
 
             <Button 
               onClick={() => navigate('/dashboard/plan-pricing')}
-              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold text-lg hover:from-blue-600 hover:to-blue-500 transition-all shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
+              className="bg-[#D6EF3C]/90 text-black px-8 p-5 rounded-full font-semibold text-lg hover:bg-[#D6EF3C]/90 transition-all shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.5)]"
             >
               Manage Subscription
             </Button>

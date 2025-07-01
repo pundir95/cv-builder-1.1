@@ -1,10 +1,11 @@
 import { t } from "@lingui/macro";
-import { ChartLine, ChartLineDown, CheckCircle, FadersHorizontal, Money, ReadCvLogo, UserCircle } from "@phosphor-icons/react";
+import { ChartLine, ChartLineDown, CheckCircle, FadersHorizontal, Money, ReadCvLogo, UserCircle, X } from "@phosphor-icons/react";
 import { Button, KeyboardShortcut, Separator } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router";
 import useKeyboardShortcut from "use-keyboard-shortcut";
+import React, { useState } from "react";
 
 import { Copyright } from "@/client/components/copyright";
 import { Icon } from "@/client/components/icon";
@@ -69,15 +70,18 @@ type SidebarProps = {
 export const Sidebar = ({ setOpen }: SidebarProps) => {
   const { user } = useUser();
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useKeyboardShortcut(["shift", "r"], () => {
     void navigate("/dashboard/resumes");
     setOpen?.(false);
+    setMobileOpen(false);
   });
 
   useKeyboardShortcut(["shift", "s"], () => {
     void navigate("/dashboard/settings");
     setOpen?.(false);
+    setMobileOpen(false);
   });
 
   const sidebarItems: SidebarItem[] = [
@@ -121,36 +125,65 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
   ];
 
   return (
-    <div className="flex h-full gap-y-4 bg-blue-500 p-3">
-      <div className="ml-12 flex justify-center lg:ml-0">
-        <Button asChild size="icon" variant="ghost" className="size-10 p-0">
-          <Link to="/">
-            {/* <Icon size={24} className="mx-auto hidden lg:block" /> */}
-            
-          </Link>
-        </Button>
-      </div>
+    <>
+      {/* Hamburger button for mobile */}
+      <button
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded bg-blue-600 text-white shadow-md"
+        onClick={() => setMobileOpen((open) => !open)}
+        aria-label="Open sidebar"
+      >
+        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+      </button>
 
-      {/* <Separator className="opacity-50" /> */}
+      {/* Sidebar overlay for mobile */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity lg:hidden",
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setMobileOpen(false)}
+      />
 
-      <div className="flex gap-x-2 w-full justify-center">
-        {sidebarItems.map((item) => (
-          <SidebarItem {...item} key={item.path} onClick={() => setOpen?.(false)} />
-        ))}
-      </div>
+      {/* Sidebar itself */}
+      <nav
+        className={cn(
+          "fixed top-0 left-0 z-50 h-full w-64 bg-blue-500 p-3 flex flex-col gap-y-4 transition-transform duration-300 lg:static lg:w-auto lg:h-full lg:flex-row lg:items-center lg:bg-blue-500 lg:p-3 lg:gap-y-4",
+          mobileOpen ? "translate-x-0" : "-translate-x-full",
+          "lg:translate-x-0"
+        )}
+        style={{ minWidth: "200px" }}
+      >
+        {/* Close button for mobile sidebar */}
+        <button
+          className="absolute top-4 right-4 z-50 p-2 rounded bg-blue-600 text-white shadow-md lg:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-label="Close sidebar"
+        >
+          <X size={24} />
+        </button>
+        <div className="ml-4 flex justify-center lg:ml-0">
+          <Button asChild size="icon" variant="ghost" className="size-10 p-0">
+            <Link to="/">
+              {/* <Icon size={24} className="mx-auto hidden lg:block" /> */}
+            </Link>
+          </Button>
+        </div>
 
-      {/* <div className="flex-1" /> */}
+        <div className="flex flex-col gap-y-2 w-full justify-center lg:flex-row lg:gap-x-2 lg:gap-y-0">
+          {sidebarItems.map((item) => (
+            <SidebarItem {...item} key={item.path} onClick={() => { setOpen?.(false); setMobileOpen(false); }} />
+          ))}
+        </div>
 
-      {/* <Separator className="opacity-50" /> */}
+        <UserOptions>
+          <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
+            <UserAvatar size={24} className="mr-3" />
+            <span>{user?.name}</span>
+          </Button>
+        </UserOptions>
 
-      <UserOptions>
-        <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
-          <UserAvatar size={24} className="mr-3" />
-          <span>{user?.name}</span>
-        </Button>
-      </UserOptions>
-
-      <Copyright className="ml-2" />
-    </div>
+        <Copyright className="ml-2" />
+      </nav>
+    </>
   );
 };

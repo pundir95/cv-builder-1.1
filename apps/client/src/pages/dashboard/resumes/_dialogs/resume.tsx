@@ -191,22 +191,46 @@ console.log(payload,"payload")
   if (isDelete) {
     return (
       <AlertDialog open={isOpen} onOpenChange={close}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[95vw] max-w-lg mx-auto rounded-xl shadow-2xl border-0 bg-white dark:bg-gray-900 p-0 overflow-hidden">
           <Form {...form}>
             <form>
-              <AlertDialogHeader>
-                <AlertDialogTitle>{t`Are you sure you want to delete your resume?`}</AlertDialogTitle>
-                <AlertDialogDescription>
-                  {t`This action cannot be undone. This will permanently delete your resume and cannot be recovered.`}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 px-6 py-6 border-b border-gray-200 dark:border-gray-700">
+                <AlertDialogHeader className="space-y-3">
+                  <AlertDialogTitle className="text-xl font-bold text-gray-900 dark:text-white flex items-center space-x-3">
+                    <div className="p-2.5 bg-red-100 dark:bg-red-900/40 rounded-xl">
+                      <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                      </svg>
+                    </div>
+                    {t`Are you sure you want to delete your resume?`}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                    {t`This action cannot be undone. This will permanently delete your resume and cannot be recovered.`}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+              </div>
 
-              <AlertDialogFooter>
-                <AlertDialogCancel>{t`Cancel`}</AlertDialogCancel>
-                <AlertDialogAction variant="error" onClick={deleteResumeData}>
-                  {t`Delete`}
-                </AlertDialogAction>
-              </AlertDialogFooter>
+              <div className="bg-gray-50 dark:bg-gray-800/50 px-6 py-4">
+                <AlertDialogFooter className="flex-col sm:flex-row gap-3">
+                  <AlertDialogCancel className="w-full sm:w-auto h-12 px-6 rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200">
+                    {t`Cancel`}
+                  </AlertDialogCancel>
+                  <AlertDialogAction 
+                    variant="error" 
+                    onClick={deleteResumeData}
+                    className="w-full sm:w-auto h-12 px-8 rounded-lg font-semibold bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                  >
+                    {deleteLoading ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                        <span>{t`Deleting...`}</span>
+                      </div>
+                    ) : (
+                      t`Delete Resume`
+                    )}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </div>
             </form>
           </Form>
         </AlertDialogContent>
@@ -215,103 +239,135 @@ console.log(payload,"payload")
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={close}>
-      <DialogContent>
+    <Dialog open={isOpen}  onOpenChange={close}>
+      <DialogContent className="w-[95vw] max-w-2xl mx-auto rounded-xl shadow-2xl border-0 bg-white dark:bg-gray-900 p-0 overflow-hidden">
         <Form {...form}>
-          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-            <DialogHeader>
-              <DialogTitle>
-                <div className="flex items-center space-x-2.5">
-                  <Plus />
-                  <h2>
-                    {isCreate && t`Create a new resume`}
-                    {isUpdate && t`Update an existing resume`}
-                    {isDuplicate && t`Duplicate an existing resume`}
-                  </h2>
-                </div>
-              </DialogTitle>
-              <DialogDescription>
-                {isCreate && t`Start building your resume by giving it a name.`}
-                {isUpdate && t`Changed your mind about the name? Give it a new one.`}
-                {isDuplicate && t`Give your old resume a new name.`}
-              </DialogDescription>
-            </DialogHeader>
-
-            <FormField
-              name="title"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t`Title`}</FormLabel>
-                  <FormControl>
-                    <div className="flex items-center justify-between gap-x-2">
-                      <Input {...field} className="flex-1" />
-
-                      {(isCreate || isDuplicate) && (
-                        <Tooltip content={t`Generate a random title for your resume`}>
-                          <Button
-                            size="icon"
-                            type="button"
-                            variant="outline"
-                            onClick={onGenerateRandomName}
-                          >
-                            <MagicWand />
-                          </Button>
-                        </Tooltip>
-                      )}
+          <form className="space-y-0" onSubmit={form.handleSubmit(onSubmit)}>
+            {/* Header Section */}
+            <div className="bg-[#0D84F3] text-white px-6 py-6 border-b border-gray-200 dark:border-gray-700">
+              <DialogHeader className="space-y-2">
+                <DialogTitle>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2.5 bg-blue-100 dark:bg-blue-900/40 rounded-xl">
+                      <Plus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
-                  </FormControl>
-                  <FormDescription>
-                    {t`Tip: You can name the resume referring to the position you are applying for.`}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <h2 className="text-xl font-bold text-white">
+                      {isCreate && t`Create a new resume`}
+                      {isUpdate && t`Update an existing resume`}
+                      {isDuplicate && t`Duplicate an existing resume`}
+                    </h2>
+                  </div>
+                </DialogTitle>
+                <DialogDescription className="text-white text-base leading-relaxed">
+                  {isCreate && t`Start building your resume by giving it a name.`}
+                  {isUpdate && t`Changed your mind about the name? Give it a new one.`}
+                  {isDuplicate && t`Give your old resume a new name.`}
+                </DialogDescription>
+              </DialogHeader>
+            </div>
 
-            <FormField
-              name="slug"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t`Slug`}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* Content Section */}
+            <div className="px-6 py-6 space-y-6">
+              <FormField
+                name="title"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                      {t`Title`}
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center justify-between gap-x-3">
+                        <Input 
+                          {...field} 
+                          className="flex-1 h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+                          placeholder="Enter resume title..."
+                        />
 
-            <DialogFooter>
-              <div className="flex items-center">
+                        {(isCreate || isDuplicate) && (
+                          <Tooltip content={t`Generate a random title for your resume`}>
+                            <Button
+                              size="icon"
+                              type="button"
+                              variant="outline"
+                              onClick={onGenerateRandomName}
+                              className="h-12 w-12 rounded-lg border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+                            >
+                              <MagicWand className="w-5 h-5" />
+                            </Button>
+                          </Tooltip>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormDescription className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                      {t`Tip: You can name the resume referring to the position you are applying for.`}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                name="slug"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                      {t`Slug`}
+                    </FormLabel>
+                    <FormControl>
+                      <Input 
+                        {...field} 
+                        className="h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="resume-slug"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Footer Section */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+              <DialogFooter className="flex-col sm:flex-row gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={close}
+                  className="w-full sm:w-auto h-12 px-6 rounded-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                >
+                  {t`Cancel`}
+                </Button>
                 <Button
                   type="submit"
                   disabled={loading}
-                  className={cn(isCreate && "rounded-r-none")}
+                  className={cn(
+                    "w-full sm:w-auto h-12 px-8 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl",
+                    isCreate 
+                      ? "bg-[#D6EF3C] rounded-full text-black hover:bg-[#D6EF3C]/90  hover:scale-105" 
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                  )}
                 >
-                  {isCreate && t`Create`}
-                  {isUpdate && t`Save Changes`}
-                  {isDuplicate && t`Duplicate`}
+                  {loading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                      <span>
+                        {isCreate && t`Creating...`}
+                        {isUpdate && t`Saving...`}
+                        {isDuplicate && t`Duplicating...`}
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      {isCreate && t`Create Resume`}
+                      {isUpdate && t`Save Changes`}
+                      {isDuplicate && t`Duplicate Resume`}
+                    </>
+                  )}
                 </Button>
-
-                {isCreate && (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button type="button" size="icon" className="rounded-l-none border-l">
-                        <CaretDown />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent side="right" align="center">
-                      <DropdownMenuItem onClick={onCreateSample}>
-                        <Flask className="mr-2" />
-                        {t`Create Sample Resume`}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
-              </div>
-            </DialogFooter>
+              </DialogFooter>
+            </div>
           </form>
         </Form>
       </DialogContent>

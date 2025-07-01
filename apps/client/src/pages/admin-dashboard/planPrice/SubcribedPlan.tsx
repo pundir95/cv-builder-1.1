@@ -54,7 +54,7 @@ const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setS
   return (
     <div className="w-full">
       {/* Plan Card */}
-      <div className="max-w-sm bg-indigo-500 text-white rounded-2xl shadow-lg p-6 mb-8">
+      <div className="max-w-sm bg-[#0D84F3] text-white rounded-2xl shadow-lg p-6 mb-8">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-2xl font-bold">{name}</h2>
           <div className="text-right">

@@ -31,28 +31,28 @@ export const AccountSettings = () => {
               <nav className="space-x-2 flex">
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'general' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'general' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('general')}
                 >
                   Profile
                 </Button>
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'company' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'company' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('company')}
                 >
                   Organization
                 </Button>
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'subscription' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'subscription' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('subscription')}
                 >
                   Subscription
                 </Button>
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full text-[#0D84F3] border duration-300 hover:text-[#0D84F3] hover:border-[#0D84F3] ${activeSection === 'communication' ? 'bg-[#D6EF3C] border-[#D6EF3C]' : ' border-[#0D84F3]'}`}
+                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'communication' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('communication')}
                 >
                   Communication
@@ -74,9 +74,9 @@ export const AccountSettings = () => {
 
           {/* Communication Preferences Section */}
           <div className={`md:col-span-3 ${activeSection !== 'communication' && 'hidden'}`}>
-            <Card className="p-6 bg-gray-300">
-              <h2 className="text-xl font-semibold text-primary mb-4">Communication Preferences</h2>
-              <p className="text-primary/70 mb-6">Select which emails you would like to receive:</p>
+            <Card className="p-6 bg-white border border-[#e6f3fd]">
+              <h2 className="text-xl font-semibold text-[#0D84F3] mb-4">Communication Preferences</h2>
+              <p className="text-[#0D84F3]/70 mb-6">Select which emails you would like to receive:</p>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Checkbox id="insider-tips" defaultChecked />
@@ -95,7 +95,7 @@ export const AccountSettings = () => {
                   <Label htmlFor="unsubscribe-all">Unsubscribe from all Resume builder emails</Label>
                 </div>
                 <Button
-                  className="mt-6 bg-[#CDEA68] text-black hover:bg-[#CDEA68]/90"
+                  className="mt-6 bg-[#0D84F3] text-white hover:bg-[#156fd1]"
                 >
                   Save Changes
                 </Button>
@@ -105,8 +105,8 @@ export const AccountSettings = () => {
 
           {/* Privacy Settings Section */}
           <div className={`md:col-span-3 ${activeSection !== 'privacy' && 'hidden'}`}>
-            <Card className="p-6 bg-gray-300">
-              <h2 className="text-xl font-semibold text-primary mb-4">Privacy Settings</h2>
+            <Card className="p-6 bg-white border border-[#e6f3fd]">
+              <h2 className="text-xl font-semibold text-[#0D84F3] mb-4">Privacy Settings</h2>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Checkbox id="analytics" defaultChecked />
@@ -121,7 +121,7 @@ export const AccountSettings = () => {
                   <Label htmlFor="personalization">Personalization</Label>
                 </div>
                 <Button
-                  className="mt-6 bg-[#CDEA68] text-black hover:bg-[#CDEA68]/90"
+                  className="mt-6 bg-[#0D84F3] text-white hover:bg-[#156fd1]"
                 >
                   Save Changes
                 </Button>
@@ -132,32 +132,32 @@ export const AccountSettings = () => {
           {/* Main Content Area */}
           <div className={`md:col-span-3 ${activeSection !== 'general' && 'hidden'}`}>
             {/* Profile Card */}
-            <Card className="p-6 mb-6 bg-[#e7f0ff]">
+            <Card className="p-6 mb-6 bg-white border border-[#e6f3fd]">
               <div className="flex items-center gap-4">
-                <div className="size-20 rounded-full bg-[#3b82f6] flex items-center justify-center">
+                <div className="size-20 rounded-full bg-[#0D84F3] flex items-center justify-center">
                   <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-primary">{userData?.first_name} {userData?.last_name}</h3>
-                  <p className="text-primary/70">{userData?.subscription_details?.length > 0 ? "Premium Member" : "Free Member"}</p>
-                  <p className="text-sm text-primary/50">Member since {userData?.date_joined.split("T")[0]}</p>
+                  <h3 className="text-lg font-semibold text-[#0D84F3]">{userData?.first_name} {userData?.last_name}</h3>
+                  <p className="text-[#0D84F3]/70">{userData?.subscription_details?.length > 0 ? "Premium Member" : "Free Member"}</p>
+                  <p className="text-sm text-[#0D84F3]/50">Member since {userData?.date_joined.split("T")[0]}</p>
                 </div>
                 <Button
                   variant="outline"
-                  className="ml-auto"
+                  className="ml-auto bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90 hover:bg-[#D6EF3C]/90 rounded-full"
                 >
                   Change Photo
                 </Button>
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-6 bg-white border border-[#e6f3fd]">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-primary">General Settings</h2>
+                  <h2 className="text-xl font-semibold text-[#0D84F3]">General Settings</h2>
                   <Button
                     variant="outline"
-                    className="flex items-center gap-2"
+                    className="flex items-center rounded-full gap-2 bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90 hover:bg-[#D6EF3C]/90"
                     onClick={() => setIsEditing(!isEditing)}
                   >
                     <Pencil size={16} />
@@ -199,16 +199,16 @@ export const AccountSettings = () => {
               </div>
             </Card>
 
-            <Card className="mt-8 p-6">
+            <Card className="mt-8 p-6 bg-white border border-[#e6f3fd]">
               <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-primary">Danger Zone</h2>
+                <h2 className="text-xl font-semibold text-destructive">Danger Zone</h2>
 
                 <Separator />
 
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-medium text-destructive">Delete Account</h3>
-                    <p className="text-sm text-primary/70">
+                    <p className="text-sm text-[#0D84F3]/70">
                       Permanently delete your account and all associated data
                     </p>
                   </div>

@@ -22,7 +22,7 @@ const BuilderBox = ({ data, handleClick, headingValue }: { data: any, handleClic
                     whileTap={{ scale: 0.97 }}
                     className={`px-6 py-3 rounded-lg cursor-pointer transition-all duration-300 text-base font-medium shadow-sm ${
                       item?.isSelected 
-                        ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md" 
+                        ? " bg-[#0D84F3] text-white shadow-md" 
                         : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200"
                     }`}
                     onClick={() => handleClick(item, index, headingValue)}

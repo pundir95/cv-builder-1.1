@@ -61,7 +61,7 @@ export const ResumesPage = () => {
               </TabsTrigger>
               
             </TabsList>
-            <Button className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-800"
+            <Button className="bg-[#D6EF3C]/90 text-black px-4 py-2 rounded-full font-semibold hover:bg-[#D6EF3C]/90"
               onClick={() => navigate('/onboard/experience-level')}
             >
               <Plus className="mr-2" />

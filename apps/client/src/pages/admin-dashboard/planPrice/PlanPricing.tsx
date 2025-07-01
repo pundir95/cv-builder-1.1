@@ -81,22 +81,21 @@ export const PlanPricing = () => {
   }
 
   return (
-    <ScrollArea orientation="vertical" className="h-screen">
+    <ScrollArea orientation="vertical" className="h-screen bg-gray-50">
       <Helmet>
         <title>{t`Pricing Plans`} - Resume Builder</title>
       </Helmet>
 
-      <div className="w-full">
+      <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
         <div className="">
          {subscribed && <div className="flex items-center mb-6 cursor-pointer" onClick={()=>{
             setSubscribed(false)
           }}>
-
               <ArrowLeft size={20} className="mr-2" />
-              <span>Back to Dashboard</span>            
+              <span className="text-base sm:text-lg">Back to Dashboard</span>            
           </div>}
           
-      <h2 className="text-3xl font-bold text-center mb-10">Subscription Plans</h2>
+      <h2 className="text-2xl sm:text-3xl lg:text:xl font-bold text-left mb-10 text-gray-900">Subscription Plans</h2>
 
       {
         user.subscription_details.length > 0 && !subscribed ?
@@ -104,18 +103,17 @@ export const PlanPricing = () => {
         :
         <>
 
-
-        <div className="flex items-center justify-center mb-8 gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-8 gap-4">
         <span className="text-gray-700 font-medium">Monthly</span>
         <button
-          className={`relative w-14 h-7 rounded-full transition-colors duration-200 focus:outline-none ${isYearly ? 'bg-green-500' : 'bg-gray-300'}`}
+          className={`relative w-14 h-7 rounded-full transition-colors duration-200 focus:outline-none border-2 border-gray-300 ${isYearly ? 'bg-green-500 border-green-500' : 'bg-gray-300'}`}
           onClick={() =>{
             setIsYearly((v) => !v)
           }}
           aria-label="Toggle yearly pricing"
         >
           <span
-            className={`absolute left-1 top-1 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 ${isYearly ? 'translate-x-7' : ''}`}
+            className={`absolute left-1 top-1 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 border ${isYearly ? 'translate-x-7 border-green-500' : 'border-gray-300'}`}
             style={{ transform: isYearly ? 'translateX(28px)' : 'translateX(0)' }}
           />
         </button>
@@ -123,7 +121,7 @@ export const PlanPricing = () => {
           Yearly <span className="text-green-600 text-xs font-semibold">(Save 20%)</span>
         </span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {
           loading ?
       Array.from({ length: 3 }).map((_, i) => (
@@ -140,7 +138,7 @@ export const PlanPricing = () => {
           filteredPlans.length > 0 && filteredPlans.map((product:any) => (
           <div
             key={product.name}
-            className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative"
+            className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative min-h-[420px] w-full"
           >
             {isAdmin && (
               <button
@@ -151,10 +149,10 @@ export const PlanPricing = () => {
                 <Trash size={20} />
               </button>
             )}
-            <h3 className="text-xl font-semibold mb-2 text-center">{product.name}</h3>
-            <p className="text-sm text-gray-500 mb-2 text-center">{product.description}</p>
+            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-center text-gray-900">{product.name}</h3>
+            <p className="text-sm text-gray-500 mb-2 text-center min-h-[40px]">{product.description}</p>
             <div className="text-center mb-6">
-              <span className="text-4xl font-bold text-gray-900">
+              <span className="text-3xl sm:text-4xl font-bold text-gray-900">
                 ${isYearly ? product?.price : product?.price}
               </span>
               <span className="text-base text-gray-500 ml-1 font-medium">
@@ -165,12 +163,12 @@ export const PlanPricing = () => {
               {Array.isArray(product?.fetures) && product?.fetures?.map((feature:any) => (
                 <li key={feature} className="flex items-center gap-2 mb-3 text-gray-700">
                   <Check size={20} style={{ color: '#22c55e' }} />
-                  <span>{feature}</span>
+                  <span className="text-sm sm:text-base">{feature}</span>
                 </li>
               ))}
             </ul>
             <button
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition-colors duration-200 shadow-md"
+              className="w-full bg-[#D6EF3C]/90 hover:bg-[#D6EF3C] text-black font-semibold py-2 rounded-lg transition-colors duration-200 shadow-md text-base sm:text-lg"
               onClick={()=>{
                 if(product?.validity === "onetime"){
                   getTheOnetimePlan(product)
@@ -186,7 +184,6 @@ export const PlanPricing = () => {
         </div>
         </>
         }
-
 
     </div>
 

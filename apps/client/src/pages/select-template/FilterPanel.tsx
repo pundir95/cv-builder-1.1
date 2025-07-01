@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
 const FilterPanel = ({ setHoveredColor, setSelectedFilter, onChange }: { setHoveredColor: any, setSelectedFilter: any, onChange: any }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="mt-4 container mx-auto px-4">
-      <div className="bg-white rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.1)] p-6 hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-shadow duration-300">
+      {/* Mobile: Collapsible Button */}
+      <div className="block lg:hidden mb-2">
+        <button
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow hover:bg-blue-600 transition-colors"
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          {open ? "Hide Filters" : "Show Filters"}
+        </button>
+      </div>
+      {/* Panel: Always open on desktop, toggle on mobile */}
+      <div className={`bg-white rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.1)] p-6 hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-shadow duration-300 ${open ? "block" : "hidden"} lg:block`}>
         <h5 className="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />

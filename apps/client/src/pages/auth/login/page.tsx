@@ -168,12 +168,12 @@ export const LoginPage = () => {
                   )}
                 />
 
-                <Button type="submit" disabled={loading} className="text-white px-6 py-6 rounded-full font-semibold" loading={loading}>
+                <Button type="submit" disabled={loading} className="bg-[#D6EF3C]/90 text-black px-6 py-6 rounded-full hover:bg-[#D6EF3C]/30" loading={loading}>
                   Log in
                 </Button>
 
                 <div className="mt-4 flex items-center gap-x-4">
-                  <Button type="button" disabled={loading} className="rounded-full flex-1 py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
+                  <Button type="button" disabled={loading} className="bg-black text-white rounded-full flex-1 py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
                     Do it Later
                   </Button>
 

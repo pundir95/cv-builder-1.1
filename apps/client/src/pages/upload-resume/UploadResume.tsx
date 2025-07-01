@@ -228,7 +228,7 @@ console.log(selectedStep,"selectedStep")
         </button>
         <button 
           onClick={selectedStep === 2 ? uploadResume : handleNextStep}
-          className="bg-yellow-300 border-2 border-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow hover:bg-yellow-400 transition-colors duration-200"
+          className="bg-[#D6EF3C] border-2 border-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow hover:bg-[#D6EF3C]/90 transition-colors duration-200"
         >
           Next
         </button>

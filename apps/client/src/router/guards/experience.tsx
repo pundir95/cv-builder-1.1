@@ -23,7 +23,7 @@ const ExperienceHeader = () => {
     <div className="fixed inset-x-0 top-0 z-20 h-16 bg-[#0D84F3]">
       <div className="flex h-full items-center justify-between px-4">
         <div className="flex items-center gap-4">
-          <Logo size={48} />
+          {/* <Logo size={48} /> */}
         { !isNew && <Button
             variant="ghost"
             size="sm"
@@ -99,14 +99,14 @@ export const ExperienceGuard = () => {
         <Outlet />
       </div>
       <footer className="w-full flex justify-center items-center py-4 border-t text-xs text-neutral-900">
-        <nav className="flex gap-4">
-          <a href="#" className="font-semibold hover:underline">TERMS AND CONDITIONS</a>
-          <span>|</span>
-          <a href="#" className="font-semibold hover:underline">PRIVACY POLICY</a>
-          <span>|</span>
-          <a href="#" className="font-semibold hover:underline">ACCESSIBILITY</a>
-          <span>|</span>
-          <a href="#" className="font-semibold hover:underline">CONTACT US</a>
+        <nav className="flex flex-wrap justify-center gap-2 md:gap-4 px-4">
+          <a href="#" className="font-semibold hover:underline whitespace-nowrap">TERMS AND CONDITIONS</a>
+          <span className="hidden md:inline">|</span>
+          <a href="#" className="font-semibold hover:underline whitespace-nowrap">PRIVACY POLICY</a>
+          <span className="hidden md:inline">|</span>
+          <a href="#" className="font-semibold hover:underline whitespace-nowrap">ACCESSIBILITY</a>
+          <span className="hidden md:inline">|</span>
+          <a href="#" className="font-semibold hover:underline whitespace-nowrap">CONTACT US</a>
         </nav>
       </footer>
     </>

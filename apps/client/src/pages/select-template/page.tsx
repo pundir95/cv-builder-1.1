@@ -34,9 +34,9 @@ const onChange=(value: keyof typeof selectedFilter)=>{
     <>
       <div className="min-h-screen bg-white">
         <BuilderHeading headingValue="choose_template" />
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex gap-8">
-            <div className="w-72 shrink-0">
+        <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+            <div className="w-full lg:w-72 shrink-0 mb-4 lg:mb-0">
               <FilterPanel 
                 setHoveredColor={setHoveredColor}
                 setSelectedFilter={setSelectedFilter}
@@ -44,7 +44,7 @@ const onChange=(value: keyof typeof selectedFilter)=>{
               />
             </div>
 
-            <div className="w-full bg-gray-50 rounded-xl p-8 shadow-inner">
+            <div className="w-full bg-gray-50 rounded-xl p-2 sm:p-4 md:p-8 shadow-inner">
               <div className="max-w-4xl mx-auto bg-[#F4F5FF] rounded-lg shadow-sm">
                 <TemplateSection selectedFilter={selectedFilter} showTemplateButton={showTemplateButton}/>
               </div>
@@ -52,8 +52,6 @@ const onChange=(value: keyof typeof selectedFilter)=>{
           </div>
         </div>
       </div>
-      {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={() => setIsLimitReachedModalOpen(false)} resumeDetailsId={resumeDetailsId} /> */}
-      {/* <ResumeDialog /> */}
     </>
   );
 };

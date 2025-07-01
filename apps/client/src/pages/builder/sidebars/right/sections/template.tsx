@@ -94,7 +94,7 @@ const selectedTemplateId = (crrTemplate: string) => {
           <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{t`Template`}</h2>
         </div>
       </header>}
-      <main className="grid grid-cols-3 gap-8 @lg/right:grid-cols-3 @2xl/right:grid-cols-4">
+      <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
         {templatesItem.map((template, index) => (
           <AspectRatio key={template.id} ratio={1 / 1.4142}>
             <motion.div
@@ -102,9 +102,9 @@ const selectedTemplateId = (crrTemplate: string) => {
               animate={{ opacity: 1, transition: { delay: index * 0.1 } }}
               whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
               className={cn(
-                "relative cursor-pointer rounded-sm ring-primary transition-all hover:ring-1"
-                // currentTemplate === template.name && "ring-2",
+                "relative cursor-pointer rounded-sm ring-primary transition-all hover:ring-1 focus:outline-none focus:ring-2 focus:ring-primary",
               )}
+              tabIndex={0}
               onClick={() => {
                 if(!showTemplateButton){
                   let newData={
@@ -112,30 +112,22 @@ const selectedTemplateId = (crrTemplate: string) => {
                     progress:progress.progress
                   }
 
-                  console.log(newData,"templateNew");
                   setValue("metadata.template", newData);
                 }
               }}
             > 
-              <img src={`/templates/jpg/${template.name}.jpg`} alt={template.name} className="rounded-sm" />
+              <img src={`/templates/jpg/${template.name}.jpg`} alt={template.name} className="rounded-sm w-full h-auto object-cover" />
 
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                {/* <p className="font-bold capitalize text-primary bg-white/80 px-4 py-1 rounded">
-                  {template.name}
-                </p> */}
                <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/50 border-0">
                   { showTemplateButton && <button 
-                    className="bg-blue-500 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-600 transition-colors"
+                    className="bg-[#D6EF3C]/90 px-4   sm:px-6  py-2 sm:py-3 rounded-full font-medium hover:bg-[#D6EF3C]/90 transition-colors text-sm sm:text-base"
                     onClick={(e) => {
                       e.stopPropagation();
                       selectedTemplateId(template.name)
-
-                      // 
-                      // open("create");
-                      // setValue("metadata.template", template);
                     }}
                   >
-                    Use This Template
+                    Choose Template
                   </button>}
                 </div>
               </div>

@@ -95,7 +95,7 @@ export default function OrganisationUsers({showModal, setShowModal, employees}: 
               </SelectContent>
             </Select>
           </div>
-          <Button className="bg-blue-500 text-white px-6" onClick={() =>{
+          <Button className="bg-[#D6EF3C]/90 rounded-full text-black px-6" onClick={() =>{
             if(userDataObj?.subscription_details?.length>0){
               if(userDataObj.limit==0){
                 setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
