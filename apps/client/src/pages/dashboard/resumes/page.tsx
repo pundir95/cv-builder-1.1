@@ -62,7 +62,7 @@ export const ResumesPage = () => {
               
             </TabsList>
             <Button className="bg-[#D6EF3C]/90 text-black px-4 py-2 rounded-full font-semibold hover:bg-[#D6EF3C]/90"
-              onClick={() => navigate('/onboard/upload-resume')}
+              onClick={() => navigate('/onboard/select-template')}
             >
               <Plus className="mr-2" />
               Create New Resume

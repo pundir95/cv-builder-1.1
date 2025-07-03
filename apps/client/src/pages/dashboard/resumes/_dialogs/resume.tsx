@@ -274,14 +274,14 @@ console.log(payload,"payload")
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-                      {t`Title`}
+                      {t`Full Name`}
                     </FormLabel>
                     <FormControl>
                       <div className="flex items-center justify-between gap-x-3">
                         <Input 
                           {...field} 
                           className="flex-1 h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
-                          placeholder="Enter resume title..."
+                          placeholder="Enter your full name..."
                         />
 
                         {(isCreate || isDuplicate) && (
