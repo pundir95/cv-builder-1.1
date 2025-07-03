@@ -35,7 +35,7 @@ export const useLogin = () => {
       if(user.subscription_details.length>0){
         navigate("/dashboard")
       }else{
-        navigate("/onboard/experience-level")
+        navigate("/onboard/upload-resume")
       }
 
       // setUser(data.data.user);
