@@ -39,7 +39,7 @@ const OutletSlot = ({ showRightSidebar, setShowRightSidebar,showLeftSidebar,setS
       <Outlet />
     {/* </div> */}
 
-    {/* <BuilderToolbar /> */}
+    <BuilderToolbar />
   </>
 );
 

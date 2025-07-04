@@ -61,8 +61,8 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
           <TypographySection />
           <Separator />
           <ThemeSection />
-          <Separator />
-          <PageSection />
+          {/* <Separator /> */}
+          {/* <PageSection /> */}
           <Separator />
           <ExportSection />
           <Separator />

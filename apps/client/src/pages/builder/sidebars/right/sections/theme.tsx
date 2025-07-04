@@ -69,7 +69,7 @@ export const ThemeSection = () => {
           </div>
         </div>
 
-        <div className="space-y-1.5">
+        {/* <div className="space-y-1.5">
           <Label htmlFor="theme.primary">{t`Background Color`}</Label>
           <div className="relative">
             <Popover>
@@ -127,7 +127,7 @@ export const ThemeSection = () => {
               }}
             />
           </div>
-        </div>
+        </div> */}
       </main>
     </section>
   );

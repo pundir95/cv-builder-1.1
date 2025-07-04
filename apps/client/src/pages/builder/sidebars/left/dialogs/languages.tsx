@@ -45,7 +45,7 @@ export const LanguagesDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t`Name`}</FormLabel>
+              <FormLabel>Language</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -53,22 +53,31 @@ export const LanguagesDialog = () => {
             </FormItem>
           )}
         />
-
         <FormField
-          name="description"
+          name="description" 
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t`Description`}</FormLabel>
+              <FormLabel>{t`Proficiency`}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <select
+                  {...field}
+                  className="w-full rounded-md border border-input bg-background px-3 py-2"
+                >
+                  <option value="">Select proficiency level</option>
+                  <option value="Native / Mother tongue">Native / Mother tongue</option>
+                  <option value="Fluent (C1-C2)">Fluent (C1-C2)</option>
+                  <option value="Professional working proficiency (B2-C1)">Professional working proficiency (B2-C1)</option>
+                  <option value="Conversational / Intermediate (B1)">Conversational / Intermediate (B1)</option>
+                  <option value="Basic knowledge (A1-A2)">Basic knowledge (A1-A2)</option>
+                </select>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
+        {/* <FormField
           name="level"
           control={form.control}
           render={({ field }) => (
@@ -96,7 +105,7 @@ export const LanguagesDialog = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
       </div>
     </SectionDialog>
   );

@@ -183,7 +183,7 @@ export const ExperienceDialog = () => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           name="url"
           control={form.control}
           render={({ field }) => (
@@ -195,7 +195,7 @@ export const ExperienceDialog = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
 <FormField
           name="location"

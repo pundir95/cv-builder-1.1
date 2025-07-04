@@ -71,7 +71,11 @@ export const BuilderToolbar = () => {
   };
 
   return (
-    <motion.div className="fixed inset-x-0 bottom-0 mx-auto hidden py-6 text-center md:block">
+    <motion.div className="fixed inset-x-0 bottom-0 mx-auto hidden py-6 text-center md:block" 
+    style={{
+      marginLeft: "900px",
+    }}
+    >
       <div className="inline-flex items-center justify-center rounded-full bg-background px-4 shadow-xl">
         <Tooltip content={t`Undo`}>
           <Button
@@ -99,74 +103,19 @@ export const BuilderToolbar = () => {
           </Button>
         </Tooltip>
 
-        <Separator orientation="vertical" className="h-9" />
+    
 
-        <Tooltip content={panMode ? t`Scroll to Pan` : t`Scroll to Zoom`}>
-          <Toggle className="rounded-none" pressed={panMode} onPressedChange={onTogglePanMode}>
-            {panMode ? <ArrowsOutCardinal /> : <MagnifyingGlass />}
-          </Toggle>
-        </Tooltip>
+      
 
         <Separator orientation="vertical" className="h-9" />
 
-        <Tooltip content={t`Zoom In`}>
-          <Button size="icon" variant="ghost" className="rounded-none" onClick={onZoomIn}>
-            <MagnifyingGlassPlus />
-          </Button>
-        </Tooltip>
-
-        <Tooltip content={t`Zoom Out`}>
-          <Button size="icon" variant="ghost" className="rounded-none" onClick={onZoomOut}>
-            <MagnifyingGlassMinus />
-          </Button>
-        </Tooltip>
-
-        <Tooltip content={t`Reset Zoom`}>
-          <Button size="icon" variant="ghost" className="rounded-none" onClick={onResetView}>
-            <ClockClockwise />
-          </Button>
-        </Tooltip>
-
-        <Tooltip content={t`Center Artboard`}>
-          <Button size="icon" variant="ghost" className="rounded-none" onClick={onCenterView}>
-            <CubeFocus />
-          </Button>
-        </Tooltip>
-
-        <Separator orientation="vertical" className="h-9" />
-
-        <Tooltip content={t`Toggle Page Break Line`}>
-          <Toggle
-            className="rounded-none"
-            pressed={pageOptions.breakLine}
-            onPressedChange={(pressed) => {
-              setValue("metadata.page.options.breakLine", pressed);
-            }}
-          >
-            <LineSegment />
-          </Toggle>
-        </Tooltip>
-
-        <Tooltip content={t`Toggle Page Numbers`}>
-          <Toggle
-            className="rounded-none"
-            pressed={pageOptions.pageNumbers}
-            onPressedChange={(pressed) => {
-              setValue("metadata.page.options.pageNumbers", pressed);
-            }}
-          >
-            <Hash />
-          </Toggle>
-        </Tooltip>
-
-        <Separator orientation="vertical" className="h-9" />
 
         <Tooltip content={t`Copy Link to Resume`}>
           <Button
             size="icon"
             variant="ghost"
             className="rounded-none"
-            disabled={!isPublic}
+            disabled={false}
             onClick={onCopy}
           >
             <LinkSimple />

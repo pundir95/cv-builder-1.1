@@ -63,7 +63,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
           <SectionIcon
             id="basics"
             name={t({
-              message: "Basics",
+              message: "Personal Information",
               context:
                 "The basics section of a resume consists of User's Picture, Full Name, Location etc.",
             })}
@@ -81,14 +81,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
               setShowRightSidebar(false);
             }}
           />
-          <SectionIcon
-            id="profiles"
-            onClick={() => {
-              scrollIntoView("#profiles");
-              setShowLeftSidebar(true);
-              setShowRightSidebar(false);
-            }}
-          />
+       
           <SectionIcon
             id="experience"
             onClick={() => {
@@ -117,6 +110,22 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             id="languages"
             onClick={() => {
               scrollIntoView("#languages");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
+            }}
+          />
+            <SectionIcon
+            id="references"
+            onClick={() => {
+                scrollIntoView("#references");
+              setShowLeftSidebar(true);
+              setShowRightSidebar(false);
+            }}
+          />
+             {/* <SectionIcon
+            id="profiles"
+            onClick={() => {
+              scrollIntoView("#profiles");
               setShowLeftSidebar(true);
               setShowRightSidebar(false);
             }}
@@ -168,15 +177,8 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
               setShowLeftSidebar(true);
               setShowRightSidebar(false);
             }}
-          />
-          <SectionIcon
-            id="references"
-            onClick={() => {
-                scrollIntoView("#references");
-              setShowLeftSidebar(true);
-              setShowRightSidebar(false);
-            }}
-          />
+          /> */}
+        
 
           <SectionIcon
             id="custom"
@@ -209,19 +211,14 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
           
           
           <Separator />
-          <SectionBase<Profile>
-            id="profiles"
-            title={(item) => item.network}
-            description={(item) => item.username}
-            extraDescription="Add your professional social media profiles like LinkedIn, GitHub, or portfolio website. Make sure these are up-to-date and reflect your professional image."
-          />
-          <Separator />
+
           <SectionBase<Experience>
             id="experience"
             title={(item) => item.company}
             description={(item) => item.position}
             extraDescription="Add your professional experience, including your job title, company name, and the dates of your employment. Use bullet points to note your achievements, if possible - use numbers/facts (Achieved X, measured by Y, by doing Z)."
           />
+                
           <Separator />
           <SectionBase<Education>
             id="education"
@@ -252,6 +249,23 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             title={(item) => item.title}
             description={(item) => item.awarder}
           /> */}
+
+<Separator />
+          <SectionBase<Reference>
+            id="references"
+            title={(item) => item.name}
+            description={(item) => item.description}
+            extraDescription="Add your references, including your reference name, and the dates of your employment. Use bullet points to note your achievements, if possible"
+
+          />
+
+<Separator />
+          <SectionBase<Profile>
+            id="profiles"
+            title={(item) => item.network}
+            description={(item) => item.username}
+            extraDescription="Add your professional social media profiles like LinkedIn, GitHub, or portfolio website. Make sure these are up-to-date and reflect your professional image."
+          />
           <Separator />
           <SectionBase<Certification>
             id="certifications"
@@ -286,14 +300,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
             title={(item) => item.organization}
             description={(item) => item.position}
           /> */}
-          <Separator />
-          <SectionBase<Reference>
-            id="references"
-            title={(item) => item.name}
-            description={(item) => item.description}
-            extraDescription="Add your references, including your reference name, and the dates of your employment. Use bullet points to note your achievements, if possible"
-
-          />
+       
 
           {/* Custom Sections */}
           {Object.values(customSections).map((section) => (

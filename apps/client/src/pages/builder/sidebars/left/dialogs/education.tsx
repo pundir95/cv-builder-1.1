@@ -171,7 +171,7 @@ export const EducationDialog = () => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           name="url"
           control={form.control}
           render={({ field }) => (
@@ -183,7 +183,7 @@ export const EducationDialog = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           name="summary"

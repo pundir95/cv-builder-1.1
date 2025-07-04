@@ -13,6 +13,25 @@ export const BasicsSection = () => {
   const setValue = useResumeStore((state) => state.setValue);
   const basics = useResumeStore((state) => state.resume.data.basics);
 
+  // Check if all required fields are filled and valid
+  const isComplete = [
+    basics.name,
+    basics.headline,
+    basics.email,
+    basics.url.href,
+    basics.phone,
+    basics.location,
+  ].every((val) => typeof val === 'string' && val.trim() !== "") &&
+    basicsSchema.pick({
+      name: true,
+      email: true,
+      url: true,
+    }).safeParse({
+      name: basics.name,
+      email: basics.email,
+      url: basics.url,
+    }).success;
+
   return (
     <section id="basics" className="grid gap-y-6 px-6">
       <header className="flex items-center justify-between">
@@ -23,9 +42,25 @@ export const BasicsSection = () => {
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </div>
-          
-          <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{t`Basics`}</h2>
+          <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">Personal Information</h2>
         </div>
+        {isComplete && (
+          <div
+            className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-1 shadow-sm animate-fade-in-up"
+            style={{ minWidth: 0 }}
+          >
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 shadow-md scale-100 animate-pop-in">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="10" r="10" fill="#22C55E" />
+                <path d="M6 10.5L9 13.5L14 8.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <div className="flex flex-col min-w-0">
+              <span className="text-green-700 font-semibold text-base leading-tight truncate">{t`Complete!`}</span>
+              <span className="text-green-600 text-xs leading-tight truncate">{t`All basic information completed.`}</span>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="grid gap-4 sm:grid-cols-2">
@@ -56,7 +91,7 @@ export const BasicsSection = () => {
           />
         </div> */}
 
-        <div className="space-y-1.5 sm:col-span-2">
+        {/* <div className="space-y-1.5 sm:col-span-2">
           <Label htmlFor="basics.headline">{t`Headline`}</Label>
           <Input
             id="basics.headline"
@@ -65,7 +100,7 @@ export const BasicsSection = () => {
               setValue("basics.headline", event.target.value);
             }}
           />
-        </div>
+        </div> */}
 
         <div className="space-y-1.5">
           <Label htmlFor="basics.email">{t`Email`}</Label>
@@ -82,7 +117,7 @@ export const BasicsSection = () => {
           />
         </div>
 
-        <div className="space-y-1.5">
+        {/* <div className="space-y-1.5">
           <Label htmlFor="basics.url">{t`Website`}</Label>
           <URLInput
             id="basics.url"
@@ -92,7 +127,7 @@ export const BasicsSection = () => {
               setValue("basics.url", value);
             }}
           />
-        </div>
+        </div> */}
 
         <div className="space-y-1.5">
           <Label htmlFor="basics.phone">{t`Phone`}</Label>
