@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Upload, FileText, ArrowRight, ArrowLeft } from "@phosphor-icons/react";
+import { Upload, FileText, ArrowRight, ArrowLeft, Check, CheckCircle } from "@phosphor-icons/react";
 import { useDialog } from '@/client/stores/dialog';
 import { LimitReachedModal } from '../select-template/LimitReachedModal';
 import { useNavigate, useSearchParams } from 'react-router';
@@ -27,6 +27,39 @@ const UploadResume = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const isResumeChecker = searchParams.get("true") === "resume-checker"
+
+  let cardData={
+    simple: {
+      upload: {
+        title: "Yes, upload from my resume",
+        description: "We'll give you expert guidance to fill out your info and enhance your resume, from start to finish",
+        recommended: true,
+        icon: <Upload />
+      },
+    scratch: {
+      title: "No, I'll start from scratch",
+      description: "Start from scratch and build your resume from the ground up",
+      icon: <FileText />
+    },
+    
+  },
+
+  with_AI: {
+  upload: {
+    title: "Check your resume with AI",
+    description: "We'll give you AI based feedback to improve your resume",
+    recommended: false,
+    icon: <CheckCircle />
+  },
+
+    scratch: {
+      title: "Check your resume with human",
+      description: "We'll give you human based feedback to improve your resume",
+      recommended: false,
+      icon: <Check />
+    }
+  }
+  }
 
 
   
@@ -182,7 +215,9 @@ console.log(selectedStep,"selectedStep")
        <BuilderHeading headingValue={selectedStepHeading[selectedStep] as 'experience_time' | 'is_student' | 'experience_level' | 'choose_template' | 'upload_resume' | 'choose_file'} />
       {
         selectedStep === 0 && (
-          <FirstUploadUI setSelectedCard={setSelectedCard} selectedCard={selectedCard} handleDrag={handleDrag} handleDrop={handleDrop} handleFileInput={handleFileInput} selectedFile={selectedFile} onStartFromScratch={onStartFromScratch} />
+          <FirstUploadUI setSelectedCard={setSelectedCard} selectedCard={selectedCard} handleDrag={handleDrag} handleDrop={handleDrop} handleFileInput={handleFileInput} selectedFile={selectedFile} onStartFromScratch={onStartFromScratch} 
+          cardData={isResumeChecker ? cardData.with_AI : cardData.simple}
+          />
         )
       }
       {

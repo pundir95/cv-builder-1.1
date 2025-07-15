@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Upload, FileText } from '@phosphor-icons/react';
 
-const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, handleFileInput, selectedFile, onStartFromScratch }: { setSelectedCard: (card: 'upload' | 'scratch' | null) => void, selectedCard: 'upload' | 'scratch' | null, handleDrag: (e: React.DragEvent) => void, handleDrop: (e: React.DragEvent) => void, handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, selectedFile: File | null, onStartFromScratch: () => void }) => {
+const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, handleFileInput, selectedFile, onStartFromScratch, cardData }: { setSelectedCard: (card: 'upload' | 'scratch' | null) => void, selectedCard: 'upload' | 'scratch' | null, handleDrag: (e: React.DragEvent) => void, handleDrop: (e: React.DragEvent) => void, handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, selectedFile: File | null, onStartFromScratch: () => void, cardData: { upload: { title: string; description: string; icon: React.ReactNode }; scratch: { title: string; description: string; icon: React.ReactNode } } }) => {
   return (
     <div className="grid md:grid-cols-2 gap-6">
     {/* Upload Option */}
@@ -21,9 +21,9 @@ const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, 
       
       <div className="flex flex-col items-center justify-center min-h-[200px]">
         <Upload className="w-12 h-12 text-blue-500 mb-4" />
-        <h2 className="text-xl font-semibold mb-2">Yes, upload from my resume</h2>
+        <h2 className="text-xl font-semibold mb-2">{cardData.upload.title}</h2>
         <p className="text-gray-500 text-center text-sm mb-4">
-          We'll give you expert guidance to fill out your info and enhance your resume, from start to finish
+          {cardData.upload.description}
         </p>
         
         {/* <label className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
@@ -52,9 +52,9 @@ const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, 
     >
       <div className="flex flex-col items-center justify-center min-h-[200px]">
         <FileText className="w-12 h-12 text-gray-500 mb-4" />
-        <h2 className="text-xl font-semibold mb-2">No, start from scratch</h2>
+        <h2 className="text-xl font-semibold mb-2">{cardData.scratch.title}</h2>
         <p className="text-gray-500 text-center text-sm">
-          We'll guide you through the whole process so your skills can shine
+          {cardData.scratch.description}
         </p>
       </div>
     </motion.div>

@@ -117,7 +117,7 @@ export const BuilderLayout = () => {
   const [showLeftSidebar, setShowLeftSidebar] = useState<boolean>(true);
   console.log(showLeftSidebar,"showLeftSidebar")
 
-  if (isDesktop) {
+  if (true) {
     return (
       <>
       <div className="relative size-full overflow-hidden">
