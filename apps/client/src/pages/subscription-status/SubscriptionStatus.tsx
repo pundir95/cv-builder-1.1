@@ -9,6 +9,8 @@ const SubscriptionStatus = () => {
   const email = searchParams.get('email_id');
   const session_id=searchParams.get("session_id")
   const payment_type=searchParams.get("payment_type")
+  const token=searchParams.get("token_id")
+  const plan_id=searchParams.get("plan_id")
 
   console.log(session_id,"session_id")
 
@@ -17,15 +19,16 @@ const SubscriptionStatus = () => {
     
       try {
         let response;
-        if(payment_type=="one_time"){
-             response = await axios.get(`/subscription/verify-one-time-payment/${session_id}/`);
-        }
-        else if(payment_type=="super_user"){
-           response = await axios.get(`/subscription/session-status/${email}/${session_id}`);
-        }else{
+        response = await axios.get(`/subscription/subscription/success/?token_id=${token}&session_id=${session_id}&plan_id=${plan_id}`);
+        // if(payment_type=="one_time"){
+        //      response = await axios.get(`/subscription/verify-one-time-payment/${session_id}/`);
+        // }
+        // else if(payment_type=="super_user"){
+        //    response = await axios.get(`/subscription/session-status/${email}/${session_id}`);
+        // }else{
 
-          response = await axios.get(`/company/employees-subscription-status/${email}/${session_id}`);
-        }
+        //   response = await axios.get(`/company/employees-subscription-status/${email}/${session_id}`);
+        // }
 
         if (response.status === 200) {
           axios.get(`/accounts/api/users/`).then((res)=>{

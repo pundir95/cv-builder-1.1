@@ -11,6 +11,7 @@ import OrganisationDetails from './OrganisationDetails';
 const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing: boolean) => void, isEditing: boolean}> = ({activeSection, setIsEditing, isEditing}) => {
   // State for form fields
   const [companyName, setCompanyName] = useState('');
+  const [country, setCountry] = useState('');
   const [companyAddress, setCompanyAddress] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('https://www.google.com');
   const [organizationId, setOrganizationId] = useState('1234567890');
@@ -30,9 +31,11 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
     axios.get(`/company/company-details/`).then((res)=>{
       console.log(res);
       setCompanyName(res.data.data[0].company_name);
+      setCountry(res.data.data[0].country);
       setCompanyAddress(res.data.data[0].company_address);
       setCompanyWebsite(res.data.data[0].company_website);
       setOrganizationId(res.data.data[0].organisation_id);
+
     })
     axios.get(`/company/organization-employees/`).then((res)=>{
       console.log(res);
@@ -70,7 +73,8 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
         "company_name":companyName,
         "company_address":companyAddress,
         "company_website":companyWebsite,
-        "organisation_id":organizationId
+        "organisation_id":organizationId,
+        "country":country
     }
       axios.post('/company/company-details/', payload).then((res) => {
         console.log(res);
@@ -125,6 +129,17 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                       type="text"
                       value={companyAddress}
                       onChange={e => setCompanyAddress(e.target.value)}
+                      className={!isEditing ? "bg-muted" : ""}
+                    />
+                    {errors.companyAddress && <div className="text-red-500 text-xs">{errors.companyAddress}</div>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Country Name </Label>
+                    <Input
+                      type="text"
+                      value={country}
+                      onChange={e => setCountry(e.target.value)}
                       className={!isEditing ? "bg-muted" : ""}
                     />
                     {errors.companyAddress && <div className="text-red-500 text-xs">{errors.companyAddress}</div>}

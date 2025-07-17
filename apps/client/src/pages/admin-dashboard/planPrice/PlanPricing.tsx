@@ -27,16 +27,17 @@ export const PlanPricing = () => {
     setIsAdmin(user.role === "admin");
     let api = user.reference_id ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
     axios.get(api).then((res)=>{
-      setPlans(res?.data?.data)
+      console.log(res?.data,"opppp")
+      setPlans(res?.data?.results?.plans)
       setLoading(false)
     })
   },[])
 
-  useEffect(()=>{ 
-    let filteredDataList=plans.filter((item:any)=>item.validity==(isYearly ? "year" : "month"))
-    console.log(filteredDataList,"filteredDataList")
-    setFilteredPlans(filteredDataList)
-  },[isYearly,plans])
+  // useEffect(()=>{ 
+  //   let filteredDataList=plans.filter((item:any)=>item.validity==(isYearly ? "year" : "month"))
+  //   console.log(filteredDataList,"filteredDataList")
+  //   setFilteredPlans(filteredDataList)
+  // },[isYearly,plans])
 
   
   const getThePlan=(id:string)=>{
@@ -48,12 +49,13 @@ export const PlanPricing = () => {
         // }
       })
     }else{
-    axios.post(`/subscription/subscription-details/`,{
-      plan_id:id
+    axios.post(`/subscription/create-subscription/`,{
+      product_id:id
     }).then((res)=>{
-    if (res.data.data.approve_link) {
-      window.location.href = res.data.data.approve_link;
-    }
+      console.log(res,"res66")
+  
+      window.location.href = res.data.data.payment_link;
+    
     })
   }
   }
@@ -135,7 +137,7 @@ export const PlanPricing = () => {
         ))  
         :
         
-          filteredPlans.length > 0 && filteredPlans.map((product:any) => (
+          plans.length > 0 && plans.map((product:any) => (
           <div
             key={product.name}
             className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative min-h-[420px] w-full"

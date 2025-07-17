@@ -40,8 +40,9 @@ const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setS
   const { plan_details: { name, price, validity, fetures }, end_date } = data[0]
 
   useEffect(() => {
-    axios.get(`/subscription/subscription-history/`).then((res) => {
-      setSubscriptionHistory(res?.data)
+    axios.get(`/subscription/subscription/history/`).then((res) => {
+      console.log(res?.data?.results,"history")
+      setSubscriptionHistory(res?.data?.results)
     })
   }, [])
 
@@ -118,8 +119,8 @@ const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setS
                   <tr key={item.id} className="border-b last:border-b-0">
                     <td className="px-6 py-4 align-middle">{index + 1}</td>
                     <td className="px-6 py-4 align-middle">{item?.new_plan?.name}</td>
-                    <td className="px-6 py-4 align-middle">{item.billing_period_start ? new Date(item.billing_period_start).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</td>
-                    <td className="px-6 py-4 align-middle">{item.billing_period_end ? new Date(item.billing_period_end).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</td>
+                    <td className="px-6 py-4 align-middle">{item.start_date  ? new Date(item.start_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</td>
+                    <td className="px-6 py-4 align-middle">{item.end_date ? new Date(item.end_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</td>
                     <td className="px-6 py-4 align-middle">{item.new_plan.price}</td>
                     <td className="px-6 py-4 align-middle">{statusBadge(item.payment_status)}</td>
                     <td className="px-6 py-4 align-middle">

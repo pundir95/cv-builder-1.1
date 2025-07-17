@@ -106,7 +106,8 @@ console.log(payload,"payload")
         localStorage.setItem("user",JSON.stringify(res.data[0] || res.data.data))
 
       })
-      void navigate(`/builder/${newResume.data.id}`)
+      void navigate(`/onboard/upload-resume?resume_id=${newResume.data.id}`)
+      // void navigate(`/builder/${newResume.data.id}`)
     }
 
 
@@ -280,7 +281,8 @@ console.log(payload,"payload")
                       <div className="flex items-center justify-between gap-x-3">
                         <Input 
                           {...field} 
-                          className="flex-1 h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+                          autoFocus={false}
+                          className="flex-1 h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-gray-300 transition-all duration-200" 
                           placeholder="Enter your full name..."
                         />
 
@@ -291,7 +293,7 @@ console.log(payload,"payload")
                               type="button"
                               variant="outline"
                               onClick={onGenerateRandomName}
-                              className="h-12 w-12 rounded-lg border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+                              className="h-12 w-12 rounded-lg border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-transparentś transition-all duration-200"
                             >
                               <MagicWand className="w-5 h-5" />
                             </Button>
@@ -318,7 +320,7 @@ console.log(payload,"payload")
                     <FormControl>
                       <Input 
                         {...field} 
-                        className="h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        className="h-12 px-4 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400  transition-all duration-200"
                         placeholder="resume-slug"
                       />
                     </FormControl>

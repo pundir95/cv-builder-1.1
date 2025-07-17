@@ -15,6 +15,7 @@ import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
 import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
+import { useToast } from "@/client/hooks/use-toast";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -32,8 +33,20 @@ const openInNewTab = (url: string) => {
 export const ExportSection = () => {
   const navigate = useNavigate();
   const { printResume, loading } = usePrintResume();
-
+  const user=localStorage.getItem("user");
+  const userData=JSON.parse(user || "{}");
+  const { toast } = useToast();
   const onPdfExport = async () => {
+
+    if(userData.subscription_details.length == 0){
+      toast({
+        title: "You need to subscribe to download the resume",
+        description: "Please subscribe to download the resume",
+        variant: "error",
+      });
+      return;
+    }
+
     const templateRef = sharedState.getTemplateRef();
     
     if (templateRef) {

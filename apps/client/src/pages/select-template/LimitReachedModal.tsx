@@ -14,6 +14,7 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
   const navigate=useNavigate();
   const user=localStorage.getItem("user")
   const userData=JSON.parse(user || "{}")
+  console.log(userData,"userData")
 
   const skipModal=()=>{
     navigate(`/builder/${resumeDetailsId}`)

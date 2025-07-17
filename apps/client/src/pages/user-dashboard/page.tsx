@@ -104,7 +104,7 @@ export const UserDashboardPage = () => {
               size="sm" 
               variant="success" 
               className="w-full bg-[#D6EF3C]/90 text-black px-6 h-auto !py-3 rounded-full font-semibold hover:bg-[#D6EF3C]/90 transition-all duration-200 shadow-md hover:shadow-lg"
-              onClick={() => navigate("/onboard/select-template")}
+              onClick={() => navigate("/onboard/select-template?create-new-resume")}
             >
               <Plus size={18} className="mr-2" /> Create New Resume
             </Button>

@@ -35,11 +35,11 @@ export const Sidebar = () => {
       label: `Pricing and Plans`,
       path: "/admin/pricing"
     },
-    {
-      icon: <Gear size={20} />,
-      label: `Settings`, 
-      path: "/admin-dashboard/settings"
-    }
+    // {
+    //   icon: <Gear size={20} />,
+    //   label: `Settings`, 
+    //   path: "/admin-dashboard/settings"
+    // }
   ];
 
   return (

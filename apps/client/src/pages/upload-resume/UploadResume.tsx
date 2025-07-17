@@ -24,9 +24,11 @@ const UploadResume = () => {
   const [selectedStep, setSelectedStep] = useState<number>(0);
   const [isComplete, setIsComplete] = useState(false);
   const [newResume, setNewResume] = useState<any>(null);
+ 
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const isResumeChecker = searchParams.get("true") === "resume-checker"
+  const resume_id=searchParams.get("resume_id")
 
   let cardData={
     simple: {
@@ -105,7 +107,8 @@ const UploadResume = () => {
   //   open("create");
     
   // }
-  navigate("/onboard/select-template")
+  // navigate("/onboard/select-template")
+  navigate(`/builder/${resume_id}`)
 }
 
 const handleNextStep = () => {

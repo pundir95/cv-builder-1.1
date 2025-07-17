@@ -11,9 +11,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       ref={ref}
       type={type}
       autoComplete="off"
+      autoFocus={props.autoFocus}
       className={cn(
         "flex h-11 w-full rounded border border-border bg-[#F5F5F5] px-3 py-1 !text-sm ring-0 ring-offset-transparent transition-colors [appearance:textfield] placeholder:opacity-80 hover:bg-secondary/20 focus:border-primary focus:bg-secondary/20 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
-        "file:border-0 file:bg-transparent file:pt-1 file:text-sm file:font-medium file:text-gray-600",
+        "file:border-0 file:bg-transparent file:pt-1 file:text-sm file:font-medium file:text-gray-600", 
         hasError ? "border-error" : "border-border",
         className,
       )}
