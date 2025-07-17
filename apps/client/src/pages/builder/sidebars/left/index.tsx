@@ -202,8 +202,8 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
         </UserOptions>
       </div>}
 
-      <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
-        <div ref={containterRef} className={` grid gap-y-10 @container/left bg-[#ffffff] mt-[64px] border border-gray-200 ${showLeftSidebar ? 'py-6 mx-[70px]' : ''}`}>
+      <ScrollArea orientation="vertical" className="h-screen flex-1 pb-10 lg:pb-0">
+        <div ref={containterRef} className={` grid gap-y-10 @container/left bg-[#ffffff] mt-[65px] lg:mt-[64px] border border-gray-200 ${showLeftSidebar ? 'py-6 mx-5 lg:mx-[70px]' : ''}`}>
           <BasicsSection />
           <Separator />
         

@@ -290,11 +290,11 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
     return (
       <>
         <td className="px-6 py-4 align-middle">
-          <div className="font-medium text-gray-900">{resume.title}</div>
-          <div className="text-xs text-gray-500">{lastUpdated}</div>
+          <div className="font-medium text-gray-900 whitespace-nowrap">{resume.title}</div>
+          <div className="text-xs text-gray-500 whitespace-nowrap">{lastUpdated}</div>
         </td>
         <td className="px-6 py-4 align-middle text-gray-700">{createdAt}</td>
-        <td className="px-6 py-4 align-middle text-right">
+        <td className="px-6 py-4 align-middle text-center lg:text-right">
           <span className="inline-block rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-500">
             {strength}
           </span>

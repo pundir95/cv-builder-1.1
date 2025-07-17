@@ -172,8 +172,8 @@ export const LoginPage = () => {
                   Log in
                 </Button>
 
-                <div className="mt-4 flex items-center gap-x-4">
-                  <Button type="button" disabled={loading} className="bg-black text-white rounded-full flex-1 py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
+                <div className="mt-4 flex flex-col md:flex-row items-center gap-4">
+                  <Button type="button" disabled={loading} className="bg-black text-white rounded-full flex-1 py-3 md:py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
                     Do it Later
                   </Button>
 

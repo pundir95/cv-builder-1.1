@@ -76,7 +76,7 @@ export const ResumeCard = ({ resume }: Props) => {
           <div
             className={cn(
               "absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end space-y-0.5 p-4 pt-12",
-              "bg-gradient-to-t from-background/80 to-transparent",
+              "bg-gradient-to-t from-background/100 to-transparent",
             )}
           >
             <h4 className="line-clamp-2 font-medium">{resume.title}</h4>

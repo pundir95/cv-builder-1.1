@@ -47,7 +47,7 @@ export const SummarySection = () => {
 
   return (
     <section id="summary" className="grid gap-y-6 px-6">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between lg:flex-row flex-col gap-4">
         <div className="flex items-center gap-x-4">
         <div className="bg-[#0D84F3] p-1 rounded-full">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
