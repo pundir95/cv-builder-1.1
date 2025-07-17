@@ -7534,6 +7534,7 @@ const O8 = sr(
       ref: s,
       type: e,
       autoComplete: "off",
+      autoFocus: r.autoFocus,
       className: H(
         "flex h-11 w-full rounded border border-border bg-[#F5F5F5] px-3 py-1 !text-sm ring-0 ring-offset-transparent transition-colors [appearance:textfield] placeholder:opacity-80 hover:bg-secondary/20 focus:border-primary focus:bg-secondary/20 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
         "file:border-0 file:bg-transparent file:pt-1 file:text-sm file:font-medium file:text-gray-600",
@@ -8357,7 +8358,7 @@ const x4 = S(({ className: n, children: e, ...t }, r) => /* @__PURE__ */ ve(ah, 
     {
       ref: r,
       className: H(
-        "fixed left-1/2 top-1/2 z-50 grid w-full max-w-sm -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 duration-200 focus:outline-none focus:ring-1 focus:ring-secondary focus:ring-offset-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:max-w-xl sm:rounded-sm md:w-full",
+        "fixed left-1/2 top-1/2 z-50 grid w-full max-w-[80%] -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 duration-200 focus:outline-none focus:ring-1 focus:ring-secondary focus:ring-offset-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:max-w-xl sm:rounded-sm md:w-full",
         n
       ),
       ...t,
