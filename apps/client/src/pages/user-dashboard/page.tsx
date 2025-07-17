@@ -116,11 +116,11 @@ export const UserDashboardPage = () => {
             
             {/* Resume Strength & Fix Resume */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row items-center mb-8 border border-blue-100">
-              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mr-0 lg:mr-8 flex flex-col items-center min-w-[220px] mb-6 lg:mb-0">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mr-0 lg:mr-8 flex flex-col items-center min-w-full md:min-w-[220px] mb-6 lg:mb-0">
                 <span className="text-blue-600 font-bold text-lg mb-3">Resume Strength</span>
                 <div className="relative mb-4">
                   <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
-                    <span className="bg-blue-500 text-white rounded-full px-4 py-2 text-xl font-bold">
+                    <span className="text-blue-500 rounded-full px-4 py-2 text-xl font-bold">
                       {selectedResume?.cv_data?.metadata?.template?.progress || 0}%
                     </span>
                   </div>

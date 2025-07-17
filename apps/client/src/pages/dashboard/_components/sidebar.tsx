@@ -48,7 +48,7 @@ const SidebarItem = ({ path, name, shortcut, icon, onClick }: SidebarItemProps) 
       size="lg"
       variant="ghost"
       className={cn(
-        "h-auto justify-start px-4 py-3 relative before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:w-1/2 before:h-[2px] before:opacity-0 before:duration-300 before:invisible before:bg-[#D6EF3C] before:rounded-full",
+        "h-auto justify-start px-4 py-3 relative before:content-[''] before:absolute before:bottom-0 lg:before:left-1/2 translate-x-0 lg:before:-translate-x-1/2 before:w-1/2 before:h-[2px] before:opacity-0 before:duration-300 before:invisible before:bg-[#D6EF3C] before:rounded-full",
         isActive && "pointer-events-none before:opacity-1 before:visible text-secondary-foreground",
       )}
       onClick={onClick}
@@ -114,14 +114,14 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       name: `Shared Resume List`,
       shortcut: "⇧S",
       icon: <FadersHorizontal color="white" size={24} />,
-    }, 
+    },
     {
       path: "/dashboard/account",
       name: `Account Settings`,
       shortcut: "⇧S",
       icon: <UserCircle color="white" size={24} />,
-    }, 
- 
+    },
+
   ];
 
   return (
@@ -134,6 +134,16 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
       >
         <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
       </button>
+
+      {/* Profile icon */}
+      <div className="lg:hidden">
+        <UserOptions>
+          <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
+            <UserAvatar size={24} />
+            <span>{user?.name}</span>
+          </Button>
+        </UserOptions>
+      </div>
 
       {/* Sidebar overlay for mobile */}
       <div
@@ -173,14 +183,17 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
           {sidebarItems.map((item) => (
             <SidebarItem {...item} key={item.path} onClick={() => { setOpen?.(false); setMobileOpen(false); }} />
           ))}
-        </div>
+          <div className="lg:block hidden">
+            <UserOptions>
+              <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
+                <UserAvatar size={24} className="mr-3" />
+                <span>{user?.name}</span>
+              </Button>
+            </UserOptions>
 
-        <UserOptions>
-          <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
-            <UserAvatar size={24} className="mr-3" />
-            <span>{user?.name}</span>
-          </Button>
-        </UserOptions>
+          </div>
+
+        </div>
 
         <Copyright className="ml-2" />
       </nav>

@@ -11,7 +11,7 @@ export const DashboardLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="sticky top-0 z-50 flex items-center justify-between p-4 pb-0 lg:hidden">
+      <div className="sticky top-0 z-50 flex items-center justify-between p-4 pb-4 lg:pb-0 lg:hidden lg:bg-transparent bg-blue-600">
         <Button size="icon" variant="ghost" className="bg-background">
               <SidebarSimple />
         </Button>

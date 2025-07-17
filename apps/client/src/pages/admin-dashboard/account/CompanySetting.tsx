@@ -92,8 +92,8 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                 Back
               </button>
              { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} employees={employees} />}
-            {showModal.organisationDetailsEdit &&  <div className="space-y-6">
-                <div className="flex items-center justify-between">
+            {showModal.organisationDetailsEdit &&  <div className="space-y-6 w-full">
+                <div className="flex sm:flex-row flex-col gap-3 items-center justify-between">
                   <h2 className="text-xl font-semibold text-primary">Organization Details</h2>
                   <Button 
                     variant="outline"

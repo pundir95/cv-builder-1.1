@@ -38,7 +38,7 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
             <div className="text-gray-500 text-sm">Organization Number: {org.number}</div>
           </div>
         </div>
-        <div className="flex gap-4 mt-2">
+        <div className="flex lg:flex-row flex-col gap-4 mt-2">
           {/* Organization ID */}
           <div className="flex-1 bg-gray-50 rounded-lg p-4 flex flex-col gap-1">
             <div className="flex items-center gap-2 text-gray-500 text-sm">

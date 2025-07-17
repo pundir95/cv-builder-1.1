@@ -123,25 +123,19 @@ export const BuilderLayout = () => {
       <div className="relative size-full overflow-hidden">
         <PanelGroup direction="horizontal">
          {showLeftSidebar? <Panel
-            minSize={50}
-            maxSize={55}
-            defaultSize={55}
-            className={cn("z-10 bg-background", !leftHandle.isDragging && "transition-[flex]")}
+            className={cn("z-10 bg-background !flex-grow-1 lg:!flex-grow-[55] !flex-shrink !basis-0", !leftHandle.isDragging && "transition-[flex]")}
             onResize={leftSetSize}
           >
             <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />
           </Panel>
           : <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />}
          
-          <Panel>
+          <Panel className="!flex-grow-0 lg:!flex-grow-[45] !flex-shrink !basis-0">
             <OutletSlot showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar}/>
           </Panel>
         
         {showRightSidebar ?<Panel
-            minSize={45}
-            maxSize={45}
-            defaultSize={45}
-            className={cn("z-10 bg-background", !rightHandle.isDragging && "transition-[flex]")}
+            className={cn("z-10 bg-background absolute top-0 right-0 w-[80%] shadow-lg lg:shadow-none lg:relative", !rightHandle.isDragging && "transition-[flex]")}
             onResize={rightSetSize}
           >
             <RightSidebar showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} setShowLeftSidebar={setShowLeftSidebar}  showLeftSidebar={showLeftSidebar}/>

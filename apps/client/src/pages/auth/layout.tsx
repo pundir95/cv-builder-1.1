@@ -26,7 +26,7 @@ export const AuthLayout = () => {
   return (
     <GoogleOAuthProvider clientId={"48252327683-8asdmh85nur7uiunvo17dvgh0h3tpnmv.apps.googleusercontent.com"}>
       <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50">
-        <div className="relative w-full max-w-xl rounded-2xl bg-white p-12 shadow-2xl">
+        <div className="relative w-full max-w-xl rounded-2xl bg-white p-6 md:p-12 shadow-2xl">
           {/* Group login form and social auth together */}
           <div className="flex flex-col">
             <Outlet />

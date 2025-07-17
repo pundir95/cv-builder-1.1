@@ -25,15 +25,12 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
 
   return (
     <div
+      className="max-[768px]:w-full w-[40%] max-[768px]:ml-0 ml-5 max-[768px]:mr-0 mr-[200px] max-[768px]:absolute relative max-[768px]:hidden block"
       // data-page={pageNumber} 
       style={{
         fontFamily,
-        width: '40%',
         minHeight: `${100}vh`,
-        marginLeft: "20px",
-        marginRight: "200px",
         marginTop: "30px",
-        position: "relative",
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
         ...(mode === "builder" && {

@@ -17,7 +17,7 @@ export const AdminDashboardLayout = () => {
 
   return (
     <div>
-      <div className="sticky top-0 z-50 flex items-center justify-between p-4 pb-0 lg:hidden">
+      <div className="sticky top-0 z-50 flex items-center justify-between p-4 pb-4 lg:pb-0 lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button size="icon" variant="ghost" className="bg-background">

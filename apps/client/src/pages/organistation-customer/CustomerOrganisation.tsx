@@ -124,12 +124,12 @@ const CustomerOrganisation = () => {
         <thead>
           <tr className="bg-blue-500 text-white">
             <th className="py-3 px-4 text-left rounded-tl-xl">S.No.</th>
-            <th className="py-3 px-4 text-left">CV Name</th>
-            <th className="py-3 px-4 text-left">CV ID</th>
-            <th className="py-3 px-4 text-left">Shared By</th>
-            <th className="py-3 px-4 text-left">Permission</th>
-            <th className="py-3 px-4 text-left">Expiry Date</th>
-            <th className="py-3 px-4 text-left">Edited By</th>
+            <th className="py-3 px-4 text-left whitespace-nowrap">CV Name</th>
+            <th className="py-3 px-4 text-left whitespace-nowrap">CV ID</th>
+            <th className="py-3 px-4 text-left whitespace-nowrap">Shared By</th>
+            <th className="py-3 px-4 text-left whitespace-nowrap">Permission</th>
+            <th className="py-3 px-4 text-left whitespace-nowrap">Expiry Date</th>
+            <th className="py-3 px-4 text-left whitespace-nowrap">Edited By</th>
             <th className="py-3 px-4 text-left rounded-tr-xl">Action</th>
           </tr>
         </thead>
@@ -227,7 +227,7 @@ const CustomerOrganisation = () => {
 
   return (
     <>
-      <div className="p-8 bg-gray-50 min-h-screen">
+      <div className="lg:p-8 p-4 bg-gray-50 min-h-screen">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Shared CVs</h2>
           <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800">

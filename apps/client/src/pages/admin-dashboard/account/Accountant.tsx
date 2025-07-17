@@ -19,7 +19,7 @@ export const AccountSettings = () => {
   return (
     <ScrollArea orientation="vertical" className="h-screen">
       <div className="mx-auto py-10 ">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center lg:flex-row flex-col gap-4">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
             <p className="text-primary/70 mt-2">
@@ -28,31 +28,31 @@ export const AccountSettings = () => {
           </div>
           <div>
             <Card className="p-0 bg-transparent border-0">
-              <nav className="space-x-2 flex">
+              <nav className="space-x-2 flex flex-wrap gap-3">
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'general' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
+                  className={`text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'general' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('general')}
                 >
                   Profile
                 </Button>
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'company' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
+                  className={`text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'company' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('company')}
                 >
                   Organization
                 </Button>
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'subscription' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
+                  className={`text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'subscription' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('subscription')}
                 >
                   Subscription
                 </Button>
                 <Button
                   variant="ghost"
-                  className={`w-full text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'communication' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
+                  className={`text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'communication' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('communication')}
                 >
                   Communication
