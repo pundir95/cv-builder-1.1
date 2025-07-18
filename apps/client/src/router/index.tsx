@@ -37,6 +37,7 @@ import AdminPlanPricing from "../pages/admin-dashboard/planPrice/AdminPlanPricin
 import Products from "../pages/admin-dashboard/products/Products";
 import { LoginModal } from "../pages/auth/LoginModal";
 import CustomerOrganisation from "../pages/organistation-customer/CustomerOrganisation";
+import ResumeChecker from "../pages/admin-dashboard/resume-checker/ResumeChecker";
 
 
 export const routes = createRoutesFromElements(
@@ -125,11 +126,9 @@ export const routes = createRoutesFromElements(
               <Route path="admin/templates" element={<TemplatesPage />} />
               <Route path="admin/pricing" element={<AdminPlanPricing />} />
               <Route path="admin/products" element={<Products />} />
+              <Route path="admin/resume-checker" element={<ResumeChecker />} />
         </Route>
       </Route>
-
- 
-
 
       <Route path="builder">
         <Route element={<AuthGuard />}>

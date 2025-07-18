@@ -16,6 +16,7 @@ import LoadingResume from './LoadingResume';
 import { createId } from "@paralleldrive/cuid2";
 import { ErrorPage } from '../public/error';
 import UploadPageError from './UploadPageError';
+import HumanCheckerModal from './HumanCheckerModal';
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -24,6 +25,7 @@ const UploadResume = () => {
   const [selectedStep, setSelectedStep] = useState<number>(0);
   const [isComplete, setIsComplete] = useState(false);
   const [newResume, setNewResume] = useState<any>(null);
+  const [humanChecker, setHumanChecker] = useState(false);
  
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -108,7 +110,13 @@ const UploadResume = () => {
     
   // }
   // navigate("/onboard/select-template")
-  navigate(`/builder/${resume_id}`)
+  if(isResumeChecker){
+    setHumanChecker(true)
+  }else{
+    navigate(`/builder/${resume_id}`)
+  }
+  
+  
 }
 
 const handleNextStep = () => {
@@ -134,6 +142,18 @@ const selectedStepHeading: { [key: number]: string } = {
 }
 
 console.log(selectedFile,"selectedFile")
+
+const handleSubmit = (data: {
+  name: string;
+  email: string;
+  phone: string;
+  industry: string;
+  file: File | null;
+}) => {
+
+  console.log(data,"data")
+}
+
 
 const uploadResume = () => {
   if (selectedFile) {
@@ -272,7 +292,7 @@ console.log(selectedStep,"selectedStep")
         </button>
       </div>}
   
-    
+    {humanChecker && <HumanCheckerModal open={humanChecker} onClose={() => setHumanChecker(false)} onSubmit={handleSubmit} />}
     {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} /> */}
      
     </div>
