@@ -48,7 +48,7 @@ const SidebarItem = ({ path, name, shortcut, icon, onClick }: SidebarItemProps) 
       size="lg"
       variant="ghost"
       className={cn(
-        "h-auto justify-start px-4 py-3 relative before:content-[''] before:absolute before:bottom-0 lg:before:left-1/2 translate-x-0 lg:before:-translate-x-1/2 before:w-1/2 before:h-[2px] before:opacity-0 before:duration-300 before:invisible before:bg-[#D6EF3C] before:rounded-full",
+        "h-auto justify-start px-0 xl:px-4 py-3 relative before:content-[''] before:absolute before:bottom-0 lg:before:left-1/2 translate-x-0 lg:before:-translate-x-1/2 before:w-1/2 before:h-[2px] before:opacity-0 before:duration-300 before:invisible before:bg-[#D6EF3C] before:rounded-full",
         isActive && "pointer-events-none before:opacity-1 before:visible text-secondary-foreground",
       )}
       onClick={onClick}
@@ -183,6 +183,8 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
           {sidebarItems.map((item) => (
             <SidebarItem {...item} key={item.path} onClick={() => { setOpen?.(false); setMobileOpen(false); }} />
           ))}
+        </div>
+
           <div className="lg:block hidden">
             <UserOptions>
               <Button size="lg" variant="ghost" className="justify-start px-3 whitespace-nowrap text-white">
@@ -190,10 +192,7 @@ export const Sidebar = ({ setOpen }: SidebarProps) => {
                 <span>{user?.name}</span>
               </Button>
             </UserOptions>
-
           </div>
-
-        </div>
 
         <Copyright className="ml-2" />
       </nav>
