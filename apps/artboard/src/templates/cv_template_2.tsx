@@ -14,7 +14,7 @@ import type {
   Skill,
   URL,
 } from "@reactive-resume/schema";
-import { Education, Experience } from "@reactive-resume/schema";
+import { Education as EducationType, Experience as ExperienceType } from "@reactive-resume/schema";
 import { cn, isEmptyString, isUrl, sanitize } from "@reactive-resume/utils";
 import get from "lodash.get";
 import { Fragment } from "react";
@@ -326,7 +326,7 @@ const Experience = () => {
   const section = useArtboardStore((state) => state.resume.sections.experience);
 
   return (
-    <Section<Experience> section={section} urlKey="url" summaryKey="summary">
+    <Section<ExperienceType> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
         <div style={{
           display: 'flex',
@@ -357,7 +357,7 @@ const Education = () => {
   const section = useArtboardStore((state) => state.resume.sections.education);
 
   return (
-    <Section<Education> section={section} urlKey="url" summaryKey="summary">
+    <Section<EducationType> section={section} urlKey="url" summaryKey="summary">
       {(item) => (
         <div style={{
           display: 'flex',

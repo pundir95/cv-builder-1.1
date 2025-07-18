@@ -14,7 +14,7 @@ import type {
     Skill,
     URL,
   } from "@reactive-resume/schema";
-  import { Education, Experience, Volunteer } from "@reactive-resume/schema";
+  import { Education as EducationType, Experience as ExperienceType, Volunteer as VolunteerType } from "@reactive-resume/schema";
   import {
     cn,
     hexToRgb,
@@ -288,7 +288,7 @@ const Rating = ({ level }: RatingProps) => {
   
     return (
       <div className="flex gap-5 flex-col mb-4">
-      <Section<Experience> section={section} urlKey="url" summaryKey="summary">
+      <Section<ExperienceType> section={section} urlKey="url" summaryKey="summary">
         {(item) => (
 
 
@@ -322,7 +322,7 @@ const Rating = ({ level }: RatingProps) => {
       <div className="mb-4">
   
 <div className="inner-part">
-      <Section<Education> section={section} urlKey="url" summaryKey="summary">
+      <Section<EducationType> section={section} urlKey="url" summaryKey="summary">
         {(item) => (
 
 

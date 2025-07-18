@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useArtboardStore } from "../store/artboard";
 import { sanitize, isUrl } from "@reactive-resume/utils";
-import type { Skill, Language, Experience, Education, Interest } from "@reactive-resume/schema";
+import type { Skill as SkillType, Language as LanguageType, Experience as ExperienceType, Education as EducationType, Interest as InterestType } from "@reactive-resume/schema";
 
 const orange = "#F9A825";
 const darkGray = "#3A3A4A";
@@ -31,7 +31,7 @@ const SidebarItem: React.FC<{ icon: React.ReactNode; children: React.ReactNode }
   </div>
 );
 
-const SkillList: React.FC<{ skills: Skill[] }> = ({ skills }) => (
+const SkillList: React.FC<{ skills: SkillType[] }> = ({ skills }) => (
   <ul style={{ paddingLeft: 16, margin: 0 }}>
     {skills.map((skill) => (
       <li key={skill.id} style={{ marginBottom: 4 }}>{skill.name}</li>
@@ -39,7 +39,7 @@ const SkillList: React.FC<{ skills: Skill[] }> = ({ skills }) => (
   </ul>
 );
 
-const LanguageList: React.FC<{ languages: Language[] }> = ({ languages }) => (
+const LanguageList: React.FC<{ languages: LanguageType[] }> = ({ languages }) => (
   <ul style={{ paddingLeft: 0, margin: 0, listStyle: "none" }}>
     {languages.map((lang) => (
       <li key={lang.id} style={{ marginBottom: 8 }}>
@@ -49,7 +49,7 @@ const LanguageList: React.FC<{ languages: Language[] }> = ({ languages }) => (
   </ul>
 );
 
-const ExperienceList: React.FC<{ experiences: Experience[] }> = ({ experiences }) => (
+const ExperienceList: React.FC<{ experiences: ExperienceType[] }> = ({ experiences }) => (
   <div>
     {experiences.map((exp) => (
       <div key={exp.id} style={{ marginBottom: 20 }}>
@@ -65,7 +65,7 @@ const ExperienceList: React.FC<{ experiences: Experience[] }> = ({ experiences }
   </div>
 );
 
-const EducationList: React.FC<{ education: Education[] }> = ({ education }) => (
+const EducationList: React.FC<{ education: EducationType[] }> = ({ education }) => (
   <div>
     {education.map((edu) => (
       <div key={edu.id} style={{ marginBottom: 16 }}>
@@ -77,7 +77,7 @@ const EducationList: React.FC<{ education: Education[] }> = ({ education }) => (
   </div>
 );
 
-const InterestsList: React.FC<{ interests: Interest[] }> = ({ interests }) => (
+const InterestsList: React.FC<{ interests: InterestType[] }> = ({ interests }) => (
   <ul style={{ paddingLeft: 16, margin: 0 }}>
     {interests.map((item) => (
       <li key={item.id} style={{ marginBottom: 4 }}>{item.name}</li>

@@ -38,6 +38,7 @@ import Products from "../pages/admin-dashboard/products/Products";
 import { LoginModal } from "../pages/auth/LoginModal";
 import CustomerOrganisation from "../pages/organistation-customer/CustomerOrganisation";
 import ResumeChecker from "../pages/admin-dashboard/resume-checker/ResumeChecker";
+import PreviewPage from "../pages/preview/preview-page";
 
 
 export const routes = createRoutesFromElements(
@@ -136,11 +137,18 @@ export const routes = createRoutesFromElements(
             <Route path=":id" loader={builderLoader} element={<BuilderPage />} />
             <Route path="shared/:id" loader={sharedBuilderLoader} element={<BuilderPage />} />
             <Route path="anyone/:id" loader={sharedWithAnyone} element={<BuilderPage />} />
-
             <Route index element={<Navigate replace to="/dashboard/resumes" />} />
           </Route>
         </Route>
       </Route>
+
+      <Route path="preview">
+        <Route element={<AuthGuard />}>
+        
+          <Route path=":id" loader={builderLoader} element={<PreviewPage />} />
+        </Route>
+      </Route>
+      
 
       {/* Public Routes */}
       <Route path=":username">

@@ -14,7 +14,7 @@ import type {
   Skill,
   URL,
 } from "@reactive-resume/schema";
-import { Education, Experience, Volunteer } from "@reactive-resume/schema";
+import { Education as EducationType, Experience as ExperienceType, Volunteer as VolunteerType } from "@reactive-resume/schema";
 import {
   cn,
   hexToRgb,

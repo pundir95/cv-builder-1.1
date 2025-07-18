@@ -14,7 +14,7 @@ import type {
   Skill,
   URL,
 } from "@reactive-resume/schema";
-import { Education, Experience, Volunteer } from "@reactive-resume/schema";
+import { Education as EducationType, Experience as ExperienceType, Volunteer as VolunteerType } from "@reactive-resume/schema";
 import { cn, isEmptyString, isUrl, linearTransform, sanitize } from "@reactive-resume/utils";
 import get from "lodash.get";
 import React, { Fragment } from "react";
@@ -454,7 +454,7 @@ const Profiles = ({ isSidebarSection = false }: { isSidebarSection?: boolean }) 
 const Experience = ({ isSidebarSection = false }: { isSidebarSection?: boolean }) => {
   const section = useArtboardStore((state) => state.resume.sections.experience);
   return (
-    <Section<Experience> section={section} urlKey="url" summaryKey="summary" isSidebarSection={isSidebarSection}>
+    <Section<ExperienceType> section={section} urlKey="url" summaryKey="summary" isSidebarSection={isSidebarSection}>
       {(item) => (
         <div>
           <LinkedEntity
@@ -475,7 +475,7 @@ const Experience = ({ isSidebarSection = false }: { isSidebarSection?: boolean }
 const Education = ({ isSidebarSection = false }: { isSidebarSection?: boolean }) => {
   const section = useArtboardStore((state) => state.resume.sections.education);
   return (
-    <Section<Education> section={section} urlKey="url" summaryKey="summary" isSidebarSection={isSidebarSection}>
+    <Section<EducationType> section={section} urlKey="url" summaryKey="summary" isSidebarSection={isSidebarSection}>
       {(item) => (
         <div>
           <LinkedEntity
@@ -570,7 +570,7 @@ const Publications = ({ isSidebarSection = false }: { isSidebarSection: boolean 
 const Volunteer = ({ isSidebarSection = false }: { isSidebarSection: boolean }) => {
   const section = useArtboardStore((state) => state.resume.sections.volunteer);
   return (
-    <Section<Volunteer> section={section} urlKey="url" summaryKey="summary" isSidebarSection={isSidebarSection}>
+    <Section<VolunteerType> section={section} urlKey="url" summaryKey="summary" isSidebarSection={isSidebarSection}>
       {(item) => (
         <div>
           <LinkedEntity
