@@ -6,7 +6,7 @@ import { t } from "@lingui/macro";
 import { Button } from "@reactive-resume/ui";
 import { usePrintResume } from "@/client/services/resume";
 import { CircleNotch, FilePdf, Download, ArrowLeft } from "@phosphor-icons/react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { toast } from "@/client/hooks/use-toast";
 import { sharedState } from "@/artboard/utils/sharedState";
 import html2pdf from "html2pdf.js";
@@ -15,6 +15,8 @@ const HEADER_HEIGHT = 64; // px, adjust if your header is a different height
 
 export const PreviewPage = () => {
     const user=localStorage.getItem("user");
+    const pathname  =useLocation().pathname;
+    console.log(pathname,"pathname in preview page")
     const userData=JSON.parse(user || "{}");
   const frameRef = useBuilderStore((state) => state.frame.ref);
   const setFrameRef = useBuilderStore((state) => state.frame.setRef);
@@ -164,7 +166,7 @@ export const PreviewPage = () => {
         onClick={() => navigate(-1)}
         style={{
           position: "fixed",
-          top: 32,
+          bottom: 32,
           left: 32,
           zIndex: 1100,
           background: "white",
