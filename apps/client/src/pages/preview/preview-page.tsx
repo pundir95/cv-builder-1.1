@@ -199,8 +199,7 @@ export const PreviewPage = () => {
           ref={setFrameRef}
           title={resume.id}
           src="/artboard/builder"
-            className="w-6/12 h-6/12"
-        style={{ height: `calc(100vh - 64px)` }}
+            className="w-full h-full"
         />
       </div>
       {/* Floating Download Button */}

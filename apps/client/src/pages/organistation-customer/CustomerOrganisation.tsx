@@ -228,7 +228,7 @@ const CustomerOrganisation = () => {
   return (
     <>
       <div className="lg:p-8 p-4 bg-gray-50 min-h-screen">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6 lg:flex-row flex-col gap-4">
           <h2 className="text-2xl font-bold">Shared CVs</h2>
           <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800">
             Create New Resume
@@ -237,7 +237,7 @@ const CustomerOrganisation = () => {
 
         <div className="mb-6">
           <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+            <nav className="-mb-px flex space-x-8 overflow-auto">
               <button
                 onClick={() => setActiveTab('sharedByMe')}
                 className={`${

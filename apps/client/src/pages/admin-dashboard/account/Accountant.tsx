@@ -17,7 +17,7 @@ export const AccountSettings = () => {
   const userData = JSON.parse(user)
 
   return (
-    <ScrollArea orientation="vertical" className="h-screen">
+    <ScrollArea orientation="vertical" className="lg:h-screen">
       <div className="mx-auto py-10 ">
         <div className="flex justify-between items-center lg:flex-row flex-col gap-4">
           <div className="mb-8">
@@ -133,14 +133,16 @@ export const AccountSettings = () => {
           <div className={`md:col-span-3 ${activeSection !== 'general' && 'hidden'}`}>
             {/* Profile Card */}
             <Card className="p-6 mb-6 bg-white border border-[#e6f3fd]">
-              <div className="flex items-center gap-4">
-                <div className="size-20 rounded-full bg-[#0D84F3] flex items-center justify-center">
-                  <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-[#0D84F3]">{userData?.first_name} {userData?.last_name}</h3>
-                  <p className="text-[#0D84F3]/70">{userData?.subscription_details?.length > 0 ? "Premium Member" : "Free Member"}</p>
-                  <p className="text-sm text-[#0D84F3]/50">Member since {userData?.date_joined.split("T")[0]}</p>
+              <div className="flex lg:items-center gap-4 lg:flex-row flex-col">
+                <div className="flex items-center gap-4">
+                  <div className="size-20 rounded-full bg-[#0D84F3] flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#0D84F3]">{userData?.first_name} {userData?.last_name}</h3>
+                    <p className="text-[#0D84F3]/70">{userData?.subscription_details?.length > 0 ? "Premium Member" : "Free Member"}</p>
+                    <p className="text-sm text-[#0D84F3]/50">Member since {userData?.date_joined.split("T")[0]}</p>
+                  </div>
                 </div>
                 <Button
                   variant="outline"
@@ -205,7 +207,7 @@ export const AccountSettings = () => {
 
                 <Separator />
 
-                <div className="flex items-center justify-between">
+                <div className="flex lg:items-center justify-between lg:flex-row flex-col gap-4">
                   <div>
                     <h3 className="text-lg font-medium text-destructive">Delete Account</h3>
                     <p className="text-sm text-[#0D84F3]/70">

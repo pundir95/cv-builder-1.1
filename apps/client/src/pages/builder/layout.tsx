@@ -121,6 +121,9 @@ export const BuilderLayout = () => {
     return (
       <>
       <div className="relative size-full overflow-hidden">
+        <div className="lg:hidden">
+          <button className="bg-blue-600 text-white px-6 py-4 rounded-full fixed bottom-4 right-4 z-20">Preview</button>
+        </div>
         <PanelGroup direction="horizontal">
          {showLeftSidebar? <Panel
             className={cn("z-10 bg-background !flex-grow-1 lg:!flex-grow-[55] !flex-shrink !basis-0", !leftHandle.isDragging && "transition-[flex]")}
@@ -135,7 +138,7 @@ export const BuilderLayout = () => {
           </Panel>
         
         {showRightSidebar ?<Panel
-            className={cn("z-10 bg-background absolute top-0 right-0 w-[80%] shadow-lg lg:shadow-none lg:relative", !rightHandle.isDragging && "transition-[flex]")}
+            className={cn("z-10 bg-background absolute top-0 right-0 w-[80%] shadow-lg lg:shadow-none lg:relative lg:!flex-grow-[55]  !flex-shrink !basis-0", !rightHandle.isDragging && "transition-[flex]")}
             onResize={rightSetSize}
           >
             <RightSidebar showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} setShowLeftSidebar={setShowLeftSidebar}  showLeftSidebar={showLeftSidebar}/>

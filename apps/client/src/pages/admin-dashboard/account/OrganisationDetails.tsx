@@ -28,7 +28,7 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
        {userData?.role !== "employee" && <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
             <Pencil size={16} onClick={() => setShowModal({...showModal, organisationDetailsEdit: true, organisationDetails: false})} />
           </button>}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 lg:flex-row flex-col">
           {/* Avatar */}
           <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-600">
             {org.name[0]}
