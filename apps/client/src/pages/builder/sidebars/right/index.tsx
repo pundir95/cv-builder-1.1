@@ -36,8 +36,17 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
   };
 
   return (
-    <div className="flex bg-blue-100">
+    <div className="flex bg-blue-100 relative">
       <ScrollArea orientation="vertical" className={`h-screen flex-1 pb-16 lg:pb-0 transition-all duration-300 bg-[#e0effd] ${!showRightSidebar ? 'w-0 opacity-0' : 'w-full opacity-100'}`}>
+        
+      <div className="text-right pt-2 pr-2">
+        <button
+          className="bg-blue-600 text-white w-[30px] h-[30px] rounded-full z-20 lg:hidden"
+            onClick={() => setShowRightSidebar(!showRightSidebar)}
+          >
+            &times;
+          </button>
+        </div>
        <div 
          ref={containterRef} 
          className={`grid gap-y-6 p-6 @container/right transition-all duration-300 ${!showRightSidebar ? 'w-0 opacity-0 translate-x-full' : 'w-full opacity-100 translate-x-0'}`}

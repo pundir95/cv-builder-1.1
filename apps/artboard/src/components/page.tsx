@@ -25,7 +25,7 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
 
   return (
     <div
-      className="max-[768px]:w-full w-[40%] max-[768px]:ml-0 ml-5 max-[768px]:mr-0 mr-[200px] max-[768px]:absolute relative max-[768px]:hidden block"
+      className="max-[768px]:w-full w-[40%] max-[768px]:ml-0 ml-5 max-[768px]:mr-0 mr-[200px] max-[768px]:absolute relative block"
       // data-page={pageNumber} 
       style={{
         fontFamily,

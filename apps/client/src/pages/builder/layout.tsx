@@ -115,6 +115,7 @@ export const BuilderLayout = () => {
   const rightHandle = useBuilderStore((state) => state.panel.right.handle);
   const [showRightSidebar, setShowRightSidebar] = useState<boolean>(false);
   const [showLeftSidebar, setShowLeftSidebar] = useState<boolean>(true);
+  const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
   console.log(showLeftSidebar,"showLeftSidebar")
 
   if (true) {
@@ -122,18 +123,21 @@ export const BuilderLayout = () => {
       <>
       <div className="relative size-full overflow-hidden">
         <div className="lg:hidden">
-          <button className="bg-blue-600 text-white px-6 py-4 rounded-full fixed bottom-4 right-4 z-20">Preview</button>
+
+          <button onClick={() => setIsPreviewOpen(!isPreviewOpen)} className="bg-blue-600 text-white px-6 py-4 rounded-full fixed bottom-4 right-4 z-20">
+            {isPreviewOpen ? "Close" : "Preview" }
+            </button>
         </div>
         <PanelGroup direction="horizontal">
          {showLeftSidebar? <Panel
-            className={cn("z-10 bg-background !flex-grow-1 lg:!flex-grow-[55] !flex-shrink !basis-0", !leftHandle.isDragging && "transition-[flex]")}
+            className={cn(`z-10 bg-background !flex-grow-1 lg:!flex-grow-[55] !flex-shrink !basis-0 $`, !leftHandle.isDragging && "transition-[flex]")}
             onResize={leftSetSize}
           >
             <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />
           </Panel>
           : <LeftSidebar showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar} setShowRightSidebar={setShowRightSidebar} showRightSidebar={showRightSidebar} />}
          
-          <Panel className="!flex-grow-0 lg:!flex-grow-[45] !flex-shrink !basis-0">
+          <Panel className={`!flex-grow-0 lg:!flex-grow-[45] !flex-shrink !basis-0 ${isPreviewOpen  ? "fixed top-0 left-0 w-full z-10": ""}`}>
             <OutletSlot showRightSidebar={showRightSidebar} setShowRightSidebar={setShowRightSidebar} showLeftSidebar={showLeftSidebar} setShowLeftSidebar={setShowLeftSidebar}/>
           </Panel>
         
