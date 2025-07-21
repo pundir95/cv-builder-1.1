@@ -18,7 +18,7 @@ const ExperienceHeader = () => {
   const { logout } = useLogout();
   const navigate = useNavigate();
   const location = useLocation();
-  const isNew = location.search.includes("create-new-resume") || location.search.includes("true=resume-checker");
+  const isNew = location.search.includes("create-new-resume") || location.search.includes("true=resume-checker") || location.search.includes("upload-resume?resume_id");
   return (
     <div className="fixed inset-x-0 top-0 z-20 h-16 bg-[#0D84F3]">
       <div className="flex h-full items-center justify-between px-4">
