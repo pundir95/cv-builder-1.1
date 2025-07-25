@@ -195,7 +195,7 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
             </Button>
             <Button size="sm" variant="success" className="text-white px-4 py-2 rounded-full"  title="Check" onClick={onCheck}>
               <CheckCircle size={16} />
-              <span className="ml-1 hidden sm:inline" id="check">Improve Resume</span>
+              <span className="ml-1 whitespace-nowrap hidden sm:inline" id="check">Improve Resume</span>
             </Button>
             <Button size="sm" className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-800" onClick={onPdfExport} title="Download">
               <Download size={16} />

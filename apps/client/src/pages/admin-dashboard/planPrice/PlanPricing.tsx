@@ -88,7 +88,7 @@ export const PlanPricing = () => {
         <title>{t`Pricing Plans`} - Resume Builder</title>
       </Helmet>
 
-      <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
+      <div className="w-full mx-auto px-4 py-4 sm:px-6 lg:px-8 lg:py-8">
         <div className="">
          {subscribed && <div className="flex items-center mb-6 cursor-pointer" onClick={()=>{
             setSubscribed(false)
@@ -105,7 +105,7 @@ export const PlanPricing = () => {
         :
         <>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center mb-8 gap-4">
+        <div className="flex items-center justify-center mb-8 gap-4">
         <span className="text-gray-700 font-medium">Monthly</span>
         <button
           className={`relative w-14 h-7 rounded-full transition-colors duration-200 focus:outline-none border-2 border-gray-300 ${isYearly ? 'bg-green-500 border-green-500' : 'bg-gray-300'}`}
@@ -115,7 +115,7 @@ export const PlanPricing = () => {
           aria-label="Toggle yearly pricing"
         >
           <span
-            className={`absolute left-1 top-1 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 border ${isYearly ? 'translate-x-7 border-green-500' : 'border-gray-300'}`}
+            className={`absolute left-[2px] top-[2px] w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 border ${isYearly ? 'translate-x-7 border-green-500' : 'border-gray-300'}`}
             style={{ transform: isYearly ? 'translateX(28px)' : 'translateX(0)' }}
           />
         </button>

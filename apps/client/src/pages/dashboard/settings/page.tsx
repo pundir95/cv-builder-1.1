@@ -17,7 +17,7 @@ export const SettingsPage = () => (
       </title>
     </Helmet>
 
-    <div className="max-w-2xl space-y-4">
+    <div className="lg:max-w-2xl space-y-4">
       <motion.h1
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}

@@ -38,14 +38,14 @@ export const AdminDashboardPage = () => {
           <title>{t`Admin Dashboard`} - {t`Reactive Resume`}</title>
         </Helmet>
 
-        <main className="p-8">
+        <main className="py-8 md:px-8">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-primary">Welcome {data?.admin_details?.email}</h2>
             <p className="text-primary/70 mt-2">Manage and monitor user accounts</p>
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-primary/5 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-primary">Total Users</h3>
               <p className="text-3xl font-bold text-primary mt-2">{data?.total_user}</p>

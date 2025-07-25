@@ -25,7 +25,7 @@ export const AdminDashboardLayout = () => {
             </Button>
           </SheetTrigger>
 
-          <SheetContent showClose={false} side="left" className="focus-visible:outline-none">
+          <SheetContent showClose={false} side="left" className="p-0 focus-visible:outline-none">
             <SheetClose asChild className="absolute left-4 top-4">
               <Button size="icon" variant="ghost">
                 <SidebarSimple />
@@ -47,7 +47,7 @@ export const AdminDashboardLayout = () => {
         </div>
       </motion.div>
 
-      <main className="mx-6 my-4 lg:mx-8 lg:pl-[200px]">
+      <main className="mx-6 my-4 lg:mx-0 lg:pl-[240px]">
         <Outlet />
       </main>
     </div>

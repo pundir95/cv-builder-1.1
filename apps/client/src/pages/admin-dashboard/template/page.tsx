@@ -60,7 +60,7 @@ export const TemplatesPage = () => {
         <title>{t`Templates`} - {t`Reactive Resume`}</title>
       </Helmet>
 
-      <div className="p-8">
+      <div className="lg:p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold text-primary">{t`Resume Templates`}</h2>
@@ -71,7 +71,7 @@ export const TemplatesPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {templates.map((template) => (
-            <div key={template.id} className="bg-primary/5 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow transform hover:-translate-y-1 max-w-[280px] mx-auto">
+            <div key={template.id} className="bg-primary/5 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow transform hover:-translate-y-1 mx-auto">
               <div className="aspect-[210/297] relative">
                 <img 
                   src={template.thumbnail}

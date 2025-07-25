@@ -52,35 +52,38 @@ export default function ResumeChecker() {
   if (resumes.length === 0) return <div className="p-8">No resumes found.</div>;
 
   return (
-    <div className="p-8">
+    <div className="lg:p-8">
       <h2 className="text-2xl font-bold mb-4">Resume Checker</h2>
       <p className="text-sm text-gray-500 mb-4">This is a list of all the resumes that have been uploaded to the system.</p>
-      <table className="min-w-full bg-white rounded shadow">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="p-4 text-left">Name</th>
-            <th className="p-4 text-left">Email</th>
-            <th className="p-4 text-left">CV Name</th>
-            <th className="p-4 text-left">Phone Number</th>
-            <th className="p-4 text-left">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {resumes.map((resume: any, idx: number) => (
-            <tr key={resume.id || idx} className="border-b hover:bg-gray-50">
-              <td className="p-4">{resume.user?.first_name} {resume.user?.last_name}</td>
-              <td className="p-4">{resume.user?.email}</td>
-              <td className="p-4">{resume.cv_name}</td>
-              <td className="p-4">{resume.user?.phone_number}</td>
-              <td className="p-4">
-                <Button size="sm" variant="outline" onClick={() => {/* TODO: Implement edit logic */}}>
-                  <Pencil size={16} /> Edit
-                </Button>
-              </td>
+      <div className="overflow-x-auto w-full">
+        <table className="min-w-full bg-white rounded shadow">
+          
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="p-4 text-left whitespace-nowrap">Name</th>
+              <th className="p-4 text-left whitespace-nowrap">Email</th>
+              <th className="p-4 text-left whitespace-nowrap">CV Name</th>
+              <th className="p-4 text-left whitespace-nowrap">Phone Number</th>
+              <th className="p-4 text-left whitespace-nowrap">Edit</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {resumes.map((resume: any, idx: number) => (
+              <tr key={resume.id || idx} className="border-b hover:bg-gray-50">
+                <td className="p-4 whitespace-nowrap">{resume.user?.first_name} {resume.user?.last_name}</td>
+                <td className="p-4">{resume.user?.email}</td>
+                <td className="p-4 whitespace-nowrap">{resume.cv_name}</td>
+                <td className="p-4 whitespace-nowrap">{resume.user?.phone_number}</td>
+                <td className="p-4">
+                  <Button className="flex gap-1 items-center" size="sm" variant="outline" onClick={() => {/* TODO: Implement edit logic */}}>
+                    <Pencil size={16} /> Edit
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export const cv_template_16 = ({ columns, isFirstPage = false }: TemplateProps) 
   const primaryColor = useArtboardStore((state) => state.resume.metadata.theme.primary);
 
   return (
-    <div className="flex gap-5 min-h-[100vh]">
+    <div className="flex gap-5 min-h-[100vh] lg:max-h-none max-h-[100vh] overflow-auto">
       <div className="w-[40%] flex flex-col min-h-full">
         <div className="profile-pic mb-2">
           <img src={profilePic} className="mr-auto w-full h-[339px] object-cover rounded-b-[60px] rounded-l-[0px]" />

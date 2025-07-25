@@ -43,7 +43,7 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="w-[240px] bg-blue-500 text-white p-6 flex flex-col">
+    <div className="md:w-[240px] h-full bg-blue-500 text-white p-6 flex flex-col">
       <div className="mb-8">
         <h1 className="text-2xl font-bold">{t`Dashboard`}</h1>
       </div>

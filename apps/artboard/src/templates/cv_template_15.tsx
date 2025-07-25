@@ -93,7 +93,7 @@ import type {
     return (
         <>
         <div className="py-8 px-9">
-            <h2 className="uppercase text-[48px] font-[700] mb-5 text-[#0E1E37]">{basics?.name.split(" ")[0]} <span className="text-[#CFD823]">{basics?.name.split(" ")[1]}</span></h2>
+            <h2 className="uppercase text-[48px] font-[700] mb-5 text-[#0E1E37] overflow-wrap-anywhere">{basics?.name.split(" ")[0]} <span className="text-[#CFD823]">{basics?.name.split(" ")[1]}</span></h2>
             <p className="tracking-[4px] mb-6 font-semibold uppercase text-[#0E1E37]">{basics?.profession}</p>
             <div className="contact-info bg-[#CFD823] rounded-[20px] p-4 flex flex-col gap-2.5">
               <div className="flex gap-3">
@@ -425,7 +425,7 @@ const Rating = ({ level }: RatingProps) => {
 
   
     return (
-      <div className="flex gap-5 min-h-[100vh]">
+      <div className="flex gap-5 min-h-[100vh] lg:max-h-none max-h-[100vh] overflow-auto">
         <div className="w-[60%] flex flex-col min-h-full">
           {isFirstPage && <Header />}
           <div className="journey-wrapper flex-1 rounded p-8 bg-[#0E1E37] rounded-r-[60px] rounded-b-[60px] rounded-l-[0px]">
@@ -437,31 +437,31 @@ const Rating = ({ level }: RatingProps) => {
             <h3 className="text-white tracking-[4px] mb-2.5 uppercase text-[18px] font-extrabold">Design Work</h3>
             <div className="mb-4">
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
             </div>
             <h3 className="text-white tracking-[4px] mb-2.5 uppercase text-[18px] font-extrabold">Portfolio</h3>
             <div className="mb-4">
               <div className="mb-2.5">
-                <a href="#" className="text-[10px] text-white">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
+                <a href="#" className="text-[10px] text-white overflow-wrap-anywhere">https://www.figma.com/design/JvkLhLziuyr0oYwpIimooI/Zety-Resume-Builder?node-id=2007-250&t=kJFKyrWdzFth1Pnh-0</a>
               </div>
             </div>
           </div>

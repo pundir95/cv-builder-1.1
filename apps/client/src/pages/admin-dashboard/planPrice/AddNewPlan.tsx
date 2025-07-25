@@ -99,7 +99,7 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-8 px-4">
+    <div className="w-full mx-auto mt-8">
       <div className="flex items-center mb-6">
         <button
           type="button"
@@ -139,7 +139,7 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
 
       <div className="mb-4">
         <label className="block mb-2 font-medium">Plan Type</label>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           {planTypeList.map(type => (
             <button
               key={type.value}
@@ -159,7 +159,7 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
 
       <div className="mb-4">
         <label className="block mb-2 font-medium">Plan Validity</label>
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap">
           {planValidityList.map(type => (
             <button
               key={type.value}
@@ -178,14 +178,14 @@ const AddNewPlan: React.FC<AddNewPlanProps> = ({ onBack }) => {
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-medium">Plan Price</label>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <span className="bg-gray-100 px-4 py-3 rounded-l-lg text-gray-400">$</span>
           <input
             type="number"
             placeholder="E.g. 9"
             value={planPrice}
             onChange={e => setPlanPrice(e.target.value)}
-            className={`w-full bg-gray-100 rounded-r-lg px-4 py-3 outline-none placeholder-gray-400 ${
+            className={`w-full bg-gray-100 border border-transparent rounded-r-lg px-4 py-3 outline-none placeholder-gray-400 ${
               errors.planPrice ? 'border-2 border-red-500' : ''
             }`}
           />

@@ -41,7 +41,7 @@ export const ListView = ({ resumes, loading }: { resumes: any[], loading: boolea
                 <th className="px-6 py-3 text-left text-sm font-semibold text-white">Name</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-white">Creation</th>
                 <th className="px-6 py-3 text-right text-sm font-semibold text-white">Strength</th>
-                <th className="px-6 py-3 text-right text-sm font-semibold text-white">Actions</th>
+                <th className="px-6 py-3 text-center text-sm font-semibold text-white">Actions</th>
               </tr>
             </thead>
             <tbody>

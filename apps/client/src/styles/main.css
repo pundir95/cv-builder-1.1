@@ -53,3 +53,7 @@
 {
   left: 30px;
 }
+.overflow-wrap-anywhere
+{
+  overflow-wrap: anywhere;
+}
