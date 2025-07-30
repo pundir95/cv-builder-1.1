@@ -37,6 +37,9 @@ export const ExportSection = () => {
   const user=localStorage.getItem("user");
   const userData=JSON.parse(user || "{}");
   const { toast } = useToast();
+  
+  // Fix for HTML content escaping issue: Using FormData instead of JSON
+  // to prevent automatic escaping of quotes and special characters in HTML
   const onPdfExport = async () => {
 
     if(userData.subscription_details.length == 0){
@@ -51,12 +54,24 @@ export const ExportSection = () => {
     const templateRef = sharedState.getTemplateRef();
     if (templateRef) {
       const templateString = templateRef.innerHTML;
-      axios.post(`/cv-manager/cv-download/`, {
-        
-          "html_content": templateString,
-          "cv_name": "Dummy"
       
-      }, { responseType: 'blob' })
+      // Option 1: Use FormData to avoid JSON escaping issues
+      const formData = new FormData();
+      formData.append('html_content', templateString);
+      formData.append('cv_name', 'Dummy');
+      
+      // Option 2: If backend doesn't support FormData, use JSON with proper encoding
+      // const requestData = {
+      //   html_content: templateString,
+      //   cv_name: "Dummy"
+      // };
+      
+      axios.post(`/cv-manager/cv-download/`, formData, { 
+        responseType: 'blob',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      })
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' });
         const downloadUrl = window.URL.createObjectURL(blob);
