@@ -15,7 +15,7 @@ export const AuthGuard = () => {
   const { user, loading } = useUser();
   if (loading) return null;
 
-  if (user && (role === "cv_user" || role === "employee") || refId) {
+  if (user && (role === "cv_user" || role === "employee" || role === "admin") || refId) {
     return <Outlet />;
   }else{
     return <Navigate replace to={`/admin`} />;

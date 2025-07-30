@@ -6,9 +6,11 @@ import type { LoaderFunction } from "react-router";
 import { redirect, useLocation, useParams } from "react-router";
 
 import { queryClient } from "@/client/libs/query-client";
-import { findResumeById, findResumeWithAnyone, findSahredResumeById } from "@/client/services/resume";
+import { createResume, findResumeById, findResumeCheck, findResumeWithAnyone, findSahredResumeById } from "@/client/services/resume";
 import { useBuilderStore } from "@/client/stores/builder";
 import { useResumeStore } from "@/client/stores/resume";
+import { resumeData } from '../dashboard/resumes/constant';
+import { createId } from "@paralleldrive/cuid2";
 
 export const BuilderPage = () => {
   const frameRef = useBuilderStore((state) => state.frame.ref);
@@ -199,6 +201,100 @@ export const sharedWithAnyone: LoaderFunction<any> = async ({ params }) => {
       localStorage.setItem("user", JSON.stringify(cv_details?.user))
 
       console.log(resumeDto, "resumeDto")
+
+    useResumeStore.setState({ resume: resumeDto });
+    useResumeStore.temporal.getState().clear();
+
+    return resumeDto;
+  } catch {
+    return redirect("/dashboard");
+  }
+};
+
+
+export const humanResumeCheckerLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const id = params.id!;
+
+
+    const resume = await queryClient.fetchQuery({
+      queryKey: ["resume", { id }],
+      queryFn: () => findResumeCheck({ id,reference_id:id }),
+    });
+
+
+
+    console.log(resume,"resume")
+    console.log(resumeData,"resumeData")
+    let otherData=resume?.data?.user_cv
+    let resumeFinal=resume?.data?.user_cv?.cv_data
+
+
+    localStorage.setItem("uploadCVName",resumeFinal?.personal_info.name)
+    resumeData.basics.name = resumeFinal?.personal_info.name;
+    resumeData.basics.email = resumeFinal?.personal_info?.email;
+    resumeData.basics.phone = resumeFinal?.personal_info?.phone;
+    resumeData.sections.summary.content = resumeFinal?.summary;
+    resumeData.sections.experience.items = resumeFinal?.work_experience?.map((ele:any)=>{
+      return {
+        company: ele?.company,
+        date:ele?.duration,
+        id:createId(),
+        location:"",
+        position: ele.position,
+        summary: Array.isArray(ele.responsibilities) ? ele.responsibilities.join('\n') : ele.responsibilities,
+        url:{label: "", href: ""},
+        visible:true
+      }
+    });
+    resumeData.sections.skills.items = resumeFinal?.skills?.technical
+    ?.map((ele:any)=>{
+      return {
+        id:createId(),
+        name: ele,
+        level: 2,
+        visible:true,
+        description:"",
+        keywords:[]
+
+      }
+    });
+      resumeData.sections.education.items = resumeFinal?.education?.map((ele:any)=>{
+      return {
+        area:ele?.area,
+        date:ele?.year,
+        id:createId(),
+        institution:ele?.institution,
+        score:"",
+        studyType:ele?.degree,
+        summary:ele?.summary,
+        url:{label: "", href: ""},
+        visible:true
+      }
+    });
+
+    console.log(resumeData,"resumeData")
+
+
+   
+
+     const resumeDto = {
+        id: otherData.id,
+        title: otherData?.title,
+        slug: otherData.slug,
+        data1: resumeData,
+        visibility: otherData.visibility,
+        userId: otherData.user?.id ?? '',
+        createdAt: otherData.createdAt,
+        updatedAt: otherData.updatedAt,
+        created_at: otherData.createdAt,
+        updated_at: otherData.updatedAt,
+        locked: otherData.locked,
+        data: resumeData,
+        cv_template: otherData.cv_template,
+      };
+    
 
     useResumeStore.setState({ resume: resumeDto });
     useResumeStore.temporal.getState().clear();

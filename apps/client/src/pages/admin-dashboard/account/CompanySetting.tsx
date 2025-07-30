@@ -25,7 +25,15 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
     organisationDetailsEdit: false,
     createAddOnUser: false
   });
+  const [countries,setCountries] = useState([]);  
+  useEffect(()=>{
+    axios.get(`/company/countries/`).then((res)=>{
+      console.log(res);
+      setCountries(res.data);
+    })
+  },[])
 
+  console.log(countries,"countries");
 
   useEffect(()=>{
     axios.get(`/company/company-details/`).then((res)=>{
@@ -135,13 +143,19 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Country Name </Label>
-                    <Input
-                      type="text"
+                    <Label>Country Name</Label>
+                    <select
                       value={country}
-                      onChange={e => setCountry(e.target.value)}
-                      className={!isEditing ? "bg-muted" : ""}
-                    />
+                      onChange={(e) => setCountry(e.target.value)}
+                      className={`w-full px-3 py-2 rounded-md border ${!isEditing ? "bg-muted" : ""}`}
+                    >
+                      <option value="">Select a country</option>
+                      {countries.map((country:any,index:number) => (
+                        <option key={index} value={country.id}>
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
                     {errors.companyAddress && <div className="text-red-500 text-xs">{errors.companyAddress}</div>}
                   </div>
 

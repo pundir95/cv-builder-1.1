@@ -26,3 +26,8 @@ export const findResumeWithAnyone = async (data: { id: string,shared_id: string 
   const response = await axios.get<ResumeDto>(`/share-resume/shared/${data.shared_id}/ref_id/${data.id}`);
   return response.data;
 };
+
+export const findResumeCheck = async (data: { id: string,reference_id: string }) => {
+  const response = await axios.get<ResumeDto>(`/cv-manager/human-resume-verification/${data.id}/`);
+  return response.data;
+};

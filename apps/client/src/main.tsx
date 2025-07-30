@@ -11,9 +11,9 @@ import { setLoadingState } from "./libs/axios";
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 
 root.render(
-  <StrictMode>
+  // <StrictMode>
       <ToastProvider>
         <RouterProvider router={router} />
       </ToastProvider>
-  </StrictMode>,
+  // </StrictMode>,
 );

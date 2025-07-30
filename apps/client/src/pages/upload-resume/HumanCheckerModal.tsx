@@ -4,7 +4,10 @@ import {
   Input, Label, Button,
   Select, SelectTrigger, SelectContent, SelectItem, SelectValue
 } from '@reactive-resume/ui';
-import { User, Envelope, Phone, Buildings, UploadSimple, FileText } from '@phosphor-icons/react';
+import { User, Envelope, Phone, Buildings, UploadSimple, FileText, CheckCircle } from '@phosphor-icons/react';
+import { axios } from '@/client/libs/axios';
+import { toast } from '@/client/hooks/use-toast';
+import { useNavigate } from 'react-router';
 
 interface HumanCheckerModalProps {
   open: boolean;
@@ -38,7 +41,8 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitting, setSubmitting] = useState(false);
-
+  const [isComplete, setIsComplete] = useState(false);    
+  const navigate = useNavigate()
   const handleChange = (field: string, value: string | File | null) => {
     setForm((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: '' }));
@@ -66,10 +70,32 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
+    console.log(form,"form")
     setTimeout(() => {
       setSubmitting(false);
-      onSubmit(form);
-      onClose();
+      const formData = new FormData();
+      formData.append("name", form.name)
+      formData.append("email", form.email)
+      formData.append("phone", form.phone)
+      formData.append("industry", form.industry)
+      formData.append("file", form.file as File)
+      axios.post("/cv-manager/human-resume-verification/", formData).then(async (res) => {
+        console.log(res.data.data);
+        setIsComplete(true)
+        toast({
+          title: "Resume verified successfully",
+          description: "Our team will review and provide feedback within 24 hours.",
+          duration: 5000,
+          className: "bg-green-500 text-white",
+          icon: <CheckCircle size={24} className="text-white" />, 
+          variant: "default",
+        })
+        navigate("/dashboard/resumes")
+        // localStorage.setItem("uploadCVName",res.data.data.personal_info.name)
+        onClose();
+      });
+      // onSubmit(form);
+      // onClose();
     }, 800);
   };
 
