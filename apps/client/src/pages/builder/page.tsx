@@ -212,7 +212,7 @@ export const sharedWithAnyone: LoaderFunction<any> = async ({ params }) => {
 };
 
 
-export const humanResumeCheckerLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
+export const humanResumeCheckerLoader: LoaderFunction<any> = async ({ params }) => {
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const id = params.id!;
@@ -227,8 +227,8 @@ export const humanResumeCheckerLoader: LoaderFunction<ResumeDto> = async ({ para
 
     console.log(resume,"resume")
     console.log(resumeData,"resumeData")
-    let otherData=resume?.data?.user_cv
-    let resumeFinal=resume?.data?.user_cv?.cv_data
+    let otherData=(resume as any)?.data?.user_cv 
+    let resumeFinal=(resume as any)?.data?.user_cv?.cv_data
 
 
     localStorage.setItem("uploadCVName",resumeFinal?.personal_info.name)
@@ -276,9 +276,6 @@ export const humanResumeCheckerLoader: LoaderFunction<ResumeDto> = async ({ para
 
     console.log(resumeData,"resumeData")
 
-
-   
-
      const resumeDto = {
         id: otherData.id,
         title: otherData?.title,
@@ -296,7 +293,7 @@ export const humanResumeCheckerLoader: LoaderFunction<ResumeDto> = async ({ para
       };
     
 
-    useResumeStore.setState({ resume: resumeDto });
+    useResumeStore.setState({ resume: resumeDto as any });
     useResumeStore.temporal.getState().clear();
 
     return resumeDto;
