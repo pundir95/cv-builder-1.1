@@ -11,15 +11,23 @@ const SubscriptionStatus = () => {
   const payment_type=searchParams.get("payment_type")
   const token=searchParams.get("token_id")
   const plan_id=searchParams.get("plan_id")
+  const is_add_on_user=searchParams.get("add_on_user")
 
   console.log(session_id,"session_id")
 
+  // http://localhost:5173/subscription-status?session_id=cs_test_a1ZLt9GzceqTS1IR6ehdpgE8TvLUJnFvu44jnwQB4zkX63rNh3yhSaXgWP&token_id=965a2f22-b6df-4354-a495-f1b4f617185b8ce5dd16-0e2a-4cfb-af9c-e58a5753527a2c88cf240-2791-48e6-a514-fbe92ecb6d89&plan_id=78ea7299-c069-4da7-955c-56d982aa6c2f&add_on_user=True
+
   useEffect(() => {
     const checkSubscriptionStatus = async () => {
-    
+      let API_URL=""
+      if(is_add_on_user){
+        API_URL=`/subscription/addon-user-payment/verify/`
+      } else{
+        API_URL=`/subscription/subscription/success/`
+      }
       try {
         let response;
-        response = await axios.get(`/subscription/subscription/success/?token_id=${token}&session_id=${session_id}&plan_id=${plan_id}`);
+        response = await axios.get(`${API_URL}?token_id=${token}&session_id=${session_id}&plan_id=${plan_id}`);
         // if(payment_type=="one_time"){
         //      response = await axios.get(`/subscription/verify-one-time-payment/${session_id}/`);
         // }
@@ -41,7 +49,12 @@ const SubscriptionStatus = () => {
           setStatus('success');
           // Redirect to dashboard after 5 seconds
           setTimeout(() => {
-            navigate('/dashboard');
+            if(is_add_on_user){
+              localStorage.setItem("is_add_on_user",JSON.stringify(true))
+              navigate('/dashboard/account')
+            } else{
+              navigate('/dashboard');
+            }
           }, 5000);
         } else {
           setStatus('error');

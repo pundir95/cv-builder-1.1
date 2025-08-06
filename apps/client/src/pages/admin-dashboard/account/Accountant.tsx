@@ -1,13 +1,20 @@
 import { t } from "@lingui/macro";
 import { Pencil } from "@phosphor-icons/react";
 import { Button, Card, Checkbox, Input, Label, ScrollArea, Separator } from "@reactive-resume/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompanySetting from "./CompanySetting";
 import { ActiveSubscription } from "./ActiveSubScription";
 
 export const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState('general');
   const [isEditing, setIsEditing] = useState(false);
+  const is_add_on_user=localStorage.getItem("is_add_on_user")
+
+  useEffect(()=>{
+    if(is_add_on_user){
+      setActiveSection("company")
+    }
+  },[is_add_on_user])
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
@@ -222,7 +229,7 @@ export const AccountSettings = () => {
 
 
 
-          <CompanySetting activeSection={activeSection} setIsEditing={setIsEditing} isEditing={isEditing} />
+          <CompanySetting activeSection={activeSection} setIsEditing={setIsEditing} isEditing={isEditing} is_add_on_user={is_add_on_user} />
 
         </div>
       </div>

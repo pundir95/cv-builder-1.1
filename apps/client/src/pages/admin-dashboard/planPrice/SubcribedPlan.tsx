@@ -43,6 +43,8 @@ const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setS
     axios.get(`/subscription/subscription/history/`).then((res) => {
       console.log(res?.data?.results,"history")
       setSubscriptionHistory(res?.data?.results)
+    }).catch((err)=>{
+      console.log(err,"error")
     })
   }, [])
 
@@ -124,7 +126,7 @@ const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setS
                     <td className="px-6 py-4 align-middle">{item.new_plan.price}</td>
                     <td className="px-6 py-4 align-middle">{statusBadge(item.payment_status)}</td>
                     <td className="px-6 py-4 align-middle">
-                      {item.invoice_pdf_url ? (
+                      {item.payment_details.length > 0 && item.payment_details[0].invoice_pdf_url ? (
                         <a href={item.invoiceLink} className="text-indigo-600 underline flex items-center gap-1 cursor-pointer">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 4h6a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                           {/* {item.invoice_pdf_url} */}

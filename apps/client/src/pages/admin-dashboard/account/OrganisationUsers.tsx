@@ -32,7 +32,14 @@ export default function OrganisationUsers({showModal, setShowModal, employees}: 
   const userData=localStorage.getItem("user")||"";
   const userDataObj=JSON.parse(userData)
 
+const is_add_on_user=localStorage.getItem("is_add_on_user")
 
+useEffect(()=>{
+  if(is_add_on_user){
+    setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
+  }
+  localStorage.removeItem("is_add_on_user")
+},[is_add_on_user])
   
   // // Filtered users based on search
   // const filteredUsers = employees.filter((user: any) =>

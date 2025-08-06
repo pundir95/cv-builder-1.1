@@ -84,7 +84,7 @@ export const VerifyOtpPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t`One-Time Password`}</FormLabel>
+                  <FormLabel className="text-foreground">{t`One-Time Password`}</FormLabel>
                   <FormControl>
                     <Input placeholder="123456" autoComplete="one-time-code" {...field} />
                   </FormControl>
@@ -101,11 +101,11 @@ export const VerifyOtpPage = () => {
                 showToast('OTP reset. Please try again.', 'info');
               }}
             >
-              {t`Reset OTP`}
+              Reset OTP
             </Button>
 
             <Button type="submit" disabled={loading} className="mt-4 w-full" loading={loading}>
-              {t`Submit`}
+              Submit
             </Button>
           </form>
         </Form>

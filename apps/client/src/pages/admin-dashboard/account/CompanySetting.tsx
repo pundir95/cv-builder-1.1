@@ -8,7 +8,7 @@ import { axios } from '@/client/libs/axios';
 import OrganisationUsers from './OrganisationUsers';
 import OrganisationDetails from './OrganisationDetails';
 
-const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing: boolean) => void, isEditing: boolean}> = ({activeSection, setIsEditing, isEditing}) => {
+const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing: boolean) => void, isEditing: boolean, is_add_on_user: string | null}> = ({activeSection, setIsEditing, isEditing, is_add_on_user  }) => {
   // State for form fields
   const [companyName, setCompanyName] = useState('');
   const [country, setCountry] = useState('');
@@ -23,7 +23,8 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
     organisationDetails: true,
     organisationUsers: false,
     organisationDetailsEdit: false,
-    createAddOnUser: false
+    createAddOnUser: false,
+    addOnUser: false
   });
   const [countries,setCountries] = useState([]);  
   useEffect(()=>{
@@ -32,6 +33,14 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
       setCountries(res.data);
     })
   },[])
+
+  useEffect(()=>{
+    if(is_add_on_user){
+      setShowModal({...showModal, organisationDetails: false, organisationDetailsEdit: false, organisationUsers: true, addOnUser: false, createAddOnUser: true})
+      // setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
+      localStorage.removeItem("is_add_on_user")
+    }
+  },[is_add_on_user])
 
   console.log(countries,"countries");
 
@@ -56,9 +65,9 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   // Validation function
   const validate = () => {
     const newErrors: {[key: string]: string} = {};
-    if (!companyName.trim()) newErrors.companyName = 'Company Name is required.';
-    if (!companyAddress.trim()) newErrors.companyAddress = 'Company Address is required.';
-    if (!companyWebsite.trim()) {
+    if (companyName && !companyName.trim()) newErrors.companyName = 'Company Name is required.';
+    if (companyAddress && !companyAddress.trim()) newErrors.companyAddress = 'Company Address is required.';
+  if (companyWebsite && !companyWebsite.trim()) {
       newErrors.companyWebsite = 'Company Website is required.';
     } else {
       try {
@@ -67,7 +76,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
         newErrors.companyWebsite = 'Invalid URL.';
       }
     }
-    if (!organizationId.trim()) newErrors.organizationId = 'Organization Id is required.';
+    if (organizationId && !organizationId.trim()) newErrors.organizationId = 'Organization Id is required.';
     return newErrors;
   };
 
@@ -86,6 +95,8 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
     }
       axios.post('/company/company-details/', payload).then((res) => {
         console.log(res);
+        setIsEditing(false);
+        setShowModal({...showModal, organisationDetails: false, organisationDetailsEdit: false, organisationUsers: true, addOnUser: false, createAddOnUser: false})
       }).catch((err) => {
         console.log(err);
       })

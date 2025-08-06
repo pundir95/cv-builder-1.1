@@ -17,6 +17,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { ErrorPage } from '../public/error';
 import UploadPageError from './UploadPageError';
 import HumanCheckerModal from './HumanCheckerModal';
+import { PaymentModal } from '../builder/sidebars/left/sections/picture/payment-modal';
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -26,6 +27,7 @@ const UploadResume = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [newResume, setNewResume] = useState<any>(null);
   const [humanChecker, setHumanChecker] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
  
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -111,7 +113,8 @@ const UploadResume = () => {
   // }
   // navigate("/onboard/select-template")
   if(isResumeChecker){
-    setHumanChecker(true)
+    // setHumanChecker(true)
+    setIsPaymentModalOpen(true)
   }else{
     navigate(`/builder/${resume_id}`)
   }
@@ -294,7 +297,17 @@ console.log(selectedStep,"selectedStep")
   
     {humanChecker && <HumanCheckerModal open={humanChecker} onClose={() => setHumanChecker(false)} onSubmit={handleSubmit} />}
     {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} /> */}
-     
+     { isPaymentModalOpen &&
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        onSuccess={() => {
+          setIsPaymentModalOpen(false);
+          handleNextStep();
+        }}
+        cvId={'newResume.data.id'}
+      />
+     }
     </div>
   ); 
 };

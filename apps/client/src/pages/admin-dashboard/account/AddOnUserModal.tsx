@@ -63,13 +63,14 @@ const payBtnStyles: React.CSSProperties = {
 const AddOnUserModal: React.FC<AddOnUserModalProps> = ({ isOpen, onClose, price,plan_id }) => {
   if (!isOpen) return null;
   const getThePlan=(id:string)=>{
-    axios.post(`/company/employees-subscription/`,{
+    axios.post(`/subscription/add-on-user-payment/`,{
       plan_id:id,
       "no_employees":1,
       "no_employees_unlimited": false,
     }).then((res)=>{
-    if (res.data.data.approve_link) {
-      window.location.href = res.data.data.approve_link;
+      console.log(res.data,"res.data")
+    if (res.data.data.checkout_url) {
+      window.location.href = res.data.data.checkout_url;
     }
     })
   }

@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
-import { Input, Select, SelectTrigger, SelectContent, SelectItem, Button } from '@reactive-resume/ui';
+import React from 'react';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Input, Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@reactive-resume/ui';
 import { axios } from '@/client/libs/axios';
 import { toast } from '@/client/hooks/use-toast';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
+// Define the schema for form validation
+const createAddOnUserSchema = z.object({
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
+  role: z.enum(["manager", "member"]),
+  phone: z.string().min(1, "Phone number is required"),
+  email: z.string().email("Invalid email address"),
+});
+
+type FormValues = z.infer<typeof createAddOnUserSchema>;
 
 const modalStyles: React.CSSProperties = {
   position: 'fixed',
@@ -54,17 +70,6 @@ const addBtnStyles: React.CSSProperties = {
   marginRight: 'auto',
 };
 
-const countryCodeBox: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 4,
-  background: '#f3f4f6',
-  borderRadius: 6,
-  padding: '0 8px',
-  border: '1px solid #e5e7eb',
-  height: 40,
-};
-
 const labelStyle: React.CSSProperties = {
   fontWeight: 500,
   marginBottom: 4,
@@ -90,48 +95,47 @@ const roles = [
 ];
 
 const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => void; }) => {
-  const [form, setForm] = useState({
-    first_name: '',
-    last_name: '',
-    designation: 'manager',
-    phone: '',
-    email: '',
-    countryCode: '+91',
+  const form = useForm<FormValues>({
+    resolver: zodResolver(createAddOnUserSchema),
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      role: "manager",
+      phone: "",
+      email: "",
+    },
   });
 
   if (!isOpen) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleRoleChange = (value: string) => {
-      setForm({ ...form, designation: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(form,"formm")
-    axios.post("/company/organization-employees/",form)
-    .then((res)=>{
-        axios.get(`/accounts/api/users/`).then((res)=>{
-          localStorage.setItem("user",JSON.stringify(res.data[0]))
-          onClose()
-        })
-        axios.get(`/company/organization-employees/`).then((res)=>{
-          console.log(res,"res")
-        })
-    })
+  const onSubmit = async (data: FormValues) => {
+    console.log(data, "formm");
     
-
-    .catch((err)=>{
-      console.log(err,"err")
+    try {
+      const response = await axios.post("/addon-user/auth/create-add-on-user/", data);
+      
+      // Fetch user data
+      const userResponse = await axios.get(`/accounts/api/users/`);
+      localStorage.setItem("user", JSON.stringify(userResponse.data[0]));
+      
+      // Fetch organization employees
+      const employeesResponse = await axios.get(`/company/organization-employees/`);
+      console.log(employeesResponse, "res");
+      
+      onClose();
       toast({
-        title: err.message,
-        description: err.message,
+        title: "Success",
+        description: "Add-on user created successfully",
+        variant: "default",
+      });
+    } catch (err: any) {
+      console.log(err, "err");
+      toast({
+        title: err.message || "Error",
+        description: err.message || "Failed to create add-on user",
         variant: "error",
-      })
-    })
+      });
+    }
   };
 
   return (
@@ -139,54 +143,129 @@ const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => v
       <div style={boxStyles}>
         <button style={closeBtnStyles} onClick={onClose} aria-label="Close">×</button>
         <h2 style={{ fontWeight: 700, fontSize: 24, marginBottom: 16 }}>Add–On User</h2>
-        <form onSubmit={handleSubmit}>
-          <div style={rowStyle}>
-            <div style={{ ...halfWidth, ...fieldBox }}>
-              <label style={labelStyle}>First Name*</label>
-                <Input name="first_name" placeholder="Enter the user's First Name" value={form.first_name} onChange={handleChange} required />
-            </div>
-            <div style={{ ...halfWidth, ...fieldBox }}>
-              <label style={labelStyle}>Last Name*</label>
-              <Input name="last_name" placeholder="Enter the user's Last Name" value={form.last_name} onChange={handleChange} required />
-            </div>
-          </div>
-          <div style={rowStyle}>
-            <div style={{ ...halfWidth, ...fieldBox }}>
-              <label style={labelStyle}>Role*</label>
-              <select 
-                value={form.designation} 
-                onChange={(e) => handleRoleChange(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '8px 12px',
-                  borderRadius: '6px',
-                  border: '1px solid #ddd',
-                  backgroundColor: '#fff',
-                  fontSize: '16px'
-                }}
-              >
-                {roles.map(role => (
-                  <option key={role.value} value={role.value}>
-                    {role.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div style={{ ...halfWidth, ...fieldBox }}>
-              <label style={labelStyle}>Phone*</label>
-              <div style={countryCodeBox}>
-                <span role="img" aria-label="India flag">🇮🇳</span>
-                <span style={{ marginRight: 4 }}>{form.countryCode}</span>
-                <Input name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} required style={{ border: 'none', boxShadow: 'none', background: 'transparent', flex: 1 }} />
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div style={rowStyle}>
+              <div style={{ ...halfWidth, ...fieldBox }}>
+                <FormField
+                  name="first_name"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel style={labelStyle} className="text-foreground">First Name*</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter the user's First Name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div style={{ ...halfWidth, ...fieldBox }}>
+                <FormField
+                  name="last_name"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel style={labelStyle} className="text-foreground">Last Name*</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter the user's Last Name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
-          </div>
-          <div style={fieldBox}>
-            <label style={labelStyle}>Email*</label>
-            <Input name="email" type="email" placeholder="Enter the user's Email Address" value={form.email} onChange={handleChange} required />
-          </div>
-          <Button type="submit" style={addBtnStyles}>Add Member</Button>
-        </form>
+            
+            <div style={rowStyle}>
+              <div style={{ ...halfWidth, ...fieldBox }}>
+                <FormField
+                  name="role"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel style={labelStyle} className="text-foreground">Role*</FormLabel>
+                      <FormControl>
+                        <select
+                          {...field}
+                          style={{
+                            width: '100%',
+                            padding: '8px 12px',
+                            borderRadius: '6px',
+                            border: '1px solid #ddd',
+                            backgroundColor: '#fff',
+                            fontSize: '16px'
+                          }}
+                        >
+                          {roles.map(role => (
+                            <option key={role.value} value={role.value}>
+                              {role.label}
+                            </option>
+                          ))}
+                        </select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div style={{ ...halfWidth, ...fieldBox }}>
+                <FormField
+                  name="phone"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel style={labelStyle} className="text-foreground">Phone*</FormLabel>
+                      <FormControl>
+                        <PhoneInput
+                          country="IN"
+                          value={field.value}
+                          onChange={(value) => field.onChange(value)}
+                          inputClass="!w-full !h-11 !pl-16"
+                          containerClass="phonefield-wrapper"
+                          placeholder="Phone Number"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            
+            <div style={fieldBox}>
+              <FormField
+                name="email"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel style={labelStyle} className="text-foreground">Email*</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="Enter the user's Email Address"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            <Button type="submit" style={addBtnStyles}>
+              Add Member
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );
