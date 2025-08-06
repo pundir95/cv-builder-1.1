@@ -1,5 +1,5 @@
 import { z } from 'zod';
-export declare const registerSchema: z.ZodObject<z.objectUtil.extendShape<Pick<{
+export declare const registerSchema: z.ZodEffects<z.ZodObject<z.objectUtil.extendShape<Pick<{
     id: z.ZodDefault<z.ZodString>;
     first_name: z.ZodString;
     last_name: z.ZodString;
@@ -34,6 +34,22 @@ export declare const registerSchema: z.ZodObject<z.objectUtil.extendShape<Pick<{
     phone_number: string;
     confirm_password: string;
     locale?: string | undefined;
+}>, {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    locale: string;
+    confirm_password: string;
+}, {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    confirm_password: string;
+    locale?: string | undefined;
 }>;
 declare const RegisterDto_base: import('nestjs-zod/dto').ZodDto<{
     email: string;
@@ -43,7 +59,7 @@ declare const RegisterDto_base: import('nestjs-zod/dto').ZodDto<{
     phone_number: string;
     locale: string;
     confirm_password: string;
-}, z.ZodObjectDef<z.objectUtil.extendShape<Pick<{
+}, z.ZodEffectsDef<z.ZodObject<z.objectUtil.extendShape<Pick<{
     id: z.ZodDefault<z.ZodString>;
     first_name: z.ZodString;
     last_name: z.ZodString;
@@ -62,7 +78,23 @@ declare const RegisterDto_base: import('nestjs-zod/dto').ZodDto<{
 }, "email" | "first_name" | "last_name" | "phone_number" | "locale">, {
     password: z.ZodString;
     confirm_password: z.ZodString;
-}>, "strip", z.ZodTypeAny>, {
+}>, "strip", z.ZodTypeAny, {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    locale: string;
+    confirm_password: string;
+}, {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    confirm_password: string;
+    locale?: string | undefined;
+}>>, {
     email: string;
     password: string;
     first_name: string;

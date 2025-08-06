@@ -514,7 +514,7 @@ class P {
     return Ee.create(this, this._def);
   }
   nullable() {
-    return Be.create(this, this._def);
+    return Ue.create(this, this._def);
   }
   nullish() {
     return this.nullable().optional();
@@ -1603,7 +1603,7 @@ function rt(t) {
   } else return t instanceof xe ? new xe({
     ...t._def,
     type: rt(t.element)
-  }) : t instanceof Ee ? Ee.create(rt(t.unwrap())) : t instanceof Be ? Be.create(rt(t.unwrap())) : t instanceof Ce ? Ce.create(t.items.map((e) => rt(e))) : t;
+  }) : t instanceof Ee ? Ee.create(rt(t.unwrap())) : t instanceof Ue ? Ue.create(rt(t.unwrap())) : t instanceof Ce ? Ce.create(t.items.map((e) => rt(e))) : t;
 }
 class re extends P {
   constructor() {
@@ -1965,8 +1965,8 @@ bt.create = (t, e) => new bt({
   typeName: j.ZodUnion,
   ...Z(e)
 });
-const De = (t) => t instanceof wt ? De(t.schema) : t instanceof ke ? De(t.innerType()) : t instanceof St ? [t.value] : t instanceof ze ? t.options : t instanceof Tt ? V.objectValues(t.enum) : t instanceof Ot ? De(t._def.innerType) : t instanceof _t ? [void 0] : t instanceof vt ? [null] : t instanceof Ee ? [void 0, ...De(t.unwrap())] : t instanceof Be ? [null, ...De(t.unwrap())] : t instanceof Qt || t instanceof At ? De(t.unwrap()) : t instanceof Et ? De(t._def.innerType) : [];
-class Bt extends P {
+const De = (t) => t instanceof wt ? De(t.schema) : t instanceof ke ? De(t.innerType()) : t instanceof St ? [t.value] : t instanceof ze ? t.options : t instanceof Tt ? V.objectValues(t.enum) : t instanceof Ot ? De(t._def.innerType) : t instanceof _t ? [void 0] : t instanceof vt ? [null] : t instanceof Ee ? [void 0, ...De(t.unwrap())] : t instanceof Ue ? [null, ...De(t.unwrap())] : t instanceof Qt || t instanceof At ? De(t.unwrap()) : t instanceof Et ? De(t._def.innerType) : [];
+class Ut extends P {
   _parse(e) {
     const { ctx: n } = this._processInputParams(e);
     if (n.parsedType !== O.object)
@@ -2019,7 +2019,7 @@ class Bt extends P {
         s.set(d, a);
       }
     }
-    return new Bt({
+    return new Ut({
       typeName: j.ZodDiscriminatedUnion,
       discriminator: e,
       options: n,
@@ -2657,7 +2657,7 @@ Ee.create = (t, e) => new Ee({
   typeName: j.ZodOptional,
   ...Z(e)
 });
-class Be extends P {
+class Ue extends P {
   _parse(e) {
     return this._getType(e) === O.null ? de(null) : this._def.innerType._parse(e);
   }
@@ -2665,7 +2665,7 @@ class Be extends P {
     return this._def.innerType;
   }
 }
-Be.create = (t, e) => new Be({
+Ue.create = (t, e) => new Ue({
   innerType: t,
   typeName: j.ZodNullable,
   ...Z(e)
@@ -2836,7 +2836,7 @@ var j;
 })(j || (j = {}));
 const jr = (t, e = {
   message: `Input not instance of ${t.name}`
-}) => yn((n) => n instanceof t, e), _n = be.create, vn = Ne.create, Lr = Pt.create, $r = Pe.create, bn = yt.create, Zr = Ge.create, Mr = Zt.create, Nr = _t.create, Pr = vt.create, zr = ot.create, Br = qe.create, Ur = $e.create, Fr = Mt.create, Vr = xe.create, Hr = re.create, Wr = re.strictCreate, Yr = bt.create, qr = Bt.create, Kr = xt.create, Gr = Ce.create, Jr = kt.create, Xr = Nt.create, Qr = Je.create, es = at.create, ts = wt.create, ns = St.create, rs = ze.create, ss = Tt.create, as = ut.create, on = ke.create, is = Ee.create, os = Be.create, us = ke.createWithPreprocess, cs = Rt.create, ds = () => _n().optional(), ls = () => vn().optional(), fs = () => bn().optional(), hs = {
+}) => yn((n) => n instanceof t, e), _n = be.create, vn = Ne.create, Lr = Pt.create, $r = Pe.create, bn = yt.create, Zr = Ge.create, Mr = Zt.create, Nr = _t.create, Pr = vt.create, zr = ot.create, Ur = qe.create, Br = $e.create, Fr = Mt.create, Vr = xe.create, Hr = re.create, Wr = re.strictCreate, Yr = bt.create, qr = Ut.create, Kr = xt.create, Gr = Ce.create, Jr = kt.create, Xr = Nt.create, Qr = Je.create, es = at.create, ts = wt.create, ns = St.create, rs = ze.create, ss = Tt.create, as = ut.create, on = ke.create, is = Ee.create, os = Ue.create, us = ke.createWithPreprocess, cs = Rt.create, ds = () => _n().optional(), ls = () => vn().optional(), fs = () => bn().optional(), hs = {
   string: (t) => be.create({ ...t, coerce: !0 }),
   number: (t) => Ne.create({ ...t, coerce: !0 }),
   boolean: (t) => yt.create({
@@ -2887,7 +2887,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodArray: xe,
   ZodObject: re,
   ZodUnion: bt,
-  ZodDiscriminatedUnion: Bt,
+  ZodDiscriminatedUnion: Ut,
   ZodIntersection: xt,
   ZodTuple: Ce,
   ZodRecord: kt,
@@ -2902,7 +2902,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodEffects: ke,
   ZodTransformer: ke,
   ZodOptional: Ee,
-  ZodNullable: Be,
+  ZodNullable: Ue,
   ZodDefault: Ot,
   ZodCatch: Et,
   ZodNaN: Pt,
@@ -2934,7 +2934,7 @@ var i = /* @__PURE__ */ Object.freeze({
   map: Xr,
   nan: Lr,
   nativeEnum: ss,
-  never: Ur,
+  never: Br,
   null: Pr,
   nullable: os,
   number: vn,
@@ -2955,7 +2955,7 @@ var i = /* @__PURE__ */ Object.freeze({
   tuple: Gr,
   undefined: Nr,
   union: Yr,
-  unknown: Br,
+  unknown: Ur,
   void: Fr,
   NEVER: ps,
   ZodIssueCode: y,
@@ -3062,10 +3062,10 @@ const Pn = (t, e, n, r) => (t >>> 0) + (e >>> 0) + (n >>> 0) + (r >>> 0);
 $.add4L = Pn;
 const zn = (t, e, n, r, s) => e + n + r + s + (t / 2 ** 32 | 0) | 0;
 $.add4H = zn;
-const Bn = (t, e, n, r, s) => (t >>> 0) + (e >>> 0) + (n >>> 0) + (r >>> 0) + (s >>> 0);
-$.add5L = Bn;
-const Un = (t, e, n, r, s, a) => e + n + r + s + a + (t / 2 ** 32 | 0) | 0;
-$.add5H = Un;
+const Un = (t, e, n, r, s) => (t >>> 0) + (e >>> 0) + (n >>> 0) + (r >>> 0) + (s >>> 0);
+$.add5L = Un;
+const Bn = (t, e, n, r, s, a) => e + n + r + s + a + (t / 2 ** 32 | 0) | 0;
+$.add5H = Bn;
 const xs = {
   fromBig: en,
   split: kn,
@@ -3087,18 +3087,18 @@ const xs = {
   add3H: Nn,
   add4L: Pn,
   add4H: zn,
-  add5H: Un,
-  add5L: Bn
+  add5H: Bn,
+  add5L: Un
 };
 $.default = xs;
-var Fn = {}, Ut = {};
-Object.defineProperty(Ut, "__esModule", { value: !0 });
-Ut.crypto = void 0;
-Ut.crypto = typeof globalThis == "object" && "crypto" in globalThis ? globalThis.crypto : void 0;
+var Fn = {}, Bt = {};
+Object.defineProperty(Bt, "__esModule", { value: !0 });
+Bt.crypto = void 0;
+Bt.crypto = typeof globalThis == "object" && "crypto" in globalThis ? globalThis.crypto : void 0;
 (function(t) {
   /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
   Object.defineProperty(t, "__esModule", { value: !0 }), t.Hash = t.nextTick = t.byteSwapIfBE = t.isLE = void 0, t.isBytes = r, t.u8 = s, t.u32 = a, t.createView = o, t.rotr = d, t.rotl = k, t.byteSwap = f, t.byteSwap32 = T, t.bytesToHex = le, t.hexToBytes = We, t.asyncLoop = Ye, t.utf8ToBytes = Xe, t.toBytes = ye, t.concatBytes = Qe, t.checkOpts = ae, t.wrapConstructor = q, t.wrapConstructorWithOpts = c, t.wrapXOFConstructorWithOpts = l, t.randomBytes = h;
-  const e = Ut, n = Ve;
+  const e = Bt, n = Ve;
   function r(u) {
     return u instanceof Uint8Array || ArrayBuffer.isView(u) && u.constructor.name === "Uint8Array";
   }
@@ -3390,8 +3390,8 @@ Fe.createFingerprint = Xn;
 Fe.isCuid = js;
 const { createId: Ls, init: Za, getConstants: Ma, isCuid: Na } = Fe;
 var Ft = Ls;
-const Ue = i.string().cuid2().default(Ft()).describe("Unique identifier for the item in Cuid2 format"), ge = i.object({
-  id: Ue,
+const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the item in Cuid2 format"), ge = i.object({
+  id: Be,
   visible: i.boolean()
 }), we = i.object({
   label: i.string(),
@@ -3536,13 +3536,13 @@ const Ue = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
     underlineLinks: !0
   },
   notes: ""
-}, Bs = ge.extend({
+}, Us = ge.extend({
   title: i.string().min(1),
   awarder: i.string(),
   date: i.string(),
   summary: i.string(),
   url: we
-}), Us = ge.extend({
+}), Bs = ge.extend({
   name: i.string().min(1),
   issuer: i.string(),
   date: i.string(),
@@ -3625,7 +3625,7 @@ const Ue = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   separateLinks: i.boolean().default(!0),
   visible: i.boolean().default(!0)
 }), Qs = ce.extend({
-  id: Ue,
+  id: Be,
   items: i.array(nr)
 }), ea = i.object({
   collapse: ce.extend({
@@ -3640,12 +3640,12 @@ const Ue = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   }),
   awards: ce.extend({
     id: i.literal("awards"),
-    items: i.array(Bs),
+    items: i.array(Us),
     extraDescription: i.string().default("")
   }),
   certifications: ce.extend({
     id: i.literal("certifications"),
-    items: i.array(Us),
+    items: i.array(Bs),
     extraDescription: i.string().default("")
   }),
   education: ce.extend({
@@ -3858,12 +3858,12 @@ License: MIT
     }
     function We(c) {
       var l, h, u, p, A = Math.pow(2, 53), b = -A, g = /^\s*-?(\d+\.?|\.\d+|\d+\.\d+)([eE][-+]?\d+)?\s*$/, m = /^((\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)))$/, _ = this, v = 0, x = 0, R = !1, E = !1, I = [], S = { data: [], errors: [], meta: {} };
-      function U(M) {
+      function B(M) {
         return c.skipEmptyLines === "greedy" ? M.join("").trim() === "" : M.length === 1 && M[0].length === 0;
       }
       function Y() {
         if (S && u && (se("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to '" + f.DefaultDelimiter + "'"), u = !1), c.skipEmptyLines && (S.data = S.data.filter(function(D) {
-          return !U(D);
+          return !B(D);
         })), Q()) {
           let D = function(K, ee) {
             q(c.transformHeader) && (K = c.transformHeader(K, ee)), I.push(K);
@@ -3883,28 +3883,28 @@ License: MIT
           }
           return c.header && (G > I.length ? se("FieldMismatch", "TooManyFields", "Too many fields: expected " + I.length + " fields but parsed " + G, x + K) : G < I.length && se("FieldMismatch", "TooFewFields", "Too few fields: expected " + I.length + " fields but parsed " + G, x + K)), ee;
         }
-        var B;
-        S && (c.header || c.dynamicTyping || c.transform) && (B = 1, !S.data.length || Array.isArray(S.data[0]) ? (S.data = S.data.map(z), B = S.data.length) : S.data = z(S.data, 0), c.header && S.meta && (S.meta.fields = I), x += B);
+        var U;
+        S && (c.header || c.dynamicTyping || c.transform) && (U = 1, !S.data.length || Array.isArray(S.data[0]) ? (S.data = S.data.map(z), U = S.data.length) : S.data = z(S.data, 0), c.header && S.meta && (S.meta.fields = I), x += U);
       }
       function Q() {
         return c.header && I.length === 0;
       }
-      function se(M, z, B, D) {
-        M = { type: M, code: z, message: B }, D !== void 0 && (M.row = D), S.errors.push(M);
+      function se(M, z, U, D) {
+        M = { type: M, code: z, message: U }, D !== void 0 && (M.row = D), S.errors.push(M);
       }
       q(c.step) && (p = c.step, c.step = function(M) {
         S = M, Q() ? Y() : (Y(), S.data.length !== 0 && (v += M.data.length, c.preview && v > c.preview ? h.abort() : (S.data = S.data[0], p(S, _))));
-      }), this.parse = function(M, z, B) {
+      }), this.parse = function(M, z, U) {
         var D = c.quoteChar || '"', D = (c.newline || (c.newline = this.guessLineEndings(M, D)), u = !1, c.delimiter ? q(c.delimiter) && (c.delimiter = c.delimiter(M), S.meta.delimiter = c.delimiter) : ((D = ((K, ee, G, J, F) => {
           var ve, N, ne, Ze;
           F = F || [",", "	", "|", ";", f.RECORD_SEP, f.UNIT_SEP];
           for (var et = 0; et < F.length; et++) {
-            for (var Se, dt = F[et], oe = 0, Te = 0, ie = 0, he = (ne = void 0, new Ye({ comments: J, delimiter: dt, newline: ee, preview: 10 }).parse(K)), Ie = 0; Ie < he.data.length; Ie++) G && U(he.data[Ie]) ? ie++ : (Se = he.data[Ie].length, Te += Se, ne === void 0 ? ne = Se : 0 < Se && (oe += Math.abs(Se - ne), ne = Se));
+            for (var Se, dt = F[et], oe = 0, Te = 0, ie = 0, he = (ne = void 0, new Ye({ comments: J, delimiter: dt, newline: ee, preview: 10 }).parse(K)), Ie = 0; Ie < he.data.length; Ie++) G && B(he.data[Ie]) ? ie++ : (Se = he.data[Ie].length, Te += Se, ne === void 0 ? ne = Se : 0 < Se && (oe += Math.abs(Se - ne), ne = Se));
             0 < he.data.length && (Te /= he.data.length - ie), (N === void 0 || oe <= N) && (Ze === void 0 || Ze < Te) && 1.99 < Te && (N = oe, ve = dt, Ze = Te);
           }
           return { successful: !!(c.delimiter = ve), bestDelimiter: ve };
         })(M, c.newline, c.skipEmptyLines, c.comments, c.delimitersToGuess)).successful ? c.delimiter = D.bestDelimiter : (u = !0, c.delimiter = f.DefaultDelimiter), S.meta.delimiter = c.delimiter), _e(c));
-        return c.preview && c.header && D.preview++, l = M, h = new Ye(D), S = h.parse(l, z, B), Y(), R ? { meta: { paused: !0 } } : S || { meta: { paused: !1 } };
+        return c.preview && c.header && D.preview++, l = M, h = new Ye(D), S = h.parse(l, z, U), Y(), R ? { meta: { paused: !0 } } : S || { meta: { paused: !1 } };
       }, this.paused = function() {
         return R;
       }, this.pause = function() {
@@ -3917,13 +3917,13 @@ License: MIT
         E = !0, h.abort(), S.meta.aborted = !0, q(c.complete) && c.complete(S), l = "";
       }, this.guessLineEndings = function(K, D) {
         K = K.substring(0, 1048576);
-        var D = new RegExp(Re(D) + "([^]*?)" + Re(D), "gm"), B = (K = K.replace(D, "")).split("\r"), D = K.split(`
-`), K = 1 < D.length && D[0].length < B[0].length;
-        if (B.length === 1 || K) return `
+        var D = new RegExp(Re(D) + "([^]*?)" + Re(D), "gm"), U = (K = K.replace(D, "")).split("\r"), D = K.split(`
+`), K = 1 < D.length && D[0].length < U[0].length;
+        if (U.length === 1 || K) return `
 `;
-        for (var ee = 0, G = 0; G < B.length; G++) B[G][0] === `
+        for (var ee = 0, G = 0; G < U.length; G++) U[G][0] === `
 ` && ee++;
-        return ee >= B.length / 2 ? `\r
+        return ee >= U.length / 2 ? `\r
 ` : "\r";
       };
     }
@@ -3940,7 +3940,7 @@ License: MIT
       var x = 0, R = !1;
       this.parse = function(E, I, S) {
         if (typeof E != "string") throw new Error("Input must be a string");
-        var U = E.length, Y = l.length, Q = h.length, se = u.length, M = q(p), z = [], B = [], D = [], K = x = 0;
+        var B = E.length, Y = l.length, Q = h.length, se = u.length, M = q(p), z = [], U = [], D = [], K = x = 0;
         if (!E) return oe();
         if (b || b !== !1 && E.indexOf(_) === -1) {
           for (var ee = E.split(h), G = 0; G < ee.length; G++) {
@@ -3956,8 +3956,8 @@ License: MIT
           return oe();
         }
         for (var J = E.indexOf(l, x), F = E.indexOf(h, x), ve = new RegExp(Re(v) + Re(_), "g"), N = E.indexOf(_, x); ; ) if (E[x] === _) for (N = x, x++; ; ) {
-          if ((N = E.indexOf(_, N + 1)) === -1) return S || B.push({ type: "Quotes", code: "MissingQuotes", message: "Quoted field unterminated", row: z.length, index: x }), Se();
-          if (N === U - 1) return Se(E.substring(x, N).replace(ve, _));
+          if ((N = E.indexOf(_, N + 1)) === -1) return S || U.push({ type: "Quotes", code: "MissingQuotes", message: "Quoted field unterminated", row: z.length, index: x }), Se();
+          if (N === B - 1) return Se(E.substring(x, N).replace(ve, _));
           if (_ === v && E[N + 1] === v) N++;
           else if (_ === v || N === 0 || E[N - 1] !== v) {
             J !== -1 && J < N + 1 && (J = E.indexOf(l, N + 1));
@@ -3971,7 +3971,7 @@ License: MIT
               if (A && z.length >= A) return oe(!0);
               break;
             }
-            B.push({ type: "Quotes", code: "InvalidQuotes", message: "Trailing quote on quoted field is malformed", row: z.length, index: x }), N++;
+            U.push({ type: "Quotes", code: "InvalidQuotes", message: "Trailing quote on quoted field is malformed", row: z.length, index: x }), N++;
           }
         }
         else if (u && D.length === 0 && E.substring(x, x + se) === u) {
@@ -3992,7 +3992,7 @@ License: MIT
           return he = ie !== -1 && (ie = E.substring(N + 1, ie)) && ie.trim() === "" ? ie.length : he;
         }
         function Se(ie) {
-          return S || (ie === void 0 && (ie = E.substring(x)), D.push(ie), x = U, Ze(D), M && Te()), oe();
+          return S || (ie === void 0 && (ie = E.substring(x)), D.push(ie), x = B, Ze(D), M && Te()), oe();
         }
         function dt(ie) {
           x = ie, Ze(D), D = [], F = E.indexOf(h, x);
@@ -4012,10 +4012,10 @@ License: MIT
             }
             rn && console.warn("Duplicate headers found and renamed."), m = !0;
           }
-          return { data: z, errors: B, meta: { delimiter: l, linebreak: h, aborted: R, truncated: !!ie, cursor: K + (I || 0), renamedHeaders: g } };
+          return { data: z, errors: U, meta: { delimiter: l, linebreak: h, aborted: R, truncated: !!ie, cursor: K + (I || 0), renamedHeaders: g } };
         }
         function Te() {
-          p(oe()), z = [], B = [];
+          p(oe()), z = [], U = [];
         }
       }, this.abort = function() {
         R = !0;
@@ -4086,38 +4086,38 @@ License: MIT
         if (typeof c[0] == "object") return R(_ || Object.keys(c[0]), c, m);
       } else if (typeof c == "object") return typeof c.data == "string" && (c.data = JSON.parse(c.data)), Array.isArray(c.data) && (c.fields || (c.fields = c.meta && c.meta.fields || _), c.fields || (c.fields = Array.isArray(c.data[0]) ? c.fields : typeof c.data[0] == "object" ? Object.keys(c.data[0]) : []), Array.isArray(c.data[0]) || typeof c.data[0] == "object" || (c.data = [c.data])), R(c.fields || [], c.data || [], m);
       throw new Error("Unable to serialize unrecognized input");
-      function R(I, S, U) {
+      function R(I, S, B) {
         var Y = "", Q = (typeof I == "string" && (I = JSON.parse(I)), typeof S == "string" && (S = JSON.parse(S)), Array.isArray(I) && 0 < I.length), se = !Array.isArray(S[0]);
         if (Q && u) {
           for (var M = 0; M < I.length; M++) 0 < M && (Y += p), Y += E(I[M], M);
           0 < S.length && (Y += A);
         }
         for (var z = 0; z < S.length; z++) {
-          var B = (Q ? I : S[z]).length, D = !1, K = Q ? Object.keys(S[z]).length === 0 : S[z].length === 0;
-          if (U && !Q && (D = U === "greedy" ? S[z].join("").trim() === "" : S[z].length === 1 && S[z][0].length === 0), U === "greedy" && Q) {
-            for (var ee = [], G = 0; G < B; G++) {
+          var U = (Q ? I : S[z]).length, D = !1, K = Q ? Object.keys(S[z]).length === 0 : S[z].length === 0;
+          if (B && !Q && (D = B === "greedy" ? S[z].join("").trim() === "" : S[z].length === 1 && S[z][0].length === 0), B === "greedy" && Q) {
+            for (var ee = [], G = 0; G < U; G++) {
               var J = se ? I[G] : G;
               ee.push(S[z][J]);
             }
             D = ee.join("").trim() === "";
           }
           if (!D) {
-            for (var F = 0; F < B; F++) {
+            for (var F = 0; F < U; F++) {
               0 < F && !K && (Y += p);
               var ve = Q && se ? I[F] : F;
               Y += E(S[z][ve], F);
             }
-            z < S.length - 1 && (!U || 0 < B && !K) && (Y += A);
+            z < S.length - 1 && (!B || 0 < U && !K) && (Y += A);
           }
         }
         return Y;
       }
       function E(I, S) {
-        var U, Y;
-        return I == null ? "" : I.constructor === Date ? JSON.stringify(I).slice(1, 25) : (Y = !1, v && typeof I == "string" && v.test(I) && (I = "'" + I, Y = !0), U = I.toString().replace(x, g), (Y = Y || h === !0 || typeof h == "function" && h(I, S) || Array.isArray(h) && h[S] || ((Q, se) => {
+        var B, Y;
+        return I == null ? "" : I.constructor === Date ? JSON.stringify(I).slice(1, 25) : (Y = !1, v && typeof I == "string" && v.test(I) && (I = "'" + I, Y = !0), B = I.toString().replace(x, g), (Y = Y || h === !0 || typeof h == "function" && h(I, S) || Array.isArray(h) && h[S] || ((Q, se) => {
           for (var M = 0; M < se.length; M++) if (-1 < Q.indexOf(se[M])) return !0;
           return !1;
-        })(U, f.BAD_DELIMITERS) || -1 < U.indexOf(p) || U.charAt(0) === " " || U.charAt(U.length - 1) === " ") ? b + U + b : U);
+        })(B, f.BAD_DELIMITERS) || -1 < B.indexOf(p) || B.charAt(0) === " " || B.charAt(B.length - 1) === " ") ? b + B + b : B);
       }
     }, f.RECORD_SEP = "", f.UNIT_SEP = "", f.BYTE_ORDER_MARK = "\uFEFF", f.BAD_DELIMITERS = ["\r", `
 `, '"', f.BYTE_ORDER_MARK], f.WORKERS_SUPPORTED = !a && !!r.Worker, f.NODE_STREAM_INPUT = 1, f.LocalChunkSize = 10485760, f.RemoteChunkSize = 5242880, f.DefaultDelimiter = ",", f.Parser = Ye, f.ParserHandle = We, f.NetworkStreamer = H, f.FileStreamer = le, f.StringStreamer = W, f.ReadableStreamStreamer = fe, r.jQuery && ((s = r.jQuery).fn.parse = function(c) {
@@ -4242,20 +4242,20 @@ var sr = { exports: {} };
       }, g.valueOf = function() {
         return this.$d.getTime();
       }, g.startOf = function(m, _) {
-        var v = this, x = !!u.u(_) || _, R = u.p(m), E = function(z, B) {
-          var D = u.w(v.$u ? Date.UTC(v.$y, B, z) : new Date(v.$y, B, z), v);
+        var v = this, x = !!u.u(_) || _, R = u.p(m), E = function(z, U) {
+          var D = u.w(v.$u ? Date.UTC(v.$y, U, z) : new Date(v.$y, U, z), v);
           return x ? D : D.endOf(f);
-        }, I = function(z, B) {
-          return u.w(v.toDate()[z].apply(v.toDate("s"), (x ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(B)), v);
-        }, S = this.$W, U = this.$M, Y = this.$D, Q = "set" + (this.$u ? "UTC" : "");
+        }, I = function(z, U) {
+          return u.w(v.toDate()[z].apply(v.toDate("s"), (x ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(U)), v);
+        }, S = this.$W, B = this.$M, Y = this.$D, Q = "set" + (this.$u ? "UTC" : "");
         switch (R) {
           case W:
             return x ? E(1, 0) : E(31, 11);
           case H:
-            return x ? E(1, U) : E(0, U + 1);
+            return x ? E(1, B) : E(0, B + 1);
           case T:
             var se = this.$locale().weekStart || 0, M = (S < se ? S + 7 : S) - se;
-            return E(x ? Y - M : Y + (6 - M), U);
+            return E(x ? Y - M : Y + (6 - M), B);
           case f:
           case fe:
             return I(Q + "Hours", 0);
@@ -4284,9 +4284,9 @@ var sr = { exports: {} };
       }, g.add = function(m, _) {
         var v, x = this;
         m = Number(m);
-        var R = u.p(_), E = function(U) {
+        var R = u.p(_), E = function(B) {
           var Y = h(x);
-          return u.w(Y.date(Y.date() + Math.round(U * m)), x);
+          return u.w(Y.date(Y.date() + Math.round(B * m)), x);
         };
         if (R === H) return this.set(H, this.$M + m);
         if (R === W) return this.set(W, this.$y + m);
@@ -4299,15 +4299,15 @@ var sr = { exports: {} };
       }, g.format = function(m) {
         var _ = this, v = this.$locale();
         if (!this.isValid()) return v.invalidDate || We;
-        var x = m || "YYYY-MM-DDTHH:mm:ssZ", R = u.z(this), E = this.$H, I = this.$m, S = this.$M, U = v.weekdays, Y = v.months, Q = v.meridiem, se = function(B, D, K, ee) {
-          return B && (B[D] || B(_, x)) || K[D].slice(0, ee);
-        }, M = function(B) {
-          return u.s(E % 12 || 12, B, "0");
-        }, z = Q || function(B, D, K) {
-          var ee = B < 12 ? "AM" : "PM";
+        var x = m || "YYYY-MM-DDTHH:mm:ssZ", R = u.z(this), E = this.$H, I = this.$m, S = this.$M, B = v.weekdays, Y = v.months, Q = v.meridiem, se = function(U, D, K, ee) {
+          return U && (U[D] || U(_, x)) || K[D].slice(0, ee);
+        }, M = function(U) {
+          return u.s(E % 12 || 12, U, "0");
+        }, z = Q || function(U, D, K) {
+          var ee = U < 12 ? "AM" : "PM";
           return K ? ee.toLowerCase() : ee;
         };
-        return x.replace(Ye, function(B, D) {
+        return x.replace(Ye, function(U, D) {
           return D || function(K) {
             switch (K) {
               case "YY":
@@ -4329,11 +4329,11 @@ var sr = { exports: {} };
               case "d":
                 return String(_.$W);
               case "dd":
-                return se(v.weekdaysMin, _.$W, U, 2);
+                return se(v.weekdaysMin, _.$W, B, 2);
               case "ddd":
-                return se(v.weekdaysShort, _.$W, U, 3);
+                return se(v.weekdaysShort, _.$W, B, 3);
               case "dddd":
-                return U[_.$W];
+                return B[_.$W];
               case "H":
                 return String(E);
               case "HH":
@@ -4360,12 +4360,12 @@ var sr = { exports: {} };
                 return R;
             }
             return null;
-          }(B) || R.replace(":", "");
+          }(U) || R.replace(":", "");
         });
       }, g.utcOffset = function() {
         return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
       }, g.diff = function(m, _, v) {
-        var x, R = this, E = u.p(_), I = h(m), S = (I.utcOffset() - this.utcOffset()) * r, U = this - I, Y = function() {
+        var x, R = this, E = u.p(_), I = h(m), S = (I.utcOffset() - this.utcOffset()) * r, B = this - I, Y = function() {
           return u.m(R, I);
         };
         switch (E) {
@@ -4379,22 +4379,22 @@ var sr = { exports: {} };
             x = Y() / 3;
             break;
           case T:
-            x = (U - S) / 6048e5;
+            x = (B - S) / 6048e5;
             break;
           case f:
-            x = (U - S) / 864e5;
+            x = (B - S) / 864e5;
             break;
           case k:
-            x = U / s;
+            x = B / s;
             break;
           case d:
-            x = U / r;
+            x = B / r;
             break;
           case o:
-            x = U / n;
+            x = B / n;
             break;
           default:
-            x = U;
+            x = B;
         }
         return v ? x : u.a(x);
       }, g.daysInMonth = function() {
@@ -4430,7 +4430,7 @@ var sr = { exports: {} };
 })(sr);
 var sa = sr.exports;
 const aa = /* @__PURE__ */ gs(sa), Me = i.union([i.date(), i.string().datetime()]).transform((t) => typeof t == "string" ? aa(t).toDate() : t), ia = i.object({
-  id: Ue,
+  id: Be,
   password: i.string().nullable(),
   lastSignedIn: i.date().nullable(),
   verificationToken: i.string().nullable(),
@@ -4438,17 +4438,17 @@ const aa = /* @__PURE__ */ gs(sa), Me = i.union([i.date(), i.string().datetime()
   twoFactorBackupCodes: i.array(i.string()).default([]),
   refreshToken: i.string().nullable(),
   resetToken: i.string().nullable(),
-  userId: Ue
-}), ar = i.string().min(3).max(255).regex(/^[\w.-]+$/, {
+  userId: Be
+}), ar = i.string().min(3, "Username must be at least 3 characters long").max(255, "Username must be less than 255 characters").regex(/^[\w.-]+$/, {
   message: "Usernames can only contain letters, numbers, periods, hyphens, and underscores."
 }).transform((t) => t.toLowerCase()), ct = i.object({
-  id: Ue,
-  first_name: i.string().min(1).max(255),
-  last_name: i.string().min(1).max(255),
+  id: Be,
+  first_name: i.string().min(1, "First name is required").max(255, "First name must be less than 255 characters"),
+  last_name: i.string().min(1, "Last name is required").max(255, "Last name must be less than 255 characters"),
   picture: i.literal("").or(i.null()).or(i.string().url()),
-  phone_number: i.string().min(1).max(255),
+  phone_number: i.string().min(1, "Phone number is required").max(255, "Phone number must be less than 255 characters"),
   username: ar,
-  email: i.string().email().transform((t) => t.toLowerCase()),
+  email: i.string().min(1, "Email is required").email("Please enter a valid email address").transform((t) => t.toLowerCase()),
   locale: i.string().default("en-US"),
   emailVerified: i.boolean().default(!1),
   twoFactorEnabled: i.boolean().default(!1),
@@ -4471,7 +4471,7 @@ const ua = ct.partial().pick({
   email: !0,
   picture: !0
 });
-class Ba extends te(ua) {
+class Ua extends te(ua) {
 }
 const ca = i.object({
   email: i.string().transform((t) => t.toLowerCase()),
@@ -4480,7 +4480,7 @@ const ca = i.object({
   (t) => t.email.includes("@") ? i.string().email().parse(t.email) : ar.parse(t.email),
   { message: "InvalidCredentials" }
 );
-class Ua extends te(ca) {
+class Ba extends te(ca) {
 }
 const da = i.object({ message: i.string() });
 class Fa extends te(da) {
@@ -4488,7 +4488,14 @@ class Fa extends te(da) {
 const la = i.array(i.enum(["email", "github", "google", "openid"]));
 class Va extends te(la) {
 }
-const fa = ct.pick({ first_name: !0, last_name: !0, email: !0, phone_number: !0, locale: !0 }).extend({ password: i.string().min(6), confirm_password: i.string().min(6) });
+const fa = ct.pick({ first_name: !0, last_name: !0, email: !0, phone_number: !0, locale: !0 }).extend({
+  password: i.string().min(6, "Password must be at least 6 characters long").max(255, "Password must be less than 255 characters"),
+  confirm_password: i.string().min(6, "Confirm password must be at least 6 characters long").max(255, "Confirm password must be less than 255 characters")
+}).refine((t) => t.password === t.confirm_password, {
+  message: "Passwords don't match",
+  path: ["confirm_password"]
+  // This will show the error on the confirm_password field
+});
 class Ha extends te(fa) {
 }
 const ha = i.object({
@@ -6636,7 +6643,7 @@ const Aa = i.object({
 class ei extends te(Aa) {
 }
 const Ca = i.object({
-  id: Ue
+  id: Be
 });
 class ti extends te(Ca) {
 }
@@ -6652,7 +6659,7 @@ const Ra = i.object({
 class ni extends te(Ra) {
 }
 const ir = i.object({
-  id: Ue,
+  id: Be,
   title: i.string(),
   slug: i.string(),
   cv_data: i.any(),
@@ -6660,7 +6667,7 @@ const ir = i.object({
   data: rr.default(na),
   visibility: i.enum(["private", "public"]).default("private"),
   locked: i.boolean().default(!1),
-  userId: Ue,
+  userId: Be,
   user: ct.optional(),
   createdAt: Me,
   updatedAt: Me,
@@ -6702,7 +6709,7 @@ export {
   $a as ForgotPasswordDto,
   oi as GetTemplateListDto,
   ni as ImportResumeDto,
-  Ua as LoginDto,
+  Ba as LoginDto,
   Fa as MessageDto,
   Ha as RegisterDto,
   Wa as ResetPasswordDto,
@@ -6712,7 +6719,7 @@ export {
   qa as TwoFactorDto,
   Ja as UpdatePasswordDto,
   si as UpdateResumeDto,
-  Ba as UpdateUserDto,
+  Ua as UpdateUserDto,
   ai as UrlDto,
   Pa as UserDto,
   za as UserWithSecrets,
