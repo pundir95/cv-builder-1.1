@@ -126,7 +126,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-1/2">
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel className="text-foreground">First Name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="John"
@@ -143,10 +143,9 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-1/2">
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel className="text-foreground">Last Name</FormLabel>
                   <FormControl>
                     <Input
-                      className="lowercase"
                       placeholder="Doe"
                       {...field}
                     />
@@ -162,7 +161,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t`Email`}</FormLabel>
+                  <FormLabel className="text-foreground">{t`Email`}</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -181,7 +180,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel className="text-foreground">Phone Number</FormLabel>
                   <FormControl>
                     <PhoneInput
                       country="IN"
@@ -203,7 +202,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-foreground">{t`Password`}</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
@@ -222,7 +221,7 @@ export const RegisterPage = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t`Password`}</FormLabel>
+                  <FormLabel className="text-foreground">Confirm Password</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
