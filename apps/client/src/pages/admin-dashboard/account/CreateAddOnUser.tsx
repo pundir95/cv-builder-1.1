@@ -110,9 +110,14 @@ const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => v
 
   const onSubmit = async (data: FormValues) => {
     console.log(data, "formm");
+    const organisation_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").organizations?.[0] || null : null;
+    const payload = {
+      ...data,
+      organisation_id: organisation_id,
+    }
     
     try {
-      const response = await axios.post("/addon-user/auth/create-add-on-user/", data);
+      const response = await axios.post("/addon-user/auth/create-add-on-user/", payload);
       
       // Fetch user data
       const userResponse = await axios.get(`/accounts/api/users/`);
