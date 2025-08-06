@@ -76,7 +76,7 @@ export const RegisterPage = () => {
         showToast('Registration failed. Please try again.', 'error');
       }
       
-      form.reset();
+      // form.reset();
     }
   };
 
