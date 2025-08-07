@@ -110,7 +110,23 @@ export const EducationDialog = () => {
                 })}
               </FormLabel>
               <FormControl>
-                <Input {...field} placeholder="9.2 GPA" />
+                <Input 
+                  {...field} 
+                  placeholder="9.2 GPA" 
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Allow empty string or format to allow up to 2 decimal places
+                    if (value === '') {
+                      field.onChange(value);
+                    } else {
+                      // Regex to match numbers with up to 2 decimal places
+                      const regex = /^\d*\.?\d{0,2}$/;
+                      if (regex.test(value)) {
+                        field.onChange(value);
+                      }
+                    }
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

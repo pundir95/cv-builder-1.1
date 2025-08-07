@@ -110,7 +110,7 @@ const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => v
 
   const onSubmit = async (data: FormValues) => {
     console.log(data, "formm");
-    const organisation_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").reference_id : null;
+    const organisation_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").organizations[0] : null;
     const payload = {
       ...data,
       organization_id: organisation_id,

@@ -9,6 +9,7 @@ import {
   FormMessage,
   Input,
   RichInput,
+  Checkbox,
 } from "@reactive-resume/ui";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -18,13 +19,15 @@ import { useSectionProgress } from "@/client/hooks/use-section-progress";
 
 import { SectionDialog } from "../sections/shared/section-dialog";
 import { URLInput } from "../sections/shared/url-input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const formSchema = experienceSchema;
 
 type FormValues = z.infer<typeof formSchema>;
 
 export const ExperienceDialog = () => {
+  const [isPresent, setIsPresent] = useState(false);
+  
   const form = useForm<FormValues>({
     defaultValues: defaultExperience,
     resolver: zodResolver(formSchema),
@@ -35,6 +38,7 @@ export const ExperienceDialog = () => {
   // Watch form values to determine completion
   const formValues = form.watch();
   console.log(formValues,"formValues")
+  
   // Convert date string to start and end dates
   const convertDateRange = (dateStr: string) => {
     try {
@@ -83,11 +87,19 @@ export const ExperienceDialog = () => {
     }
   }, [formValues.date, formValues.startDate, formValues.endDate, form]);
 
+  // Handle present checkbox change
+  const handlePresentChange = (checked: boolean) => {
+    setIsPresent(checked);
+    if (checked) {
+      form.setValue('endDate', '');
+    }
+  };
+
   const isCompleted = Boolean(
     formValues.company &&
     formValues.position &&
     formValues.startDate &&
-    formValues.endDate &&
+    (formValues.endDate || isPresent) &&
     formValues.date &&
     formValues.summary
   );
@@ -165,18 +177,34 @@ export const ExperienceDialog = () => {
             <FormItem>
               <FormLabel>End Date</FormLabel>
               <FormControl>
-                <Input 
-                  {...field} 
-                  type="date" 
-                  placeholder={t`End Date`}
-                  min={form.getValues("startDate")}
-                  onChange={(e) => {
-                    const startDate = form.getValues("startDate");
-                    if (!startDate || e.target.value >= startDate) {
-                      field.onChange(e);
-                    }
-                  }}
-                />
+                <div className="space-y-2">
+                  <Input 
+                    {...field} 
+                    type="date" 
+                    placeholder={t`End Date`}
+                    min={form.getValues("startDate")}
+                    disabled={isPresent}
+                    onChange={(e) => {
+                      const startDate = form.getValues("startDate");
+                      if (!startDate || e.target.value >= startDate) {
+                        field.onChange(e);
+                      }
+                    }}
+                  />
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="present"
+                      checked={isPresent}
+                      onCheckedChange={handlePresentChange}
+                    />
+                    <label
+                      htmlFor="present"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Currently working here
+                    </label>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

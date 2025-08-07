@@ -27,6 +27,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
     addOnUser: false
   });
   const [countries,setCountries] = useState([]);  
+  const org_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").organizations[0] : null;
   useEffect(()=>{
     axios.get(`/company/countries/`).then((res)=>{
       console.log(res);
@@ -93,7 +94,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
         "organisation_id":organizationId,
         "country":country
     }
-      axios.post('/company/company-details/', payload).then((res) => {
+      axios.patch(`/company/company-details/${org_id}/`, payload).then((res) => {
         console.log(res);
         setIsEditing(false);
         setShowModal({...showModal, organisationDetails: false, organisationDetailsEdit: false, organisationUsers: true, addOnUser: false, createAddOnUser: false})
