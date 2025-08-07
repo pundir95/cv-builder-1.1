@@ -227,7 +227,7 @@ console.log(payload,"payload")
                         <span>{t`Deleting...`}</span>
                       </div>
                     ) : (
-                      t`Delete Resume`
+                      `Delete Resume`
                     )}
                   </AlertDialogAction>
                 </AlertDialogFooter>
@@ -362,7 +362,7 @@ console.log(payload,"payload")
                     </div>
                   ) : (
                     <>
-                      {isCreate && t`Create Resume`}
+                      {isCreate && `Create Resume`}
                       {isUpdate && t`Save Changes`}
                       {isDuplicate && t`Duplicate Resume`}
                     </>

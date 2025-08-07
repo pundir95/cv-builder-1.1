@@ -94,7 +94,7 @@ const roles = [
   { value: 'member', label: 'Member' },
 ];
 
-const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => void; }) => {
+const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit}: { isOpen: boolean; onClose: () => void; setAddOnUserLimit: (limit: any) => void; }) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(createAddOnUserSchema),
     defaultValues: {
@@ -126,7 +126,7 @@ const CreateAddOnUser = ({ isOpen, onClose}: { isOpen: boolean; onClose: () => v
       // Fetch organization employees
       const employeesResponse = await axios.get(`/company/organization-employees/`);
       console.log(employeesResponse, "res");
-      
+      setAddOnUserLimit((prevLimit: any) => prevLimit - 1);
       onClose();
       toast({
         title: "Success",

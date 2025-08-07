@@ -26,6 +26,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
     createAddOnUser: false,
     addOnUser: false
   });
+  const [add_on_user_limit,setAddOnUserLimit] = useState(0);
   const [countries,setCountries] = useState([]);  
   const org_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").organizations[0] : null;
   useEffect(()=>{
@@ -53,6 +54,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
       setCompanyAddress(res.data.data[0].company_address);
       setCompanyWebsite(res.data.data[0].company_website);
       setOrganizationId(res.data.data[0].organisation_id);
+      setAddOnUserLimit(res.data.data[0].add_on_user_limit);
 
     })
     axios.get(`/company/organization-employees/`).then((res)=>{
@@ -195,7 +197,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                 </div>
               </div>}
             {showModal.organisationUsers && <div className='w-full'>
-               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} />
+               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} add_on_user_limit={add_on_user_limit} setAddOnUserLimit={setAddOnUserLimit} />
               </div>}
             </Card>
           </div>

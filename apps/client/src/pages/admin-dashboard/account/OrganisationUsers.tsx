@@ -19,7 +19,7 @@ const mockUsers = [
   // Add more users as needed
 ];
 
-export default function OrganisationUsers({showModal, setShowModal, employees}: {showModal: any, setShowModal: any, employees: any}) {
+export default function OrganisationUsers({showModal, setShowModal, employees, add_on_user_limit, setAddOnUserLimit}: {showModal: any, setShowModal: any, employees: any, add_on_user_limit : any, setAddOnUserLimit : (limit: number) => void}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [users, setUsers] = useState(mockUsers);
@@ -104,7 +104,7 @@ useEffect(()=>{
           </div>
           <Button className="bg-[#D6EF3C]/90 rounded-full text-black px-6" onClick={() =>{
             if(userDataObj?.subscription_details?.length>0){
-              if(userDataObj.limit==0){
+              if(add_on_user_limit==0){
                 setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
               }else{
                 setShowModal({...showModal, addOnUser: false,createAddOnUser: true})
@@ -172,7 +172,7 @@ useEffect(()=>{
             setIsDeleteORDisable({...isDeleteORDisable, delete: true})
           }}
           />
-        <CreateAddOnUser isOpen={showModal.createAddOnUser} onClose={() => setShowModal({...showModal, createAddOnUser: false})} />
+        <CreateAddOnUser isOpen={showModal.createAddOnUser} onClose={() => setShowModal({...showModal, createAddOnUser: false})} setAddOnUserLimit={setAddOnUserLimit} />
       </Card>
       {isDeleteORDisable.delete && <DeleteSubscriptionUser isOpen={isDeleteORDisable.delete}  onClose={() => setIsDeleteORDisable({...isDeleteORDisable, delete: false})} id={isDeleteORDisable.deletedId}
       text="Delete"
