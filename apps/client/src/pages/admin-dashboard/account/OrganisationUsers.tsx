@@ -40,6 +40,26 @@ useEffect(()=>{
   }
   localStorage.removeItem("is_add_on_user")
 },[is_add_on_user])
+
+useEffect(()=>{
+    const fetchAddOnUsers = async () => {
+      try {
+        const response = await axios.get('addon-user/auth/add-on-user-list/');
+        if (response.data) {
+          setUsers(response.data);
+        }
+      } catch (error) {
+        toast({
+          title: "Error fetching users",
+          description: "There was a problem fetching the add-on users.",
+          variant: "error",
+        });
+      }
+    };
+
+    fetchAddOnUsers();
+
+},[])
   
   // // Filtered users based on search
   // const filteredUsers = employees.filter((user: any) =>

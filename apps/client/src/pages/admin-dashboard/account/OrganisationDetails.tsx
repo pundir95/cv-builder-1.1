@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
 
-    const OrganisationDetails: React.FC<{showModal: any, setShowModal: any, employees: any}> = ({showModal, setShowModal, employees}) => {
+    const OrganisationDetails: React.FC<{showModal: any, setShowModal: any, employees: any, organizationDetail:any}> = ({showModal, setShowModal, employees, organizationDetail}) => {
     const [copied, setCopied] = useState(false);
   const org = {
     name: 'Avio',
@@ -10,6 +10,8 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
     id: '3c3428ae-7017-4a07-9506-f5937f6cac20',
     users: 1,
   };
+
+  console.log(organizationDetail,"organizationDetail")
 
   const handleCopy = () => {
     navigator.clipboard.writeText(org.id);

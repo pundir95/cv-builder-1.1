@@ -15,7 +15,9 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   const [companyAddress, setCompanyAddress] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('https://www.google.com');
   const [organizationId, setOrganizationId] = useState('1234567890');
+  const [orgDomain, setOrgDomain] = useState('');
   const [employees, setEmployees] = useState([]);
+  const [organizationDetail, setOrganizationDetails] = useState()
   const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
   // State for errors
   const [errors, setErrors] = useState<{[key: string]: string}>({});
@@ -49,11 +51,13 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   useEffect(()=>{
     axios.get(`/company/company-details/`).then((res)=>{
       console.log(res);
+      setOrganizationDetails(res.data.data[0])
       setCompanyName(res.data.data[0].company_name);
       setCountry(res.data.data[0].country);
       setCompanyAddress(res.data.data[0].company_address);
       setCompanyWebsite(res.data.data[0].company_website);
       setOrganizationId(res.data.data[0].organisation_id);
+      setOrgDomain(res.data.data[0].org_domain || '');
       setAddOnUserLimit(res.data.data[0].add_on_user_limit);
 
     })
@@ -80,6 +84,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
       }
     }
     if (organizationId && !organizationId.trim()) newErrors.organizationId = 'Organization Id is required.';
+    if (orgDomain && !orgDomain.trim()) newErrors.orgDomain = 'Organization Domain is required.';
     return newErrors;
   };
 
@@ -94,6 +99,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
         "company_address":companyAddress,
         "company_website":companyWebsite,
         "organisation_id":organizationId,
+        "org_domain":orgDomain,
         "country":country
     }
       axios.patch(`/company/company-details/${org_id}/`, payload).then((res) => {
@@ -117,7 +123,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
               <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})}>
                 Back
               </button>
-             { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} employees={employees} />}
+             { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} employees={employees} organizationDetail={organizationDetail} />}
             {showModal.organisationDetailsEdit &&  <div className="space-y-6 w-full">
                 <div className="flex sm:flex-row flex-col gap-3 items-center justify-between">
                   <h2 className="text-xl font-semibold text-primary">Organization Details</h2>
@@ -193,6 +199,18 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                       className={!isEditing ? "bg-muted" : ""}
                     />
                     {errors.organizationId && <div className="text-red-500 text-xs">{errors.organizationId}</div>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Organization Domain</Label>
+                    <Input
+                      type="text"
+                      value={orgDomain}
+                      onChange={e => setOrgDomain(e.target.value)}
+                      className={!isEditing ? "bg-muted" : ""}
+                      placeholder="e.g., example.com"
+                    />
+                    {errors.orgDomain && <div className="text-red-500 text-xs">{errors.orgDomain}</div>}
                   </div>
                 </div>
               </div>}

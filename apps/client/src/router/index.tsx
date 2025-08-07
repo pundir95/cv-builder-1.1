@@ -39,6 +39,7 @@ import { LoginModal } from "../pages/auth/LoginModal";
 import CustomerOrganisation from "../pages/organistation-customer/CustomerOrganisation";
 import ResumeChecker from "../pages/admin-dashboard/resume-checker/ResumeChecker";
 import PreviewPage from "../pages/preview/preview-page";
+import CreatePasswordPage from "../pages/auth/CreatePassword/CreatePasswordPage";
 
 
 export const routes = createRoutesFromElements(
@@ -78,6 +79,7 @@ export const routes = createRoutesFromElements(
 
           {/* OAuth Callback */}
           {/* <Route path="callback" loader={authLoader} element={<div />} /> */}
+      <Route path="create-password/:token/:email" element={<CreatePasswordPage />} />
         </Route>
 
         <Route index element={<Navigate replace to="/auth/login" />} />
