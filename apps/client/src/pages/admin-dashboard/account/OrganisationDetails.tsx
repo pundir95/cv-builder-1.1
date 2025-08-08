@@ -31,7 +31,7 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
           </div>
           <div>
             <div className="text-lg font-semibold">Organization Name: <span className="font-bold">{organizationDetail?.company_name || organizationDetail?.name || 'N/A'}</span></div>
-            <div className="text-gray-500 text-sm">Organization Number: {organizationDetail?.number || 'N/A'}</div>
+            {/* <div className="text-gray-500 text-sm">Organization Number: {organizationDetail?.number || 'N/A'}</div> */}
           </div>
         </div>
         <div className="flex lg:flex-row flex-col gap-4 mt-2">
