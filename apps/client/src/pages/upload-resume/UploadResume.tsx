@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Upload, FileText, ArrowRight, ArrowLeft, Check, CheckCircle } from "@phosphor-icons/react";
 import { useDialog } from '@/client/stores/dialog';
@@ -18,6 +18,7 @@ import { ErrorPage } from '../public/error';
 import UploadPageError from './UploadPageError';
 import HumanCheckerModal from './HumanCheckerModal';
 import { PaymentModal } from '../builder/sidebars/left/sections/picture/payment-modal';
+import { toast } from '@/client/hooks/use-toast';
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -28,11 +29,56 @@ const UploadResume = () => {
   const [newResume, setNewResume] = useState<any>(null);
   const [humanChecker, setHumanChecker] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
  
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const isResumeChecker = searchParams.get("true") === "resume-checker"
   const resume_id=searchParams.get("resume_id")
+
+  // Check for URL parameters and handle payment verification
+  console.log(searchParams.get('human_resume'), 'searchParams 123', searchParams.get('session_id'));
+  useEffect(() => {
+    const humanResume = searchParams.get('human_resume');
+    const sessionId = searchParams.get('session_id');
+
+    if (humanResume && sessionId) {
+      handlePaymentVerification(sessionId);
+    }
+  }, [searchParams]);
+
+  const handlePaymentVerification = async (sessionId: string) => {
+    try {
+      const response = await axios.get(`/cv-manager/human-verification/check-payment/${sessionId}/`);
+      
+      if (response.status === 200) {
+        setShowSuccessModal(true);
+        toast({
+          title: "Payment verification successful",
+          description: "Your human verification request has been confirmed.",
+          duration: 5000,
+          className: "bg-green-500 text-white",
+          icon: <CheckCircle size={24} className="text-white" />,
+          variant: "default",
+        });
+
+        // Remove the URL parameters
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete('human_resume');
+        newSearchParams.delete('session_id');
+        setSearchParams(newSearchParams);
+      }
+    } catch (error) {
+      console.error('Payment verification error:', error);
+      toast({
+        title: "Payment verification failed",
+        description: "Please try again or contact support.",
+        duration: 5000,
+        className: "bg-red-500 text-white",
+        variant: "error",
+      });
+    }
+  };
 
   let cardData={
     simple: {
@@ -308,6 +354,33 @@ console.log(selectedStep,"selectedStep")
         cvId={'newResume.data.id'}
       />
      }
+
+     {/* Success Modal */}
+     {showSuccessModal && (
+       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+         <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
+           <div className="p-6">
+             <div className="text-center py-8">
+               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                 <CheckCircle size={32} className="text-green-600" />
+               </div>
+               <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                 Payment Successful!
+               </h3>
+               <p className="text-gray-600 text-sm">
+                 Your human verification request has been submitted. You'll receive feedback within 24 hours.
+               </p>
+               <button
+                 onClick={() => setShowSuccessModal(false)}
+                 className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+               >
+                 Close
+               </button>
+             </div>
+           </div>
+         </div>
+       </div>
+     )}
     </div>
   ); 
 };

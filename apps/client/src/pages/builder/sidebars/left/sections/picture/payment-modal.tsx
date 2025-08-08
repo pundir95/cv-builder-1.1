@@ -35,7 +35,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       const user = localStorage.getItem("user");
       const userData = JSON.parse(user || "{}");
       
-      const response = await axios.post('/cv_manager/human-verification/start-payment/', {
+      const response = await axios.post('/cv-manager/human-verification/start-payment/', {
         user_id: userData.id,
         cv_id: cvId,
         amount: 10.00,
@@ -52,12 +52,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           icon: <CheckCircle size={24} className="text-white" />,
           variant: "default",
         });
+
+        window.location.href = response.data.checkout_url;
         
         // Close modal after showing success state
-        setTimeout(() => {
-          onSuccess();
-          onClose();
-        }, 2000);
+        // setTimeout(() => {
+        //   onSuccess();
+        //   onClose();
+        // }, 2000);
       }
     } catch (error) {
       console.error('Payment error:', error);
@@ -131,7 +133,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                   <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4 mb-6">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-700 font-medium">Service Fee:</span>
-                      <span className="text-2xl font-bold text-green-600">$10.00</span>
+                      <span className="text-2xl font-bold text-green-600">$05.00</span>
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
                       One-time payment • 24-hour turnaround
@@ -180,7 +182,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     ) : (
                       <div className="flex items-center gap-2">
                         <CreditCard size={16} />
-                        Pay $10.00
+                        Pay $05.00
                       </div>
                     )}
                   </Button>
