@@ -40,118 +40,187 @@ export const ExportSection = () => {
   
   // Fix for HTML content escaping issue: Using FormData instead of JSON
   // to prevent automatic escaping of quotes and special characters in HTML
-  const onPdfExport = async () => {
+  // const onPdfExport = async () => {
 
-    if(userData.subscription_details.length == 0){
-      toast({
-        title: "You need to subscribe to download the resume",
-        description: "Please subscribe to download the resume",
-        variant: "error",
-      });
-      return;
-    }
+  //   if(userData.subscription_details.length == 0){
+  //     toast({
+  //       title: "You need to subscribe to download the resume",
+  //       description: "Please subscribe to download the resume",
+  //       variant: "error",
+  //     });
+  //     return;
+  //   }
 
-    const templateRef = sharedState.getTemplateRef();
-    if (templateRef) {
-      const templateString = templateRef.innerHTML;
+  //   const templateRef = sharedState.getTemplateRef();
+  //   if (templateRef) {
+  //     const templateString = templateRef.innerHTML;
       
-      // Option 1: Use FormData to avoid JSON escaping issues
-      const formData = new FormData();
-      formData.append('html_content', templateString);
-      formData.append('cv_name', 'Dummy');
+  //     // Option 1: Use FormData to avoid JSON escaping issues
+  //     const formData = new FormData();
+  //     formData.append('html_content', templateString);
+  //     formData.append('cv_name', 'Dummy');
       
-      // Option 2: If backend doesn't support FormData, use JSON with proper encoding
-      // const requestData = {
-      //   html_content: templateString,
-      //   cv_name: "Dummy"
-      // };
+  //     // Option 2: If backend doesn't support FormData, use JSON with proper encoding
+  //     // const requestData = {
+  //     //   html_content: templateString,
+  //     //   cv_name: "Dummy"
+  //     // };
       
-      axios.post(`/cv-manager/cv-download/`, formData, { 
-        responseType: 'blob',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      })
-      .then((response) => {
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = 'resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(downloadUrl);
-      })
-      .catch((error) => {
-        console.error("Error generating PDF:", error);
-      });
+  //     axios.post(`/cv-manager/cv-download/`, formData, { 
+  //       responseType: 'blob',
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       }
+  //     })
+  //     .then((response) => {
+  //       const blob = new Blob([response.data], { type: 'application/pdf' });
+  //       const downloadUrl = window.URL.createObjectURL(blob);
+  //       const link = document.createElement('a');
+  //       link.href = downloadUrl;
+  //       link.download = 'resume.pdf';
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       document.body.removeChild(link);
+  //       window.URL.revokeObjectURL(downloadUrl);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error generating PDF:", error);
+  //     });
     
-    }
-    // if (templateRef) {
-    //   let templateString = templateRef.innerHTML;
+  //   }
+  //   // if (templateRef) {
+  //   //   let templateString = templateRef.innerHTML;
 
-    //   // Inject print-specific CSS
-    //   const printCSS = `
-    //     <style>
-    //       .card, .section { page-break-inside: avoid; break-inside: avoid; }
-    //       .page-break { page-break-before: always; break-before: always; }
-    //     </style>
-    //   `;
-    //   templateString = printCSS + templateString;
+  //   //   // Inject print-specific CSS
+  //   //   const printCSS = `
+  //   //     <style>
+  //   //       .card, .section { page-break-inside: avoid; break-inside: avoid; }
+  //   //       .page-break { page-break-before: always; break-before: always; }
+  //   //     </style>
+  //   //   `;
+  //   //   templateString = printCSS + templateString;
 
-    //   // Replace width: 40% with width: 100% in the template string
-    //   const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "100%"');
-    //   console.log(modifiedTemplateString,"templateString");
+  //   //   // Replace width: 40% with width: 100% in the template string
+  //   //   const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "100%"');
+  //   //   console.log(modifiedTemplateString,"templateString");
       
-    //   // Configure PDF options
-    //   const options = {
-    //     margin: 0,
-    //     filename: 'resume.pdf',
-    //     image: { type: 'jpeg', quality: 0.98 },
-    //     html2canvas: { 
-    //       margin: 15,
-    //       scale: 2,
-    //       useCORS: true,
-    //       allowTaint: true,
-    //       imageTimeout: 0,
-    //       logging: true,
-    //       paddingOffsetY: 0,
-    //       paddingOffsetX: 0,
+  //   //   // Configure PDF options
+  //   //   const options = {
+  //   //     margin: 0,
+  //   //     filename: 'resume.pdf',
+  //   //     image: { type: 'jpeg', quality: 0.98 },
+  //   //     html2canvas: { 
+  //   //       margin: 15,
+  //   //       scale: 2,
+  //   //       useCORS: true,
+  //   //       allowTaint: true,
+  //   //       imageTimeout: 0,
+  //   //       logging: true,
+  //   //       paddingOffsetY: 0,
+  //   //       paddingOffsetX: 0,
         
-    //     },
-    //     jsPDF: { 
-    //       unit: 'mm', 
-    //       format: 'a4', 
-    //       orientation: 'portrait',
-    //       compress: true
-    //     },
-    //     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    //   };
+  //   //     },
+  //   //     jsPDF: { 
+  //   //       unit: 'mm', 
+  //   //       format: 'a4', 
+  //   //       orientation: 'portrait',
+  //   //       compress: true
+  //   //     },
+  //   //     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  //   //   };
 
-    //   try {
-    //     // Create a temporary div to hold the HTML content
-    //     const element = document.createElement('div');
-    //     element.innerHTML = modifiedTemplateString;
+  //   //   try {
+  //   //     // Create a temporary div to hold the HTML content
+  //   //     const element = document.createElement('div');
+  //   //     element.innerHTML = modifiedTemplateString;
         
-    //     // Wait for images to load
-    //     const images = element.getElementsByTagName('img');
-    //     await Promise.all(Array.from(images).map(img => {
-    //       if (img.complete) return Promise.resolve();
-    //       return new Promise(resolve => {
-    //         img.onload = resolve;
-    //         img.onerror = resolve;
-    //       });
-    //     }));
+  //   //     // Wait for images to load
+  //   //     const images = element.getElementsByTagName('img');
+  //   //     await Promise.all(Array.from(images).map(img => {
+  //   //       if (img.complete) return Promise.resolve();
+  //   //       return new Promise(resolve => {
+  //   //         img.onload = resolve;
+  //   //         img.onerror = resolve;
+  //   //       });
+  //   //     }));
         
-    //     // Generate PDF
-    //     await html2pdf().set(options).from(element).save();
-    //   } catch (error) {
-    //     console.error("Error generating PDF:", error);
-    //   }
-    // } else {
-    //   console.error("Template reference is null. Please ensure the builder page is loaded.");
-    // }
+  //   //     // Generate PDF
+  //   //     await html2pdf().set(options).from(element).save();
+  //   //   } catch (error) {
+  //   //     console.error("Error generating PDF:", error);
+  //   //   }
+  //   // } else {
+  //   //   console.error("Template reference is null. Please ensure the builder page is loaded.");
+  //   // }
+  // };
+
+  const onPdfExport = async () => {
+    const templateRef = sharedState.getTemplateRef();
+    
+    if (templateRef) {
+      let templateString = templateRef.innerHTML;
+
+      // Inject print-specific CSS
+      const printCSS = `
+        <style>
+          .card, .section { page-break-inside: avoid; break-inside: avoid; }
+          .page-break { page-break-before: always; break-before: always; }
+        </style>
+      `;
+      templateString = printCSS + templateString;
+
+      // Replace width: 40% with width: 100% in the template string
+      const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "100%"');
+      console.log(modifiedTemplateString,"templateString");
+      
+      // Configure PDF options
+      const options = {
+        margin: 0,
+        filename: 'resume.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          margin: 15,
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          imageTimeout: 0,
+          logging: true,
+          paddingOffsetY: 0,
+          paddingOffsetX: 0,
+        
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      try {
+        // Create a temporary div to hold the HTML content
+        const element = document.createElement('div');
+        element.innerHTML = modifiedTemplateString;
+        
+        // Wait for images to load
+        const images = element.getElementsByTagName('img');
+        await Promise.all(Array.from(images).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }));
+        
+        // Generate PDF
+        await html2pdf().set(options).from(element).save();
+      } catch (error) {
+        console.error("Error generating PDF:", error);
+      }
+    } else {
+      console.error("Template reference is null. Please ensure the builder page is loaded.");
+    }
   };
 
   return (
