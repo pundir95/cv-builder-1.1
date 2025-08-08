@@ -38,9 +38,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       const response = await axios.post('/cv-manager/human-verification/start-payment/', {
         user_id: userData.id,
         cv_id: cvId,
-        amount: 10.00,
+        amount: 5.00,
         currency: 'USD'
       });
+      console.log(response.data,"response.data123123")
 
       if (response.status === 200) {
         setIsSuccess(true);
@@ -53,7 +54,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           variant: "default",
         });
 
-        window.location.href = response.data.checkout_url;
+        // window.location.href = response.data.checkout_url;
         
         // Close modal after showing success state
         // setTimeout(() => {

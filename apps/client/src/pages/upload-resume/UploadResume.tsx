@@ -29,18 +29,22 @@ const UploadResume = () => {
   const [newResume, setNewResume] = useState<any>(null);
   const [humanChecker, setHumanChecker] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
  
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const isResumeChecker = searchParams.get("true") === "resume-checker"
   const resume_id=searchParams.get("resume_id")
+  const [paymentId, setPaymentId] = useState<any>(null);
 
   // Check for URL parameters and handle payment verification
   console.log(searchParams.get('human_resume'), 'searchParams 123', searchParams.get('session_id'));
+  const sessionId = searchParams.get('session_id');
   useEffect(() => {
+    const payment_Id = searchParams.get('payment_id') || null;
     const humanResume = searchParams.get('human_resume');
-    const sessionId = searchParams.get('session_id');
+    if(payment_Id){
+      setPaymentId(payment_Id)
+    }
 
     if (humanResume && sessionId) {
       handlePaymentVerification(sessionId);
@@ -52,7 +56,6 @@ const UploadResume = () => {
       const response = await axios.get(`/cv-manager/human-verification/check-payment/${sessionId}/`);
       
       if (response.status === 200) {
-        setShowSuccessModal(true);
         toast({
           title: "Payment verification successful",
           description: "Your human verification request has been confirmed.",
@@ -62,11 +65,18 @@ const UploadResume = () => {
           variant: "default",
         });
 
-        // Remove the URL parameters
-        const newSearchParams = new URLSearchParams(searchParams);
-        newSearchParams.delete('human_resume');
-        newSearchParams.delete('session_id');
-        setSearchParams(newSearchParams);
+        console.log(response.data,"response.data")
+
+        // Clean up the URL by removing the human_resume part and session_id parameter
+        const currentUrl = window.location.href;
+        const baseUrl = currentUrl.split('human_resume')[0];
+        const cleanUrl = baseUrl + '?true=resume-checker';
+        
+        // Update the URL without the human_resume and session_id
+        window.history.replaceState({}, '', cleanUrl);
+
+        // Open HumanCheckerModal after successful payment
+        setHumanChecker(true);
       }
     } catch (error) {
       console.error('Payment verification error:', error);
@@ -148,20 +158,27 @@ const UploadResume = () => {
     }
   };
 
-  const onStartFromScratch = () => {
-  //   if(isSubscriptionHave.length==0 && resumeCount==1){
-  //   setSelectedCard('scratch')
-  //   setIsLimitReachedModalOpen(true)
-    
-  // }else{
-  //   open("create");
-    
-  // }
-  // navigate("/onboard/select-template")
+  const onStartFromScratch = async () => {
   if(isResumeChecker){
-    // setHumanChecker(true)
-    setIsPaymentModalOpen(true)
-  }else{
+    try {
+      // First check if payment is already done
+      const response = await axios.get(`/cv-manager/human-verification/check-for-payment/`);
+      console.log(response.data.data,"response.data123123")
+      
+      if (response.status === 200 && response.data.data.is_paid && !response.data.data.is_used) {
+        // Payment is already done, open HumanCheckerModal
+        setHumanChecker(true);
+        setPaymentId(response.data.data.payment_id)
+      } else {
+        // Payment not done, open PaymentModal
+        setIsPaymentModalOpen(true);
+      }
+    } catch (error) {
+      console.error('Error checking payment status:', error);
+      // If there's an error, default to opening PaymentModal
+      setIsPaymentModalOpen(true);
+    }
+  } else {
     navigate(`/builder/${resume_id}`)
   }
   
@@ -341,7 +358,7 @@ console.log(selectedStep,"selectedStep")
         </button>
       </div>}
   
-    {humanChecker && <HumanCheckerModal open={humanChecker} onClose={() => setHumanChecker(false)} onSubmit={handleSubmit} />}
+    {humanChecker && <HumanCheckerModal open={humanChecker} onClose={() => setHumanChecker(false)} onSubmit={handleSubmit} paymentId={paymentId} />}
     {/* <LimitReachedModal isOpen={isLimitReachedModalOpen} onClose={onCloseLimitReached} resumeDetailsId={resumeDetailsId} /> */}
      { isPaymentModalOpen &&
       <PaymentModal
@@ -355,32 +372,6 @@ console.log(selectedStep,"selectedStep")
       />
      }
 
-     {/* Success Modal */}
-     {showSuccessModal && (
-       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-         <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
-           <div className="p-6">
-             <div className="text-center py-8">
-               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                 <CheckCircle size={32} className="text-green-600" />
-               </div>
-               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                 Payment Successful!
-               </h3>
-               <p className="text-gray-600 text-sm">
-                 Your human verification request has been submitted. You'll receive feedback within 24 hours.
-               </p>
-               <button
-                 onClick={() => setShowSuccessModal(false)}
-                 className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-               >
-                 Close
-               </button>
-             </div>
-           </div>
-         </div>
-       </div>
-     )}
     </div>
   ); 
 };

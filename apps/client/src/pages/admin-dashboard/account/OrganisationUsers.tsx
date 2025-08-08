@@ -196,7 +196,7 @@ useEffect(()=>{
                     <td className="p-4">
                       <span className="flex items-center gap-2">
                         <span>{user.is_verified ? "Active" : "Inactive"}</span>
-                        <Switch checked={user.is_verified} onCheckedChange={() => handleStatusChange(user.id)} />
+                        {/* <Switch checked={user.is_verified} onCheckedChange={() => handleStatusChange(user.id)} /> */}
                       </span>
                     </td>
                     <td className="p-4">

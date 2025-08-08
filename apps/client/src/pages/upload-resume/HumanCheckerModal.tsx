@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
   Input, Label, Button,
-  Select, SelectTrigger, SelectContent, SelectItem, SelectValue
+  Select, SelectTrigger, SelectContent, SelectItem, SelectValue,
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage
 } from '@reactive-resume/ui';
 import { User, Envelope, Phone, Buildings, UploadSimple, FileText, CheckCircle } from '@phosphor-icons/react';
 import { axios } from '@/client/libs/axios';
 import { toast } from '@/client/hooks/use-toast';
 import { useNavigate } from 'react-router';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 interface HumanCheckerModalProps {
   open: boolean;
@@ -19,6 +25,7 @@ interface HumanCheckerModalProps {
     industry: string;
     file: File | null;
   }) => void;
+  paymentId: string | null;
 }
 
 const INDUSTRIES = [
@@ -31,57 +38,56 @@ const INDUSTRIES = [
   'Other',
 ];
 
-export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onClose, onSubmit }) => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    industry: '',
-    file: null as File | null,
-  });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+// Define the schema for form validation
+const humanCheckerSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(1, "Phone number is required"),
+  industry: z.string().min(1, "Industry is required"),
+  file: z.instanceof(File, { message: "Please upload your CV" }),
+});
+
+type FormValues = z.infer<typeof humanCheckerSchema>;
+
+export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onClose, onSubmit, paymentId }) => {
   const [submitting, setSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);    
-  const navigate = useNavigate()
-  const handleChange = (field: string, value: string | File | null) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: '' }));
-  };
+  const navigate = useNavigate();
 
-  const validate = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (!form.name.trim()) newErrors.name = 'Name is required';
-    if (!form.email.trim()) newErrors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) newErrors.email = 'Invalid email';
-    if (!form.phone.trim()) newErrors.phone = 'Phone is required';
-    if (!form.industry) newErrors.industry = 'Industry is required';
-    if (!form.file) newErrors.file = 'Please upload your CV';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const form = useForm<FormValues>({
+    resolver: zodResolver(humanCheckerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      industry: "",
+      file: undefined as any,
+    },
+  });
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      handleChange('file', e.target.files[0]);
+      form.setValue("file", e.target.files[0]);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!validate()) return;
+  const handleSubmit = async (data: FormValues) => {
     setSubmitting(true);
-    console.log(form,"form")
+    console.log(data, "form");
+    
     setTimeout(() => {
       setSubmitting(false);
       const formData = new FormData();
-      formData.append("name", form.name)
-      formData.append("email", form.email)
-      formData.append("phone", form.phone)
-      formData.append("industry", form.industry)
-      formData.append("file", form.file as File)
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("industry", data.industry);
+      formData.append("file", data.file);
+      formData.append("payment_id", paymentId || "");
+      
       axios.post("/cv-manager/human-resume-verification/", formData).then(async (res) => {
         console.log(res.data.data);
-        setIsComplete(true)
+        setIsComplete(true);
         toast({
           title: "Resume verified successfully",
           description: "Our team will review and provide feedback within 24 hours.",
@@ -89,13 +95,10 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
           className: "bg-green-500 text-white",
           icon: <CheckCircle size={24} className="text-white" />, 
           variant: "default",
-        })
-        navigate("/dashboard/resumes")
-        // localStorage.setItem("uploadCVName",res.data.data.personal_info.name)
+        });
+        navigate("/dashboard/resumes");
         onClose();
       });
-      // onSubmit(form);
-      // onClose();
     }, 800);
   };
 
@@ -112,95 +115,135 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
           </DialogDescription>
         </DialogHeader>
         <div className="my-2 border-b border-gray-200" />
-        <form onSubmit={handleSubmit} className="space-y-6 mt-2">
-          <div className="grid grid-cols-1 gap-4">
-            <div>
-              <Label htmlFor="name" className="flex items-center gap-2">
-                <User size={18} className="text-gray-500" /> Name
-              </Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Enter your name"
-                value={form.name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('name', e.target.value)}
-                hasError={!!errors.name}
-                autoFocus
-                className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80"
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 mt-2">
+            <div className="grid grid-cols-1 gap-4">
+              <FormField
+                name="name"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <User size={18} className="text-gray-500" /> Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your name"
+                        className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-            </div>
-            <div>
-              <Label htmlFor="email" className="flex items-center gap-2">
-                <Envelope size={18} className="text-gray-500" /> Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={form.email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('email', e.target.value)}
-                hasError={!!errors.email}
-                className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80"
+              
+              <FormField
+                name="email"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Envelope size={18} className="text-gray-500" /> Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-            </div>
-            <div>
-              <Label htmlFor="phone" className="flex items-center gap-2">
-                <Phone size={18} className="text-gray-500" /> Phone Number
-              </Label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="Enter your phone number"
-                value={form.phone}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('phone', e.target.value)}
-                hasError={!!errors.phone}
-                className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80"
+              
+              <FormField
+                name="phone"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Phone size={18} className="text-gray-500" /> Phone Number
+                    </FormLabel>
+                    <FormControl>
+                      <PhoneInput
+                        country="IN"
+                        value={field.value}
+                        onChange={(value) => field.onChange(value)}
+                        inputClass="!w-full !h-11 !pl-16"
+                        containerClass="phonefield-wrapper"
+                        placeholder="Phone Number"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-            </div>
-            <div>
-              <Label htmlFor="industry" className="flex items-center gap-2">
-                <Buildings size={18} className="text-gray-500" /> Industry Type
-              </Label>
-              <Select value={form.industry} onValueChange={(v: string) => handleChange('industry', v)}>
-                <SelectTrigger id="industry" className={`rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80 ${errors.industry ? 'border-red-300' : ''}`}>
-                  <SelectValue placeholder="Select industry" />
-                </SelectTrigger>
-                <SelectContent>
-                  {INDUSTRIES.map((ind) => (
-                    <SelectItem key={ind} value={ind}>{ind}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.industry && <p className="text-red-500 text-xs mt-1">{errors.industry}</p>}
-            </div>
-            <div>
-              <Label htmlFor="cv" className="flex items-center gap-2">
-                <UploadSimple size={18} className="text-gray-500" /> Upload CV
-              </Label>
-              <input
-                id="cv"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFile}
-                className={`block w-full text-sm text-gray-700 rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all bg-white/80 ${errors.file ? 'border-red-300 bg-red-50' : ''}`}
+              
+              <FormField
+                name="industry"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Buildings size={18} className="text-gray-500" /> Industry Type
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80">
+                          <SelectValue placeholder="Select industry" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {INDUSTRIES.map((ind) => (
+                          <SelectItem key={ind} value={ind}>{ind}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {form.file && <p className="text-green-600 text-xs mt-1">Selected: {form.file.name}</p>}
-              {errors.file && <p className="text-red-500 text-xs mt-1">{errors.file}</p>}
+              
+              <FormField
+                name="file"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <UploadSimple size={18} className="text-gray-500" /> Upload CV
+                    </FormLabel>
+                    <FormControl>
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFile}
+                        className="block w-full text-sm text-gray-700 rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all bg-white/80"
+                      />
+                    </FormControl>
+                    {form.watch("file") && (
+                      <p className="text-green-600 text-xs mt-1">Selected: {form.watch("file")?.name}</p>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-          </div>
-          <DialogFooter>
-            <Button
-              type="submit"
-              loading={submitting}
-              className="w-full mt-2 bg-gradient-to-r from-[#D6EF3C] to-[#A7E92F] text-black rounded-full shadow-md hover:from-[#A7E92F] hover:to-[#D6EF3C] transition-all border border-[#D6EF3C]/40"
-            >
-              Submit
-            </Button>
-          </DialogFooter>
-        </form>
+            
+            <DialogFooter>
+              <Button
+                type="submit"
+                loading={submitting}
+                className="w-full mt-2 bg-gradient-to-r from-[#D6EF3C] to-[#A7E92F] text-black rounded-full shadow-md hover:from-[#A7E92F] hover:to-[#D6EF3C] transition-all border border-[#D6EF3C]/40"
+              >
+                Submit
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
