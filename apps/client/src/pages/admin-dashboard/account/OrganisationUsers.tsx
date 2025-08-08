@@ -19,7 +19,7 @@ const mockUsers = [
   // Add more users as needed
 ];
 
-export default function OrganisationUsers({showModal, setShowModal, employees, add_on_user_limit, setAddOnUserLimit}: {showModal: any, setShowModal: any, employees: any, add_on_user_limit : any, setAddOnUserLimit : (limit: number) => void}) {
+export default function OrganisationUsers({showModal, setShowModal, employees, add_on_user_limit, setAddOnUserLimit, setOrganizationDetails}: {showModal: any, setShowModal: any, employees: any, add_on_user_limit : any, setAddOnUserLimit : (limit: number) => void, setOrganizationDetails: (details: any ) => void}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [users, setUsers] = useState(mockUsers);
@@ -46,7 +46,8 @@ useEffect(()=>{
       try {
         const response = await axios.get('addon-user/auth/add-on-user-list/');
         if (response.data) {
-          setUsers(response.data);
+          console.log(response.data,"response.data");
+          setUsers(response.data.data);
         }
       } catch (error) {
         toast({
@@ -87,10 +88,38 @@ useEffect(()=>{
   const handleConfirm = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`company/organization-employees/${isDeleteORDisable.deletedId}/`);
-      setIsDeleteORDisable({...isDeleteORDisable, delete: false})
-    } catch (error) {
+      await axios.delete(`addon-user/auth/create-add-on-user/`, {
+        data: {
+          reference_id: isDeleteORDisable.deletedId
+        }
+      });
+      
+      // Show success toast
+      toast({
+        title: "User deleted successfully",
+        description: "The add-on user has been removed from your organization.",
+        variant: "default",
+      });
+
+      setOrganizationDetails((prev: any) => ({...prev, add_on_user_limit: add_on_user_limit - 1}))
+      
+      // Refresh the users list
+      const response = await axios.get('addon-user/auth/add-on-user-list/');
+      if (response.data) {
+        setUsers(response.data.data);
+      }
+      
+      setIsDeleteORDisable({...isDeleteORDisable, delete: false, deletedId: ""})
+    } catch (error: any) {
       console.error('Error deleting user:', error);
+      
+      // Show error toast with specific message
+      const errorMessage = error.response?.data?.message || error.response?.data?.detail || "Failed to delete user. Please try again.";
+      toast({
+        title: "Error deleting user",
+        description: errorMessage,
+        variant: "error",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -151,29 +180,29 @@ useEffect(()=>{
               </tr>
             </thead>
             <tbody>
-              {employees.length === 0 ? (
+              {users.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="p-6 text-center text-gray-400">No users found.</td>
                 </tr>
               ) : (
-                employees?.length>0 && employees?.map((user: any, idx: any) => (
+                users?.length>0 && users?.map((user: any, idx: any) => (
                   <tr key={user.id} className="border-b last:border-0 hover:bg-gray-50">
                     <td className="p-4">{idx + 1}</td>
-                    <td className="p-4 font-medium">{user.organization_user?.first_name} {user.organization_user?.last_name}</td>
-                    <td className="p-4">{user.organization_user?.email}</td>
+                    <td className="p-4 font-medium">{user.first_name} {user.last_name}</td>
+                    <td className="p-4">{user.email}</td>
                     <td className="p-4">
                       <Badge variant="secondary">{user.role}</Badge>
                     </td>
                     <td className="p-4">
                       <span className="flex items-center gap-2">
-                        <span>{user.is_active ? "Active" : "Inactive"}</span>
-                        <Switch checked={user.is_active} onCheckedChange={() => handleStatusChange(user.id)} />
+                        <span>{user.is_verified ? "Active" : "Inactive"}</span>
+                        <Switch checked={user.is_verified} onCheckedChange={() => handleStatusChange(user.id)} />
                       </span>
                     </td>
                     <td className="p-4">
                       <button
                         className="text-red-500 hover:bg-gray-100 rounded p-2"
-                        onClick={() => handleDelete(user.id)}
+                        onClick={() => handleDelete(user.reference_id)}
                         title="Delete user"
                       >
                         <Trash size={18} />

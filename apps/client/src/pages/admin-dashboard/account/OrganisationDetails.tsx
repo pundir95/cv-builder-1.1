@@ -4,17 +4,11 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
 
     const OrganisationDetails: React.FC<{showModal: any, setShowModal: any, employees: any, organizationDetail:any}> = ({showModal, setShowModal, employees, organizationDetail}) => {
     const [copied, setCopied] = useState(false);
-  const org = {
-    name: 'Avio',
-    number: '2323213123',
-    id: '3c3428ae-7017-4a07-9506-f5937f6cac20',
-    users: 1,
-  };
 
   console.log(organizationDetail,"organizationDetail")
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(org.id);
+    navigator.clipboard.writeText(organizationDetail?.id || '');
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
   };
@@ -33,11 +27,11 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
         <div className="flex items-center gap-4 lg:flex-row flex-col">
           {/* Avatar */}
           <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-600">
-            {org.name[0]}
+            {organizationDetail?.company_name?.[0] || organizationDetail?.name?.[0] || 'A'}
           </div>
           <div>
-            <div className="text-lg font-semibold">Organization Name: <span className="font-bold">{org.name}</span></div>
-            <div className="text-gray-500 text-sm">Organization Number: {org.number}</div>
+            <div className="text-lg font-semibold">Organization Name: <span className="font-bold">{organizationDetail?.company_name || organizationDetail?.name || 'N/A'}</span></div>
+            <div className="text-gray-500 text-sm">Organization Number: {organizationDetail?.number || 'N/A'}</div>
           </div>
         </div>
         <div className="flex lg:flex-row flex-col gap-4 mt-2">
@@ -48,7 +42,7 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
               Organization ID
             </div>
             <div className="flex items-center gap-2 mt-1">
-              <span className="font-mono text-sm break-all">{employees[0]?.org_id}</span>
+              <span className="font-mono text-sm break-all">{organizationDetail?.id || employees[0]?.org_id || 'N/A'}</span>
               <button onClick={handleCopy} className="text-gray-400 hover:text-gray-600" title="Copy">
                 <Clipboard size={16} />
               </button>
@@ -62,7 +56,7 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
               Users
             </div>
             <div className="flex items-center gap-2 mt-1">
-              <span className="font-semibold">{employees.length} users</span>
+              <span className="font-semibold">{organizationDetail?.total_active_user || employees.length} users</span>
              {userData?.role !== "employee" && <button className="ml-auto text-gray-400 hover:text-gray-600" title="View Users">
                 <Eye size={16} onClick={() => setShowModal({...showModal, organisationUsers: true, organisationDetailsEdit: false, organisationDetails: false})} />
               </button>}

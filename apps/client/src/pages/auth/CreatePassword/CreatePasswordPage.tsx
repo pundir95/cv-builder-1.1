@@ -75,7 +75,7 @@ const CreatePasswordPage = () => {
       <Card className="w-full max-w-md">
         <CardContent className="space-y-8">
           <Helmet>
-            <title>{t`Create Password`} - {t`Reactive Resume`}</title>
+            <title>{`Create Password`} - {`Reactive Resume`}</title>
           </Helmet>
 
           <div className="space-y-1.5 text-center">
@@ -120,7 +120,7 @@ const CreatePasswordPage = () => {
                           </button>
                         </div>
                       </FormControl>
-                      <FormDescription>{t`Password must be at least 6 characters long`}</FormDescription>
+                      <FormDescription>{`Password must be at least 6 characters long`}</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -131,7 +131,7 @@ const CreatePasswordPage = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground">{t`Confirm Password`}</FormLabel>
+                      <FormLabel className="text-foreground">{`Confirm Password`}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -155,7 +155,7 @@ const CreatePasswordPage = () => {
                           </button>
                         </div>
                       </FormControl>
-                      <FormDescription>{t`Please confirm your password`}</FormDescription>
+                      <FormDescription>{`Please confirm your password`}</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -167,13 +167,13 @@ const CreatePasswordPage = () => {
                   className="bg-[#D6EF3C]/90 text-black px-6 py-6 rounded-full hover:bg-[#D6EF3C]/30" 
                   loading={loading}
                 >
-                  {t`Create Password`}
+                  {`Create Password`}
                 </Button>
 
                 <div className="mt-4 flex items-center justify-center">
                   <Button asChild variant="link" className="px-4 text-base">
                     <Link to="/auth/login">
-                      {t`Back to Login`} <ArrowRight className="ml-1" />
+                      {`Back to Login`} <ArrowRight className="ml-1" />
                     </Link>
                   </Button>
                 </div>

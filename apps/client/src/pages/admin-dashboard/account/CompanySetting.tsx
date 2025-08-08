@@ -30,7 +30,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   });
   const [add_on_user_limit,setAddOnUserLimit] = useState(0);
   const [countries,setCountries] = useState([]);  
-  const org_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").organizations[0] : null;
+  const org_id = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "").organizations ? JSON.parse(localStorage.getItem("user") || "").organizations[0] : null : null;
   useEffect(()=>{
     axios.get(`/company/countries/`).then((res)=>{
       console.log(res);
@@ -83,7 +83,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
         newErrors.companyWebsite = 'Invalid URL.';
       }
     }
-    if (organizationId && !organizationId.trim()) newErrors.organizationId = 'Organization Id is required.';
+    // if (organizationId && !organizationId.trim()) newErrors.organizationId = 'Organization Id is required.';
     if (orgDomain && !orgDomain.trim()) newErrors.orgDomain = 'Organization Domain is required.';
     return newErrors;
   };
@@ -190,7 +190,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                     {errors.companyWebsite && <div className="text-red-500 text-xs">{errors.companyWebsite}</div>}
                   </div>
 
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <Label>Organization Id</Label>
                     <Input
                       type="text"
@@ -199,7 +199,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                       className={!isEditing ? "bg-muted" : ""}
                     />
                     {errors.organizationId && <div className="text-red-500 text-xs">{errors.organizationId}</div>}
-                  </div>
+                  </div> */}
 
                   <div className="space-y-2">
                     <Label>Organization Domain</Label>
@@ -215,7 +215,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                 </div>
               </div>}
             {showModal.organisationUsers && <div className='w-full'>
-               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} add_on_user_limit={add_on_user_limit} setAddOnUserLimit={setAddOnUserLimit} />
+               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} add_on_user_limit={add_on_user_limit} setAddOnUserLimit={setAddOnUserLimit} setOrganizationDetails={setOrganizationDetails} />
               </div>}
             </Card>
           </div>
