@@ -32,11 +32,24 @@ export const useLogin = () => {
       localStorage.setItem("user", JSON.stringify(data.data.user));
       const user = data.data.user as any;
       console.log(user.subscription_details.length,"ppppppppp")
-      if(user.subscription_details.length>0){
-        navigate("/dashboard")
-      }else{
-        navigate("/onboard/select-template")
-      }
+      axios.get("/accounts/api/users/",{
+        headers:{
+          Authorization:`Bearer ${data.data.access}`
+        }
+       
+      }).then((res) => {
+        localStorage.setItem("user",JSON.stringify(res.data[0]));
+        if(res.data[0].subscription_details.length>0){
+          navigate("/dashboard")
+        }else{
+          navigate("/onboard/select-template")
+        }
+      })
+      // if(user.subscription_details.length>0){
+      //   navigate("/dashboard")
+      // }else{
+      //   navigate("/onboard/select-template")
+      // }
 
       // setUser(data.data.user);
       
