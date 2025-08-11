@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t, Trans } from "@lingui/macro";
-import { ArrowRight } from "@phosphor-icons/react";
+import { ArrowRight, Eye, EyeSlash } from "@phosphor-icons/react";
 import { registerSchema } from "@reactive-resume/dto";
 import { usePasswordToggle } from "@reactive-resume/hooks";
 import {
@@ -17,7 +17,7 @@ import {
   Input,
 } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
@@ -38,6 +38,8 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
   const { flags } = useFeatureFlags();
   const { register, loading, error } = useRegister();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
   usePasswordToggle(formRef);
@@ -204,14 +206,24 @@ export const RegisterPage = () => {
                 <FormItem>
                   <FormLabel className="text-foreground">{t`Password`}</FormLabel>
                   <FormControl>
-                    <Input type="password" {...field} />
+                    <div className="relative">
+                      <Input 
+                        type={showPassword ? "text" : "password"} 
+                        {...field} 
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      >
+                        {showPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeSlash size={20} />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
-                  <FormDescription>
-                    <Trans>
-                      Hold <code className="text-xs font-bold">Ctrl</code> to display your password
-                      temporarily.
-                    </Trans>
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -223,14 +235,24 @@ export const RegisterPage = () => {
                 <FormItem>
                   <FormLabel className="text-foreground">Confirm Password</FormLabel>
                   <FormControl>
-                    <Input type="password" {...field} />
+                    <div className="relative">
+                      <Input 
+                        type={showConfirmPassword ? "text" : "password"} 
+                        {...field} 
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      >
+                        {showConfirmPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeSlash size={20} />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
-                  <FormDescription>
-                    <Trans>
-                      Hold <code className="text-xs font-bold">Ctrl</code> to display your password
-                      temporarily.
-                    </Trans>
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

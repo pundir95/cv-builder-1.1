@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t } from "@lingui/macro";
-import { ArrowRight } from "@phosphor-icons/react";
+import { ArrowRight, ArrowLeft } from "@phosphor-icons/react";
 import { twoFactorSchema } from "@reactive-resume/dto";
 import { usePasswordToggle } from "@reactive-resume/hooks";
 import {
@@ -109,6 +109,18 @@ export const VerifyOtpPage = () => {
             </Button>
           </form>
         </Form>
+      </div>
+
+      <div className="flex justify-center">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeft size={16} />
+          Back
+        </Button>
       </div>
     </div>
   );

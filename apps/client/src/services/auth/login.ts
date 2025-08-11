@@ -31,7 +31,12 @@ export const useLogin = () => {
       localStorage.setItem("refresh_token", data.data.refresh);
       localStorage.setItem("user", JSON.stringify(data.data.user));
       const user = data.data.user as any;
+      console.log(user,"user")
       console.log(user.subscription_details.length,"ppppppppp")
+      if(user.role === "admin"){
+        navigate("/admin")
+        return
+      }
       axios.get("/accounts/api/users/",{
         headers:{
           Authorization:`Bearer ${data.data.access}`

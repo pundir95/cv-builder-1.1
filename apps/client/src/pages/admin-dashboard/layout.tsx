@@ -11,8 +11,9 @@ export const AdminDashboardLayout = () => {
   const userData = localStorage.getItem("user");
   const userDataJson = JSON.parse(userData || "{}");
   const role = userDataJson.role;
+  console.log(role, "rolew12");
   if(role !== "admin"){
-    return <Navigate replace to={`/`} />
+    // return <Navigate replace to={`/`} />
   }
 
   return (
