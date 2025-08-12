@@ -2,15 +2,9 @@ import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { Helmet } from "react-helmet-async";
 import { ScrollArea, Button, TabsContent } from "@reactive-resume/ui";
-import { UserAvatar } from "@/client/components/user-avatar";
-import { UserOptions } from "@/client/components/user-options";
 import { Pagination } from "@/client/components/pagination";
-import { ChartLine, CurrencyDollar, Gear, Users, Notepad } from "@phosphor-icons/react";
-import { Sidebar } from "./components/Sidbar";
 import { useEffect, useState } from "react";
 import { axios } from "@/client/libs/axios";
-import { ListView } from "../dashboard/resumes/_layouts/list";
-import { GridView } from "../dashboard/resumes/_layouts/grid";
 import { AnimatePresence, motion } from "framer-motion";
 import dayjs from "dayjs";
 
