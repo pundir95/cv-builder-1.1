@@ -4,6 +4,8 @@ import { Button, Card, Checkbox, Input, Label, ScrollArea, Separator } from "@re
 import { useEffect, useState } from "react";
 import CompanySetting from "./CompanySetting";
 import { ActiveSubscription } from "./ActiveSubScription";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState('general');
@@ -197,11 +199,12 @@ export const AccountSettings = () => {
                   </div>
                   <div className="space-y-2">
                     <Label>Contact Number</Label>
-                    <Input
-                      type="tel"
+                    <PhoneInput
+                      country="IN"
                       value={userData?.phone_number}
                       disabled={!isEditing}
-                      className={!isEditing ? "bg-muted" : ""}
+                      inputClass={`!w-full !h-11 !pl-16 ${!isEditing ? "!bg-muted" : ""}`}
+                      containerClass="phonefield-wrapper"
                     />
                   </div>
                 </div>
