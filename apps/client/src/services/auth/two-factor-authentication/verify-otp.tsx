@@ -26,7 +26,11 @@ export const useVerifyOtp = () => {
     mutationFn: verifyOtp,
     onSuccess: (data) => {
       setUser(data.data.user);
+      localStorage.setItem("user", JSON.stringify(data.data.user));
+      localStorage.setItem("token", data.data.access);
+      localStorage.setItem("refresh_token", data.data.refresh);
       queryClient.setQueryData(["user"], data.data.user);
+      console.log(data.data.user, "data.data.user");
     },
   });
 

@@ -21,6 +21,7 @@ import type { z } from "zod";
 
 import { useVerifyOtp } from "@/client/services/auth";
 import { useToast } from "@/client/components/ToastProvider";
+import { axios } from "@/client/libs/axios";
 type FormValues = z.infer<typeof twoFactorSchema>;
 
 export const VerifyOtpPage = () => {
@@ -45,8 +46,21 @@ export const VerifyOtpPage = () => {
     try {
       await verifyOtp(newPayload);
       showToast('Operation successful!', 'success');
-
-      void navigate("/auth/login");
+      const res = await axios.get("/accounts/api/users/",{
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem("access")}`
+        }
+       
+      })
+      if(res?.data?.length>0){
+        localStorage.setItem("user",JSON.stringify(res.data[0]));
+        if(res.data[0].subscription_details.length>0){
+          void navigate("/dashboard");
+        }else{
+          void navigate("/onboard/select-template");
+        }
+      }
+      void navigate("/dashboard");
     } catch (error: any) {
       console.log(error);
       let errorMessage = error?.response?.data?.data?.non_field_errors?.[0] || 'Operation failed. Please try again.';
