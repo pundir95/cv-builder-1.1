@@ -25,7 +25,7 @@ export const PlanPricing = () => {
     const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
     setLoading(true)
     setIsAdmin(user.role === "admin");
-    let api = user.reference_id ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
+    let api = user.role !== "admin" ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
     axios.get(api).then((res)=>{
       setPlans(res?.data?.results?.plans)
       setLoading(false)
