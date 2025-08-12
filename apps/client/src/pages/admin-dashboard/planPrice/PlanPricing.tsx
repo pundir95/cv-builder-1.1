@@ -27,17 +27,16 @@ export const PlanPricing = () => {
     setIsAdmin(user.role === "admin");
     let api = user.reference_id ? `/subscription/subscription-plans?reference_id=${user.reference_id}` : `/subscription/subscription-plans`
     axios.get(api).then((res)=>{
-      console.log(res?.data,"opppp")
       setPlans(res?.data?.results?.plans)
       setLoading(false)
     })
   },[])
 
-  // useEffect(()=>{ 
-  //   let filteredDataList=plans.filter((item:any)=>item.validity==(isYearly ? "year" : "month"))
-  //   console.log(filteredDataList,"filteredDataList")
-  //   setFilteredPlans(filteredDataList)
-  // },[isYearly,plans])
+  useEffect(()=>{ 
+    let filteredDataList = plans.filter((item:any) => item.plan_type === (isYearly ? "yearly" : "monthly"))
+    console.log(filteredDataList,"filteredDataList")
+    setFilteredPlans(filteredDataList)
+  },[isYearly,plans])
 
   
   const getThePlan=(id:string)=>{
@@ -137,7 +136,7 @@ export const PlanPricing = () => {
         ))  
         :
         
-          plans.length > 0 && plans.map((product:any) => (
+          filteredPlans.length > 0 && filteredPlans.map((product:any) => (
           <div
             key={product.name}
             className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 flex flex-col items-center border border-gray-100 hover:shadow-2xl transition-shadow duration-200 relative min-h-[420px] w-full"
@@ -155,10 +154,10 @@ export const PlanPricing = () => {
             <p className="text-sm text-gray-500 mb-2 text-center min-h-[40px]">{product.description}</p>
             <div className="text-center mb-6">
               <span className="text-3xl sm:text-4xl font-bold text-gray-900">
-                ${isYearly ? product?.price : product?.price}
+                ${product?.price}
               </span>
               <span className="text-base text-gray-500 ml-1 font-medium">
-                /{isYearly ? 'year' : 'month'}
+                /{product?.plan_type === "yearly" ? 'year' : 'month'}
               </span>
             </div>
             <ul className="mb-8 w-full">
@@ -184,6 +183,11 @@ export const PlanPricing = () => {
           </div>
         ))}
         </div>
+        {filteredPlans.length === 0 && !loading && (
+          <div className="text-center py-8">
+            <p className="text-gray-500 text-lg">No {isYearly ? 'yearly' : 'monthly'} plans available at the moment.</p>
+          </div>
+        )}
         </>
         }
 
