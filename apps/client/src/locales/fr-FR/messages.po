@@ -168,7 +168,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer votre CV ?"
 
 #: apps/client/src/pages/dashboard/settings/_dialogs/two-factor.tsx:125
 msgid "Are you sure you want to disable two-factor authentication?"
-msgstr "Êtes-vous sûr de vouloir désactiver l’authentification à deux facteurs ?"
+msgstr "Êtes-vous sûr de vouloir désactiver l'authentification à deux facteurs ?"
 
 #: apps/client/src/pages/dashboard/resumes/_dialogs/lock.tsx:38
 msgid "Are you sure you want to lock this resume?"
@@ -1527,7 +1527,7 @@ msgstr "Ce CV est verrouillé, veuillez le déverrouiller pour effectuer d'autre
 
 #: apps/client/src/pages/builder/sidebars/right/sections/notes.tsx:23
 msgid "This section is reserved for your personal notes specific to this resume. The content here remains private and is not shared with anyone else."
-msgstr "Cette section est réservée à vos notes personnelles spécifiques à ce CV. Le contenu ici reste privé et n’est partagé avec personne d’autre."
+msgstr "Cette section est réservée à vos notes personnelles spécifiques à ce CV. Le contenu ici reste privé et n'est partagé avec personne d'autre."
 
 #: apps/client/src/pages/dashboard/resumes/_dialogs/resume.tsx:216
 msgid "Tip: You can name the resume referring to the position you are applying for."
@@ -1639,7 +1639,7 @@ msgstr "L'utilisateur n'a pas d'enregistrement de « secrets » associé. Veui
 #: apps/client/src/pages/builder/sidebars/left/dialogs/profiles.tsx:55
 #: apps/client/src/pages/dashboard/settings/_sections/account.tsx:167
 msgid "Username"
-msgstr "Nom d’utilisateur"
+msgstr "Nom d'utilisateur"
 
 #: apps/client/src/pages/home/sections/statistics/index.tsx:13
 msgid "Users Signed Up"
@@ -1741,7 +1741,7 @@ msgstr ""
 
 #: apps/client/src/pages/dashboard/settings/_sections/openai.tsx:87
 msgid "You have the option to <0>obtain your own OpenAI API key</0>. This key empowers you to leverage the API as you see fit. Alternatively, if you wish to disable the AI features in Reactive Resume altogether, you can simply remove the key from your settings."
-msgstr "Vous avez la possibilité d'<0>obtenir votre propre clé API OpenAI</0> . Cette clé vous permet d’exploiter l’API comme bon vous semble. Alternativement, si vous souhaitez désactiver complètement les fonctionnalités d'IA dans Reactive Resume, vous pouvez simplement supprimer la clé de vos paramètres."
+msgstr "Vous avez la possibilité d'<0>obtenir votre propre clé API OpenAI</0> . Cette clé vous permet d'exploiter l'API comme bon vous semble. Alternativement, si vous souhaitez désactiver complètement les fonctionnalités d'IA dans Reactive Resume, vous pouvez simplement supprimer la clé de vos paramètres."
 
 #: apps/client/src/pages/auth/verify-email/page.tsx:50
 msgid "You should have received an email from <0>Reactive Resume</0> with a link to verify your account."
@@ -1779,4 +1779,60 @@ msgstr "Zoomer"
 #: apps/client/src/pages/builder/_components/toolbar.tsx:118
 msgid "Zoom Out"
 msgstr "Dézoomer"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:31
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:42
+msgid "Search users..."
+msgstr "Rechercher des utilisateurs..."
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:47
+msgid "Filter"
+msgstr "Filtrer"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:51
+msgid "Export"
+msgstr "Exporter"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:60
+msgid "Non-Registered Users"
+msgstr "Utilisateurs Non Inscrits"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:66
+msgid "Registered Users"
+msgstr "Utilisateurs Inscrits"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:72
+msgid "Premium Users"
+msgstr "Utilisateurs Premium"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:78
+msgid "Name"
+msgstr "Nom"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:79
+msgid "Email"
+msgstr "E-mail"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:80
+msgid "Phone"
+msgstr "Téléphone"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:81
+msgid "Last Active"
+msgstr "Dernière Activité"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:82
+msgid "Plan"
+msgstr "Plan"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:95
+msgid "Premium"
+msgstr "Premium"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:95
+msgid "Free"
+msgstr "Gratuit"
 

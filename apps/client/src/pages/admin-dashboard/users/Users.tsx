@@ -74,11 +74,11 @@ export const Users = () => {
           {t`Premium Users`}
         </button>
       </div>
-      <div className="rounded-lg border border-gray-100 bg-gray-200">
-        <div className="w-full overflow-x-auto">
+      <div className="rounded-lg border border-gray-100">
+        <div className="overflow-x-auto rounded-lg border border-secondary/20">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-400">
+              <tr className="border-lg bg-blue-500 hover:bg-blue-600 text-white">
                 <th className="text-left p-4 font-medium whitespace-nowrap">{t`Name`}</th>
                 <th className="text-left p-4 font-medium whitespace-nowrap">{t`Email`}</th>
                 <th className="text-left p-4 font-medium whitespace-nowrap">{t`Phone`}</th>
@@ -99,7 +99,7 @@ export const Users = () => {
                   <td className="p-4 whitespace-nowrap">{user.last_login?.split("T")[0]}</td>
                   {selectedTab === "premium" && <td className="p-4">
                     <span className="inline-flex items-center rounded-full bg-blue-500 px-2.5 py-0.5 text-xs font-medium text-white">
-                      {user.subscription_details.length > 0 ? "Premium" : "Free"}
+                      {user.subscription_details.length > 0 ? t`Premium` : t`Free`}
                     </span>
                   </td>}
                   {/* <td className="p-4">

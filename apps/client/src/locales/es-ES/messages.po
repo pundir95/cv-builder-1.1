@@ -1780,3 +1780,59 @@ msgstr "Aumentar"
 msgid "Zoom Out"
 msgstr "Disminuir"
 
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:31
+msgid "Users"
+msgstr "Usuarios"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:42
+msgid "Search users..."
+msgstr "Buscar usuarios..."
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:47
+msgid "Filter"
+msgstr "Filtrar"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:51
+msgid "Export"
+msgstr "Exportar"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:60
+msgid "Non-Registered Users"
+msgstr "Usuarios No Registrados"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:66
+msgid "Registered Users"
+msgstr "Usuarios Registrados"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:72
+msgid "Premium Users"
+msgstr "Usuarios Premium"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:78
+msgid "Name"
+msgstr "Nombre"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:79
+msgid "Email"
+msgstr "Correo"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:80
+msgid "Phone"
+msgstr "Teléfono"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:81
+msgid "Last Active"
+msgstr "Última Actividad"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:82
+msgid "Plan"
+msgstr "Plan"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:95
+msgid "Premium"
+msgstr "Premium"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:95
+msgid "Free"
+msgstr "Gratis"
+

@@ -1779,3 +1779,59 @@ msgstr "Zoom In"
 #: apps/client/src/pages/builder/_components/toolbar.tsx:118
 msgid "Zoom Out"
 msgstr "Zoom Out"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:31
+msgid "Users"
+msgstr "Users"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:42
+msgid "Search users..."
+msgstr "Search users..."
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:47
+msgid "Filter"
+msgstr "Filter"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:51
+msgid "Export"
+msgstr "Export"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:60
+msgid "Non-Registered Users"
+msgstr "Non-Registered Users"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:66
+msgid "Registered Users"
+msgstr "Registered Users"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:72
+msgid "Premium Users"
+msgstr "Premium Users"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:78
+msgid "Name"
+msgstr "Name"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:79
+msgid "Email"
+msgstr "Email"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:80
+msgid "Phone"
+msgstr "Phone"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:81
+msgid "Last Active"
+msgstr "Last Active"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:82
+msgid "Plan"
+msgstr "Plan"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:95
+msgid "Premium"
+msgstr "Premium"
+
+#: apps/client/src/pages/admin-dashboard/users/Users.tsx:95
+msgid "Free"
+msgstr "Free"

@@ -7,7 +7,7 @@ const AdminPlanPricing: React.FC = () => {
   const [showAddNewPlan, setShowAddNewPlan] = useState(false);
   return (
     <div className='w-full lg:p-8'>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <h4 style={{ fontWeight: 600, textDecoration: 'underline', fontSize: 16, margin: 0 }}>Pricing & Plans</h4>
         <button
           style={{
@@ -24,7 +24,7 @@ const AdminPlanPricing: React.FC = () => {
         >
           Add New Plan
         </button>
-      </div>
+      </div> */}
       {showAddNewPlan ? (
         <AddNewPlan onBack={() => setShowAddNewPlan(false)} />
       ) : (

@@ -168,7 +168,7 @@ export const PlanPricing = () => {
                 </li>
               ))}
             </ul>
-            <button
+           { user.role !== "admin" && <button
               className="w-full bg-[#D6EF3C]/90 hover:bg-[#D6EF3C] text-black font-semibold py-2 rounded-lg transition-colors duration-200 shadow-md text-base sm:text-lg"
               onClick={()=>{
                 if(product?.validity === "onetime"){
@@ -179,7 +179,7 @@ export const PlanPricing = () => {
               }}
             >
               Choose {product?.name}
-            </button>
+            </button>}
           </div>
         ))}
         </div>
