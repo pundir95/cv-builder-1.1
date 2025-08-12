@@ -78,7 +78,7 @@ export const TemplatesPage = () => {
                   alt={template.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                {/* <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <Button size="sm" variant="outline" className="bg-white/90 hover:bg-white">
                     <Pencil className="w-4 h-4" />
                   </Button>
@@ -88,7 +88,7 @@ export const TemplatesPage = () => {
                   <Button size="sm" variant="outline" className="bg-white/90 hover:bg-white">
                     <DotsThree className="w-4 h-4" weight="bold" />
                   </Button>
-                </div>
+                </div> */}
               </div>
               <div className="p-3">
                 <h3 className="font-medium text-primary">{template.name}</h3>

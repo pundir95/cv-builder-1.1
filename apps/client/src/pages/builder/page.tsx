@@ -111,7 +111,8 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
     useResumeStore.temporal.getState().clear();
 
     return resumeDto;
-  } catch {
+  } catch(error) {
+    console.log(error,"error")
     return redirect("/dashboard");
   }
 };
@@ -217,6 +218,8 @@ export const humanResumeCheckerLoader: LoaderFunction<any> = async ({ params }) 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const id = params.id!;
 
+    console.log(id,"id 123123")
+
 
     const resume = await queryClient.fetchQuery({
       queryKey: ["resume", { id }],
@@ -231,10 +234,10 @@ export const humanResumeCheckerLoader: LoaderFunction<any> = async ({ params }) 
     let resumeFinal=(resume as any)?.data?.user_cv?.cv_data
 
 
-    localStorage.setItem("uploadCVName",resumeFinal?.personal_info.name)
-    resumeData.basics.name = resumeFinal?.personal_info.name;
-    resumeData.basics.email = resumeFinal?.personal_info?.email;
-    resumeData.basics.phone = resumeFinal?.personal_info?.phone;
+    localStorage.setItem("uploadCVName",resumeFinal?.basics.name)
+    resumeData.basics.name = resumeFinal?.basics.name;
+    resumeData.basics.email = resumeFinal?.basics?.email;
+    resumeData.basics.phone = resumeFinal?.basics?.phone;
     resumeData.sections.summary.content = resumeFinal?.summary;
     resumeData.sections.experience.items = resumeFinal?.work_experience?.map((ele:any)=>{
       return {
@@ -248,7 +251,7 @@ export const humanResumeCheckerLoader: LoaderFunction<any> = async ({ params }) 
         visible:true
       }
     });
-    resumeData.sections.skills.items = resumeFinal?.skills?.technical
+    resumeData.sections.skills.items = resumeFinal?.sections?.skills?.technical
     ?.map((ele:any)=>{
       return {
         id:createId(),
@@ -260,7 +263,7 @@ export const humanResumeCheckerLoader: LoaderFunction<any> = async ({ params }) 
 
       }
     });
-      resumeData.sections.education.items = resumeFinal?.education?.map((ele:any)=>{
+      resumeData.sections.education.items = resumeFinal?.sections?.education?.map((ele:any)=>{
       return {
         area:ele?.area,
         date:ele?.year,

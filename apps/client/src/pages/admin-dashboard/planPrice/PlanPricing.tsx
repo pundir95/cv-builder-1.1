@@ -18,6 +18,8 @@ export const PlanPricing = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading,setLoading]=useState(false)
   const [subscribed,setSubscribed]=useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [planToDelete, setPlanToDelete] = useState<any>(null);
   const user = JSON.parse(localStorage.getItem("user") || '{"isPlanReached":[],"count":0}');
 
 
@@ -59,14 +61,28 @@ export const PlanPricing = () => {
   }
   }
 
-  const handleDeletePlan = (id: string) => {
-    if (window.confirm("Are you sure you want to delete this plan?")) {
-      axios.delete(`/subscription/subscription-plans/${id}/`).then((res) => {
-        setPlans(plans.filter((plan: any) => plan.id !== id));
+  const handleDeletePlan = (plan: any) => {
+    setPlanToDelete(plan);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (planToDelete) {
+      axios.delete(`/subscription/subscription-plans/${planToDelete.id}/`).then((res) => {
+        setPlans(plans.filter((plan: any) => plan.id !== planToDelete.id));
+        setShowDeleteModal(false);
+        setPlanToDelete(null);
       }).catch((err) => {
         console.error("Error deleting plan:", err);
+        setShowDeleteModal(false);
+        setPlanToDelete(null);
       });
     }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setPlanToDelete(null);
   };
 
   const getTheOnetimePlan=(data:any)=>{
@@ -80,6 +96,8 @@ export const PlanPricing = () => {
       window.location.href = res.data.data.checkout_url;
     })
   }
+
+  console.log(user,"user123 ")
 
   return (
     <ScrollArea orientation="vertical" className="h-screen bg-gray-50">
@@ -99,7 +117,7 @@ export const PlanPricing = () => {
       <h2 className="text-2xl sm:text-3xl lg:text:xl font-bold text-left mb-10 text-gray-900">Subscription Plans</h2>
 
       {
-        user.subscription_details.length > 0 && !subscribed ?
+       user.role !== "admin" && user.subscription_details.length > 0 && !subscribed ?
         <SubcribedPlan data={user.subscription_details} setSubscribed={setSubscribed} />
         :
         <>
@@ -143,7 +161,7 @@ export const PlanPricing = () => {
           >
             {isAdmin && (
               <button
-                onClick={() => handleDeletePlan(product.id)}
+                onClick={() => handleDeletePlan(product)}
                 className="absolute top-4 right-4 p-2 text-red-500 hover:text-red-700 transition-colors"
                 title="Delete Plan"
               >
@@ -193,6 +211,36 @@ export const PlanPricing = () => {
 
     </div>
 
+      {/* Custom Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-red-100 rounded-full">
+              <Trash size={24} className="text-red-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
+              Delete Plan
+            </h3>
+            <p className="text-gray-600 text-center mb-6">
+              Are you sure you want to delete <span className="font-semibold">"{planToDelete?.name}"</span>? This action cannot be undone.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={cancelDelete}
+                className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="flex-1 px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg font-medium transition-colors duration-200"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       
       </div>
     </ScrollArea>

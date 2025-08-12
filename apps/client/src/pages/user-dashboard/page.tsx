@@ -64,7 +64,7 @@ export const UserDashboardPage = () => {
             <div className="my-4 w-full flex justify-center">
               <div className="relative group">
                 <img
-                  src={`/templates/jpg/${selectedResume?.cv_template?.internal_name}.jpg`}
+                  src={selectedResume?.cv_template?.internal_name ? `/templates/jpg/${selectedResume?.cv_template?.internal_name}.jpg` : "/templates/jpg/cv_template_2.jpg"}
                   alt="Resume Preview"
                   className="rounded-lg shadow-md border border-gray-200 w-full max-w-60 h-72 object-contain bg-gray-50 transition-transform group-hover:scale-105"
                 />

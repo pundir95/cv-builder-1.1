@@ -158,7 +158,7 @@ export default function ResumeChecker() {
         <table className="min-w-full bg-white rounded shadow">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-4 text-left whitespace-nowrap">ID</th>
+              {/* <th className="p-4 text-left whitespace-nowrap">ID</th> */}
               <th className="p-4 text-left whitespace-nowrap">Name</th>
               <th className="p-4 text-left whitespace-nowrap">Email</th>
               <th className="p-4 text-left whitespace-nowrap">Phone</th>
@@ -173,7 +173,7 @@ export default function ResumeChecker() {
           <tbody>
             {resumes.map((resume: ResumeVerification, idx: number) => (
               <tr key={resume.id || idx} className="border-b hover:bg-gray-50">
-                <td className="p-4 whitespace-nowrap">{resume.id}</td>
+                {/* <td className="p-4 whitespace-nowrap">{resume.id}</td> */}
                 <td className="p-4 whitespace-nowrap">{resume.name}</td>
                 <td className="p-4">{resume.email}</td>
                 <td className="p-4 whitespace-nowrap">{resume.phone}</td>
