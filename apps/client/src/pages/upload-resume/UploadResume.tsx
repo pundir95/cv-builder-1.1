@@ -87,7 +87,7 @@ const UploadResume = () => {
 
   const handlePaymentVerification = async (sessionId: string) => {
     try {
-      const response = await axios.get(`/cv-manager/human-verification/check-for-payment/`);
+      const response = await axios.get(`/cv-manager/human-verification/check-payment/${sessionId}`);
       
       if (response.status === 200) {
         toast({
@@ -98,8 +98,20 @@ const UploadResume = () => {
           icon: <CheckCircle size={24} className="text-white" />,
           variant: "default",
         });
-        setPaymentId(response.data.data.payment_id)
+
         console.log(response.data,"response.data")
+
+        const checkPayment = await axios.get(`/cv-manager/human-verification/check-for-payment/`);
+      console.log(checkPayment.data.data,"response.data123123")
+      
+      if (checkPayment.status === 200 && checkPayment.data.data.is_paid && !checkPayment.data.data.is_used) {
+        // Payment is already done, open HumanCheckerModal
+        setHumanChecker(true);
+        setPaymentId(checkPayment.data.data.payment_id)
+      } else {
+        // Payment not done, open PaymentModal
+        setIsPaymentModalOpen(true);
+      }
 
         // Clean up the URL by removing the human_resume part and session_id parameter
         const currentUrl = window.location.href;
@@ -108,9 +120,6 @@ const UploadResume = () => {
         
         // Update the URL without the human_resume and session_id
         window.history.replaceState({}, '', cleanUrl);
-
-        // Open HumanCheckerModal after successful payment
-        setHumanChecker(true);
       }
     } catch (error) {
       console.error('Payment verification error:', error);

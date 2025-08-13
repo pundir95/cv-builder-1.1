@@ -21,7 +21,7 @@ const mockUsers = [
 
 export default function OrganisationUsers({showModal, setShowModal, employees, add_on_user_limit, setAddOnUserLimit, setOrganizationDetails}: {showModal: any, setShowModal: any, employees: any, add_on_user_limit : any, setAddOnUserLimit : (limit: number) => void, setOrganizationDetails: (details: any ) => void}) {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("all");
   const [users, setUsers] = useState(mockUsers);
   const [isDeleteORDisable, setIsDeleteORDisable] = useState({
     delete: false,
@@ -62,11 +62,20 @@ useEffect(()=>{
 
 },[])
   
-  // // Filtered users based on search
-  // const filteredUsers = employees.filter((user: any) =>
-  //   user.name.toLowerCase().includes(search.toLowerCase()) ||
-  //   user.email.toLowerCase().includes(search.toLowerCase())
-  // );
+  // Filtered users based on search and filter
+  const filteredUsers = users.filter((user: any) => {
+    const matchesSearch = 
+      user.first_name?.toLowerCase().includes(search.toLowerCase()) ||
+      user.last_name?.toLowerCase().includes(search.toLowerCase()) ||
+      user.email?.toLowerCase().includes(search.toLowerCase());
+    
+    const matchesFilter = 
+      filter === "all" ||
+      (filter === "active" && user.is_verified) ||
+      (filter === "inactive" && !user.is_verified);
+    
+    return matchesSearch && matchesFilter;
+  });
 
   // Handle status toggle
   const handleStatusChange = (id: number) => {
@@ -144,10 +153,10 @@ useEffect(()=>{
             <Select value={filter} onValueChange={setFilter}>
               <SelectTrigger className="w-32">Filter by</SelectTrigger>
               <SelectContent>
-                {/* <SelectItem value="">All</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="all">All</SelectItem>
+                {/* <SelectItem value="admin">Admin</SelectItem> */}
                 <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem> */}
+                <SelectItem value="inactive">Inactive</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -180,12 +189,14 @@ useEffect(()=>{
               </tr>
             </thead>
             <tbody>
-              {users.length === 0 ? (
+              {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="p-6 text-center text-gray-400">No users found.</td>
+                  <td colSpan={6} className="p-6 text-center text-gray-400">
+                    {users.length === 0 ? "No users found." : "No users match your search criteria."}
+                  </td>
                 </tr>
               ) : (
-                users?.length>0 && users?.map((user: any, idx: any) => (
+                filteredUsers?.map((user: any, idx: any) => (
                   <tr key={user.id} className="border-b last:border-0 hover:bg-gray-50">
                     <td className="p-4">{idx + 1}</td>
                     <td className="p-4 font-medium">{user.first_name} {user.last_name}</td>

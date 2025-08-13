@@ -27,6 +27,7 @@ export const useLogin = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      console.log(data,"data 123123")
       localStorage.setItem("token", data.data.access);
       localStorage.setItem("refresh_token", data.data.refresh);
       localStorage.setItem("user", JSON.stringify(data.data.user));
@@ -44,7 +45,7 @@ export const useLogin = () => {
        
       }).then((res) => {
         localStorage.setItem("user",JSON.stringify(res.data[0]));
-        if(res.data[0].subscription_details.length>0){
+        if(res.data[0].subscription_details.length>0 || user.resume_count > 1){
           navigate("/dashboard")
         }else{
           navigate("/onboard/select-template")
