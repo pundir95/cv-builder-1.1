@@ -315,7 +315,7 @@ class ue {
 }
 const L = Object.freeze({
   status: "aborted"
-}), st = (t) => ({ status: "dirty", value: t }), de = (t) => ({ status: "valid", value: t }), Yt = (t) => t.status === "aborted", qt = (t) => t.status === "dirty", Ke = (t) => t.status === "valid", gt = (t) => typeof Promise < "u" && t instanceof Promise;
+}), st = (t) => ({ status: "dirty", value: t }), de = (t) => ({ status: "valid", value: t }), qt = (t) => t.status === "aborted", Yt = (t) => t.status === "dirty", Ke = (t) => t.status === "valid", gt = (t) => typeof Promise < "u" && t instanceof Promise;
 function $t(t, e, n, r) {
   if (typeof e == "function" ? t !== e || !0 : !e.has(t)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
   return e.get(t);
@@ -1473,7 +1473,7 @@ ot.create = (t) => new ot({
   typeName: j.ZodAny,
   ...Z(t)
 });
-class qe extends P {
+class Ye extends P {
   constructor() {
     super(...arguments), this._unknown = !0;
   }
@@ -1481,7 +1481,7 @@ class qe extends P {
     return de(e.data);
   }
 }
-qe.create = (t) => new qe({
+Ye.create = (t) => new Ye({
   typeName: j.ZodUnknown,
   ...Z(t)
 });
@@ -1965,7 +1965,7 @@ bt.create = (t, e) => new bt({
   typeName: j.ZodUnion,
   ...Z(e)
 });
-const De = (t) => t instanceof wt ? De(t.schema) : t instanceof ke ? De(t.innerType()) : t instanceof St ? [t.value] : t instanceof ze ? t.options : t instanceof Tt ? V.objectValues(t.enum) : t instanceof Ot ? De(t._def.innerType) : t instanceof _t ? [void 0] : t instanceof vt ? [null] : t instanceof Ee ? [void 0, ...De(t.unwrap())] : t instanceof Ue ? [null, ...De(t.unwrap())] : t instanceof Qt || t instanceof At ? De(t.unwrap()) : t instanceof Et ? De(t._def.innerType) : [];
+const Ie = (t) => t instanceof wt ? Ie(t.schema) : t instanceof ke ? Ie(t.innerType()) : t instanceof St ? [t.value] : t instanceof ze ? t.options : t instanceof Tt ? V.objectValues(t.enum) : t instanceof Ot ? Ie(t._def.innerType) : t instanceof _t ? [void 0] : t instanceof vt ? [null] : t instanceof Ee ? [void 0, ...Ie(t.unwrap())] : t instanceof Ue ? [null, ...Ie(t.unwrap())] : t instanceof Qt || t instanceof At ? Ie(t.unwrap()) : t instanceof Et ? Ie(t._def.innerType) : [];
 class Ut extends P {
   _parse(e) {
     const { ctx: n } = this._processInputParams(e);
@@ -2010,7 +2010,7 @@ class Ut extends P {
   static create(e, n, r) {
     const s = /* @__PURE__ */ new Map();
     for (const a of n) {
-      const o = De(a.shape[e]);
+      const o = Ie(a.shape[e]);
       if (!o.length)
         throw new Error(`A discriminator value for key \`${e}\` could not be extracted from all schema options`);
       for (const d of o) {
@@ -2057,10 +2057,10 @@ function Kt(t, e) {
 class xt extends P {
   _parse(e) {
     const { status: n, ctx: r } = this._processInputParams(e), s = (a, o) => {
-      if (Yt(a) || Yt(o))
+      if (qt(a) || qt(o))
         return L;
       const d = Kt(a.value, o.value);
-      return d.valid ? ((qt(a) || qt(o)) && n.dirty(), { status: n.value, value: d.data }) : (w(r, {
+      return d.valid ? ((Yt(a) || Yt(o)) && n.dirty(), { status: n.value, value: d.data }) : (w(r, {
         code: y.invalid_intersection_types
       }), L);
     };
@@ -2372,7 +2372,7 @@ class at extends P {
   args(...e) {
     return new at({
       ...this._def,
-      args: Ce.create(e).rest(qe.create())
+      args: Ce.create(e).rest(Ye.create())
     });
   }
   returns(e) {
@@ -2389,8 +2389,8 @@ class at extends P {
   }
   static create(e, n, r) {
     return new at({
-      args: e || Ce.create([]).rest(qe.create()),
-      returns: n || qe.create(),
+      args: e || Ce.create([]).rest(Ye.create()),
+      returns: n || Ye.create(),
       typeName: j.ZodFunction,
       ...Z(r)
     });
@@ -2750,7 +2750,7 @@ Pt.create = (t) => new Pt({
   typeName: j.ZodNaN,
   ...Z(t)
 });
-const Ir = Symbol("zod_brand");
+const Dr = Symbol("zod_brand");
 class Qt extends P {
   _parse(e) {
     const { ctx: n } = this._processInputParams(e), r = n.data;
@@ -2827,7 +2827,7 @@ function yn(t, e = {}, n) {
     }
   }) : ot.create();
 }
-const Dr = {
+const Ir = {
   object: re.lazycreate
 };
 var j;
@@ -2836,7 +2836,7 @@ var j;
 })(j || (j = {}));
 const jr = (t, e = {
   message: `Input not instance of ${t.name}`
-}) => yn((n) => n instanceof t, e), _n = be.create, vn = Ne.create, Lr = Pt.create, $r = Pe.create, bn = yt.create, Zr = Ge.create, Mr = Zt.create, Nr = _t.create, Pr = vt.create, zr = ot.create, Ur = qe.create, Br = $e.create, Fr = Mt.create, Vr = xe.create, Hr = re.create, Wr = re.strictCreate, Yr = bt.create, qr = Ut.create, Kr = xt.create, Gr = Ce.create, Jr = kt.create, Xr = Nt.create, Qr = Je.create, es = at.create, ts = wt.create, ns = St.create, rs = ze.create, ss = Tt.create, as = ut.create, on = ke.create, is = Ee.create, os = Ue.create, us = ke.createWithPreprocess, cs = Rt.create, ds = () => _n().optional(), ls = () => vn().optional(), fs = () => bn().optional(), hs = {
+}) => yn((n) => n instanceof t, e), _n = be.create, vn = Ne.create, Lr = Pt.create, $r = Pe.create, bn = yt.create, Zr = Ge.create, Mr = Zt.create, Nr = _t.create, Pr = vt.create, zr = ot.create, Ur = Ye.create, Br = $e.create, Fr = Mt.create, Vr = xe.create, Hr = re.create, Wr = re.strictCreate, qr = bt.create, Yr = Ut.create, Kr = xt.create, Gr = Ce.create, Jr = kt.create, Xr = Nt.create, Qr = Je.create, es = at.create, ts = wt.create, ns = St.create, rs = ze.create, ss = Tt.create, as = ut.create, on = ke.create, is = Ee.create, os = Ue.create, us = ke.createWithPreprocess, cs = Rt.create, ds = () => _n().optional(), ls = () => vn().optional(), fs = () => bn().optional(), hs = {
   string: (t) => be.create({ ...t, coerce: !0 }),
   number: (t) => Ne.create({ ...t, coerce: !0 }),
   boolean: (t) => yt.create({
@@ -2858,8 +2858,8 @@ var i = /* @__PURE__ */ Object.freeze({
   INVALID: L,
   DIRTY: st,
   OK: de,
-  isAborted: Yt,
-  isDirty: qt,
+  isAborted: qt,
+  isDirty: Yt,
   isValid: Ke,
   isAsync: gt,
   get util() {
@@ -2881,7 +2881,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodUndefined: _t,
   ZodNull: vt,
   ZodAny: ot,
-  ZodUnknown: qe,
+  ZodUnknown: Ye,
   ZodNever: $e,
   ZodVoid: Mt,
   ZodArray: xe,
@@ -2906,14 +2906,14 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodDefault: Ot,
   ZodCatch: Et,
   ZodNaN: Pt,
-  BRAND: Ir,
+  BRAND: Dr,
   ZodBranded: Qt,
   ZodPipeline: Rt,
   ZodReadonly: At,
   custom: yn,
   Schema: P,
   ZodSchema: P,
-  late: Dr,
+  late: Ir,
   get ZodFirstPartyTypeKind() {
     return j;
   },
@@ -2923,7 +2923,7 @@ var i = /* @__PURE__ */ Object.freeze({
   bigint: $r,
   boolean: bn,
   date: Zr,
-  discriminatedUnion: qr,
+  discriminatedUnion: Yr,
   effect: on,
   enum: rs,
   function: es,
@@ -2954,7 +2954,7 @@ var i = /* @__PURE__ */ Object.freeze({
   transformer: on,
   tuple: Gr,
   undefined: Nr,
-  union: Yr,
+  union: qr,
   unknown: Ur,
   void: Fr,
   NEVER: ps,
@@ -3012,9 +3012,9 @@ $.add5L = $.add5H = $.add4H = $.add4L = $.add3H = $.add3L = $.rotlBL = $.rotlBH 
 $.fromBig = en;
 $.split = kn;
 $.add = Zn;
-const Dt = /* @__PURE__ */ BigInt(2 ** 32 - 1), Jt = /* @__PURE__ */ BigInt(32);
+const It = /* @__PURE__ */ BigInt(2 ** 32 - 1), Jt = /* @__PURE__ */ BigInt(32);
 function en(t, e = !1) {
-  return e ? { h: Number(t & Dt), l: Number(t >> Jt & Dt) } : { h: Number(t >> Jt & Dt) | 0, l: Number(t & Dt) | 0 };
+  return e ? { h: Number(t & It), l: Number(t >> Jt & It) } : { h: Number(t >> Jt & It) | 0, l: Number(t & It) | 0 };
 }
 function kn(t, e = !1) {
   let n = new Uint32Array(t.length), r = new Uint32Array(t.length);
@@ -3040,10 +3040,10 @@ const Cn = (t, e, n) => t >>> n - 32 | e << 64 - n;
 $.rotrBL = Cn;
 const Rn = (t, e) => e;
 $.rotr32H = Rn;
-const In = (t, e) => t;
-$.rotr32L = In;
-const Dn = (t, e, n) => t << n | e >>> 32 - n;
-$.rotlSH = Dn;
+const Dn = (t, e) => t;
+$.rotr32L = Dn;
+const In = (t, e, n) => t << n | e >>> 32 - n;
+$.rotlSH = In;
 const jn = (t, e, n) => e << n | t >>> 32 - n;
 $.rotlSL = jn;
 const Ln = (t, e, n) => e << n - 32 | t >>> 64 - n;
@@ -3077,8 +3077,8 @@ const xs = {
   rotrBH: An,
   rotrBL: Cn,
   rotr32H: Rn,
-  rotr32L: In,
-  rotlSH: Dn,
+  rotr32L: Dn,
+  rotlSH: In,
   rotlSL: jn,
   rotlBH: Ln,
   rotlBL: $n,
@@ -3097,7 +3097,7 @@ Bt.crypto = void 0;
 Bt.crypto = typeof globalThis == "object" && "crypto" in globalThis ? globalThis.crypto : void 0;
 (function(t) {
   /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-  Object.defineProperty(t, "__esModule", { value: !0 }), t.Hash = t.nextTick = t.byteSwapIfBE = t.isLE = void 0, t.isBytes = r, t.u8 = s, t.u32 = a, t.createView = o, t.rotr = d, t.rotl = k, t.byteSwap = f, t.byteSwap32 = T, t.bytesToHex = le, t.hexToBytes = We, t.asyncLoop = Ye, t.utf8ToBytes = Xe, t.toBytes = ye, t.concatBytes = Qe, t.checkOpts = ae, t.wrapConstructor = q, t.wrapConstructorWithOpts = c, t.wrapXOFConstructorWithOpts = l, t.randomBytes = h;
+  Object.defineProperty(t, "__esModule", { value: !0 }), t.Hash = t.nextTick = t.byteSwapIfBE = t.isLE = void 0, t.isBytes = r, t.u8 = s, t.u32 = a, t.createView = o, t.rotr = d, t.rotl = k, t.byteSwap = f, t.byteSwap32 = T, t.bytesToHex = le, t.hexToBytes = We, t.asyncLoop = qe, t.utf8ToBytes = Xe, t.toBytes = ye, t.concatBytes = Qe, t.checkOpts = ae, t.wrapConstructor = Y, t.wrapConstructorWithOpts = c, t.wrapXOFConstructorWithOpts = l, t.randomBytes = h;
   const e = Bt, n = Ve;
   function r(u) {
     return u instanceof Uint8Array || ArrayBuffer.isView(u) && u.constructor.name === "Uint8Array";
@@ -3163,7 +3163,7 @@ Bt.crypto = typeof globalThis == "object" && "crypto" in globalThis ? globalThis
   const Re = async () => {
   };
   t.nextTick = Re;
-  async function Ye(u, p, A) {
+  async function qe(u, p, A) {
     let b = Date.now();
     for (let g = 0; g < u; g++) {
       A(g);
@@ -3204,7 +3204,7 @@ Bt.crypto = typeof globalThis == "object" && "crypto" in globalThis ? globalThis
       throw new Error("Options should be object or undefined");
     return Object.assign(u, p);
   }
-  function q(u) {
+  function Y(u) {
     const p = (b) => u().update(ye(b)).digest(), A = u();
     return p.outputLen = A.outputLen, p.blockLen = A.blockLen, p.create = () => u(), p;
   }
@@ -3226,7 +3226,7 @@ Bt.crypto = typeof globalThis == "object" && "crypto" in globalThis ? globalThis
 })(Fn);
 Object.defineProperty(X, "__esModule", { value: !0 });
 X.shake256 = X.shake128 = X.keccak_512 = X.keccak_384 = X.keccak_256 = X.keccak_224 = X.sha3_512 = X.sha3_384 = X.sha3_256 = X.sha3_224 = X.Keccak = void 0;
-X.keccakP = Yn;
+X.keccakP = qn;
 const nt = Ve, Ct = $, je = Fn, Vn = [], Hn = [], Wn = [], ks = /* @__PURE__ */ BigInt(0), ft = /* @__PURE__ */ BigInt(1), ws = /* @__PURE__ */ BigInt(2), Ss = /* @__PURE__ */ BigInt(7), Ts = /* @__PURE__ */ BigInt(256), Os = /* @__PURE__ */ BigInt(113);
 for (let t = 0, e = ft, n = 1, r = 0; t < 24; t++) {
   [n, r] = [r, (2 * n + 3 * r) % 5], Vn.push(2 * (5 * r + n)), Hn.push((t + 1) * (t + 2) / 2 % 64);
@@ -3236,7 +3236,7 @@ for (let t = 0, e = ft, n = 1, r = 0; t < 24; t++) {
   Wn.push(s);
 }
 const [Es, As] = /* @__PURE__ */ (0, Ct.split)(Wn, !0), un = (t, e, n) => n > 32 ? (0, Ct.rotlBH)(t, e, n) : (0, Ct.rotlSH)(t, e, n), cn = (t, e, n) => n > 32 ? (0, Ct.rotlBL)(t, e, n) : (0, Ct.rotlSL)(t, e, n);
-function Yn(t, e = 24) {
+function qn(t, e = 24) {
   const n = new Uint32Array(10);
   for (let r = 24 - e; r < 24; r++) {
     for (let o = 0; o < 10; o++)
@@ -3261,7 +3261,7 @@ function Yn(t, e = 24) {
   }
   n.fill(0);
 }
-class It extends je.Hash {
+class Dt extends je.Hash {
   // NOTE: we accept arguments in bytes instead of bits here.
   constructor(e, n, r, s = !1, a = 24) {
     if (super(), this.blockLen = e, this.suffix = n, this.outputLen = r, this.enableXOF = s, this.rounds = a, this.pos = 0, this.posOut = 0, this.finished = !1, this.destroyed = !1, (0, nt.anumber)(r), 0 >= this.blockLen || this.blockLen >= 200)
@@ -3269,7 +3269,7 @@ class It extends je.Hash {
     this.state = new Uint8Array(200), this.state32 = (0, je.u32)(this.state);
   }
   keccak() {
-    je.isLE || (0, je.byteSwap32)(this.state32), Yn(this.state32, this.rounds), je.isLE || (0, je.byteSwap32)(this.state32), this.posOut = 0, this.pos = 0;
+    je.isLE || (0, je.byteSwap32)(this.state32), qn(this.state32, this.rounds), je.isLE || (0, je.byteSwap32)(this.state32), this.posOut = 0, this.pos = 0;
   }
   update(e) {
     (0, nt.aexists)(this);
@@ -3322,11 +3322,11 @@ class It extends je.Hash {
   }
   _cloneInto(e) {
     const { blockLen: n, suffix: r, outputLen: s, rounds: a, enableXOF: o } = this;
-    return e || (e = new It(n, r, s, o, a)), e.state32.set(this.state32), e.pos = this.pos, e.posOut = this.posOut, e.finished = this.finished, e.rounds = a, e.suffix = r, e.outputLen = s, e.enableXOF = o, e.destroyed = this.destroyed, e;
+    return e || (e = new Dt(n, r, s, o, a)), e.state32.set(this.state32), e.pos = this.pos, e.posOut = this.posOut, e.finished = this.finished, e.rounds = a, e.suffix = r, e.outputLen = s, e.enableXOF = o, e.destroyed = this.destroyed, e;
   }
 }
-X.Keccak = It;
-const He = (t, e, n) => (0, je.wrapConstructor)(() => new It(e, t, n));
+X.Keccak = Dt;
+const He = (t, e, n) => (0, je.wrapConstructor)(() => new Dt(e, t, n));
 X.sha3_224 = He(6, 144, 224 / 8);
 X.sha3_256 = He(6, 136, 256 / 8);
 X.sha3_384 = He(6, 104, 384 / 8);
@@ -3335,9 +3335,9 @@ X.keccak_224 = He(1, 144, 224 / 8);
 X.keccak_256 = He(1, 136, 256 / 8);
 X.keccak_384 = He(1, 104, 384 / 8);
 X.keccak_512 = He(1, 72, 512 / 8);
-const qn = (t, e, n) => (0, je.wrapXOFConstructorWithOpts)((r = {}) => new It(e, t, r.dkLen === void 0 ? n : r.dkLen, !0));
-X.shake128 = qn(31, 168, 128 / 8);
-X.shake256 = qn(31, 136, 256 / 8);
+const Yn = (t, e, n) => (0, je.wrapXOFConstructorWithOpts)((r = {}) => new Dt(e, t, r.dkLen === void 0 ? n : r.dkLen, !0));
+X.shake128 = Yn(31, 168, 128 / 8);
+X.shake256 = Yn(31, 136, 256 / 8);
 const { sha3_512: Cs } = X, Kn = 24, mt = 32, Xt = (t = 4, e = Math.random) => {
   let n = "";
   for (; n.length < t; )
@@ -3361,18 +3361,18 @@ const Jn = (t = "") => Gn(Cs(t)).toString(36).slice(1), dn = Array.from(
 } = {}) => {
   const n = Object.keys(t).toString(), r = n.length ? n + Xt(mt, e) : Xt(mt, e);
   return Jn(r).substring(0, mt);
-}, Qn = (t) => () => t++, Is = 476782367, er = ({
+}, Qn = (t) => () => t++, Ds = 476782367, er = ({
   // Fallback if the user does not pass in a CSPRNG. This should be OK
   // because we don't rely solely on the random number generator for entropy.
   // We also use the host fingerprint, current time, and a session counter.
   random: t = Math.random,
-  counter: e = Qn(Math.floor(t() * Is)),
+  counter: e = Qn(Math.floor(t() * Ds)),
   length: n = Kn,
   fingerprint: r = Xn({ random: t })
 } = {}) => function() {
   const a = Rs(t), o = Date.now().toString(36), d = e().toString(36), k = Xt(n, t), f = `${o + k + d + r}`;
   return `${a + Jn(f).substring(1, n)}`;
-}, Ds = er(), js = (t, { minLength: e = 2, maxLength: n = mt } = {}) => {
+}, Is = er(), js = (t, { minLength: e = 2, maxLength: n = mt } = {}) => {
   const r = t.length, s = /^[0-9a-z]+$/;
   try {
     if (typeof t == "string" && r >= e && r <= n && s.test(t))
@@ -3383,7 +3383,7 @@ const Jn = (t = "") => Gn(Cs(t)).toString(36).slice(1), dn = Array.from(
 };
 Fe.getConstants = () => ({ defaultLength: Kn, bigLength: mt });
 Fe.init = er;
-Fe.createId = Ds;
+Fe.createId = Is;
 Fe.bufToBigInt = Gn;
 Fe.createCounter = Qn;
 Fe.createFingerprint = Xn;
@@ -3567,14 +3567,31 @@ const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   startDate: i.string(),
   endDate: i.string()
 }), Vs = ge.extend({
-  company: i.string().min(1),
-  position: i.string(),
-  location: i.string(),
-  date: i.string(),
-  startDate: i.string(),
-  endDate: i.string().optional(),
-  summary: i.string(),
+  company: i.string().min(1, "Company name is required").min(2, "Company name must be at least 2 characters").max(100, "Company name must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Company name contains invalid characters"),
+  position: i.string().min(1, "Position is required").min(2, "Position must be at least 2 characters").max(100, "Position must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Position contains invalid characters"),
+  location: i.string().min(1, "Location is required").min(2, "Location must be at least 2 characters").max(100, "Location must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Location contains invalid characters"),
+  date: i.string().optional().refine((t) => !t || t.length === 0, "Date field is auto-populated"),
+  startDate: i.string().min(1, "Start date is required").refine((t) => {
+    if (!t) return !1;
+    const e = new Date(t);
+    return !isNaN(e.getTime());
+  }, "Please enter a valid start date").refine((t) => t ? new Date(t) <= /* @__PURE__ */ new Date() : !1, "Start date cannot be in the future"),
+  endDate: i.string().optional().refine((t) => {
+    if (!t) return !0;
+    const e = new Date(t);
+    return !isNaN(e.getTime());
+  }, "Please enter a valid end date"),
+  summary: i.string().min(1, "Summary is required").min(10, "Summary must be at least 10 characters").max(1e3, "Summary must be less than 1000 characters"),
   url: we
+}).refine((t) => {
+  if (t.endDate && t.startDate) {
+    const e = new Date(t.endDate), n = new Date(t.startDate);
+    return e >= n;
+  }
+  return !0;
+}, {
+  message: "End date must be after start date",
+  path: ["endDate"]
 }), Hs = ge.extend({
   name: i.string().min(1),
   keywords: i.array(i.string()).default([])
@@ -3582,14 +3599,14 @@ const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   name: i.string().min(1),
   description: i.string(),
   level: i.coerce.number().min(0).max(5).default(1)
-}), Ys = ge.extend({
+}), qs = ge.extend({
   network: i.string().min(1),
   username: i.string().min(1),
   icon: i.string().describe(
     'Slug for the icon from https://simpleicons.org. For example, "github", "linkedin", etc.'
   ),
   url: we
-}), qs = ge.extend({
+}), Ys = ge.extend({
   name: i.string().min(1),
   description: i.string(),
   date: i.string(),
@@ -3608,10 +3625,10 @@ const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   summary: i.string(),
   url: we
 }), Js = ge.extend({
-  name: i.string(),
+  name: i.string().trim().min(1, "Name is required"),
   description: i.string(),
   level: i.coerce.number().min(0).max(5).default(1),
-  keywords: i.array(i.string()).default([])
+  keywords: i.array(i.string().trim().min(1)).min(1, "Add at least one keyword").default([])
 }), Xs = ge.extend({
   organization: i.string().min(1),
   position: i.string(),
@@ -3675,12 +3692,12 @@ const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   }),
   profiles: ce.extend({
     id: i.literal("profiles"),
-    items: i.array(Ys),
+    items: i.array(qs),
     extraDescription: i.string().default("")
   }),
   projects: ce.extend({
     id: i.literal("projects"),
-    items: i.array(qs),
+    items: i.array(Ys),
     extraDescription: i.string().default("")
   }),
   publications: ce.extend({
@@ -3759,19 +3776,19 @@ License: MIT
           let A = this._config.newline;
           A || (p = this._config.quoteChar || '"', A = this._handle.guessLineEndings(l, p)), l = [...l.split(A).slice(u)].join(A);
         }
-        this.isFirstChunk && q(this._config.beforeFirstChunk) && (p = this._config.beforeFirstChunk(l)) !== void 0 && (l = p), this.isFirstChunk = !1, this._halted = !1;
+        this.isFirstChunk && Y(this._config.beforeFirstChunk) && (p = this._config.beforeFirstChunk(l)) !== void 0 && (l = p), this.isFirstChunk = !1, this._halted = !1;
         var u = this._partialLine + l, p = (this._partialLine = "", this._handle.parse(u, this._baseIndex, !this._finished));
         if (!this._handle.paused() && !this._handle.aborted()) {
           if (l = p.meta.cursor, u = (this._finished || (this._partialLine = u.substring(l - this._baseIndex), this._baseIndex = l), p && p.data && (this._rowCount += p.data.length), this._finished || this._config.preview && this._rowCount >= this._config.preview), o) r.postMessage({ results: p, workerId: f.WORKER_ID, finished: u });
-          else if (q(this._config.chunk) && !h) {
+          else if (Y(this._config.chunk) && !h) {
             if (this._config.chunk(p, this._handle), this._handle.paused() || this._handle.aborted()) return void (this._halted = !0);
             this._completeResults = p = void 0;
           }
-          return this._config.step || this._config.chunk || (this._completeResults.data = this._completeResults.data.concat(p.data), this._completeResults.errors = this._completeResults.errors.concat(p.errors), this._completeResults.meta = p.meta), this._completed || !u || !q(this._config.complete) || p && p.meta.aborted || (this._config.complete(this._completeResults, this._input), this._completed = !0), u || p && p.meta.paused || this._nextChunk(), p;
+          return this._config.step || this._config.chunk || (this._completeResults.data = this._completeResults.data.concat(p.data), this._completeResults.errors = this._completeResults.errors.concat(p.errors), this._completeResults.meta = p.meta), this._completed || !u || !Y(this._config.complete) || p && p.meta.aborted || (this._config.complete(this._completeResults, this._input), this._completed = !0), u || p && p.meta.paused || this._nextChunk(), p;
         }
         this._halted = !0;
       }, this._sendError = function(l) {
-        q(this._config.error) ? this._config.error(l) : o && this._config.error && r.postMessage({ workerId: f.WORKER_ID, error: l, finished: !1 });
+        Y(this._config.error) ? this._config.error(l) : o && this._config.error && r.postMessage({ workerId: f.WORKER_ID, error: l, finished: !1 });
       };
     }
     function H(c) {
@@ -3857,68 +3874,68 @@ License: MIT
       }, this);
     }
     function We(c) {
-      var l, h, u, p, A = Math.pow(2, 53), b = -A, g = /^\s*-?(\d+\.?|\.\d+|\d+\.\d+)([eE][-+]?\d+)?\s*$/, m = /^((\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)))$/, _ = this, v = 0, x = 0, R = !1, E = !1, I = [], S = { data: [], errors: [], meta: {} };
+      var l, h, u, p, A = Math.pow(2, 53), b = -A, g = /^\s*-?(\d+\.?|\.\d+|\d+\.\d+)([eE][-+]?\d+)?\s*$/, m = /^((\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)))$/, _ = this, v = 0, x = 0, R = !1, E = !1, D = [], S = { data: [], errors: [], meta: {} };
       function B(M) {
         return c.skipEmptyLines === "greedy" ? M.join("").trim() === "" : M.length === 1 && M[0].length === 0;
       }
-      function Y() {
-        if (S && u && (se("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to '" + f.DefaultDelimiter + "'"), u = !1), c.skipEmptyLines && (S.data = S.data.filter(function(D) {
-          return !B(D);
+      function q() {
+        if (S && u && (se("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to '" + f.DefaultDelimiter + "'"), u = !1), c.skipEmptyLines && (S.data = S.data.filter(function(I) {
+          return !B(I);
         })), Q()) {
-          let D = function(K, ee) {
-            q(c.transformHeader) && (K = c.transformHeader(K, ee)), I.push(K);
+          let I = function(K, ee) {
+            Y(c.transformHeader) && (K = c.transformHeader(K, ee)), D.push(K);
           };
           if (S) if (Array.isArray(S.data[0])) {
-            for (var M = 0; Q() && M < S.data.length; M++) S.data[M].forEach(D);
+            for (var M = 0; Q() && M < S.data.length; M++) S.data[M].forEach(I);
             S.data.splice(0, 1);
-          } else S.data.forEach(D);
+          } else S.data.forEach(I);
         }
-        function z(D, K) {
-          for (var ee = c.header ? {} : [], G = 0; G < D.length; G++) {
-            var J = G, F = D[G], F = ((ve, N) => ((ne) => (c.dynamicTypingFunction && c.dynamicTyping[ne] === void 0 && (c.dynamicTyping[ne] = c.dynamicTypingFunction(ne)), (c.dynamicTyping[ne] || c.dynamicTyping) === !0))(ve) ? N === "true" || N === "TRUE" || N !== "false" && N !== "FALSE" && (((ne) => {
+        function z(I, K) {
+          for (var ee = c.header ? {} : [], G = 0; G < I.length; G++) {
+            var J = G, F = I[G], F = ((ve, N) => ((ne) => (c.dynamicTypingFunction && c.dynamicTyping[ne] === void 0 && (c.dynamicTyping[ne] = c.dynamicTypingFunction(ne)), (c.dynamicTyping[ne] || c.dynamicTyping) === !0))(ve) ? N === "true" || N === "TRUE" || N !== "false" && N !== "FALSE" && (((ne) => {
               if (g.test(ne) && (ne = parseFloat(ne), b < ne && ne < A))
                 return 1;
-            })(N) ? parseFloat(N) : m.test(N) ? new Date(N) : N === "" ? null : N) : N)(J = c.header ? G >= I.length ? "__parsed_extra" : I[G] : J, F = c.transform ? c.transform(F, J) : F);
+            })(N) ? parseFloat(N) : m.test(N) ? new Date(N) : N === "" ? null : N) : N)(J = c.header ? G >= D.length ? "__parsed_extra" : D[G] : J, F = c.transform ? c.transform(F, J) : F);
             J === "__parsed_extra" ? (ee[J] = ee[J] || [], ee[J].push(F)) : ee[J] = F;
           }
-          return c.header && (G > I.length ? se("FieldMismatch", "TooManyFields", "Too many fields: expected " + I.length + " fields but parsed " + G, x + K) : G < I.length && se("FieldMismatch", "TooFewFields", "Too few fields: expected " + I.length + " fields but parsed " + G, x + K)), ee;
+          return c.header && (G > D.length ? se("FieldMismatch", "TooManyFields", "Too many fields: expected " + D.length + " fields but parsed " + G, x + K) : G < D.length && se("FieldMismatch", "TooFewFields", "Too few fields: expected " + D.length + " fields but parsed " + G, x + K)), ee;
         }
         var U;
-        S && (c.header || c.dynamicTyping || c.transform) && (U = 1, !S.data.length || Array.isArray(S.data[0]) ? (S.data = S.data.map(z), U = S.data.length) : S.data = z(S.data, 0), c.header && S.meta && (S.meta.fields = I), x += U);
+        S && (c.header || c.dynamicTyping || c.transform) && (U = 1, !S.data.length || Array.isArray(S.data[0]) ? (S.data = S.data.map(z), U = S.data.length) : S.data = z(S.data, 0), c.header && S.meta && (S.meta.fields = D), x += U);
       }
       function Q() {
-        return c.header && I.length === 0;
+        return c.header && D.length === 0;
       }
-      function se(M, z, U, D) {
-        M = { type: M, code: z, message: U }, D !== void 0 && (M.row = D), S.errors.push(M);
+      function se(M, z, U, I) {
+        M = { type: M, code: z, message: U }, I !== void 0 && (M.row = I), S.errors.push(M);
       }
-      q(c.step) && (p = c.step, c.step = function(M) {
-        S = M, Q() ? Y() : (Y(), S.data.length !== 0 && (v += M.data.length, c.preview && v > c.preview ? h.abort() : (S.data = S.data[0], p(S, _))));
+      Y(c.step) && (p = c.step, c.step = function(M) {
+        S = M, Q() ? q() : (q(), S.data.length !== 0 && (v += M.data.length, c.preview && v > c.preview ? h.abort() : (S.data = S.data[0], p(S, _))));
       }), this.parse = function(M, z, U) {
-        var D = c.quoteChar || '"', D = (c.newline || (c.newline = this.guessLineEndings(M, D)), u = !1, c.delimiter ? q(c.delimiter) && (c.delimiter = c.delimiter(M), S.meta.delimiter = c.delimiter) : ((D = ((K, ee, G, J, F) => {
+        var I = c.quoteChar || '"', I = (c.newline || (c.newline = this.guessLineEndings(M, I)), u = !1, c.delimiter ? Y(c.delimiter) && (c.delimiter = c.delimiter(M), S.meta.delimiter = c.delimiter) : ((I = ((K, ee, G, J, F) => {
           var ve, N, ne, Ze;
           F = F || [",", "	", "|", ";", f.RECORD_SEP, f.UNIT_SEP];
           for (var et = 0; et < F.length; et++) {
-            for (var Se, dt = F[et], oe = 0, Te = 0, ie = 0, he = (ne = void 0, new Ye({ comments: J, delimiter: dt, newline: ee, preview: 10 }).parse(K)), Ie = 0; Ie < he.data.length; Ie++) G && B(he.data[Ie]) ? ie++ : (Se = he.data[Ie].length, Te += Se, ne === void 0 ? ne = Se : 0 < Se && (oe += Math.abs(Se - ne), ne = Se));
+            for (var Se, dt = F[et], oe = 0, Te = 0, ie = 0, he = (ne = void 0, new qe({ comments: J, delimiter: dt, newline: ee, preview: 10 }).parse(K)), De = 0; De < he.data.length; De++) G && B(he.data[De]) ? ie++ : (Se = he.data[De].length, Te += Se, ne === void 0 ? ne = Se : 0 < Se && (oe += Math.abs(Se - ne), ne = Se));
             0 < he.data.length && (Te /= he.data.length - ie), (N === void 0 || oe <= N) && (Ze === void 0 || Ze < Te) && 1.99 < Te && (N = oe, ve = dt, Ze = Te);
           }
           return { successful: !!(c.delimiter = ve), bestDelimiter: ve };
-        })(M, c.newline, c.skipEmptyLines, c.comments, c.delimitersToGuess)).successful ? c.delimiter = D.bestDelimiter : (u = !0, c.delimiter = f.DefaultDelimiter), S.meta.delimiter = c.delimiter), _e(c));
-        return c.preview && c.header && D.preview++, l = M, h = new Ye(D), S = h.parse(l, z, U), Y(), R ? { meta: { paused: !0 } } : S || { meta: { paused: !1 } };
+        })(M, c.newline, c.skipEmptyLines, c.comments, c.delimitersToGuess)).successful ? c.delimiter = I.bestDelimiter : (u = !0, c.delimiter = f.DefaultDelimiter), S.meta.delimiter = c.delimiter), _e(c));
+        return c.preview && c.header && I.preview++, l = M, h = new qe(I), S = h.parse(l, z, U), q(), R ? { meta: { paused: !0 } } : S || { meta: { paused: !1 } };
       }, this.paused = function() {
         return R;
       }, this.pause = function() {
-        R = !0, h.abort(), l = q(c.chunk) ? "" : l.substring(h.getCharIndex());
+        R = !0, h.abort(), l = Y(c.chunk) ? "" : l.substring(h.getCharIndex());
       }, this.resume = function() {
         _.streamer._halted ? (R = !1, _.streamer.parseChunk(l, !0)) : setTimeout(_.resume, 3);
       }, this.aborted = function() {
         return E;
       }, this.abort = function() {
-        E = !0, h.abort(), S.meta.aborted = !0, q(c.complete) && c.complete(S), l = "";
-      }, this.guessLineEndings = function(K, D) {
+        E = !0, h.abort(), S.meta.aborted = !0, Y(c.complete) && c.complete(S), l = "";
+      }, this.guessLineEndings = function(K, I) {
         K = K.substring(0, 1048576);
-        var D = new RegExp(Re(D) + "([^]*?)" + Re(D), "gm"), U = (K = K.replace(D, "")).split("\r"), D = K.split(`
-`), K = 1 < D.length && D[0].length < U[0].length;
+        var I = new RegExp(Re(I) + "([^]*?)" + Re(I), "gm"), U = (K = K.replace(I, "")).split("\r"), I = K.split(`
+`), K = 1 < I.length && I[0].length < U[0].length;
         if (U.length === 1 || K) return `
 `;
         for (var ee = 0, G = 0; G < U.length; G++) U[G][0] === `
@@ -3930,7 +3947,7 @@ License: MIT
     function Re(c) {
       return c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function Ye(c) {
+    function qe(c) {
       var l = (c = c || {}).delimiter, h = c.newline, u = c.comments, p = c.step, A = c.preview, b = c.fastMode, g = null, m = !1, _ = c.quoteChar == null ? '"' : c.quoteChar, v = _;
       if (c.escapeChar !== void 0 && (v = c.escapeChar), (typeof l != "string" || -1 < f.BAD_DELIMITERS.indexOf(l)) && (l = ","), u === l) throw new Error("Comment character same as delimiter");
       u === !0 ? u = "#" : (typeof u != "string" || -1 < f.BAD_DELIMITERS.indexOf(u)) && (u = !1), h !== `
@@ -3938,18 +3955,18 @@ License: MIT
 ` && (h = `
 `);
       var x = 0, R = !1;
-      this.parse = function(E, I, S) {
+      this.parse = function(E, D, S) {
         if (typeof E != "string") throw new Error("Input must be a string");
-        var B = E.length, Y = l.length, Q = h.length, se = u.length, M = q(p), z = [], U = [], D = [], K = x = 0;
+        var B = E.length, q = l.length, Q = h.length, se = u.length, M = Y(p), z = [], U = [], I = [], K = x = 0;
         if (!E) return oe();
         if (b || b !== !1 && E.indexOf(_) === -1) {
           for (var ee = E.split(h), G = 0; G < ee.length; G++) {
-            if (D = ee[G], x += D.length, G !== ee.length - 1) x += h.length;
+            if (I = ee[G], x += I.length, G !== ee.length - 1) x += h.length;
             else if (S) return oe();
-            if (!u || D.substring(0, se) !== u) {
+            if (!u || I.substring(0, se) !== u) {
               if (M) {
-                if (z = [], Ze(D.split(l)), Te(), R) return oe();
-              } else Ze(D.split(l));
+                if (z = [], Ze(I.split(l)), Te(), R) return oe();
+              } else Ze(I.split(l));
               if (A && A <= G) return z = z.slice(0, A), oe(!0);
             }
           }
@@ -3962,25 +3979,25 @@ License: MIT
           else if (_ === v || N === 0 || E[N - 1] !== v) {
             J !== -1 && J < N + 1 && (J = E.indexOf(l, N + 1));
             var ne = et((F = F !== -1 && F < N + 1 ? E.indexOf(h, N + 1) : F) === -1 ? J : Math.min(J, F));
-            if (E.substr(N + 1 + ne, Y) === l) {
-              D.push(E.substring(x, N).replace(ve, _)), E[x = N + 1 + ne + Y] !== _ && (N = E.indexOf(_, x)), J = E.indexOf(l, x), F = E.indexOf(h, x);
+            if (E.substr(N + 1 + ne, q) === l) {
+              I.push(E.substring(x, N).replace(ve, _)), E[x = N + 1 + ne + q] !== _ && (N = E.indexOf(_, x)), J = E.indexOf(l, x), F = E.indexOf(h, x);
               break;
             }
             if (ne = et(F), E.substring(N + 1 + ne, N + 1 + ne + Q) === h) {
-              if (D.push(E.substring(x, N).replace(ve, _)), dt(N + 1 + ne + Q), J = E.indexOf(l, x), N = E.indexOf(_, x), M && (Te(), R)) return oe();
+              if (I.push(E.substring(x, N).replace(ve, _)), dt(N + 1 + ne + Q), J = E.indexOf(l, x), N = E.indexOf(_, x), M && (Te(), R)) return oe();
               if (A && z.length >= A) return oe(!0);
               break;
             }
             U.push({ type: "Quotes", code: "InvalidQuotes", message: "Trailing quote on quoted field is malformed", row: z.length, index: x }), N++;
           }
         }
-        else if (u && D.length === 0 && E.substring(x, x + se) === u) {
+        else if (u && I.length === 0 && E.substring(x, x + se) === u) {
           if (F === -1) return oe();
           x = F + Q, F = E.indexOf(h, x), J = E.indexOf(l, x);
-        } else if (J !== -1 && (J < F || F === -1)) D.push(E.substring(x, J)), x = J + Y, J = E.indexOf(l, x);
+        } else if (J !== -1 && (J < F || F === -1)) I.push(E.substring(x, J)), x = J + q, J = E.indexOf(l, x);
         else {
           if (F === -1) break;
-          if (D.push(E.substring(x, F)), dt(F + Q), M && (Te(), R)) return oe();
+          if (I.push(E.substring(x, F)), dt(F + Q), M && (Te(), R)) return oe();
           if (A && z.length >= A) return oe(!0);
         }
         return Se();
@@ -3992,27 +4009,27 @@ License: MIT
           return he = ie !== -1 && (ie = E.substring(N + 1, ie)) && ie.trim() === "" ? ie.length : he;
         }
         function Se(ie) {
-          return S || (ie === void 0 && (ie = E.substring(x)), D.push(ie), x = B, Ze(D), M && Te()), oe();
+          return S || (ie === void 0 && (ie = E.substring(x)), I.push(ie), x = B, Ze(I), M && Te()), oe();
         }
         function dt(ie) {
-          x = ie, Ze(D), D = [], F = E.indexOf(h, x);
+          x = ie, Ze(I), I = [], F = E.indexOf(h, x);
         }
         function oe(ie) {
-          if (c.header && !I && z.length && !m) {
-            var he = z[0], Ie = {}, Vt = new Set(he);
+          if (c.header && !D && z.length && !m) {
+            var he = z[0], De = {}, Vt = new Set(he);
             let rn = !1;
             for (let tt = 0; tt < he.length; tt++) {
               let Oe = he[tt];
-              if (Ie[Oe = q(c.transformHeader) ? c.transformHeader(Oe, tt) : Oe]) {
-                let lt, sn = Ie[Oe];
+              if (De[Oe = Y(c.transformHeader) ? c.transformHeader(Oe, tt) : Oe]) {
+                let lt, sn = De[Oe];
                 for (; lt = Oe + "_" + sn, sn++, Vt.has(lt); ) ;
-                Vt.add(lt), he[tt] = lt, Ie[Oe]++, rn = !0, (g = g === null ? {} : g)[lt] = Oe;
-              } else Ie[Oe] = 1, he[tt] = Oe;
+                Vt.add(lt), he[tt] = lt, De[Oe]++, rn = !0, (g = g === null ? {} : g)[lt] = Oe;
+              } else De[Oe] = 1, he[tt] = Oe;
               Vt.add(Oe);
             }
             rn && console.warn("Duplicate headers found and renamed."), m = !0;
           }
-          return { data: z, errors: U, meta: { delimiter: l, linebreak: h, aborted: R, truncated: !!ie, cursor: K + (I || 0), renamedHeaders: g } };
+          return { data: z, errors: U, meta: { delimiter: l, linebreak: h, aborted: R, truncated: !!ie, cursor: K + (D || 0), renamedHeaders: g } };
         }
         function Te() {
           p(oe()), z = [], U = [];
@@ -4030,16 +4047,16 @@ License: MIT
         var p = { abort: function() {
           u = !0, ye(l.workerId, { data: [], errors: [], meta: { aborted: !0 } });
         }, pause: Qe, resume: Qe };
-        if (q(h.userStep)) {
+        if (Y(h.userStep)) {
           for (var A = 0; A < l.results.data.length && (h.userStep({ data: l.results.data[A], errors: l.results.errors, meta: l.results.meta }, p), !u); A++) ;
           delete l.results;
-        } else q(h.userChunk) && (h.userChunk(l.results, p, l.file), delete l.results);
+        } else Y(h.userChunk) && (h.userChunk(l.results, p, l.file), delete l.results);
       }
       l.finished && !u && ye(l.workerId, l.results);
     }
     function ye(c, l) {
       var h = d[c];
-      q(h.userComplete) && h.userComplete(l), h.terminate(), delete d[c];
+      Y(h.userComplete) && h.userComplete(l), h.terminate(), delete d[c];
     }
     function Qe() {
       throw new Error("Not implemented.");
@@ -4055,25 +4072,25 @@ License: MIT
         c.apply(l, arguments);
       };
     }
-    function q(c) {
+    function Y(c) {
       return typeof c == "function";
     }
     return f.parse = function(c, l) {
       var h = (l = l || {}).dynamicTyping || !1;
-      if (q(h) && (l.dynamicTypingFunction = h, h = {}), l.dynamicTyping = h, l.transform = !!q(l.transform) && l.transform, !l.worker || !f.WORKERS_SUPPORTED) return h = null, f.NODE_STREAM_INPUT, typeof c == "string" ? (c = ((u) => u.charCodeAt(0) !== 65279 ? u : u.slice(1))(c), h = new (l.download ? H : W)(l)) : c.readable === !0 && q(c.read) && q(c.on) ? h = new fe(l) : (r.File && c instanceof File || c instanceof Object) && (h = new le(l)), h.stream(c);
+      if (Y(h) && (l.dynamicTypingFunction = h, h = {}), l.dynamicTyping = h, l.transform = !!Y(l.transform) && l.transform, !l.worker || !f.WORKERS_SUPPORTED) return h = null, f.NODE_STREAM_INPUT, typeof c == "string" ? (c = ((u) => u.charCodeAt(0) !== 65279 ? u : u.slice(1))(c), h = new (l.download ? H : W)(l)) : c.readable === !0 && Y(c.read) && Y(c.on) ? h = new fe(l) : (r.File && c instanceof File || c instanceof Object) && (h = new le(l)), h.stream(c);
       (h = (() => {
         var u;
         return !!f.WORKERS_SUPPORTED && (u = (() => {
           var p = r.URL || r.webkitURL || null, A = n.toString();
           return f.BLOB_URL || (f.BLOB_URL = p.createObjectURL(new Blob(["var global = (function() { if (typeof self !== 'undefined') { return self; } if (typeof window !== 'undefined') { return window; } if (typeof global !== 'undefined') { return global; } return {}; })(); global.IS_PAPA_WORKER=true; ", "(", A, ")();"], { type: "text/javascript" })));
         })(), (u = new r.Worker(u)).onmessage = Xe, u.id = k++, d[u.id] = u);
-      })()).userStep = l.step, h.userChunk = l.chunk, h.userComplete = l.complete, h.userError = l.error, l.step = q(l.step), l.chunk = q(l.chunk), l.complete = q(l.complete), l.error = q(l.error), delete l.worker, h.postMessage({ input: c, config: l, workerId: h.id });
+      })()).userStep = l.step, h.userChunk = l.chunk, h.userComplete = l.complete, h.userError = l.error, l.step = Y(l.step), l.chunk = Y(l.chunk), l.complete = Y(l.complete), l.error = Y(l.error), delete l.worker, h.postMessage({ input: c, config: l, workerId: h.id });
     }, f.unparse = function(c, l) {
       var h = !1, u = !0, p = ",", A = `\r
 `, b = '"', g = b + b, m = !1, _ = null, v = !1, x = ((() => {
         if (typeof l == "object") {
-          if (typeof l.delimiter != "string" || f.BAD_DELIMITERS.filter(function(I) {
-            return l.delimiter.indexOf(I) !== -1;
+          if (typeof l.delimiter != "string" || f.BAD_DELIMITERS.filter(function(D) {
+            return l.delimiter.indexOf(D) !== -1;
           }).length || (p = l.delimiter), typeof l.quotes != "boolean" && typeof l.quotes != "function" && !Array.isArray(l.quotes) || (h = l.quotes), typeof l.skipEmptyLines != "boolean" && typeof l.skipEmptyLines != "string" || (m = l.skipEmptyLines), typeof l.newline == "string" && (A = l.newline), typeof l.quoteChar == "string" && (b = l.quoteChar), typeof l.header == "boolean" && (u = l.header), Array.isArray(l.columns)) {
             if (l.columns.length === 0) throw new Error("Option columns is empty");
             _ = l.columns;
@@ -4086,61 +4103,61 @@ License: MIT
         if (typeof c[0] == "object") return R(_ || Object.keys(c[0]), c, m);
       } else if (typeof c == "object") return typeof c.data == "string" && (c.data = JSON.parse(c.data)), Array.isArray(c.data) && (c.fields || (c.fields = c.meta && c.meta.fields || _), c.fields || (c.fields = Array.isArray(c.data[0]) ? c.fields : typeof c.data[0] == "object" ? Object.keys(c.data[0]) : []), Array.isArray(c.data[0]) || typeof c.data[0] == "object" || (c.data = [c.data])), R(c.fields || [], c.data || [], m);
       throw new Error("Unable to serialize unrecognized input");
-      function R(I, S, B) {
-        var Y = "", Q = (typeof I == "string" && (I = JSON.parse(I)), typeof S == "string" && (S = JSON.parse(S)), Array.isArray(I) && 0 < I.length), se = !Array.isArray(S[0]);
+      function R(D, S, B) {
+        var q = "", Q = (typeof D == "string" && (D = JSON.parse(D)), typeof S == "string" && (S = JSON.parse(S)), Array.isArray(D) && 0 < D.length), se = !Array.isArray(S[0]);
         if (Q && u) {
-          for (var M = 0; M < I.length; M++) 0 < M && (Y += p), Y += E(I[M], M);
-          0 < S.length && (Y += A);
+          for (var M = 0; M < D.length; M++) 0 < M && (q += p), q += E(D[M], M);
+          0 < S.length && (q += A);
         }
         for (var z = 0; z < S.length; z++) {
-          var U = (Q ? I : S[z]).length, D = !1, K = Q ? Object.keys(S[z]).length === 0 : S[z].length === 0;
-          if (B && !Q && (D = B === "greedy" ? S[z].join("").trim() === "" : S[z].length === 1 && S[z][0].length === 0), B === "greedy" && Q) {
+          var U = (Q ? D : S[z]).length, I = !1, K = Q ? Object.keys(S[z]).length === 0 : S[z].length === 0;
+          if (B && !Q && (I = B === "greedy" ? S[z].join("").trim() === "" : S[z].length === 1 && S[z][0].length === 0), B === "greedy" && Q) {
             for (var ee = [], G = 0; G < U; G++) {
-              var J = se ? I[G] : G;
+              var J = se ? D[G] : G;
               ee.push(S[z][J]);
             }
-            D = ee.join("").trim() === "";
+            I = ee.join("").trim() === "";
           }
-          if (!D) {
+          if (!I) {
             for (var F = 0; F < U; F++) {
-              0 < F && !K && (Y += p);
-              var ve = Q && se ? I[F] : F;
-              Y += E(S[z][ve], F);
+              0 < F && !K && (q += p);
+              var ve = Q && se ? D[F] : F;
+              q += E(S[z][ve], F);
             }
-            z < S.length - 1 && (!B || 0 < U && !K) && (Y += A);
+            z < S.length - 1 && (!B || 0 < U && !K) && (q += A);
           }
         }
-        return Y;
+        return q;
       }
-      function E(I, S) {
-        var B, Y;
-        return I == null ? "" : I.constructor === Date ? JSON.stringify(I).slice(1, 25) : (Y = !1, v && typeof I == "string" && v.test(I) && (I = "'" + I, Y = !0), B = I.toString().replace(x, g), (Y = Y || h === !0 || typeof h == "function" && h(I, S) || Array.isArray(h) && h[S] || ((Q, se) => {
+      function E(D, S) {
+        var B, q;
+        return D == null ? "" : D.constructor === Date ? JSON.stringify(D).slice(1, 25) : (q = !1, v && typeof D == "string" && v.test(D) && (D = "'" + D, q = !0), B = D.toString().replace(x, g), (q = q || h === !0 || typeof h == "function" && h(D, S) || Array.isArray(h) && h[S] || ((Q, se) => {
           for (var M = 0; M < se.length; M++) if (-1 < Q.indexOf(se[M])) return !0;
           return !1;
         })(B, f.BAD_DELIMITERS) || -1 < B.indexOf(p) || B.charAt(0) === " " || B.charAt(B.length - 1) === " ") ? b + B + b : B);
       }
     }, f.RECORD_SEP = "", f.UNIT_SEP = "", f.BYTE_ORDER_MARK = "\uFEFF", f.BAD_DELIMITERS = ["\r", `
-`, '"', f.BYTE_ORDER_MARK], f.WORKERS_SUPPORTED = !a && !!r.Worker, f.NODE_STREAM_INPUT = 1, f.LocalChunkSize = 10485760, f.RemoteChunkSize = 5242880, f.DefaultDelimiter = ",", f.Parser = Ye, f.ParserHandle = We, f.NetworkStreamer = H, f.FileStreamer = le, f.StringStreamer = W, f.ReadableStreamStreamer = fe, r.jQuery && ((s = r.jQuery).fn.parse = function(c) {
+`, '"', f.BYTE_ORDER_MARK], f.WORKERS_SUPPORTED = !a && !!r.Worker, f.NODE_STREAM_INPUT = 1, f.LocalChunkSize = 10485760, f.RemoteChunkSize = 5242880, f.DefaultDelimiter = ",", f.Parser = qe, f.ParserHandle = We, f.NetworkStreamer = H, f.FileStreamer = le, f.StringStreamer = W, f.ReadableStreamStreamer = fe, r.jQuery && ((s = r.jQuery).fn.parse = function(c) {
       var l = c.config || {}, h = [];
       return this.each(function(A) {
         if (!(s(this).prop("tagName").toUpperCase() === "INPUT" && s(this).attr("type").toLowerCase() === "file" && r.FileReader) || !this.files || this.files.length === 0) return !0;
         for (var b = 0; b < this.files.length; b++) h.push({ file: this.files[b], inputElem: this, instanceConfig: s.extend({}, l) });
       }), u(), this;
       function u() {
-        if (h.length === 0) q(c.complete) && c.complete();
+        if (h.length === 0) Y(c.complete) && c.complete();
         else {
           var A, b, g, m, _ = h[0];
-          if (q(c.before)) {
+          if (Y(c.before)) {
             var v = c.before(_.file, _.inputElem);
             if (typeof v == "object") {
-              if (v.action === "abort") return A = "AbortError", b = _.file, g = _.inputElem, m = v.reason, void (q(c.error) && c.error({ name: A }, b, g, m));
+              if (v.action === "abort") return A = "AbortError", b = _.file, g = _.inputElem, m = v.reason, void (Y(c.error) && c.error({ name: A }, b, g, m));
               if (v.action === "skip") return void p();
               typeof v.config == "object" && (_.instanceConfig = s.extend(_.instanceConfig, v.config));
             } else if (v === "skip") return void p();
           }
           var x = _.instanceConfig.complete;
           _.instanceConfig.complete = function(R) {
-            q(x) && x(R, _.file, _.inputElem), p();
+            Y(x) && x(R, _.file, _.inputElem), p();
           }, f.parse(_.file, _.instanceConfig);
         }
       }
@@ -4157,7 +4174,7 @@ var sr = { exports: {} };
   (function(n, r) {
     t.exports = r();
   })(zt, function() {
-    var n = 1e3, r = 6e4, s = 36e5, a = "millisecond", o = "second", d = "minute", k = "hour", f = "day", T = "week", H = "month", le = "quarter", W = "year", fe = "date", We = "Invalid Date", Re = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, Ye = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, Xe = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(b) {
+    var n = 1e3, r = 6e4, s = 36e5, a = "millisecond", o = "second", d = "minute", k = "hour", f = "day", T = "week", H = "month", le = "quarter", W = "year", fe = "date", We = "Invalid Date", Re = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, qe = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, Xe = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(b) {
       var g = ["th", "st", "nd", "rd"], m = b % 100;
       return "[" + b + (g[(m - 20) % 10] || g[m] || g[0]) + "]";
     } }, ye = function(b, g, m) {
@@ -4178,8 +4195,8 @@ var sr = { exports: {} };
       return b === void 0;
     } }, _e = "en", ae = {};
     ae[_e] = Xe;
-    var q = "$isDayjsObject", c = function(b) {
-      return b instanceof p || !(!b || !b[q]);
+    var Y = "$isDayjsObject", c = function(b) {
+      return b instanceof p || !(!b || !b[Y]);
     }, l = function b(g, m, _) {
       var v;
       if (!g) return _e;
@@ -4203,7 +4220,7 @@ var sr = { exports: {} };
     };
     var p = function() {
       function b(m) {
-        this.$L = l(m.locale, null, !0), this.parse(m), this.$x = this.$x || m.x || {}, this[q] = !0;
+        this.$L = l(m.locale, null, !0), this.parse(m), this.$x = this.$x || m.x || {}, this[Y] = !0;
       }
       var g = b.prototype;
       return g.parse = function(m) {
@@ -4215,8 +4232,8 @@ var sr = { exports: {} };
           if (typeof v == "string" && !/Z$/i.test(v)) {
             var R = v.match(Re);
             if (R) {
-              var E = R[2] - 1 || 0, I = (R[7] || "0").substring(0, 3);
-              return x ? new Date(Date.UTC(R[1], E, R[3] || 1, R[4] || 0, R[5] || 0, R[6] || 0, I)) : new Date(R[1], E, R[3] || 1, R[4] || 0, R[5] || 0, R[6] || 0, I);
+              var E = R[2] - 1 || 0, D = (R[7] || "0").substring(0, 3);
+              return x ? new Date(Date.UTC(R[1], E, R[3] || 1, R[4] || 0, R[5] || 0, R[6] || 0, D)) : new Date(R[1], E, R[3] || 1, R[4] || 0, R[5] || 0, R[6] || 0, D);
             }
           }
           return new Date(v);
@@ -4243,11 +4260,11 @@ var sr = { exports: {} };
         return this.$d.getTime();
       }, g.startOf = function(m, _) {
         var v = this, x = !!u.u(_) || _, R = u.p(m), E = function(z, U) {
-          var D = u.w(v.$u ? Date.UTC(v.$y, U, z) : new Date(v.$y, U, z), v);
-          return x ? D : D.endOf(f);
-        }, I = function(z, U) {
+          var I = u.w(v.$u ? Date.UTC(v.$y, U, z) : new Date(v.$y, U, z), v);
+          return x ? I : I.endOf(f);
+        }, D = function(z, U) {
           return u.w(v.toDate()[z].apply(v.toDate("s"), (x ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(U)), v);
-        }, S = this.$W, B = this.$M, Y = this.$D, Q = "set" + (this.$u ? "UTC" : "");
+        }, S = this.$W, B = this.$M, q = this.$D, Q = "set" + (this.$u ? "UTC" : "");
         switch (R) {
           case W:
             return x ? E(1, 0) : E(31, 11);
@@ -4255,27 +4272,27 @@ var sr = { exports: {} };
             return x ? E(1, B) : E(0, B + 1);
           case T:
             var se = this.$locale().weekStart || 0, M = (S < se ? S + 7 : S) - se;
-            return E(x ? Y - M : Y + (6 - M), B);
+            return E(x ? q - M : q + (6 - M), B);
           case f:
           case fe:
-            return I(Q + "Hours", 0);
+            return D(Q + "Hours", 0);
           case k:
-            return I(Q + "Minutes", 1);
+            return D(Q + "Minutes", 1);
           case d:
-            return I(Q + "Seconds", 2);
+            return D(Q + "Seconds", 2);
           case o:
-            return I(Q + "Milliseconds", 3);
+            return D(Q + "Milliseconds", 3);
           default:
             return this.clone();
         }
       }, g.endOf = function(m) {
         return this.startOf(m, !1);
       }, g.$set = function(m, _) {
-        var v, x = u.p(m), R = "set" + (this.$u ? "UTC" : ""), E = (v = {}, v[f] = R + "Date", v[fe] = R + "Date", v[H] = R + "Month", v[W] = R + "FullYear", v[k] = R + "Hours", v[d] = R + "Minutes", v[o] = R + "Seconds", v[a] = R + "Milliseconds", v)[x], I = x === f ? this.$D + (_ - this.$W) : _;
+        var v, x = u.p(m), R = "set" + (this.$u ? "UTC" : ""), E = (v = {}, v[f] = R + "Date", v[fe] = R + "Date", v[H] = R + "Month", v[W] = R + "FullYear", v[k] = R + "Hours", v[d] = R + "Minutes", v[o] = R + "Seconds", v[a] = R + "Milliseconds", v)[x], D = x === f ? this.$D + (_ - this.$W) : _;
         if (x === H || x === W) {
           var S = this.clone().set(fe, 1);
-          S.$d[E](I), S.init(), this.$d = S.set(fe, Math.min(this.$D, S.daysInMonth())).$d;
-        } else E && this.$d[E](I);
+          S.$d[E](D), S.init(), this.$d = S.set(fe, Math.min(this.$D, S.daysInMonth())).$d;
+        } else E && this.$d[E](D);
         return this.init(), this;
       }, g.set = function(m, _) {
         return this.clone().$set(m, _);
@@ -4285,30 +4302,30 @@ var sr = { exports: {} };
         var v, x = this;
         m = Number(m);
         var R = u.p(_), E = function(B) {
-          var Y = h(x);
-          return u.w(Y.date(Y.date() + Math.round(B * m)), x);
+          var q = h(x);
+          return u.w(q.date(q.date() + Math.round(B * m)), x);
         };
         if (R === H) return this.set(H, this.$M + m);
         if (R === W) return this.set(W, this.$y + m);
         if (R === f) return E(1);
         if (R === T) return E(7);
-        var I = (v = {}, v[d] = r, v[k] = s, v[o] = n, v)[R] || 1, S = this.$d.getTime() + m * I;
+        var D = (v = {}, v[d] = r, v[k] = s, v[o] = n, v)[R] || 1, S = this.$d.getTime() + m * D;
         return u.w(S, this);
       }, g.subtract = function(m, _) {
         return this.add(-1 * m, _);
       }, g.format = function(m) {
         var _ = this, v = this.$locale();
         if (!this.isValid()) return v.invalidDate || We;
-        var x = m || "YYYY-MM-DDTHH:mm:ssZ", R = u.z(this), E = this.$H, I = this.$m, S = this.$M, B = v.weekdays, Y = v.months, Q = v.meridiem, se = function(U, D, K, ee) {
-          return U && (U[D] || U(_, x)) || K[D].slice(0, ee);
+        var x = m || "YYYY-MM-DDTHH:mm:ssZ", R = u.z(this), E = this.$H, D = this.$m, S = this.$M, B = v.weekdays, q = v.months, Q = v.meridiem, se = function(U, I, K, ee) {
+          return U && (U[I] || U(_, x)) || K[I].slice(0, ee);
         }, M = function(U) {
           return u.s(E % 12 || 12, U, "0");
-        }, z = Q || function(U, D, K) {
+        }, z = Q || function(U, I, K) {
           var ee = U < 12 ? "AM" : "PM";
           return K ? ee.toLowerCase() : ee;
         };
-        return x.replace(Ye, function(U, D) {
-          return D || function(K) {
+        return x.replace(qe, function(U, I) {
+          return I || function(K) {
             switch (K) {
               case "YY":
                 return String(_.$y).slice(-2);
@@ -4319,9 +4336,9 @@ var sr = { exports: {} };
               case "MM":
                 return u.s(S + 1, 2, "0");
               case "MMM":
-                return se(v.monthsShort, S, Y, 3);
+                return se(v.monthsShort, S, q, 3);
               case "MMMM":
-                return se(Y, S);
+                return se(q, S);
               case "D":
                 return _.$D;
               case "DD":
@@ -4343,13 +4360,13 @@ var sr = { exports: {} };
               case "hh":
                 return M(2);
               case "a":
-                return z(E, I, !0);
+                return z(E, D, !0);
               case "A":
-                return z(E, I, !1);
+                return z(E, D, !1);
               case "m":
-                return String(I);
+                return String(D);
               case "mm":
-                return u.s(I, 2, "0");
+                return u.s(D, 2, "0");
               case "s":
                 return String(_.$s);
               case "ss":
@@ -4365,18 +4382,18 @@ var sr = { exports: {} };
       }, g.utcOffset = function() {
         return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
       }, g.diff = function(m, _, v) {
-        var x, R = this, E = u.p(_), I = h(m), S = (I.utcOffset() - this.utcOffset()) * r, B = this - I, Y = function() {
-          return u.m(R, I);
+        var x, R = this, E = u.p(_), D = h(m), S = (D.utcOffset() - this.utcOffset()) * r, B = this - D, q = function() {
+          return u.m(R, D);
         };
         switch (E) {
           case W:
-            x = Y() / 12;
+            x = q() / 12;
             break;
           case H:
-            x = Y();
+            x = q();
             break;
           case le:
-            x = Y() / 3;
+            x = q() / 3;
             break;
           case T:
             x = (B - S) / 6048e5;
@@ -4513,12 +4530,12 @@ const pa = i.object({
     user: ct
   })
 });
-class Ya extends te(pa) {
+class qa extends te(pa) {
 }
 const ma = i.object({
   otp: i.string().length(6, { message: "Code must be a 6 digit number" }).regex(/^\d+$/, { message: "Code must be a 6 digit number" })
 });
-class qa extends te(ma) {
+class Ya extends te(ma) {
 }
 const ga = i.object({
   backupCodes: i.array(i.string().length(10))
@@ -6676,11 +6693,11 @@ const ir = i.object({
 });
 class ri extends te(ir) {
 }
-const Ia = ir.partial();
-class si extends te(Ia) {
+const Da = ir.partial();
+class si extends te(Da) {
 }
-const Da = i.object({ url: i.string().url() });
-class ai extends te(Da) {
+const Ia = i.object({ url: i.string().url() });
+class ai extends te(Ia) {
 }
 const ja = i.object({
   views: i.number().int().default(0),
@@ -6700,7 +6717,7 @@ class oi extends te(La) {
 }
 export {
   Va as AuthProvidersDto,
-  Ya as AuthResponseDto,
+  qa as AuthResponseDto,
   Ka as BackupCodesDto,
   Xa as ContributorDto,
   ei as CreateResumeDto,
@@ -6716,7 +6733,7 @@ export {
   ri as ResumeDto,
   ii as StatisticsDto,
   Ga as TwoFactorBackupDto,
-  qa as TwoFactorDto,
+  Ya as TwoFactorDto,
   Ja as UpdatePasswordDto,
   si as UpdateResumeDto,
   Ua as UpdateUserDto,
@@ -6742,9 +6759,9 @@ export {
   ya as twoFactorBackupSchema,
   ma as twoFactorSchema,
   _a as updatePasswordSchema,
-  Ia as updateResumeSchema,
+  Da as updateResumeSchema,
   ua as updateUserSchema,
-  Da as urlSchema,
+  Ia as urlSchema,
   ct as userSchema,
   oa as userWithSecretsSchema,
   ar as usernameSchema

@@ -87,7 +87,7 @@ const UploadResume = () => {
 
   const handlePaymentVerification = async (sessionId: string) => {
     try {
-      const response = await axios.get(`/cv-manager/human-verification/check-payment/${sessionId}/`);
+      const response = await axios.get(`/cv-manager/human-verification/check-for-payment/`);
       
       if (response.status === 200) {
         toast({
@@ -98,7 +98,7 @@ const UploadResume = () => {
           icon: <CheckCircle size={24} className="text-white" />,
           variant: "default",
         });
-
+        setPaymentId(response.data.data.payment_id)
         console.log(response.data,"response.data")
 
         // Clean up the URL by removing the human_resume part and session_id parameter

@@ -31,6 +31,7 @@ export const ExperienceDialog = () => {
   const form = useForm<FormValues>({
     defaultValues: defaultExperience,
     resolver: zodResolver(formSchema),
+    mode: "onChange", // Enable real-time validation
   });
   
   console.log(defaultExperience,"defaultExperience")
@@ -38,6 +39,9 @@ export const ExperienceDialog = () => {
   // Watch form values to determine completion
   const formValues = form.watch();
   console.log(formValues,"formValues")
+  
+  // Get form errors for validation display
+  const formErrors = form.formState.errors;
   
   // Convert date string to start and end dates
   const convertDateRange = (dateStr: string) => {
@@ -92,33 +96,52 @@ export const ExperienceDialog = () => {
     setIsPresent(checked);
     if (checked) {
       form.setValue('endDate', '');
+      form.clearErrors('endDate'); // Clear any endDate validation errors
     }
   };
 
+  // Enhanced completion check with validation
   const isCompleted = Boolean(
     formValues.company &&
     formValues.position &&
     formValues.startDate &&
     (formValues.endDate || isPresent) &&
-    formValues.date &&
-    formValues.summary
+    formValues.location &&
+    formValues.summary &&
+    Object.keys(formErrors).length === 0 // No validation errors
   );
+  
   // Use the progress hook
   useSectionProgress("experience", isCompleted);
 
   return (
-    <SectionDialog<FormValues> id="experience" form={form} defaultValues={defaultExperience}>
+    <SectionDialog<FormValues> 
+      id="experience" 
+      form={form} 
+      defaultValues={defaultExperience}
+    >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField
           name="company"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t`Company`}</FormLabel>
+              <FormLabel>{t`Company`} <span className="text-destructive">*</span></FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input 
+                  {...field} 
+                  placeholder="Enter company name"
+                  maxLength={100}
+                  required
+                  className={formErrors.company ? "border-destructive" : ""}
+                />
               </FormControl>
               <FormMessage />
+              {!formErrors.company && field.value && (
+                <p className="text-xs text-muted-foreground">
+                  {field.value.length}/100 characters
+                </p>
+              )}
             </FormItem>
           )}
         />
@@ -132,12 +155,23 @@ export const ExperienceDialog = () => {
                 {t({
                   message: "Position",
                   context: "Position held at a company, for example, Software Engineer",
-                })}
+                })} <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input 
+                  {...field} 
+                  placeholder="Enter your position/title"
+                  maxLength={100}
+                  required
+                  className={formErrors.position ? "border-destructive" : ""}
+                />
               </FormControl>
               <FormMessage />
+              {!formErrors.position && field.value && (
+                <p className="text-xs text-muted-foreground">
+                  {field.value.length}/100 characters
+                </p>
+              )}
             </FormItem>
           )}
         />
@@ -147,26 +181,36 @@ export const ExperienceDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-              <FormLabel>Start Date</FormLabel>
-              </FormLabel>
+              <FormLabel>Start Date <span className="text-destructive">*</span></FormLabel>
               <FormControl>
                 <div className="flex gap-2">
                   <Input 
                     {...field} 
                     type="date" 
                     placeholder={t`Start Date`}
+                    required
+                    max={new Date().toISOString().split('T')[0]}
+                    className={formErrors.startDate ? "border-destructive" : ""}
                     onChange={(e) => {
                       field.onChange(e);
                       const endDate = form.getValues("endDate");
                       if (endDate && e.target.value > endDate) {
                         form.setValue("endDate", e.target.value);
                       }
+                      // Clear endDate errors when startDate changes
+                      if (formErrors.endDate) {
+                        form.clearErrors('endDate');
+                      }
                     }}
                   />
                 </div>
               </FormControl>
               <FormMessage />
+              {!formErrors.startDate && field.value && (
+                <p className="text-xs text-muted-foreground">
+                  Start date: {new Date(field.value).toLocaleDateString()}
+                </p>
+              )}
             </FormItem>
           )}
         />
@@ -175,7 +219,7 @@ export const ExperienceDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>End Date</FormLabel>
+              <FormLabel>End Date {!isPresent && <span className="text-destructive">*</span>}</FormLabel>
               <FormControl>
                 <div className="space-y-2">
                   <Input 
@@ -184,6 +228,7 @@ export const ExperienceDialog = () => {
                     placeholder={t`End Date`}
                     min={form.getValues("startDate")}
                     disabled={isPresent}
+                    className={formErrors.endDate ? "border-destructive" : ""}
                     onChange={(e) => {
                       const startDate = form.getValues("startDate");
                       if (!startDate || e.target.value >= startDate) {
@@ -207,6 +252,16 @@ export const ExperienceDialog = () => {
                 </div>
               </FormControl>
               <FormMessage />
+              {!formErrors.endDate && field.value && !isPresent && (
+                <p className="text-xs text-muted-foreground">
+                  End date: {new Date(field.value).toLocaleDateString()}
+                </p>
+              )}
+              {isPresent && (
+                <p className="text-xs text-muted-foreground">
+                  Currently employed - no end date required
+                </p>
+              )}
             </FormItem>
           )}
         />
@@ -230,11 +285,22 @@ export const ExperienceDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="sm:col-span-2">
-              <FormLabel>{t`Location`}</FormLabel>
+              <FormLabel>{t`Location`} <span className="text-destructive">*</span></FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input 
+                  {...field} 
+                  placeholder="Enter work location (city, state, country)"
+                  maxLength={100}
+                  required
+                  className={formErrors.location ? "border-destructive" : ""}
+                />
               </FormControl>
               <FormMessage />
+              {!formErrors.location && field.value && (
+                <p className="text-xs text-muted-foreground">
+                  {field.value.length}/100 characters
+                </p>
+              )}
             </FormItem>
           )}
         />
@@ -244,11 +310,15 @@ export const ExperienceDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="sm:col-span-2">
-              <FormLabel>{t`Summary`}</FormLabel>
+              <FormLabel>{t`Summary`} <span className="text-destructive">*</span></FormLabel>
               <FormControl>
                 <RichInput
                   {...field}
                   content={field.value}
+                  placeholder="Describe your role, responsibilities, and achievements..."
+                  maxLength={1000}
+                  required
+                  className={formErrors.summary ? "border-destructive" : ""}
                   footer={(editor) => (
                     <AiActions
                       value={editor.getText()}
@@ -264,6 +334,9 @@ export const ExperienceDialog = () => {
                 />
               </FormControl>
               <FormMessage />
+              <div className="text-xs text-muted-foreground mt-1">
+                {field.value?.length || 0}/1000 characters
+              </div>
             </FormItem>
           )}
         />

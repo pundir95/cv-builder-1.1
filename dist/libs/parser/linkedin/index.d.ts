@@ -157,7 +157,6 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                 items: {
                     id: string;
                     visible: boolean;
-                    date: string;
                     location: string;
                     url: {
                         label: string;
@@ -167,6 +166,7 @@ export declare class LinkedInParser implements Parser<JSZip, LinkedIn> {
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;

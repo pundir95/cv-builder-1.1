@@ -551,16 +551,16 @@ export declare const resumeSchema: z.ZodObject<{
                 visible: z.ZodDefault<z.ZodBoolean>;
             }, {
                 id: z.ZodLiteral<"experience">;
-                items: z.ZodArray<z.ZodObject<z.objectUtil.extendShape<{
+                items: z.ZodArray<z.ZodEffects<z.ZodObject<z.objectUtil.extendShape<{
                     id: z.ZodDefault<z.ZodString>;
                     visible: z.ZodBoolean;
                 }, {
                     company: z.ZodString;
                     position: z.ZodString;
                     location: z.ZodString;
-                    date: z.ZodString;
-                    startDate: z.ZodString;
-                    endDate: z.ZodOptional<z.ZodString>;
+                    date: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+                    startDate: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+                    endDate: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
                     summary: z.ZodString;
                     url: z.ZodObject<{
                         label: z.ZodString;
@@ -573,7 +573,6 @@ export declare const resumeSchema: z.ZodObject<{
                         href: string;
                     }>;
                 }>, "strip", z.ZodTypeAny, {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -585,9 +584,9 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }, {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -598,6 +597,35 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
+                    id?: string | undefined;
+                    endDate?: string | undefined;
+                }>, {
+                    id: string;
+                    visible: boolean;
+                    location: string;
+                    url: {
+                        label: string;
+                        href: string;
+                    };
+                    summary: string;
+                    startDate: string;
+                    company: string;
+                    position: string;
+                    date?: string | undefined;
+                    endDate?: string | undefined;
+                }, {
+                    visible: boolean;
+                    location: string;
+                    url: {
+                        label: string;
+                        href: string;
+                    };
+                    summary: string;
+                    startDate: string;
+                    company: string;
+                    position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }>, "many">;
@@ -609,7 +637,6 @@ export declare const resumeSchema: z.ZodObject<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -621,6 +648,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -628,7 +656,6 @@ export declare const resumeSchema: z.ZodObject<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -639,6 +666,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -1410,7 +1438,6 @@ export declare const resumeSchema: z.ZodObject<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -1422,6 +1449,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -1692,7 +1720,6 @@ export declare const resumeSchema: z.ZodObject<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -1703,6 +1730,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -2213,7 +2241,6 @@ export declare const resumeSchema: z.ZodObject<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -2225,6 +2252,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -2568,7 +2596,6 @@ export declare const resumeSchema: z.ZodObject<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -2579,6 +2606,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -2989,7 +3017,6 @@ export declare const resumeSchema: z.ZodObject<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -3001,6 +3028,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -3380,7 +3408,6 @@ export declare const resumeSchema: z.ZodObject<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -3391,6 +3418,7 @@ export declare const resumeSchema: z.ZodObject<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -3768,7 +3796,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -3780,6 +3807,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -4619,16 +4647,16 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 visible: z.ZodDefault<z.ZodBoolean>;
             }, {
                 id: z.ZodLiteral<"experience">;
-                items: z.ZodArray<z.ZodObject<z.objectUtil.extendShape<{
+                items: z.ZodArray<z.ZodEffects<z.ZodObject<z.objectUtil.extendShape<{
                     id: z.ZodDefault<z.ZodString>;
                     visible: z.ZodBoolean;
                 }, {
                     company: z.ZodString;
                     position: z.ZodString;
                     location: z.ZodString;
-                    date: z.ZodString;
-                    startDate: z.ZodString;
-                    endDate: z.ZodOptional<z.ZodString>;
+                    date: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+                    startDate: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+                    endDate: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
                     summary: z.ZodString;
                     url: z.ZodObject<{
                         label: z.ZodString;
@@ -4641,7 +4669,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                         href: string;
                     }>;
                 }>, "strip", z.ZodTypeAny, {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -4653,9 +4680,9 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }, {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -4666,6 +4693,35 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
+                    id?: string | undefined;
+                    endDate?: string | undefined;
+                }>, {
+                    id: string;
+                    visible: boolean;
+                    location: string;
+                    url: {
+                        label: string;
+                        href: string;
+                    };
+                    summary: string;
+                    startDate: string;
+                    company: string;
+                    position: string;
+                    date?: string | undefined;
+                    endDate?: string | undefined;
+                }, {
+                    visible: boolean;
+                    location: string;
+                    url: {
+                        label: string;
+                        href: string;
+                    };
+                    summary: string;
+                    startDate: string;
+                    company: string;
+                    position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }>, "many">;
@@ -4677,7 +4733,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -4689,6 +4744,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -4696,7 +4752,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -4707,6 +4762,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -5478,7 +5534,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -5490,6 +5545,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -5760,7 +5816,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -5771,6 +5826,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -6281,7 +6337,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 columns: number;
                 separateLinks: boolean;
                 items: {
-                    date: string;
                     id: string;
                     visible: boolean;
                     location: string;
@@ -6293,6 +6348,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     endDate?: string | undefined;
                 }[];
                 extraDescription: string;
@@ -6636,7 +6692,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -6647,6 +6702,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];
@@ -7059,7 +7115,6 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                 id: "experience";
                 name: string;
                 items: {
-                    date: string;
                     visible: boolean;
                     location: string;
                     url: {
@@ -7070,6 +7125,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     company: string;
                     position: string;
+                    date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
                 }[];

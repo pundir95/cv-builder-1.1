@@ -214,6 +214,7 @@ export const SectionDialog = <T extends SectionItem>({
             <form
               className="max-h-[60vh] space-y-6 lg:max-h-fit"
               onSubmit={form.handleSubmit(onSubmit)}
+              noValidate
             >
               <DialogHeader className="pb-4 border-b border-gray-200 dark:border-gray-700">
                 <DialogTitle>
