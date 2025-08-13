@@ -44,7 +44,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       console.log(response.data,"response.data123123")
 
       if (response.status === 200) {
-        setIsSuccess(true);
+        // setIsSuccess(true);
         toast({
           title: "Payment initiated successfully",
           description: "Your human verification request has been submitted.",
@@ -54,7 +54,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           variant: "default",
         });
 
-        // window.location.href = response.data.checkout_url;
+        window.location.href = response.data.checkout_url;
         
         // Close modal after showing success state
         // setTimeout(() => {

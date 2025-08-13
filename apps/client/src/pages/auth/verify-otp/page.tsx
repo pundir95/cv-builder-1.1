@@ -38,6 +38,20 @@ export const VerifyOtpPage = () => {
     defaultValues: { otp: "" },
   });
 
+  const handleResendOtp = async () => {
+    try {
+      const res = await axios.post("/accounts/resend-email-verification-otp/", {
+        email: localStorage.getItem("email")
+      });
+      showToast('OTP resent successfully!', 'success');
+      form.reset();
+    } catch (error: any) {
+      console.log(error);
+      let errorMessage = error?.response?.data?.data?.non_field_errors?.[0] || 'Failed to resend OTP. Please try again.';
+      showToast(errorMessage, 'error');
+    }
+  };
+
   const onSubmit = async (data: FormValues) => {
     let newPayload = {
       otp: data.otp,
@@ -54,13 +68,13 @@ export const VerifyOtpPage = () => {
       })
       if(res?.data?.length>0){
         localStorage.setItem("user",JSON.stringify(res.data[0]));
-        if(res.data[0].subscription_details.length>0){
-          void navigate("/dashboard");
-        }else{
-          void navigate("/onboard/select-template");
-        }
+        // if(res.data[0].subscription_details.length>0){
+        //   void navigate("/dashboard");
+        // }else{
+        //   void navigate("/onboard/select-template");
+        // }
       }
-      void navigate("/dashboard");
+      void navigate("/onboard/select-template");
     } catch (error: any) {
       console.log(error);
       let errorMessage = error?.response?.data?.data?.non_field_errors?.[0] || 'Operation failed. Please try again.';
@@ -110,10 +124,7 @@ export const VerifyOtpPage = () => {
               type="button"
               variant="link" 
               className="w-full"
-              onClick={() => {
-                form.reset();
-                showToast('OTP reset. Please try again.', 'info');
-              }}
+              onClick={handleResendOtp}
             >
               Reset OTP
             </Button>

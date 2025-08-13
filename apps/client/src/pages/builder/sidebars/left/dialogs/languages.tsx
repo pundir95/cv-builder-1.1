@@ -58,7 +58,7 @@ export const LanguagesDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t`Proficiency`}</FormLabel>
+              <FormLabel>Proficiency</FormLabel>
               <FormControl>
                 <select
                   {...field}
