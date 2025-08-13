@@ -36,9 +36,43 @@ const UploadResume = () => {
   const resume_id=searchParams.get("resume_id")
   const [paymentId, setPaymentId] = useState<any>(null);
 
+  // Helper function to validate file types and size
+  const isValidFile = (file: File): boolean => {
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'text/html',
+      'text/rtf',
+      'text/plain'
+    ];
+    
+    // Check file type
+    if (!validTypes.includes(file.type)) {
+      return false;
+    }
+    
+    // Check file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    if (file.size > maxSize) {
+      return false;
+    }
+    
+    return true;
+  };
+
   // Check for URL parameters and handle payment verification
   console.log(searchParams.get('human_resume'), 'searchParams 123', searchParams.get('session_id'));
   const sessionId = searchParams.get('session_id');
+  
+  // Monitor selectedFile changes and prevent progression without file
+  useEffect(() => {
+    if (selectedStep === 1 && !selectedFile) {
+      // If user is on step 1 and no file is selected, ensure they can't proceed
+      // This handles cases where user goes back from step 2 to step 1
+    }
+  }, [selectedStep, selectedFile]);
+  
   useEffect(() => {
     const payment_Id = searchParams.get('payment_id') || null;
     const humanResume = searchParams.get('human_resume');
@@ -123,8 +157,9 @@ const UploadResume = () => {
   }
   }
 
-
-  
+  const onRemoveFile = () => {
+    setSelectedFile(null);
+  };
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -143,18 +178,42 @@ const UploadResume = () => {
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      if (file.type === 'application/pdf' || file.type === 'application/msword' || 
-          file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        setSelectedFile(file);
+      
+      // Validate file type
+      if (!isValidFile(file)) {
+        toast({
+          title: "Invalid file type or size",
+          description: "Please upload a valid resume file (PDF, DOC, DOCX, HTML, RTF, or TXT, max 10MB)",
+          duration: 5000,
+          className: "bg-red-500 text-white",
+          variant: "error",
+        });
+        return;
       }
+      
+      setSelectedFile(file);
     }
   };
 
-  const handleFileInput =async (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleNextStep()
+  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      
+      // Validate file type
+      if (!isValidFile(file)) {
+        toast({
+          title: "Invalid file type or size",
+          description: "Please upload a valid resume file (PDF, DOC, DOCX, HTML, RTF, or TXT, max 10MB)",
+          duration: 5000,
+          className: "bg-red-500 text-white",
+          variant: "error",
+        });
+        return;
+      }
+      
       setSelectedFile(file);
+      // Only proceed to next step after file is set and validated
+      handleNextStep();
     }
   };
 
@@ -186,6 +245,23 @@ const UploadResume = () => {
 }
 
 const handleNextStep = () => {
+  // Prevent moving from step 1 to step 2 without a file
+  if (selectedStep === 1 && !selectedFile) {
+    return;
+  }
+  
+  // Validate file type if moving from step 1 to step 2
+  if (selectedStep === 1 && selectedFile && !isValidFile(selectedFile)) {
+    toast({
+      title: "Invalid file type or size",
+      description: "Please upload a valid resume file (PDF, DOC, DOCX, HTML, RTF, or TXT, max 10MB)",
+      duration: 5000,
+      className: "bg-red-500 text-white",
+      variant: "error",
+    });
+    return;
+  }
+  
   if(selectedStep === 4){
     if(isResumeChecker){
       navigate(`/builder/${newResume.data.id}?improve=true`)
@@ -198,6 +274,18 @@ const handleNextStep = () => {
 }
 
 const handlePreviousStep = () => {
+  // If going back to step 1, ensure file is still valid
+  if (selectedStep === 2 && selectedFile && !isValidFile(selectedFile)) {
+    setSelectedFile(null);
+    toast({
+      title: "File validation failed",
+      description: "The previously selected file is no longer valid. Please upload a new file.",
+      duration: 5000,
+      className: "bg-yellow-500 text-white",
+      variant: "default",
+    });
+  }
+  
   setSelectedStep(prev => prev - 1);
 }
 
@@ -222,7 +310,7 @@ const handleSubmit = (data: {
 
 
 const uploadResume = () => {
-  if (selectedFile) {
+  if (selectedFile && isValidFile(selectedFile)) {
     handleNextStep()
     console.log(selectedFile,"selectedFile")
     const formData = new FormData();
@@ -292,6 +380,14 @@ const uploadResume = () => {
     })
  
     
+  } else {
+    toast({
+      title: "Invalid file",
+      description: "Please select a valid resume file to continue",
+      duration: 5000,
+      className: "bg-red-500 text-white",
+      variant: "error",
+    });
   }
 }
 
@@ -311,7 +407,7 @@ console.log(selectedStep,"selectedStep")
       }
       {
         selectedStep === 1 && (
-          <UploadContainer handleFileInput={handleFileInput} selectedFile={selectedFile}/>
+          <UploadContainer handleFileInput={handleFileInput} selectedFile={selectedFile} onRemoveFile={onRemoveFile}/>
         )
       }
       {
@@ -350,12 +446,31 @@ console.log(selectedStep,"selectedStep")
           <ArrowLeft />
           Back
         </button>
-        <button 
-          onClick={selectedStep === 2 ? uploadResume : handleNextStep}
-          className="bg-[#D6EF3C] border-2 border-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow hover:bg-[#D6EF3C]/90 transition-colors duration-200"
-        >
-          Next
-        </button>
+        <div className="flex flex-col items-center">
+          {selectedStep === 1 && selectedFile && (
+            <div className="mb-2 text-center">
+              <p className="text-sm text-green-600 font-medium">
+                ✓ Ready to proceed with: {selectedFile.name}
+              </p>
+            </div>
+          )}
+          <button 
+            onClick={selectedStep === 2 ? uploadResume : (selectedStep === 1 && !selectedFile ? () => {} : handleNextStep)}
+            disabled={selectedStep === 1 && !selectedFile}
+            className={`bg-[#D6EF3C] border-2 border-yellow-300 text-blue-900 rounded-full px-12 py-3 font-bold text-lg shadow transition-colors duration-200 ${
+              selectedStep === 1 && !selectedFile 
+                ? 'opacity-50 cursor-not-allowed' 
+                : 'hover:bg-[#D6EF3C]/90'
+            }`}
+          >
+            {selectedStep === 2 ? 'Upload Resume' : 'Next'}
+          </button>
+          {selectedStep === 1 && !selectedFile && (
+            <p className="text-sm text-gray-500 mt-2 text-center">
+              Please upload a resume file to continue
+            </p>
+          )}
+        </div>
       </div>}
   
     {humanChecker && <HumanCheckerModal open={humanChecker} onClose={() => setHumanChecker(false)} onSubmit={handleSubmit} paymentId={paymentId} />}

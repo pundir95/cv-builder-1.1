@@ -108,7 +108,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
             <FileText className="text-blue-600" size={24} />
-            Upload Your CV for Human Check
+            Check your resume with human
           </DialogTitle>
           <DialogDescription>
             Please fill in your details and upload your CV. Our team will review and provide feedback.

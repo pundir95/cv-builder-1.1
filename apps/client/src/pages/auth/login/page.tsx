@@ -23,14 +23,31 @@ import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { data, Link,useNavigate } from "react-router";
-import type { z } from "zod";
+import { z } from "zod";
 
 import { useLogin } from "@/client/services/auth";
 import { useFeatureFlags } from "@/client/services/feature";
 import { useToast } from "@/client/components/ToastProvider";
 import axios from "axios";
 
-type FormValues = z.infer<typeof loginSchema>;
+// Local validation schema with better error messages
+const localLoginSchema = z.object({
+  email: z.string()
+    .min(1, "Email is required")
+    .refine((value) => {
+      if (value.includes("@")) {
+        return z.string().email().safeParse(value).success;
+      }
+      return value.length >= 3;
+    }, {
+      message: "Please enter a valid email address or username (at least 3 characters)"
+    }),
+  password: z.string()
+    .min(1, "Password is required")
+    .min(6, "Password must be at least 6 characters long")
+});
+
+type FormValues = z.infer<typeof localLoginSchema>;
 
 export const LoginPage = () => {
   const { login, loading } = useLogin();
@@ -43,16 +60,29 @@ export const LoginPage = () => {
   usePasswordToggle(formRef);
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(localLoginSchema),
     defaultValues: { email: "", password: "" },
+    mode: "onChange", // Enable real-time validation
   });
 
   const onSubmit = async (data: FormValues) => {
     try {
-      // navigate("/onboard/experience-level");
+      // Check if form is valid before submitting
+      const isValid = await form.trigger();
+      if (!isValid) {
+        console.log("Form validation failed:", form.formState.errors);
+        // Force re-render to show errors
+        form.trigger();
+        return;
+      }
 
-      await login(data);
-      // navigate("/onboard/experience-level");
+      // Convert to the format expected by the API
+      const loginData = {
+        email: data.email,
+        password: data.password
+      };
+
+      await login(loginData);
       showToast('Login successful!', 'success');
     } catch (error: any) {
       let errorMessage = error?.response?.data?.message || 'Login failed. Please try again.';
@@ -74,7 +104,9 @@ export const LoginPage = () => {
     // navigate("/auth/verify-otp");
   }
 
-
+  // Log form errors for debugging
+  console.log("Form errors:", form.formState.errors);
+  console.log("Form state:", form.formState);
 
   return (
     <div className="flex items-center justify-center bg-gray-50">
@@ -111,21 +143,26 @@ export const LoginPage = () => {
                 ref={formRef}
                 className="flex flex-col gap-y-6"
                 onSubmit={form.handleSubmit(onSubmit)}
+                noValidate // Prevent browser validation
               >
                 <FormField
                   name="email"
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-base">{t`Email`}</FormLabel>
+                      <FormLabel className="text-base text-foreground">{t`Email`}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Envelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                           <Input
                             autoComplete="email"
-                            className="pl-10 py-6 text-base"
+                            className={cn(
+                              "pl-10 py-6 text-base",
+                              form.formState.errors.email && "border-red-500 focus:border-red-500"
+                            )}
                             placeholder="john.doe@example.com"
                             {...field}
+                            onBlur={() => form.trigger("email")} // Trigger validation on blur
                           />
                         </div>
                       </FormControl>
@@ -140,15 +177,19 @@ export const LoginPage = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-base">{t`Password`}</FormLabel>
+                      <FormLabel className="text-base text-foreground">{t`Password`}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                           <Input 
                             type={showPassword ? "text" : "password"}
-                            autoComplete="password" 
-                            className="pl-10 pr-10 py-6 text-base"
+                            autoComplete="current-password" 
+                            className={cn(
+                              "pl-10 pr-10 py-6 text-base",
+                              form.formState.errors.password && "border-red-500 focus:border-red-500"
+                            )}
                             {...field} 
+                            onBlur={() => form.trigger("password")} // Trigger validation on blur
                           />
                           <button
                             type="button"
@@ -170,6 +211,19 @@ export const LoginPage = () => {
 
                 <Button type="submit" disabled={loading} className="bg-[#D6EF3C]/90 text-black px-6 py-6 rounded-full hover:bg-[#D6EF3C]/30" loading={loading}>
                   Log in
+                </Button>
+
+                {/* Debug button to test validation */}
+                <Button 
+                  type="button" 
+                  onClick={() => {
+                    console.log("Testing validation...");
+                    form.trigger();
+                    console.log("Form errors after trigger:", form.formState.errors);
+                  }}
+                  className="bg-gray-500 text-white px-6 py-3 rounded-full hover:bg-gray-600"
+                >
+                  Test Validation
                 </Button>
 
                 <div className="mt-4 flex flex-col md:flex-row items-center gap-4">

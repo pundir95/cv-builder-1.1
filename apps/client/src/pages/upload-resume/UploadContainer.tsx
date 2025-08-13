@@ -1,7 +1,11 @@
 import React from "react";
 import { ArrowLeft, ArrowRight, CloudArrowUp, File, Upload } from "@phosphor-icons/react";
 
-export default function UploadContainer({ handleFileInput, selectedFile }: { handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, selectedFile: File | null }) {
+export default function UploadContainer({ handleFileInput, selectedFile, onRemoveFile }: { 
+  handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, 
+  selectedFile: File | null,
+  onRemoveFile: () => void 
+}) {
   return (
     <div>
       <div className="bg-white rounded-3xl flex flex-row items-center justify-between gap-8 px-6 py-10 max-w-4xl w-full mb-8 animate-fade-in">
@@ -19,9 +23,20 @@ export default function UploadContainer({ handleFileInput, selectedFile }: { han
         </label>
         
         {selectedFile && (
-          <p className="mt-2 text-sm text-gray-600">
-            Selected: {selectedFile.name}
-          </p>
+          <div className="mt-2 text-center">
+            <p className="text-sm text-green-600 font-medium">
+              ✓ {selectedFile.name}
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              File selected successfully
+            </p>
+            <button
+              onClick={onRemoveFile}
+              className="mt-2 text-xs text-red-500 hover:text-red-700 underline"
+            >
+              Remove file
+            </button>
+          </div>
         )}
           {/* <button className="bg-blue-500 text-white rounded-full px-8 py-3 text-lg font-semibold hover:bg-blue-800 transition-colors duration-200">
             Browse
