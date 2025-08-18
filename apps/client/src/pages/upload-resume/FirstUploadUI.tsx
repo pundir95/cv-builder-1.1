@@ -2,7 +2,30 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Upload, FileText } from '@phosphor-icons/react';
 
-const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, handleFileInput, selectedFile, onStartFromScratch, cardData }: { setSelectedCard: (card: 'upload' | 'scratch' | null) => void, selectedCard: 'upload' | 'scratch' | null, handleDrag: (e: React.DragEvent) => void, handleDrop: (e: React.DragEvent) => void, handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, selectedFile: File | null, onStartFromScratch: () => void, cardData: { upload: { title: string; description: string; icon: React.ReactNode }; scratch: { title: string; description: string; icon: React.ReactNode } } }) => {
+const FirstUploadUI = ({ 
+  setSelectedCard, 
+  selectedCard, 
+  handleDrag, 
+  handleDrop, 
+  handleFileInput, 
+  selectedFile, 
+  onStartFromScratch, 
+  cardData,
+  onUploadCardClick 
+}: { 
+  setSelectedCard: (card: 'upload' | 'scratch' | null) => void, 
+  selectedCard: 'upload' | 'scratch' | null, 
+  handleDrag: (e: React.DragEvent) => void, 
+  handleDrop: (e: React.DragEvent) => void, 
+  handleFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void, 
+  selectedFile: File | null, 
+  onStartFromScratch: () => void, 
+  cardData: { 
+    upload: { title: string; description: string; icon: React.ReactNode; recommended?: boolean }, 
+    scratch: { title: string; description: string; icon: React.ReactNode } 
+  },
+  onUploadCardClick: () => void
+}) => {
   return (
     <div className="grid md:grid-cols-2 gap-6">
     {/* Upload Option */}
@@ -13,11 +36,13 @@ const FirstUploadUI = ({ setSelectedCard, selectedCard, handleDrag, handleDrop, 
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDrop={handleDrop}
-      onClick={() => setSelectedCard('upload')}
+      onClick={onUploadCardClick}
     >
-      <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
-        Recommended option to save your time
-      </div>
+      {cardData.upload.recommended && (
+        <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+          Recommended option to save your time
+        </div>
+      )}
       
       <div className="flex flex-col items-center justify-center min-h-[200px]">
         <Upload className="w-12 h-12 text-blue-500 mb-4" />

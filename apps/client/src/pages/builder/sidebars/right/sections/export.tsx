@@ -15,8 +15,6 @@ import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
 import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
-import { useToast } from "@/client/hooks/use-toast";
-import { axios } from "@/client/libs/axios";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -31,12 +29,13 @@ const openInNewTab = (url: string) => {
   if (win) win.focus();
 };
 
-export const ExportSection = () => {
+export const ExportSection = ({ setShowSubscriptionModal }: { setShowSubscriptionModal: (show: boolean) => void }) => {
   const navigate = useNavigate();
   const { printResume, loading } = usePrintResume();
   const user=localStorage.getItem("user");
   const userData=JSON.parse(user || "{}");
-  const { toast } = useToast();
+
+  const hasSubscription=userData.subscription_details.length > 0;
   
   // Fix for HTML content escaping issue: Using FormData instead of JSON
   // to prevent automatic escaping of quotes and special characters in HTML
@@ -155,6 +154,11 @@ export const ExportSection = () => {
   // };
 
   const onPdfExport = async () => {
+
+    if(!hasSubscription){
+      setShowSubscriptionModal(true);
+      return;
+    }
     const templateRef = sharedState.getTemplateRef();
     
     if (templateRef) {

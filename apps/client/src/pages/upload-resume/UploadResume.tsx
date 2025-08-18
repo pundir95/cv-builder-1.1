@@ -19,6 +19,7 @@ import UploadPageError from './UploadPageError';
 import HumanCheckerModal from './HumanCheckerModal';
 import { PaymentModal } from '../builder/sidebars/left/sections/picture/payment-modal';
 import { toast } from '@/client/hooks/use-toast';
+import { SubscriptionModal } from '@/client/components';
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -29,12 +30,37 @@ const UploadResume = () => {
   const [newResume, setNewResume] = useState<any>(null);
   const [humanChecker, setHumanChecker] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
  
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const isResumeChecker = searchParams.get("true") === "resume-checker"
   const resume_id=searchParams.get("resume_id")
   const [paymentId, setPaymentId] = useState<any>(null);
+
+  // Get user subscription status
+  const user = localStorage.getItem("user") || '{"subscription_details":[]}';
+  const userData = JSON.parse(user);
+  const hasSubscription = userData?.subscription_details?.length > 0;
+
+  // Helper function to show subscription required modal
+  const showSubscriptionRequiredModal = (title: string, message: string) => {
+    setModalConfig({ title, message });
+    setShowSubscriptionModal(true);
+  };
+
+  // Handle upload card click with subscription check
+  const handleUploadCardClick = () => {
+    if (!hasSubscription && isResumeChecker) {
+        showSubscriptionRequiredModal(
+          "Upgrade to AI Resume Checker",
+          "Using the AI resume checker requires a premium subscription. Upgrade now to get AI-powered feedback on your resume!"
+        );
+      return;
+    }
+    setSelectedCard('upload');
+  };
 
   // Helper function to validate file types and size
   const isValidFile = (file: File): boolean => {
@@ -62,7 +88,6 @@ const UploadResume = () => {
   };
 
   // Check for URL parameters and handle payment verification
-  console.log(searchParams.get('human_resume'), 'searchParams 123', searchParams.get('session_id'));
   const sessionId = searchParams.get('session_id');
   
   // Monitor selectedFile changes and prevent progression without file
@@ -185,6 +210,15 @@ const UploadResume = () => {
     e.stopPropagation();
     setDragActive(false);
     
+    // Check subscription before allowing file drop
+    if (!hasSubscription && isResumeChecker) {
+        showSubscriptionRequiredModal(
+          "Upgrade to AI Resume Checker",
+          "Using the AI resume checker requires a premium subscription. Upgrade now to get AI-powered feedback on your resume!"
+        );
+      return;
+    }
+    
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       
@@ -205,6 +239,15 @@ const UploadResume = () => {
   };
 
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Check subscription before allowing file upload
+    if (!hasSubscription && isResumeChecker) {
+        showSubscriptionRequiredModal(
+          "Upgrade to AI Resume Checker",
+          "Using the AI resume checker requires a premium subscription. Upgrade now to get AI-powered feedback on your resume!"
+        );
+      return;
+    }
+
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       
@@ -228,6 +271,15 @@ const UploadResume = () => {
 
   const onStartFromScratch = async () => {
   if(isResumeChecker){
+    // Check subscription for human checker functionality
+    if (!hasSubscription) {
+      showSubscriptionRequiredModal(
+        "Upgrade to Human Resume Checker",
+        "Using the human resume checker requires a premium subscription. Upgrade now to get expert human feedback on your resume!"
+      );
+      return;
+    }
+
     try {
       // First check if payment is already done
       const response = await axios.get(`/cv-manager/human-verification/check-for-payment/`);
@@ -254,6 +306,24 @@ const UploadResume = () => {
 }
 
 const handleNextStep = () => {
+  // Check subscription for resume upload functionality
+  if (!hasSubscription && selectedCard === 'upload' && isResumeChecker) {
+    showSubscriptionRequiredModal(
+      "Upgrade to Upload Resume",
+      "Uploading and processing resumes requires a premium subscription. Upgrade now to unlock AI-powered resume analysis!"
+    );
+    return;
+  }
+
+  // Check subscription for AI checker functionality
+  if (!hasSubscription && isResumeChecker && selectedCard === 'upload') {
+    showSubscriptionRequiredModal(
+      "Upgrade to AI Resume Checker",
+      "Using the AI resume checker requires a premium subscription. Upgrade now to get AI-powered feedback on your resume!"
+    );
+    return;
+  }
+
   // Prevent moving from step 1 to step 2 without a file
   if (selectedStep === 1 && !selectedFile) {
     return;
@@ -319,6 +389,15 @@ const handleSubmit = (data: {
 
 
 const uploadResume = () => {
+  // Check subscription before uploading
+  if (!hasSubscription && isResumeChecker) {
+      showSubscriptionRequiredModal(
+        "Upgrade to AI Resume Checker",
+        "Using the AI resume checker requires a premium subscription. Upgrade now to get AI-powered feedback on your resume!"
+      );
+    return;
+  }
+
   if (selectedFile && isValidFile(selectedFile)) {
     handleNextStep()
     console.log(selectedFile,"selectedFile")
@@ -409,8 +488,16 @@ console.log(selectedStep,"selectedStep")
        <BuilderHeading headingValue={selectedStepHeading[selectedStep] as 'experience_time' | 'is_student' | 'experience_level' | 'choose_template' | 'upload_resume' | 'choose_file'} />
       {
         selectedStep === 0 && (
-          <FirstUploadUI setSelectedCard={setSelectedCard} selectedCard={selectedCard} handleDrag={handleDrag} handleDrop={handleDrop} handleFileInput={handleFileInput} selectedFile={selectedFile} onStartFromScratch={onStartFromScratch} 
-          cardData={isResumeChecker ? cardData.with_AI : cardData.simple}
+          <FirstUploadUI 
+            setSelectedCard={setSelectedCard} 
+            selectedCard={selectedCard} 
+            handleDrag={handleDrag} 
+            handleDrop={handleDrop} 
+            handleFileInput={handleFileInput} 
+            selectedFile={selectedFile} 
+            onStartFromScratch={onStartFromScratch} 
+            cardData={isResumeChecker ? cardData.with_AI : cardData.simple}
+            onUploadCardClick={handleUploadCardClick}
           />
         )
       }
@@ -498,6 +585,14 @@ console.log(selectedStep,"selectedStep")
         cvId={'newResume.data.id'}
       />
      }
+
+     {/* Subscription Modal */}
+     <SubscriptionModal
+       isOpen={showSubscriptionModal}
+       onClose={() => setShowSubscriptionModal(false)}
+       title={modalConfig.title}
+       message={modalConfig.message}
+     />
 
     </div>
   ); 

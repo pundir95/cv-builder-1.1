@@ -2,12 +2,12 @@ import type { AuthResponseDto, TwoFactorDto } from "@reactive-resume/dto";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosResponse } from "axios";
 
-import { axios } from "@/client/libs/axios";
+import { axiosForAuth } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 import { useAuthStore } from "@/client/stores/auth";
 
 export const verifyOtp = async (data: TwoFactorDto) => {
-  const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, TwoFactorDto>(
+  const response = await axiosForAuth.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, TwoFactorDto>(
     "accounts/verify-user/",
     data,
   );
@@ -39,7 +39,7 @@ export const useVerifyOtp = () => {
 
 
 export const resendOtp = async () => {
-  const response = await axios.post("/accounts/resend-email-verification-otp/", {
+  const response = await axiosForAuth.post("/accounts/resend-email-verification-otp/", {
     email: localStorage.getItem("email")
   });
 
