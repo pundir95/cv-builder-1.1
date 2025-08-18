@@ -20,7 +20,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import type { z } from "zod";
 
 import { useResetPassword } from "@/client/services/auth";
-import axios from "axios";
+import { axiosForAuth } from "@/client/libs/axios";
 
 type FormValues = z.infer<typeof resetPasswordSchema>;
 
@@ -48,7 +48,7 @@ export const ResetPasswordPage = () => {
         email:email,
       }
 
-      await axios.post(`https://cvbuilder-api.rexett.com/api/v1/accounts/change-email-password/`,newdata,
+      await axiosForAuth.post(`accounts/change-email-password/`,newdata,
         {
           headers:{
             "Authorization":`Bearer ${token}`

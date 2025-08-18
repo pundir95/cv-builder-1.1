@@ -28,7 +28,7 @@ import { z } from "zod";
 import { useLogin } from "@/client/services/auth";
 import { useFeatureFlags } from "@/client/services/feature";
 import { useToast } from "@/client/components/ToastProvider";
-import axios from "axios";
+import { axiosForAuth } from "@/client/libs/axios";
 
 // Local validation schema with better error messages
 const localLoginSchema = z.object({
@@ -93,7 +93,7 @@ export const LoginPage = () => {
 
   const doItLater=()=>{
     
-    axios.post("https://cvbuilder-api.rexett.com/api/v1/accounts/guest-user/").then((res) => {
+    axiosForAuth.post("accounts/guest-user/").then((res) => {
       console.log(res.data.data.reference_id,"ress");
       localStorage.setItem("user", JSON.stringify(res.data.data));
       localStorage.setItem("reference_id",res.data.data.reference_id);

@@ -19,8 +19,10 @@ import { cn } from "@reactive-resume/utils";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 import { useDialog } from "@/client/stores/dialog";
+import { SubscriptionModal } from "@/client/components";
 
 import { BaseCard } from "./base-card";
 
@@ -32,9 +34,19 @@ export const ResumeCard = ({ resume }: Props) => {
   const navigate = useNavigate();
   const { open } = useDialog<ResumeDto>("resume");
   const { open: lockOpen } = useDialog<ResumeDto>("lock");
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
 
   const template = resume?.cv_template?.internal_name;
   const lastUpdated = dayjs().to(resume.updatedAt);
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user || "{}");
+  const hasSubscription = userData?.subscription_details?.length > 0;
+
+  const showSubscriptionRequiredModal = (title: string, message: string) => {
+    setModalConfig({ title, message });
+    setShowSubscriptionModal(true);
+  };
 
   const onOpen = () => {
     void navigate(`/builder/${resume.id}`);
@@ -45,10 +57,24 @@ export const ResumeCard = ({ resume }: Props) => {
   };
 
   const onDuplicate = () => {
+    if (userData.subscription_details.length === 0) {
+      showSubscriptionRequiredModal(
+        "Upgrade to Duplicate Resume",
+        "Duplicating resumes requires a premium subscription. Upgrade now to create multiple versions of your resume!"
+      );
+      return;
+    }
     open("duplicate", { id: "resume", item: resume });
   };
 
   const onLockChange = () => {
+    if (userData.subscription_details.length === 0) {
+      showSubscriptionRequiredModal(
+        "Upgrade to Lock/Unlock Resume",
+        "Locking and unlocking resumes requires a premium subscription. Upgrade now to protect your resume from accidental changes!"
+      );
+      return;
+    }
     lockOpen(resume.locked ? "update" : "create", { id: "lock", item: resume });
   };
 
@@ -57,70 +83,80 @@ export const ResumeCard = ({ resume }: Props) => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="text-left">
-        <BaseCard className="cursor-context-menu space-y-0">
-          <AnimatePresence>
-            {resume.locked && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 flex items-center justify-center bg-background/75 backdrop-blur-sm"
-              >
-                <Lock size={42} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="text-left">
+          <BaseCard className="cursor-context-menu space-y-0">
+            <AnimatePresence>
+              {resume.locked && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 flex items-center justify-center bg-background/75 backdrop-blur-sm"
+                >
+                  <Lock size={42} />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-          <div
-            className={cn(
-              "absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end space-y-0.5 p-4 pt-12",
-              "bg-gradient-to-t from-background/100 to-transparent",
-            )}
-          >
-            <h4 className="line-clamp-2 font-medium">{resume.title}</h4>
-            <p className="line-clamp-1 text-xs opacity-75">{t`Last updated ${lastUpdated}`}</p>
-          </div>
+            <div
+              className={cn(
+                "absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end space-y-0.5 p-4 pt-12",
+                "bg-gradient-to-t from-background/100 to-transparent",
+              )}
+            >
+              <h4 className="line-clamp-2 font-medium">{resume.title}</h4>
+              <p className="line-clamp-1 text-xs opacity-75">{t`Last updated ${lastUpdated}`}</p>
+            </div>
 
-          <img
-            src={`/templates/jpg/${template}.jpg`}
-            alt={template}
-            className="rounded-sm opacity-80"
-          />
-        </BaseCard>
-      </DropdownMenuTrigger>
+            <img
+              src={`/templates/jpg/${template}.jpg`}
+              alt={template}
+              className="rounded-sm opacity-80"
+            />
+          </BaseCard>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent>
-        <DropdownMenuItem onClick={onOpen}>
-          <FolderOpen size={14} className="mr-2" />
-          {t`Open`}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onUpdate}>
-          <PencilSimple size={14} className="mr-2" />
-          {t`Rename`}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onDuplicate}>
-          <CopySimple size={14} className="mr-2" />
-          {t`Duplicate`}
-        </DropdownMenuItem>
-        {resume.locked ? (
-          <DropdownMenuItem onClick={onLockChange}>
-            <LockOpen size={14} className="mr-2" />
-            {t`Unlock`}
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={onOpen}>
+            <FolderOpen size={14} className="mr-2" />
+            {t`Open`}
           </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem onClick={onLockChange}>
-            <Lock size={14} className="mr-2" />
-            {t`Lock`}
+          <DropdownMenuItem onClick={onUpdate}>
+            <PencilSimple size={14} className="mr-2" />
+            {t`Rename`}
           </DropdownMenuItem>
-        )}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-error" onClick={onDelete}>
-          <TrashSimple size={14} className="mr-2" />
-          {t`Delete`}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem onClick={onDuplicate}>
+            <CopySimple size={14} className="mr-2" />
+            {t`Duplicate`}
+          </DropdownMenuItem>
+          {resume.locked ? (
+            <DropdownMenuItem onClick={onLockChange}>
+              <LockOpen size={14} className="mr-2" />
+              {t`Unlock`}
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem onClick={onLockChange}>
+              <Lock size={14} className="mr-2" />
+              {t`Lock`}
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="text-error" onClick={onDelete}>
+            <TrashSimple size={14} className="mr-2" />
+            {t`Delete`}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Subscription Modal */}
+      <SubscriptionModal
+        isOpen={showSubscriptionModal}
+        onClose={() => setShowSubscriptionModal(false)}
+        title={modalConfig.title}
+        message={modalConfig.message}
+      />
+    </>
   );
 };

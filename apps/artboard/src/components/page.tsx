@@ -23,7 +23,7 @@ export const Page = ({ mode = "preview", pageNumber, children }: Props) => {
 
   return (
     <div
-      className={`w-full max-w-[646px] ml-auto mr-auto max-[768px]:absolute max-[768px]:left-1/2 max-[768px]:-translate-x-1/2 relative block lg:max-h-none max-h-[100vh] overflow-auto ${mode === "preview" ? "preview-class" :""}`}
+      className={`w-full max-w-[100%] ml-auto mr-auto max-[768px]:absolute max-[768px]:left-1/2 max-[768px]:-translate-x-1/2 relative block lg:max-h-none max-h-[100vh] overflow-auto ${mode === "preview" ? "preview-class" :""}`}
       // data-page={pageNumber} 
       style={{
         fontFamily,

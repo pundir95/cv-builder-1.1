@@ -9,8 +9,8 @@ import {
 
 
 import { useAuthProviders } from "@/client/services/auth/providers";
-import axios from "axios";
 import { useNavigate } from "react-router";
+import { axiosForAuth } from "@/client/libs/axios";
 
 export const SocialAuth = () => {
   const { providers } = useAuthProviders();
@@ -21,14 +21,14 @@ export const SocialAuth = () => {
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       console.log(tokenResponse,"tokenResponse");
-        axios.post("https://cvbuilder-api.rexett.com/api/v1/accounts/google/",{
+        axiosForAuth.post("accounts/google/",{
         access_token:tokenResponse.access_token
       }).then((res) => {
         console.log(res,"ress");
         localStorage.setItem("token",res.data.access);
         localStorage.setItem("refresh_token",res.data.refresh);
 
-        axios.get("https://cvbuilder-api.rexett.com/api/v1/accounts/api/users/",{
+        axiosForAuth.get("accounts/api/users/",{
           headers:{
             Authorization:`Bearer ${res.data.access}`
           }

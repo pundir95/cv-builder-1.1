@@ -13,4 +13,5 @@ export { LocaleCombobox } from './locale-combobox';
 export { LocaleSwitch } from './locale-switch';
 export { Logo } from './logo';
 export { ThemeSwitch } from './theme-switch';
-export { default as Toaster } from './toaster'; 
+export { default as Toaster } from './toaster';
+export { SubscriptionModal } from './SubscriptionModal'; 

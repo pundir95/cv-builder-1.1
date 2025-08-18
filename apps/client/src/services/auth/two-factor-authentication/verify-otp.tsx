@@ -36,3 +36,34 @@ export const useVerifyOtp = () => {
 
   return { verifyOtp: verifyOtpFn, loading, error };
 };
+
+
+export const resendOtp = async () => {
+  const response = await axios.post("/accounts/resend-email-verification-otp/", {
+    email: localStorage.getItem("email")
+  });
+
+  return response.data;
+};
+
+export const useResendOtp = () => {
+  const setUser = useAuthStore((state) => state.setUser);
+
+  const {
+    error,
+    isPending: loading,
+    mutateAsync: resendOtpFn,
+  } = useMutation({
+    mutationFn: resendOtp,
+    onSuccess: (data) => {
+      setUser(data.data.user);
+      localStorage.setItem("user", JSON.stringify(data.data.user));
+      localStorage.setItem("token", data.data.access);
+      localStorage.setItem("refresh_token", data.data.refresh);
+      queryClient.setQueryData(["user"], data.data.user);
+      console.log(data.data.user, "data.data.user");
+    },
+  });
+
+  return { resendOtp: resendOtpFn, loading, error };
+};

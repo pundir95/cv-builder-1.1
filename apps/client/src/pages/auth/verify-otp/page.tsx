@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import type { z } from "zod";
 
-import { useVerifyOtp } from "@/client/services/auth";
+import { useResendOtp, useVerifyOtp } from "@/client/services/auth";
 import { useToast } from "@/client/components/ToastProvider";
 import { axios } from "@/client/libs/axios";
 type FormValues = z.infer<typeof twoFactorSchema>;
@@ -27,6 +27,7 @@ type FormValues = z.infer<typeof twoFactorSchema>;
 export const VerifyOtpPage = () => {
   const navigate = useNavigate();
   const { verifyOtp, loading } = useVerifyOtp();
+  const { resendOtp, loading: resendOtpLoading } = useResendOtp();
   const { showToast } = useToast();
 
 
@@ -40,9 +41,8 @@ export const VerifyOtpPage = () => {
 
   const handleResendOtp = async () => {
     try {
-      const res = await axios.post("/accounts/resend-email-verification-otp/", {
-        email: localStorage.getItem("email")
-      });
+      const res = await resendOtp();
+      console.log(res);
       showToast('OTP resent successfully!', 'success');
       form.reset();
     } catch (error: any) {
@@ -74,7 +74,7 @@ export const VerifyOtpPage = () => {
         //   void navigate("/onboard/select-template");
         // }
       }
-      void navigate("/onboard/select-template");
+      void navigate("/dashboard/plan-pricing");
     } catch (error: any) {
       console.log(error);
       let errorMessage = error?.response?.data?.data?.non_field_errors?.[0] || 'Operation failed. Please try again.';
@@ -125,6 +125,8 @@ export const VerifyOtpPage = () => {
               variant="link" 
               className="w-full"
               onClick={handleResendOtp}
+              disabled={resendOtpLoading}
+              loading={resendOtpLoading}
             >
               Reset OTP
             </Button>

@@ -25,8 +25,10 @@ import {
 } from "@reactive-resume/ui";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 import { useDialog } from "@/client/stores/dialog";
+import { SubscriptionModal } from "@/client/components";
 
 import { BaseListItem } from "./base-item";
 import { sharedState } from "@/artboard/utils/sharedState";
@@ -43,20 +45,27 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
   const navigate = useNavigate();
   const { open } = useDialog<ResumeDto>("resume");
   const { open: lockOpen } = useDialog<ResumeDto>("lock");
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
 
   const lastUpdated = dayjs().to(resume.updated_at);
   const createdAt = dayjs(resume.created_at).format("DD/MM/YYYY");
   const strength = resume.cv_data?.metadata?.template?.progress || 0;
   const user=localStorage.getItem("user");
   const userData=JSON.parse(user || "{}");
+  const hasSubscription = userData?.subscription_details?.length > 0;
+
+  const showSubscriptionRequiredModal = (title: string, message: string) => {
+    setModalConfig({ title, message });
+    setShowSubscriptionModal(true);
+  };
 
   const onCheck = () => {
     if(userData.subscription_details.length == 0){
-      toast({
-        title: "You need to subscribe to check the resume",
-        description: "Please subscribe to check the improvement of your resume",
-        variant: "error",
-      });
+      showSubscriptionRequiredModal(
+        "Upgrade to Check Resume",
+        "Checking resume improvements requires a premium subscription. Upgrade now to unlock AI-powered resume analysis!"
+      );
       return;
     }
     void navigate(`/builder/${resume.id}?improve=true`);
@@ -72,11 +81,10 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
 
   const onDuplicate = () => {
     if(userData.subscription_details.length === 0){
-      toast({
-        title: "You need to subscribe to duplicate resumes",
-        description: "Please subscribe to duplicate resumes",
-        variant: "error",
-      });
+      showSubscriptionRequiredModal(
+        "Upgrade to Duplicate Resume",
+        "Duplicating resumes requires a premium subscription. Upgrade now to create multiple versions of your resume!"
+      );
       return;   
     }
     open("duplicate", { id: "resume", item: resume });
@@ -100,6 +108,13 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
       //   });
       //   return;
       // }
+      if(!hasSubscription){
+        showSubscriptionRequiredModal(
+          "Upgrade to Download Resume",
+          "Downloading resumes requires a premium subscription. Upgrade now to export your resume in multiple formats!"
+        );
+        return;
+      }
       void navigate(`/preview/${resume.id}`);
     }
     
@@ -204,6 +219,13 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
             {dropdownMenu}
           </div>
         </td>
+        {/* Subscription Modal */}
+      <SubscriptionModal
+        isOpen={showSubscriptionModal}
+        onClose={() => setShowSubscriptionModal(false)}
+        title={modalConfig.title}
+        message={modalConfig.message}
+      />
       </>
     );
   }

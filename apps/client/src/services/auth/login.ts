@@ -3,12 +3,12 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosResponse } from "axios";
 import { useNavigate } from "react-router";
 
-import { axios } from "@/client/libs/axios";
+import { axios, axiosForAuth } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 import { useAuthStore } from "@/client/stores/auth";
 
 export const login = async (data: LoginDto) => {
-  const response = await axios.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, LoginDto>(
+  const response = await axiosForAuth.post<AuthResponseDto, AxiosResponse<AuthResponseDto>, LoginDto>(
     "/accounts/email-login/",
     data,
   );
@@ -38,18 +38,14 @@ export const useLogin = () => {
         navigate("/admin")
         return
       }
-      axios.get("/accounts/api/users/",{
-        headers:{
-          Authorization:`Bearer ${data.data.access}`
-        }
-       
-      }).then((res) => {
+      axios.get("/accounts/api/users/").then((res) => {
         localStorage.setItem("user",JSON.stringify(res.data[0]));
-        if(res.data[0].subscription_details.length>0 || user.resume_count > 1){
-          navigate("/dashboard")
-        }else{
-          navigate("/onboard/select-template")
-        }
+        navigate("/dashboard")
+        // if(res.data[0].subscription_details.length>0 || user.resume_count > 1){
+        //   navigate("/dashboard")
+        // }else{
+        //   navigate("/onboard/select-template")
+        // }
       })
       // if(user.subscription_details.length>0){
       //   navigate("/dashboard")

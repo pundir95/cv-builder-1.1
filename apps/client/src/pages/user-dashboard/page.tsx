@@ -2,25 +2,68 @@ import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@reactive-resume/ui";
-import { Warning, PencilSimple, Download, Plus, Bank, CreditCard, Shield, Check, Money } from "@phosphor-icons/react";
+import { Warning, PencilSimple, Download, Plus, Bank, CreditCard, Shield, Check, Money, Lock } from "@phosphor-icons/react";
 import { useNavigate } from "react-router";
-import { useResumes } from "@/client/services/resume";
+import { useCanResumeDownload, useResumes } from "@/client/services/resume";
 import { useState, useEffect } from "react";
 import { ResumeDto } from "@reactive-resume/dto";
+import { SubscriptionModal } from "@/client/components";
 
 export const UserDashboardPage = () => {
   const navigate = useNavigate();
   const { i18n } = useLingui();
   const { resumes, loading } = useResumes();
+  const { resumes: canResumeDownload, loading: canResumeDownloadLoading } = useCanResumeDownload();
   const [selectedResume, setSelectedResume] = useState<ResumeDto | null>(null);
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   console.log(userData,"userData")
+
+  const hasSubscription = userData?.subscription_details?.length > 0;
 
   useEffect(() => {
     if (resumes && resumes.length > 0) {
       setSelectedResume(resumes[0]);
     }
   }, [resumes]);
+
+  const handleEditClick = () => {
+    if (!hasSubscription) {
+      setModalConfig({
+        title: "Upgrade to Edit Resume",
+        message: "Editing resumes requires a premium subscription. Upgrade now to unlock the resume builder!"
+      });
+      setShowSubscriptionModal(true);
+    } else {
+      navigate(`/builder/${selectedResume?.id}`);
+    }
+  };
+
+  const handleDownloadClick = () => {
+    if (!hasSubscription) {
+      setModalConfig({
+        title: "Upgrade to Download Resume",
+        message: "Downloading resumes requires a premium subscription. Upgrade now to export your resume!"
+      });
+      setShowSubscriptionModal(true);
+    } else {
+      // Handle download logic for subscribed users
+      console.log("Downloading resume...");
+    }
+  };
+
+  const handleCreateResumeClick = () => {
+    if (!hasSubscription) {
+      setModalConfig({
+        title: "Upgrade to Create Resume",
+        message: "Creating new resumes requires a premium subscription. Upgrade now to unlock unlimited resume creation!"
+      });
+      setShowSubscriptionModal(true);
+    } else {
+      navigate("/onboard/select-template?create-new-resume");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -36,7 +79,7 @@ export const UserDashboardPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Sidebar */}
-          <aside className="w-full lg:w-80 bg-white rounded-2xl shadow-lg p-4 sm:p-6 flex flex-col items-center order-2 lg:order-1">
+          {resumes && resumes.length > 0 && <aside className="w-full lg:w-80 bg-white rounded-2xl shadow-lg p-4 sm:p-6 flex flex-col items-center order-2 lg:order-1">
             {/* Resume Dropdown */}
             <div className="w-full mb-4">
               <label className="block text-xs font-bold text-gray-600 mb-2">RESUME</label>
@@ -63,11 +106,24 @@ export const UserDashboardPage = () => {
             {/* Resume Preview */}
             <div className="my-4 w-full flex justify-center">
               <div className="relative group">
-                <img
-                  src={selectedResume?.cv_template?.internal_name ? `/templates/jpg/${selectedResume?.cv_template?.internal_name}.jpg` : "/templates/jpg/cv_template_2.jpg"}
-                  alt="Resume Preview"
-                  className="rounded-lg shadow-md border border-gray-200 w-full max-w-60 h-72 object-contain bg-gray-50 transition-transform group-hover:scale-105"
-                />
+                <div className="relative">
+                  <img
+                    src={selectedResume?.cv_template?.internal_name ? `/templates/jpg/${selectedResume?.cv_template?.internal_name}.jpg` : "/templates/jpg/cv_template_2.jpg"}
+                    alt="Resume Preview"
+                    className={`rounded-lg shadow-md border border-gray-200 w-full max-w-60 h-72 object-contain bg-gray-50 transition-transform group-hover:scale-105 ${
+                      !hasSubscription ? 'filter blur-sm' : ''
+                    }`}
+                  />
+                  {!hasSubscription && (
+                    <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <Lock size={32} className="mx-auto mb-2" weight="fill" />
+                        <p className="text-sm font-medium">Premium Feature</p>
+                        <p className="text-xs opacity-90">Subscribe to unlock</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 rounded-lg transition-all duration-200"></div>
               </div>
             </div>
@@ -78,7 +134,7 @@ export const UserDashboardPage = () => {
                 size="sm" 
                 variant="ghost" 
                 className="flex items-center gap-2 flex-1 justify-center py-2.5 hover:bg-gray-100 transition-colors" 
-                onClick={() => navigate(`/builder/${selectedResume?.id}`)}
+                onClick={handleEditClick}
               >
                 <PencilSimple size={16} /> Edit
               </Button>
@@ -86,32 +142,34 @@ export const UserDashboardPage = () => {
                 size="sm" 
                 variant="ghost" 
                 className="flex items-center gap-2 flex-1 justify-center py-2.5 hover:bg-gray-100 transition-colors"
+                onClick={handleDownloadClick}
               >
                 <Download size={16} /> Download
               </Button>
             </div>
             
             {/* Resume Strength */}
-            <div className="w-full flex items-center justify-between mb-6 p-3 bg-gray-50 rounded-lg">
+            { hasSubscription && <div className="w-full flex items-center justify-between mb-6 p-3 bg-gray-50 rounded-lg">
               <span className="text-sm font-medium text-gray-700">Resume Strength:</span>
               <span className="bg-green-100 text-green-700 rounded-full px-3 py-1 text-sm font-bold">
                 {selectedResume?.cv_data?.metadata?.template?.progress || 0}%
               </span>
-            </div>
+            </div>}
             
             {/* Create New Resume */}
             <Button 
               size="sm" 
               variant="success" 
               className="w-full bg-[#D6EF3C]/90 text-black px-6 h-auto !py-3 rounded-full font-semibold hover:bg-[#D6EF3C]/90 transition-all duration-200 shadow-md hover:shadow-lg"
-              onClick={() => navigate("/onboard/select-template?create-new-resume")}
+              onClick={handleCreateResumeClick}
             >
               <Plus size={18} className="mr-2" /> Create New Resume
             </Button>
-          </aside>
+          </aside>}
 
           {/* Main Content */}
           <main className="flex-1 order-1 lg:order-2">
+            {hasSubscription && <>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-gray-800">Your Recommended Next Steps</h1>
             
             {/* Resume Strength & Fix Resume */}
@@ -177,10 +235,10 @@ export const UserDashboardPage = () => {
                   Improve Resume
                 </Button>
               </div>
-            </div>
+            </div> </>} 
 
             {/* Action Cards */}
-            {userData?.subscription_details?.length > 0 ? (
+            {hasSubscription ? (
               <div className="grid grid-cols-1 gap-6 mb-6">
                 {/* Current Plan Card */}
                 <div className="bg-[#0D84F3] rounded-2xl shadow-xl p-6 sm:p-8 text-white">
@@ -243,6 +301,14 @@ export const UserDashboardPage = () => {
           </main>
         </div>
       </div>
+
+      {/* Subscription Modal */}
+      <SubscriptionModal
+        isOpen={showSubscriptionModal}
+        onClose={() => setShowSubscriptionModal(false)}
+        title={modalConfig.title}
+        message={modalConfig.message}
+      />
     </div>
   );
 };

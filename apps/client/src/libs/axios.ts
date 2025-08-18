@@ -15,6 +15,7 @@ import { queryClient } from "./query-client";
 // Create a loading state manager
 let activeRequests = 0;
 let setLoading: ((loading: boolean) => void) | null = null;
+const baseUrl = import.meta.env.VITE_API_URL;
 
 export const setLoadingState = (setter: (loading: boolean) => void) => {
   setLoading = setter;
@@ -39,7 +40,7 @@ interface RefreshTokenResponse {
   };
 }
 
-export const axios = _axios.create({ baseURL: "https://cvbuilder-api.rexett.com/api/v1/", withCredentials: true });
+export const axios = _axios.create({ baseURL: baseUrl, withCredentials: true });
 
 // Add token to every request
 axios.interceptors.request.use((config) => {
@@ -75,8 +76,11 @@ axios.interceptors.response.use(
   },
 );
 
+// Create another instance to handle auth requests
+export const axiosForAuth = _axios.create({ baseURL: baseUrl, withCredentials: true });
+
 // Create another instance to handle failed refresh tokens
-const axiosForRefresh = _axios.create({ baseURL: "https://cvbuilder-api.rexett.com/api/v1/", withCredentials: true });
+const axiosForRefresh = _axios.create({ baseURL: baseUrl, withCredentials: true });
 
 // Interceptor to handle expired access token errors
 const handleAuthError = async (failedRequest: any) => {

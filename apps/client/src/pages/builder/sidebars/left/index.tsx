@@ -42,7 +42,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
   };
 
   return (
-    <div className="flex bg-secondary-accent/30  mt-5">
+    <div className="flex bg-secondary-accent/30  pt-5">
     {!showLeftSidebar &&  <div className="hidden basis-12 flex-col items-center justify-between bg-blue-500 py-4 sm:flex">
         <Button asChild size="icon" variant="ghost" className="size-8 rounded-full">
           <Link to="/dashboard">
@@ -202,7 +202,7 @@ export const  LeftSidebar = ({ showLeftSidebar, setShowLeftSidebar, setShowRight
         </UserOptions>
       </div>}
 
-      <ScrollArea orientation="vertical" className="h-screen flex-1 pb-10 lg:pb-0">
+      <ScrollArea orientation="vertical" className="flex-1 pb-10 lg:pb-0" style={{ height: "calc(-20px + 100vh)" }}>
         <div ref={containterRef} className={` grid gap-y-10 @container/left bg-[#ffffff] mt-[65px] lg:mt-[64px] border border-gray-200 ${showLeftSidebar ? 'py-6 mx-5 lg:mx-[70px]' : ''}`}>
           <BasicsSection />
           <Separator />
