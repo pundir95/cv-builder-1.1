@@ -200,7 +200,7 @@ export const PreviewPage = () => {
         <iframe
           ref={setFrameRef}
           title={resume.id}
-          src="/artboard/builder"
+          src="/artboard/builder?mode=preview"
             className="w-full h-full"
         />
       </div>

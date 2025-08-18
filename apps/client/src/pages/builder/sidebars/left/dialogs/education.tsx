@@ -51,7 +51,7 @@ export const EducationDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t`Institution`}</FormLabel>
+              <FormLabel>{t`Institution`}*</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -148,6 +148,7 @@ export const EducationDialog = () => {
                     {...field} 
                     type="date" 
                     placeholder={t`Start Date`}
+                    max={new Date().toISOString().split('T')[0]}
                     onChange={(e) => {
                       field.onChange(e);
                       const endDate = form.getValues("endDate");

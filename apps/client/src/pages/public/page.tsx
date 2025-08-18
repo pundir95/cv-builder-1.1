@@ -82,7 +82,7 @@ export const PublicResumePage = () => {
         <iframe
           ref={frameRef}
           title={title}
-          src="/artboard/preview"
+          src="/artboard/preview?mode=preview"
           style={{ width: `${pageSizeMap[format].width}mm`, overflow: "hidden" }}
         />
       </div>

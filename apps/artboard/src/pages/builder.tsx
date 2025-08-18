@@ -26,7 +26,14 @@ export const BuilderLayout = () => {
   const template = useArtboardStore((state) => state.resume.metadata.template as unknown as Template);
   const Template = useMemo(() => getTemplate(template), [template]);
 
+  // Get mode from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const mode = urlParams.get('mode') || 'builder';
+  const isPreviewMode = mode === 'preview';
   
+  const currentUrl = window.location.pathname;
+  console.log(currentUrl, "currentUrl");
+  console.log('Mode:', mode, 'Is Preview:', isPreviewMode);
 
   useEffect(() => {
     console.log(templateRef, "useEffect")
@@ -99,7 +106,7 @@ export const BuilderLayout = () => {
         data-template-ref
         style={{
           overflowY: "auto",
-          height: "100vh",
+          height: isPreviewMode ? "100vh" : "100%",
           backgroundColor: "#F4F5FF",
         }}
       >
@@ -111,7 +118,7 @@ export const BuilderLayout = () => {
             animate={{ opacity: 1, x: 0, transition: { delay: pageIndex * 0.3 } }}
             exit={{ opacity: 0, x: -200 }}
           >
-            <Page mode="builder" pageNumber={pageIndex + 1}>
+            <Page mode={isPreviewMode ? "preview" : "builder"} pageNumber={pageIndex + 1}>
               <Template isFirstPage={pageIndex === 0} columns={columns as SectionKey[][]} />
             </Page>
           </motion.div>

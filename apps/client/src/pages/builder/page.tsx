@@ -67,7 +67,7 @@ export const BuilderPage = () => {
       <iframe
         ref={setFrameRef}
         title={resume.id}
-        src="/artboard/builder"
+        src="/artboard/builder?mode=builder"
         className="mt-16 w-full"
         style={{ height: `calc(100vh - 64px)` }}
       />
