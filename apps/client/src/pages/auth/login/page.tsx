@@ -213,19 +213,6 @@ export const LoginPage = () => {
                   Log in
                 </Button>
 
-                {/* Debug button to test validation */}
-                <Button 
-                  type="button" 
-                  onClick={() => {
-                    console.log("Testing validation...");
-                    form.trigger();
-                    console.log("Form errors after trigger:", form.formState.errors);
-                  }}
-                  className="bg-gray-500 text-white px-6 py-3 rounded-full hover:bg-gray-600"
-                >
-                  Test Validation
-                </Button>
-
                 <div className="mt-4 flex flex-col md:flex-row items-center gap-4">
                   <Button type="button" disabled={loading} className="bg-black text-white rounded-full flex-1 py-3 md:py-6 text-base font-semibold" variant="warning" onClick={doItLater}>
                     Do it Later
