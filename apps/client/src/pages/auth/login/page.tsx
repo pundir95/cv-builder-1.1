@@ -97,7 +97,7 @@ export const LoginPage = () => {
       console.log(res.data.data.reference_id,"ress");
       localStorage.setItem("user", JSON.stringify(res.data.data));
       localStorage.setItem("reference_id",res.data.data.reference_id);
-      navigate("/onboard/upload-resume");
+      navigate("/onboard/select-template");
 
     });
 

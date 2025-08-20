@@ -17,7 +17,7 @@ import { TemplateSection } from "./sections/template";
 import { ThemeSection } from "./sections/theme";
 import { TypographySection } from "./sections/typography";
 import { SectionIcon } from "./shared/section-icon";
-import { SubscriptionModal } from "@/client/components";
+import { GuestRegistrationModal, SubscriptionModal } from "@/client/components";
 
 interface RightSidebarProps {
   showRightSidebar: boolean;
@@ -31,6 +31,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
   const [selectedFilter, setSelectedFilter] = useState<any>(null);
   const containterRef = useRef<HTMLDivElement | null>(null);
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [showGuestRegistrationModal, setShowGuestRegistrationModal] = useState(false);
 
   const scrollIntoView = (selector: string) => {
     const section = containterRef.current?.querySelector(selector);
@@ -75,7 +76,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
           {/* <Separator /> */}
           {/* <PageSection /> */}
           <Separator />
-          <ExportSection setShowSubscriptionModal={setShowSubscriptionModal} />
+          <ExportSection setShowSubscriptionModal={setShowSubscriptionModal} setShowGuestRegistrationModal={setShowGuestRegistrationModal} />
           <Separator />
           {/* <CssSection />
           <Separator /> */}
@@ -173,6 +174,10 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
         onClose={() => setShowSubscriptionModal(false)}
         title={"Upgrade to Download Resume"}
         message={"Downloading and processing resumes requires a premium subscription. Upgrade now to unlock AI-powered resume analysis!"}
+      />
+      <GuestRegistrationModal 
+        isOpen={showGuestRegistrationModal}
+        onClose={() => setShowGuestRegistrationModal(false)}
       />
     </div>
   );

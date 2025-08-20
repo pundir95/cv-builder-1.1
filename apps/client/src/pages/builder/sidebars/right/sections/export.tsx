@@ -10,11 +10,13 @@ import { generatePDF } from "@/artboard/constants/download";
 import { eventBus } from "@/artboard/utils/eventBus";
 import { sharedState } from "@/artboard/utils/sharedState";
 import html2pdf from 'html2pdf.js';
+import { useState } from "react";
 
 import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
 import { useNavigate } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
+import { GuestRegistrationModal } from "@/client/components/GuestRegistrationModal";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -29,13 +31,13 @@ const openInNewTab = (url: string) => {
   if (win) win.focus();
 };
 
-export const ExportSection = ({ setShowSubscriptionModal }: { setShowSubscriptionModal: (show: boolean) => void }) => {
+export const ExportSection = ({ setShowSubscriptionModal, setShowGuestRegistrationModal }: { setShowSubscriptionModal: (show: boolean) => void, setShowGuestRegistrationModal: (show: boolean) => void }) => {
   const navigate = useNavigate();
   const { printResume, loading } = usePrintResume();
   const user=localStorage.getItem("user");
   const userData=JSON.parse(user || "{}");
 
-  const hasSubscription=userData.subscription_details.length > 0;
+  const hasSubscription=userData?.subscription_details?.length > 0;
   
   // Fix for HTML content escaping issue: Using FormData instead of JSON
   // to prevent automatic escaping of quotes and special characters in HTML
@@ -156,6 +158,10 @@ export const ExportSection = ({ setShowSubscriptionModal }: { setShowSubscriptio
   const onPdfExport = async () => {
 
     if(!hasSubscription){
+      if(userData.is_guest_user){
+        setShowGuestRegistrationModal(true);
+        return;
+      }
       setShowSubscriptionModal(true);
       return;
     }

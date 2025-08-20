@@ -20,6 +20,7 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
   );
   const leftPanelSize = useBuilderStore((state) => state.panel.left.size);
   const rightPanelSize = useBuilderStore((state) => state.panel.right.size);
+  const userDetails = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "{}") : null;
 
   const onToggle = (side: "left" | "right") => {
     toggle(side);
@@ -41,7 +42,7 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
     >
       <div className="flex h-full items-center justify-between px-6">
         {/* Left Section */}
-        <div className="flex items-center gap-3">
+        {!userDetails?.is_guest_user && <div className="flex items-center gap-3">
           <Button
             size="icon"
             variant="ghost"
@@ -59,11 +60,11 @@ export const BuilderHeader = ({ showRightSidebar, setShowRightSidebar, showLeftS
             <ArrowLeft size={20} />
             <span>Back</span>
           </Button>}
-        </div>
+        </div>}
 
         {/* Center Section */}
         <div className="flex items-center justify-center gap-x-2 lg:mx-auto">
-         {!location.pathname.includes('/anyone/') && 
+         {!location.pathname.includes('/anyone/') && !userDetails.is_guest_user && 
          <>
          <Button asChild size="icon" variant="ghost" className="text-white hover:bg-blue-500">
             <Link to="/dashboard/resumes">

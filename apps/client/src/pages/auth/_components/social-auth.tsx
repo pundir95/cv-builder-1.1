@@ -38,7 +38,7 @@ export const SocialAuth = () => {
           if(res.data[0].subscription_details.length>0){
             navigate("/dashboard")
           }else{
-            navigate("/onboard/select-template")
+            navigate("/dashboard/plan-pricing");
           }
         })
 

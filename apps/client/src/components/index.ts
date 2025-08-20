@@ -14,4 +14,5 @@ export { LocaleSwitch } from './locale-switch';
 export { Logo } from './logo';
 export { ThemeSwitch } from './theme-switch';
 export { default as Toaster } from './toaster';
-export { SubscriptionModal } from './SubscriptionModal'; 
+export { SubscriptionModal } from './SubscriptionModal';
+export { GuestRegistrationModal } from './GuestRegistrationModal'; 

@@ -1,16 +1,22 @@
 import { t } from "@lingui/macro";
-import { Pencil } from "@phosphor-icons/react";
+import { Pencil, UploadSimple } from "@phosphor-icons/react";
 import { Button, Card, Checkbox, Input, Label, ScrollArea, Separator } from "@reactive-resume/ui";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CompanySetting from "./CompanySetting";
 import { ActiveSubscription } from "./ActiveSubScription";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { useUpdateUser } from "@/client/services/user";
+import { useToast } from "@/client/hooks/use-toast";
 
 export const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState('general');
   const [isEditing, setIsEditing] = useState(false);
+  const [isPhotoUploading, setIsPhotoUploading] = useState(false);
   const is_add_on_user=localStorage.getItem("is_add_on_user")
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { updateUser, loading: isUpdating } = useUpdateUser();
+  const { toast } = useToast();
 
   useEffect(()=>{
     if(is_add_on_user){
@@ -24,6 +30,83 @@ export const AccountSettings = () => {
 
   const user = localStorage.getItem("user") ?? ""
   const userData = JSON.parse(user)
+
+  // Handle photo file selection and direct upload
+  const handlePhotoSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        variant: "error",
+        title: "Invalid file type",
+        description: "Please select a valid image file (JPEG, PNG, or WebP)",
+      });
+      return;
+    }
+
+    // Validate file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast({
+        variant: "error",
+        title: "File too large",
+        description: "Image size must be less than 5MB",
+      });
+      return;
+    }
+
+    // Start upload immediately
+    setIsPhotoUploading(true);
+
+    try {
+      // Convert file to base64 for API
+      const base64String = await fileToBase64(file);
+      
+      // Update user profile with new picture
+      await updateUser({ picture: base64String });
+      
+      // Update local storage with new user data
+      const updatedUserData = { ...userData, picture: base64String };
+      localStorage.setItem("user", JSON.stringify(updatedUserData));
+      
+      toast({
+        variant: "success",
+        title: "Profile photo updated successfully!",
+      });
+      
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.message || 'Failed to update profile photo. Please try again.';
+      toast({
+        variant: "error",
+        title: "Error updating profile photo",
+        description: errorMessage,
+      });
+    } finally {
+      setIsPhotoUploading(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  // Convert file to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
+  // Trigger file input
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
     <ScrollArea orientation="vertical" className="lg:h-screen">
@@ -144,8 +227,25 @@ export const AccountSettings = () => {
             <Card className="p-6 mb-6 bg-white border border-[#e6f3fd]">
               <div className="flex lg:items-center gap-4 lg:flex-row flex-col">
                 <div className="flex items-center gap-4">
-                  <div className="size-20 rounded-full bg-[#0D84F3] flex items-center justify-center">
-                    <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
+                  <div className="relative">
+                    <div className="size-20 rounded-full bg-[#0D84F3] flex items-center justify-center overflow-hidden">
+                      {userData?.picture ? (
+                        <img 
+                          src={userData.picture} 
+                          alt={`${userData?.first_name} ${userData?.last_name}`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
+                      )}
+                    </div>
+                    
+                    {/* Photo upload overlay */}
+                    {isPhotoUploading && (
+                      <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-[#0D84F3]">{userData?.first_name} {userData?.last_name}</h3>
@@ -153,12 +253,36 @@ export const AccountSettings = () => {
                     <p className="text-sm text-[#0D84F3]/50">Member since {userData?.date_joined.split("T")[0]}</p>
                   </div>
                 </div>
-                <Button
-                  variant="outline"
-                  className="ml-auto bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90 hover:bg-[#D6EF3C]/90 rounded-full"
-                >
-                  Change Photo
-                </Button>
+                
+                {/* Photo upload section */}
+                <div className="ml-auto flex flex-col gap-3">
+                  {/* Hidden file input */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoSelect}
+                    className="hidden"
+                  />
+                  
+                  {/* Upload button or loading state */}
+                  {isPhotoUploading ? (
+                    <div className="flex items-center gap-2 text-sm text-[#0D84F3]">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0D84F3]"></div>
+                      Uploading...
+                    </div>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      className="bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90 hover:bg-[#D6EF3C]/90 rounded-full"
+                      onClick={triggerFileInput}
+                      disabled={isPhotoUploading}
+                    >
+                      <UploadSimple size={16} className="mr-2" />
+                      Change Photo
+                    </Button>
+                  )}
+                </div>
               </div>
             </Card>
 
