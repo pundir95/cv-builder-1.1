@@ -113,7 +113,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description, ext
         <p className="text-x text-black-400 mb-3">{extraDescription}</p>
 
         </div>
-        {section.items.length === 0 && (
+        {section?.items?.length === 0 && (
           <Button
             variant="outline"
             className="bg-blue-500 text-white px-6 py-2 hover:textw-white h-auto rounded-full font-semibold hover:bg-blue-800"
@@ -137,7 +137,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description, ext
         >
           <SortableContext items={section.items} strategy={verticalListSortingStrategy}>
             <AnimatePresence>
-              {section.items.map((item, index) => (
+              {section?.items && section?.items?.map((item, index) => (
                 <SectionListItem
                   key={item.id}
                   id={item.id}
@@ -163,7 +163,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description, ext
         </DndContext>
       </main>
 
-      {section.items.length > 0 && (
+      {section?.items && section?.items?.length > 0 && (
         <footer className="flex items-center justify-end">
           <Button
             variant="outline"

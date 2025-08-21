@@ -70,8 +70,8 @@ const selectedTemplateId = (crrTemplate: string) => {
   //   localStorage.setItem("templateId", templateId.id.toString())
   //   navigate(`/onboard/upload-resume`)
   // }
-
-  if((isSubscriptionHave?.length==0|| isSubscriptionHave==null) && resumeCount==1){
+console.log(isSubscriptionHave,"isSubscriptionHave", resumeCount)
+  if((isSubscriptionHave?.length==0|| isSubscriptionHave==null) && resumeCount > 1){
     setIsLimitReachedModalOpen(true)
   }else{
      const templateId = templateData?.find((template:any) => template.internal_name === crrTemplate)
