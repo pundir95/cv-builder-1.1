@@ -17,7 +17,8 @@ export const LimitReachedModal = ({ isOpen, onClose, resumeDetailsId }: LimitRea
   console.log(userData,"userData")
 
   const skipModal=()=>{
-    navigate(`/builder/${resumeDetailsId}`)
+    // navigate(`/builder/${resumeDetailsId}`)
+    onClose()
     
   }
   return (

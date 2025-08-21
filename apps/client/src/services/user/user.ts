@@ -26,7 +26,8 @@ export const fetchUser = async () => {
     created_at: userData.created_at,
     updated_at: userData.updated_at,
     createdAt: userData.created_at,
-    updatedAt: userData.updated_at
+    updatedAt: userData.updated_at,
+    is_guest_user: userData.is_guest_user,
   };
 };
 

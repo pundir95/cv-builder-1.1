@@ -6,8 +6,9 @@ import CompanySetting from "./CompanySetting";
 import { ActiveSubscription } from "./ActiveSubScription";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { useUpdateUser } from "@/client/services/user";
+import { useUpdateUserProfile, useGetUserProfile } from "@/client/services/user";
 import { useToast } from "@/client/hooks/use-toast";
+import { BASE_URL } from "@/client/config/config";
 
 export const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState('general');
@@ -15,7 +16,8 @@ export const AccountSettings = () => {
   const [isPhotoUploading, setIsPhotoUploading] = useState(false);
   const is_add_on_user=localStorage.getItem("is_add_on_user")
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { updateUser, loading: isUpdating } = useUpdateUser();
+  const { updateUserProfile, loading: isUpdating } = useUpdateUserProfile();
+  const { userProfile, isLoading: isLoadingProfile, refetch: refetchProfile } = useGetUserProfile();
   const { toast } = useToast();
 
   useEffect(()=>{
@@ -23,6 +25,19 @@ export const AccountSettings = () => {
       setActiveSection("company")
     }
   },[is_add_on_user])
+
+  // Fetch profile data on component mount
+  useEffect(() => {
+    refetchProfile();
+  }, [refetchProfile]);
+
+  // Update local storage when profile data is fetched
+  useEffect(() => {
+      console.log(userProfile,"userProfile")
+      if (userProfile) {
+      localStorage.setItem("user", JSON.stringify(userProfile));
+    }
+  }, [userProfile]);
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
@@ -62,16 +77,21 @@ export const AccountSettings = () => {
     setIsPhotoUploading(true);
 
     try {
-      // Convert file to base64 for API
-      const base64String = await fileToBase64(file);
+      // Create FormData and append the profile image
+      const formData = new FormData();
+      formData.append('profile_image', file);
       
-      // Update user profile with new picture
-      await updateUser({ picture: base64String });
+      // Update user profile with new picture using the correct API
+      const response = await updateUserProfile(formData);
       
       // Update local storage with new user data
-      const updatedUserData = { ...userData, picture: base64String };
+      // Assuming the API returns the updated user data or image URL
+      const updatedUserData = { ...userData, profile_image: response.profile_image || response.picture || response.image_url };
       localStorage.setItem("user", JSON.stringify(updatedUserData));
       
+      // Refetch profile data to ensure consistency
+      refetchProfile();
+
       toast({
         variant: "success",
         title: "Profile photo updated successfully!",
@@ -91,16 +111,6 @@ export const AccountSettings = () => {
         fileInputRef.current.value = '';
       }
     }
-  };
-
-  // Convert file to base64
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
   };
 
   // Trigger file input
@@ -229,14 +239,14 @@ export const AccountSettings = () => {
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <div className="size-20 rounded-full bg-[#0D84F3] flex items-center justify-center overflow-hidden">
-                      {userData?.picture ? (
+                      {userProfile?.profile_image ? (
                         <img 
-                          src={userData.picture} 
-                          alt={`${userData?.first_name} ${userData?.last_name}`}
+                          src={`${BASE_URL}${userProfile?.profile_image}`} 
+                          alt={`${userProfile?.first_name} ${userProfile?.last_name}`}
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <span className="text-2xl font-bold text-white">{userData?.first_name?.charAt(0)}</span>
+                        <span className="text-2xl font-bold text-white">{userProfile?.first_name?.charAt(0)}</span>
                       )}
                     </div>
                     
