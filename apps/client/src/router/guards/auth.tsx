@@ -18,8 +18,8 @@ export const AuthGuard = () => {
   if (user && (role === "cv_user" || role === "employee" || role === "admin") || refId) {
     return <Outlet />;
   }else{
-    return <Navigate replace to={`/admin`} />;
+    return <Navigate replace to={`/auth/login`} />;
   }
 
-  return <Navigate replace to={`/auth/login`} />;
+  // return <Navigate replace to={`/auth/login`} />;
 };

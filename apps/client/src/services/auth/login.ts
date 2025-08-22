@@ -34,28 +34,21 @@ export const useLogin = () => {
       const user = data.data.user as any;
       console.log(user,"user")
       console.log(user.subscription_details.length,"ppppppppp")
+      
+      // Set user in auth store - this is critical for AuthGuard to work!
+      setUser(data.data.user);
+      
       if(user.role === "admin"){
         navigate("/admin")
         return
       }
+      
       axios.get("/accounts/api/users/").then((res) => {
         localStorage.setItem("user",JSON.stringify(res.data[0]));
+        // Update auth store with the fetched user data
+        setUser(res.data[0]);
         navigate("/dashboard")
-        // if(res.data[0].subscription_details.length>0 || user.resume_count > 1){
-        //   navigate("/dashboard")
-        // }else{
-        //   navigate("/onboard/select-template")
-        // }
       })
-      // if(user.subscription_details.length>0){
-      //   navigate("/dashboard")
-      // }else{
-      //   navigate("/onboard/select-template")
-      // }
-
-      // setUser(data.data.user);
-      
-
       
       queryClient.setQueryData(["user"], data.data.user);
     },

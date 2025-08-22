@@ -11,10 +11,12 @@ import {
 import { useAuthProviders } from "@/client/services/auth/providers";
 import { useNavigate } from "react-router";
 import { axiosForAuth } from "@/client/libs/axios";
+import { useAuthStore } from "@/client/stores/auth";
 
 export const SocialAuth = () => {
   const { providers } = useAuthProviders();
   const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.setUser);
 
   // if (!providers || providers.length === 0) return null;
 
@@ -35,6 +37,8 @@ export const SocialAuth = () => {
          
         }).then((res) => {
           localStorage.setItem("user",JSON.stringify(res.data[0]));
+          // Set user in auth store - critical for AuthGuard to work!
+          setUser(res.data[0]);
           if(res.data[0].subscription_details.length>0){
             navigate("/dashboard")
           }else{

@@ -1,7 +1,7 @@
 import { t } from "@lingui/macro";
 import { cn } from "@reactive-resume/utils";
 import { useMemo } from "react";
-import { Link, matchRoutes, Outlet, useLocation } from "react-router";
+import { Link, matchRoutes, Navigate, Outlet, useLocation } from "react-router";
 
 import { LocaleSwitch } from "@/client/components/locale-switch";
 import { Logo } from "@/client/components/logo";
@@ -19,6 +19,14 @@ export const AuthLayout = () => {
   const isAuthRoute = useMemo(() => matchRoutes(authRoutes, location) !== null, [location]);
 
   if (!providers) return null;
+  const userData = localStorage.getItem("user");
+  const userDataJson = JSON.parse(userData || "{}");
+  const role = userDataJson?.role;
+  if(role === "admin"){
+    return <Navigate replace to={`/admin`} />
+  } else if(role === "cv_user" || role === "employee"){
+    return <Navigate replace to={`/dashboard`} />
+  }
 
   // Condition (providers.length === 1) hides the divider if providers[] includes only "email"
   const hideDivider = !providers.includes("email") || providers.length === 1;

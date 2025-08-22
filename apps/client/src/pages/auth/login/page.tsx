@@ -29,6 +29,7 @@ import { useLogin } from "@/client/services/auth";
 import { useFeatureFlags } from "@/client/services/feature";
 import { useToast } from "@/client/components/ToastProvider";
 import { axiosForAuth } from "@/client/libs/axios";
+import { useAuthStore } from "@/client/stores/auth";
 
 // Local validation schema with better error messages
 const localLoginSchema = z.object({
@@ -55,6 +56,7 @@ export const LoginPage = () => {
   const { flags } = useFeatureFlags();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const setUser = useAuthStore((state) => state.setUser);
 
   const formRef = useRef<HTMLFormElement>(null);
   usePasswordToggle(formRef);
@@ -97,8 +99,9 @@ export const LoginPage = () => {
       console.log(res.data.data.reference_id,"ress");
       localStorage.setItem("user", JSON.stringify(res.data.data));
       localStorage.setItem("reference_id",res.data.data.reference_id);
+      // Set user in auth store - critical for ExperienceGuard to work!
+      setUser(res.data.data);
       navigate("/onboard/select-template");
-
     });
 
     // navigate("/auth/verify-otp");

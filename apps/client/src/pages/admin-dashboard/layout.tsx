@@ -13,7 +13,7 @@ export const AdminDashboardLayout = () => {
   const role = userDataJson.role;
   console.log(role, "rolew12");
   if(role !== "admin"){
-    // return <Navigate replace to={`/`} />
+    return <Navigate replace to={`/auth/login`} />
   }
 
   return (

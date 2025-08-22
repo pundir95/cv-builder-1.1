@@ -6,7 +6,6 @@ import { useAuthStore } from "@/client/stores/auth";
 
 export const logout = async () => {
   localStorage.clear();
-  window.location.href = "/auth/login";
   queryClient.setQueryData(["user"], null);
   return Promise.resolve();
 };
@@ -24,6 +23,8 @@ export const useLogout = () => {
       localStorage.clear();
       setUser(null);
       queryClient.setQueryData(["user"], null);
+      // Use navigate instead of window.location.href for better React Router integration
+      window.location.href = "/auth/login";
     },
     onError: () => {
       setUser(null);

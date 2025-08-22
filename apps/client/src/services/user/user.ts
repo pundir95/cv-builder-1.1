@@ -32,8 +32,6 @@ export const fetchUser = async () => {
 };
 
 export const useUser = () => {
-  const setUser = useAuthStore((state) => state.setUser);
-
   const {
     error,
     isPending: loading,
@@ -41,11 +39,11 @@ export const useUser = () => {
   } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUser,
+    // Disable automatic refetching to prevent loops
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
-
-  useEffect(() => {
-    setUser(user ?? null);
-  }, [user, setUser]);
 
   return { user: user, loading, error };
 };
