@@ -103,6 +103,8 @@ console.log(isSubscriptionHave,"isSubscriptionHave", resumeCount)
               whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
               className={cn(
                 "relative cursor-pointer rounded-sm ring-primary transition-all hover:ring-1 focus:outline-none focus:ring-2 focus:ring-primary",
+                // Add selected state styling
+                progress?.name === template.name && "ring-2 ring-primary ring-offset-2"
               )}
               tabIndex={0}
               onClick={() => {
@@ -117,6 +119,15 @@ console.log(isSubscriptionHave,"isSubscriptionHave", resumeCount)
               }}
             > 
               <img src={`/templates/jpg/${template.name}.jpg`} alt={template.name} className="rounded-sm w-full h-auto object-cover" />
+
+              {/* Add selected indicator */}
+              {progress?.name === template.name && (
+                <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              )}
 
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/50 border-0">

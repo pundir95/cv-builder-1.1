@@ -1,7 +1,20 @@
 import { Fragment } from "react";
 import { useArtboardStore } from "../store/artboard";
 import { sanitize, isUrl } from "@reactive-resume/utils";
-import type { Skill as SkillType, Language as LanguageType, Experience as ExperienceType, Education as EducationType, Interest as InterestType } from "@reactive-resume/schema";
+import type { 
+  Skill as SkillType, 
+  Language as LanguageType, 
+  Experience as ExperienceType, 
+  Education as EducationType, 
+  Interest as InterestType, 
+  Project as ProjectType,
+  Award as AwardType,
+  Certification as CertificationType,
+  Volunteer as VolunteerType,
+  Publication as PublicationType,
+  Reference as ReferenceType,
+  Profile as ProfileType
+} from "@reactive-resume/schema";
 
 const orange = "#F9A825";
 const darkGray = "#3A3A4A";
@@ -57,7 +70,7 @@ const ExperienceList: React.FC<{ experiences: ExperienceType[] }> = ({ experienc
         <div style={{ fontSize: 13, color: darkGray }}>{exp.location} | {exp.date}</div>
         {exp.summary && (
           <ul style={{ margin: "8px 0 0 18px", color: darkGray, fontSize: 13 }}>
-            <li>{exp.summary}</li>
+            <li dangerouslySetInnerHTML={{ __html: sanitize(exp.summary) }} />
           </ul>
         )}
       </div>
@@ -85,6 +98,133 @@ const InterestsList: React.FC<{ interests: InterestType[] }> = ({ interests }) =
   </ul>
 );
 
+const ProjectsList: React.FC<{ projects: ProjectType[] }> = ({ projects }) => (
+  <div>
+    {projects.map((project) => (
+      <div key={project.id} style={{ marginBottom: 20 }}>
+        <div style={{ fontWeight: 700, color: darkGray }}>
+          {project.name}
+          {project.url?.href && (
+            <span style={{ fontWeight: 400, color: orange }}> @ <a href={project.url.href} target="_blank" rel="noreferrer" style={{ color: orange, textDecoration: 'underline' }}>{project.url.label || 'View Project'}</a></span>
+          )}
+        </div>
+        {project.date && <div style={{ fontSize: 13, color: darkGray }}>{project.date}</div>}
+        {project.description && (
+          <div style={{ marginTop: 8, color: darkGray, fontSize: 13 }}>
+            {project.description}
+          </div>
+        )}
+        {project.summary && (
+          <ul style={{ margin: "8px 0 0 18px", color: darkGray, fontSize: 13 }}>
+            <li dangerouslySetInnerHTML={{ __html: sanitize(project.summary) }} />
+          </ul>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+const AwardsList: React.FC<{ awards: AwardType[] }> = ({ awards }) => (
+  <div>
+    {awards.map((award) => (
+      <div key={award.id} style={{ marginBottom: 16 }}>
+        <div style={{ fontWeight: 700, color: darkGray }}>{award.title}</div>
+        <div style={{ color: orange, fontWeight: 600 }}>{award.awarder}</div>
+        <div style={{ fontSize: 13, color: darkGray }}>{award.date}</div>
+        {award.summary && (
+          <div style={{ marginTop: 8, color: darkGray, fontSize: 13 }}>
+            {award.summary}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+const CertificationsList: React.FC<{ certifications: CertificationType[] }> = ({ certifications }) => (
+  <div>
+    {certifications.map((cert) => (
+      <div key={cert.id} style={{ marginBottom: 16 }}>
+        <div style={{ fontWeight: 700, color: darkGray }}>{cert.name}</div>
+        <div style={{ color: orange, fontWeight: 600 }}>{cert.issuer}</div>
+        <div style={{ fontSize: 13, color: darkGray }}>{cert.date}</div>
+        {cert.url?.href && (
+          <a href={cert.url.href} target="_blank" rel="noreferrer" style={{ color: orange, fontSize: 13, textDecoration: 'underline' }}>
+            {cert.url.label || 'View Certificate'}
+          </a>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+const VolunteerList: React.FC<{ volunteer: VolunteerType[] }> = ({ volunteer }) => (
+  <div>
+    {volunteer.map((vol) => (
+      <div key={vol.id} style={{ marginBottom: 20 }}>
+        <div style={{ fontWeight: 700, color: darkGray }}>{vol.position} <span style={{ fontWeight: 400, color: orange }}>@ {vol.organization}</span></div>
+        <div style={{ fontSize: 13, color: darkGray }}>{vol.date}</div>
+        {vol.summary && (
+          <ul style={{ margin: "8px 0 0 18px", color: darkGray, fontSize: 13 }}>
+            <li dangerouslySetInnerHTML={{ __html: sanitize(vol.summary) }} />
+          </ul>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+const PublicationsList: React.FC<{ publications: PublicationType[] }> = ({ publications }) => (
+  <div>
+    {publications.map((pub) => (
+      <div key={pub.id} style={{ marginBottom: 16 }}>
+        <div style={{ fontWeight: 700, color: darkGray }}>{pub.name}</div>
+        <div style={{ color: orange, fontWeight: 600 }}>{pub.publisher}</div>
+        <div style={{ fontSize: 13, color: darkGray }}>{pub.date}</div>
+        {pub.url?.href && (
+          <a href={pub.url.href} target="_blank" rel="noreferrer" style={{ color: orange, fontSize: 13, textDecoration: 'underline' }}>
+            {pub.url.label || 'View Publication'}
+          </a>
+        )}
+        {pub.summary && (
+          <div style={{ marginTop: 8, color: darkGray, fontSize: 13 }}>
+            {pub.summary}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+const ReferencesList: React.FC<{ references: ReferenceType[] }> = ({ references }) => (
+  <div>
+    {references.map((ref) => (
+      <div key={ref.id} style={{ marginBottom: 16 }}>
+        <div style={{ fontWeight: 700, color: darkGray }}>{ref.name}</div>
+        <div style={{ color: orange, fontWeight: 600 }}>{ref.description}</div>
+        {ref.summary && <div style={{ fontSize: 13, color: darkGray }}>{ref.summary}</div>}
+      </div>
+    ))}
+  </div>
+);
+
+const ProfilesList: React.FC<{ profiles: ProfileType[] }> = ({ profiles }) => (
+  <div>
+    {profiles.map((profile) => (
+      <div key={profile.id} style={{ marginBottom: 8 }}>
+        <a 
+          href={profile.url.href} 
+          target="_blank" 
+          rel="noreferrer" 
+          style={{ color: "#fff", textDecoration: "underline" }}
+        >
+          {profile.network}: {profile.username}
+        </a>
+      </div>
+    ))}
+  </div>
+);
+
 export const cv_template_14 = () => {
   const basics = useArtboardStore((state) => state.resume.basics);
   const summary = useArtboardStore((state) => state.resume.sections.summary);
@@ -93,6 +233,13 @@ export const cv_template_14 = () => {
   const education = useArtboardStore((state) => state.resume.sections.education.items);
   const languages = useArtboardStore((state) => state.resume.sections.languages.items);
   const interests = useArtboardStore((state) => state.resume.sections.interests.items);
+  const projects = useArtboardStore((state) => state.resume.sections.projects.items);
+  const awards = useArtboardStore((state) => state.resume.sections.awards.items);
+  const certifications = useArtboardStore((state) => state.resume.sections.certifications.items);
+  const volunteer = useArtboardStore((state) => state.resume.sections.volunteer.items);
+  const publications = useArtboardStore((state) => state.resume.sections.publications.items);
+  const references = useArtboardStore((state) => state.resume.sections.references.items);
+  const profiles = useArtboardStore((state) => state.resume.sections.profiles.items);
   const primaryColor = useArtboardStore((state) => state.resume.metadata.theme.primary);
   return (
     <div
@@ -165,6 +312,13 @@ export const cv_template_14 = () => {
             <SkillList skills={skills} />
           </div>
         )}
+        {/* Profiles */}
+        {profiles.length > 0 && (
+          <div style={{ width: "100%" }}>
+            <SectionHeader>PROFILES</SectionHeader>
+            <ProfilesList profiles={profiles} />
+          </div>
+        )}
       </div>
       {/* Main Content */}
       <div
@@ -190,6 +344,54 @@ export const cv_template_14 = () => {
             <ExperienceList experiences={experience} />
           </div>
         )}
+        {/* Projects */}
+        {projects.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>PROJECTS</span></SectionHeader>
+            <ProjectsList projects={projects} />
+          </div>
+        )}
+        {/* Awards */}
+        {awards.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>AWARDS</span></SectionHeader>
+            <AwardsList awards={awards} />
+          </div>
+        )}
+        {/* Certifications */}
+        {certifications.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>CERTIFICATIONS</span></SectionHeader>
+            <CertificationsList certifications={certifications} />
+          </div>
+        )}
+        {/* Volunteer */}
+        {volunteer.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>VOLUNTEER EXPERIENCE</span></SectionHeader>
+            <VolunteerList volunteer={volunteer} />
+          </div>
+        )}
+        {/* Publications */}
+        {publications.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>PUBLICATIONS</span></SectionHeader>
+            <PublicationsList publications={publications} />
+          </div>
+        )}
+        {/* References */}
+        {references.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
+            <SectionHeader><span style={{"color" : "black"}}>REFERENCES</span></SectionHeader>
+            <ReferencesList references={references} />
+          </div>
+        )}
         {/* Education */}
         {education.length > 0 && (
           <div style={{ marginBottom: 24 }}>
@@ -201,6 +403,7 @@ export const cv_template_14 = () => {
         {/* Languages */}
         {languages.length > 0 && (
           <div style={{ marginBottom: 24 }}>
+            <hr style={{'height' : '2px' , "margin" : "10px 0" , "background" : "orange" , "border" : "none"} } />
             <SectionHeader>LANGUAGES</SectionHeader>
             <LanguageList languages={languages} />
           </div>

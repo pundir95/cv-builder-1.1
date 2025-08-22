@@ -194,10 +194,7 @@ export const cv_template_16 = ({ columns, isFirstPage = false }: TemplateProps) 
                 <p className=" text-[12px] font-medium mb-1">{item.company}</p>
                 <p className=" text-[12px] font-medium mb-0">{item.date}</p>
                 {item.location && <p className=" text-[12px] font-medium mb-0">{item.location}</p>}
-                {item.summary && (
-                  <p className=" text-[12px] font-medium mb-0 mt-2">
-                    {item.summary}
-                  </p>
+                {item.summary && (<p className=" text-[12px] font-medium mb-0 mt-2" dangerouslySetInnerHTML={{ __html: sanitize(item.summary) }} />
                 )}
               </div>
             ))}
