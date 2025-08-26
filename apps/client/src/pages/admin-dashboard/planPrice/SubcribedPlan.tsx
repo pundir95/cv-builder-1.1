@@ -181,7 +181,7 @@ const SubcribedPlan: React.FC<{ data: any, setSubscribed: any }> = ({ data, setS
                   <span>Do you want to update subscription?</span>
                   <button className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800" onClick={() => {
                     setSubscribed(true)
-                  }}>Update</button>
+                  }}>Upgrade</button>
                 </div>
                 <div className="flex items-center gap-4 flex-wrap">
                   <span>Do you want to cancel the subscription?</span>
