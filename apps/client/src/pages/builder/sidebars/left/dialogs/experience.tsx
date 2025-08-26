@@ -43,6 +43,11 @@ export const ExperienceDialog = () => {
   // Get form errors for validation display
   const formErrors = form.formState.errors;
   
+  // Sync isPresent state with form values
+  useEffect(() => {
+    setIsPresent(formValues.isPresent || false);
+  }, [formValues.isPresent]);
+  
   // Convert date string to start and end dates
   const convertDateRange = (dateStr: string) => {
     try {
@@ -94,6 +99,7 @@ export const ExperienceDialog = () => {
   // Handle present checkbox change
   const handlePresentChange = (checked: boolean) => {
     setIsPresent(checked);
+    form.setValue('isPresent', checked);
     if (checked) {
       form.setValue('endDate', '');
       form.clearErrors('endDate'); // Clear any endDate validation errors

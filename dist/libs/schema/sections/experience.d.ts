@@ -9,6 +9,7 @@ export declare const experienceSchema: z.ZodEffects<z.ZodObject<z.objectUtil.ext
     date: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
     startDate: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
     endDate: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+    isPresent: z.ZodDefault<z.ZodBoolean>;
     summary: z.ZodString;
     url: z.ZodObject<{
         label: z.ZodString;
@@ -30,6 +31,7 @@ export declare const experienceSchema: z.ZodEffects<z.ZodObject<z.objectUtil.ext
     };
     summary: string;
     startDate: string;
+    isPresent: boolean;
     company: string;
     position: string;
     date?: string | undefined;
@@ -48,6 +50,7 @@ export declare const experienceSchema: z.ZodEffects<z.ZodObject<z.objectUtil.ext
     id?: string | undefined;
     date?: string | undefined;
     endDate?: string | undefined;
+    isPresent?: boolean | undefined;
 }>, {
     id: string;
     visible: boolean;
@@ -58,6 +61,7 @@ export declare const experienceSchema: z.ZodEffects<z.ZodObject<z.objectUtil.ext
     };
     summary: string;
     startDate: string;
+    isPresent: boolean;
     company: string;
     position: string;
     date?: string | undefined;
@@ -76,6 +80,7 @@ export declare const experienceSchema: z.ZodEffects<z.ZodObject<z.objectUtil.ext
     id?: string | undefined;
     date?: string | undefined;
     endDate?: string | undefined;
+    isPresent?: boolean | undefined;
 }>;
 export type Experience = z.infer<typeof experienceSchema>;
 export declare const defaultExperience: Experience;

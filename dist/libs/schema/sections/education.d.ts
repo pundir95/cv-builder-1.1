@@ -21,6 +21,7 @@ export declare const educationSchema: z.ZodObject<z.objectUtil.extendShape<{
     }>;
     startDate: z.ZodString;
     endDate: z.ZodString;
+    isPresent: z.ZodDefault<z.ZodBoolean>;
 }>, "strip", z.ZodTypeAny, {
     id: string;
     visible: boolean;
@@ -36,6 +37,7 @@ export declare const educationSchema: z.ZodObject<z.objectUtil.extendShape<{
     score: string;
     startDate: string;
     endDate: string;
+    isPresent: boolean;
 }, {
     visible: boolean;
     date: string;
@@ -51,6 +53,7 @@ export declare const educationSchema: z.ZodObject<z.objectUtil.extendShape<{
     startDate: string;
     endDate: string;
     id?: string | undefined;
+    isPresent?: boolean | undefined;
 }>;
 export type Education = z.infer<typeof educationSchema>;
 export declare const defaultEducation: Education;

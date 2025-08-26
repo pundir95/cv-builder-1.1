@@ -3565,7 +3565,8 @@ const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
   summary: i.string(),
   url: we,
   startDate: i.string(),
-  endDate: i.string()
+  endDate: i.string(),
+  isPresent: i.boolean().default(!1)
 }), Vs = ge.extend({
   company: i.string().min(1, "Company name is required").min(2, "Company name must be at least 2 characters").max(100, "Company name must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Company name contains invalid characters"),
   position: i.string().min(1, "Position is required").min(2, "Position must be at least 2 characters").max(100, "Position must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Position contains invalid characters"),
@@ -3581,10 +3582,11 @@ const Be = i.string().cuid2().default(Ft()).describe("Unique identifier for the 
     const e = new Date(t);
     return !isNaN(e.getTime());
   }, "Please enter a valid end date"),
+  isPresent: i.boolean().default(!1),
   summary: i.string().min(1, "Summary is required").min(10, "Summary must be at least 10 characters").max(1e3, "Summary must be less than 1000 characters"),
   url: we
 }).refine((t) => {
-  if (t.endDate && t.startDate) {
+  if (t.endDate && t.startDate && !t.isPresent) {
     const e = new Date(t.endDate), n = new Date(t.startDate);
     return e >= n;
   }

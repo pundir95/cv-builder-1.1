@@ -459,6 +459,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 }>;
                 startDate: z.ZodString;
                 endDate: z.ZodString;
+                isPresent: z.ZodDefault<z.ZodBoolean>;
             }>, "strip", z.ZodTypeAny, {
                 id: string;
                 visible: boolean;
@@ -474,6 +475,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 score: string;
                 startDate: string;
                 endDate: string;
+                isPresent: boolean;
             }, {
                 visible: boolean;
                 date: string;
@@ -489,6 +491,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 startDate: string;
                 endDate: string;
                 id?: string | undefined;
+                isPresent?: boolean | undefined;
             }>, "many">;
             extraDescription: z.ZodDefault<z.ZodString>;
         }>, "strip", z.ZodTypeAny, {
@@ -512,6 +515,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 score: string;
                 startDate: string;
                 endDate: string;
+                isPresent: boolean;
             }[];
             extraDescription: string;
         }, {
@@ -532,6 +536,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 startDate: string;
                 endDate: string;
                 id?: string | undefined;
+                isPresent?: boolean | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -555,6 +560,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 date: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
                 startDate: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
                 endDate: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+                isPresent: z.ZodDefault<z.ZodBoolean>;
                 summary: z.ZodString;
                 url: z.ZodObject<{
                     label: z.ZodString;
@@ -576,6 +582,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 };
                 summary: string;
                 startDate: string;
+                isPresent: boolean;
                 company: string;
                 position: string;
                 date?: string | undefined;
@@ -594,6 +601,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 id?: string | undefined;
                 date?: string | undefined;
                 endDate?: string | undefined;
+                isPresent?: boolean | undefined;
             }>, {
                 id: string;
                 visible: boolean;
@@ -604,6 +612,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 };
                 summary: string;
                 startDate: string;
+                isPresent: boolean;
                 company: string;
                 position: string;
                 date?: string | undefined;
@@ -622,6 +631,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 id?: string | undefined;
                 date?: string | undefined;
                 endDate?: string | undefined;
+                isPresent?: boolean | undefined;
             }>, "many">;
             extraDescription: z.ZodDefault<z.ZodString>;
         }>, "strip", z.ZodTypeAny, {
@@ -640,6 +650,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 };
                 summary: string;
                 startDate: string;
+                isPresent: boolean;
                 company: string;
                 position: string;
                 date?: string | undefined;
@@ -663,6 +674,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 id?: string | undefined;
                 date?: string | undefined;
                 endDate?: string | undefined;
+                isPresent?: boolean | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -1441,6 +1453,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 };
                 summary: string;
                 startDate: string;
+                isPresent: boolean;
                 company: string;
                 position: string;
                 date?: string | undefined;
@@ -1469,6 +1482,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 score: string;
                 startDate: string;
                 endDate: string;
+                isPresent: boolean;
             }[];
             extraDescription: string;
         };
@@ -1727,6 +1741,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 id?: string | undefined;
                 date?: string | undefined;
                 endDate?: string | undefined;
+                isPresent?: boolean | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -1751,6 +1766,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 startDate: string;
                 endDate: string;
                 id?: string | undefined;
+                isPresent?: boolean | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -2244,6 +2260,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 };
                 summary: string;
                 startDate: string;
+                isPresent: boolean;
                 company: string;
                 position: string;
                 date?: string | undefined;
@@ -2272,6 +2289,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 score: string;
                 startDate: string;
                 endDate: string;
+                isPresent: boolean;
             }[];
             extraDescription: string;
         };
@@ -2603,6 +2621,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 id?: string | undefined;
                 date?: string | undefined;
                 endDate?: string | undefined;
+                isPresent?: boolean | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;
@@ -2627,6 +2646,7 @@ export declare const resumeDataSchema: z.ZodObject<{
                 startDate: string;
                 endDate: string;
                 id?: string | undefined;
+                isPresent?: boolean | undefined;
             }[];
             visible?: boolean | undefined;
             columns?: number | undefined;

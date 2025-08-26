@@ -48,6 +48,8 @@ export const experienceSchema = itemSchema.extend({
       return !isNaN(date.getTime());
     }, "Please enter a valid end date"),
   
+  isPresent: z.boolean().default(false),
+  
   summary: z.string()
     .min(1, "Summary is required")
     .min(10, "Summary must be at least 10 characters")
@@ -55,7 +57,7 @@ export const experienceSchema = itemSchema.extend({
   
   url: urlSchema,
 }).refine((data) => {
-  if (data.endDate && data.startDate) {
+  if (data.endDate && data.startDate && !data.isPresent) {
     const endDate = new Date(data.endDate);
     const startDate = new Date(data.startDate);
     return endDate >= startDate;
@@ -78,6 +80,7 @@ export const defaultExperience: Experience = {
   date: "",
   startDate: "",
   endDate: "",
+  isPresent: false,
   summary: "",
   url: defaultUrl,
 };

@@ -20253,18 +20253,18 @@ const ht = (a) => {
 }, Of = (...a) => Yl(hl(a)), jf = [
   // {name:"cv_template_1",id:1,withPhoto:true,withoutPhoto:false,oneColumn:true,twoColumn:false },
   { name: "cv_template_2", id: 2, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
+  { name: "cv_template_4", id: 4, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   // {name:"cv_template_3",id:3,withPhoto:false,withoutPhoto:true,oneColumn:true,twoColumn:false,progress:10},
   { name: "cv_template_15", id: 15, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   { name: "cv_template_16", id: 16, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
-  { name: "cv_template_4", id: 4, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   // {name:"cv_template_5",id:5,withPhoto:true,withoutPhoto:false,oneColumn:false,twoColumn:true,progress:10},
-  { name: "cv_template_6", id: 6, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   { name: "cv_template_14", id: 14, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
+  { name: "cv_template_6", id: 6, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   { name: "cv_template_7", id: 7, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   { name: "cv_template_8", id: 8, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
   { name: "cv_template_9", id: 9, withPhoto: !0, withoutPhoto: !1, oneColumn: !0, twoColumn: !1, progress: 10 },
   { name: "cv_template_10", id: 10, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 },
-  { name: "cv_template_11", id: 11, withPhoto: !0, withoutPhoto: !1, oneColumn: !0, twoColumn: !1, progress: 10 },
+  // {name:"cv_template_11",id:11,withPhoto:true,withoutPhoto:false,oneColumn:true,twoColumn:false,progress:10},
   { name: "cv_template_12", id: 12, withPhoto: !0, withoutPhoto: !1, oneColumn: !0, twoColumn: !1, progress: 10 },
   { name: "cv_template_13", id: 13, withPhoto: !0, withoutPhoto: !1, oneColumn: !1, twoColumn: !0, progress: 10 }
 ];

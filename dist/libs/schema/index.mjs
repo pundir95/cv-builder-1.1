@@ -3575,7 +3575,8 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
   summary: i.string(),
   url: V,
   startDate: i.string(),
-  endDate: i.string()
+  endDate: i.string(),
+  isPresent: i.boolean().default(!1)
 }), ys = {
   ...M,
   id: "",
@@ -3587,7 +3588,8 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
   summary: "",
   url: U,
   startDate: "",
-  endDate: ""
+  endDate: "",
+  isPresent: !1
 }, Qr = P.extend({
   company: i.string().min(1, "Company name is required").min(2, "Company name must be at least 2 characters").max(100, "Company name must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Company name contains invalid characters"),
   position: i.string().min(1, "Position is required").min(2, "Position must be at least 2 characters").max(100, "Position must be less than 100 characters").regex(/^[a-zA-Z0-9\s\-&.,()]+$/, "Position contains invalid characters"),
@@ -3603,10 +3605,11 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
     const e = new Date(n);
     return !isNaN(e.getTime());
   }, "Please enter a valid end date"),
+  isPresent: i.boolean().default(!1),
   summary: i.string().min(1, "Summary is required").min(10, "Summary must be at least 10 characters").max(1e3, "Summary must be less than 1000 characters"),
   url: V
 }).refine((n) => {
-  if (n.endDate && n.startDate) {
+  if (n.endDate && n.startDate && !n.isPresent) {
     const e = new Date(n.endDate), t = new Date(n.startDate);
     return e >= t;
   }
@@ -3622,6 +3625,7 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
   date: "",
   startDate: "",
   endDate: "",
+  isPresent: !1,
   summary: "",
   url: U
 }, es = P.extend({
@@ -3931,6 +3935,7 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
           summary: "",
           startDate: "2012-08-01",
           endDate: "2016-05-01",
+          isPresent: !1,
           url: {
             label: "",
             href: ""
@@ -3955,6 +3960,7 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
           date: "January 2019 to Present",
           startDate: "2019-01-01",
           endDate: "2025-01-01",
+          isPresent: !1,
           summary: "<ul><li><p>Spearheaded the redesign of the main product website, resulting in a 40% increase in user engagement.</p></li><li><p>Developed and implemented a new responsive framework, improving cross-device compatibility.</p></li><li><p>Mentored a team of four junior developers, fostering a culture of technical excellence.</p></li></ul>",
           url: {
             label: "",
@@ -3970,6 +3976,7 @@ const rn = i.string().cuid2().default(Hr()).describe("Unique identifier for the 
           date: "June 2016 to December 2018",
           startDate: "2016-06-01",
           endDate: "2018-12-01",
+          isPresent: !1,
           summary: "<ul><li><p>Collaborated in a team of 10 to develop high-quality web applications using React.js and Node.js.</p></li><li><p>Managed the integration of third-party services such as Stripe for payments and Twilio for SMS services.</p></li><li><p>Optimized application performance, achieving a 30% reduction in load times.</p></li></ul>",
           url: {
             label: "",

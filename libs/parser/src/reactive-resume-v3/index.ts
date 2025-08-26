@@ -93,13 +93,17 @@ export class ReactiveResumeV3Parser implements Parser<Json, ReactiveResumeV3> {
       for (const work of data.sections.work.items) {
         if (!work) continue;
 
+        const isPresent = !work.date?.end || work.date?.end === "Present";
         result.sections.experience.items.push({
           ...defaultExperience,
           id: createId(),
           company: work.name ?? "",
           position: work.position ?? "",
           summary: work.summary ?? "",
-          date: `${work.date?.start} - ${work.date?.end}`,
+          startDate: work.date?.start ?? "",
+          endDate: isPresent ? "" : (work.date?.end ?? ""),
+          isPresent: isPresent,
+          date: isPresent ? `${work.date?.start} - Present` : `${work.date?.start} - ${work.date?.end}`,
           url: { ...defaultExperience.url, href: isUrl(work.url) ? work.url! : "" },
         });
       }
@@ -165,6 +169,7 @@ export class ReactiveResumeV3Parser implements Parser<Json, ReactiveResumeV3> {
       for (const education of data.sections.education.items) {
         if (!education) continue;
 
+        const isPresent = !education.date?.end || education.date?.end === "Present";
         result.sections.education.items.push({
           ...defaultEducation,
           id: createId(),
@@ -173,7 +178,10 @@ export class ReactiveResumeV3Parser implements Parser<Json, ReactiveResumeV3> {
           area: education.area ?? "",
           score: education.score ?? "",
           summary: education.summary ?? "",
-          date: `${education.date?.start} - ${education.date?.end}`,
+          startDate: education.date?.start ?? "",
+          endDate: isPresent ? "" : (education.date?.end ?? ""),
+          isPresent: isPresent,
+          date: isPresent ? `${education.date?.start} - Present` : `${education.date?.start} - ${education.date?.end}`,
           url: { ...defaultEducation.url, href: isUrl(education.url) ? education.url! : "" },
         });
       }

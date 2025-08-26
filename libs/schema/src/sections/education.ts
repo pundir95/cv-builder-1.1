@@ -13,6 +13,7 @@ export const educationSchema = itemSchema.extend({
   url: urlSchema,
   startDate: z.string(),
   endDate: z.string(),
+  isPresent: z.boolean().default(false),
 });
 
 // Type
@@ -31,4 +32,5 @@ export const defaultEducation: Education = {
   url: defaultUrl,
   startDate: "",
   endDate: "",
+  isPresent: false,
 };

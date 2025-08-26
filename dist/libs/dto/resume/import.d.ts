@@ -463,6 +463,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     }>;
                     startDate: z.ZodString;
                     endDate: z.ZodString;
+                    isPresent: z.ZodDefault<z.ZodBoolean>;
                 }>, "strip", z.ZodTypeAny, {
                     date: string;
                     id: string;
@@ -478,6 +479,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }, {
                     date: string;
                     visible: boolean;
@@ -493,6 +495,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }>, "many">;
                 extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
@@ -516,6 +519,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             }, {
@@ -536,6 +540,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -559,6 +564,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
                     startDate: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
                     endDate: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+                    isPresent: z.ZodDefault<z.ZodBoolean>;
                     summary: z.ZodString;
                     url: z.ZodObject<{
                         label: z.ZodString;
@@ -580,6 +586,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -598,6 +605,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }>, {
                     id: string;
                     visible: boolean;
@@ -608,6 +616,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -626,6 +635,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }>, "many">;
                 extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
@@ -644,6 +654,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -667,6 +678,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -1445,6 +1457,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -1473,6 +1486,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             };
@@ -1731,6 +1745,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -1755,6 +1770,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -2248,6 +2264,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -2276,6 +2293,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             };
@@ -2607,6 +2625,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -2631,6 +2650,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -2966,6 +2986,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -2994,6 +3015,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             };
@@ -3330,6 +3352,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -3354,6 +3377,7 @@ export declare const importResumeSchema: z.ZodObject<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -3693,6 +3717,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -3721,6 +3746,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             };
@@ -4423,6 +4449,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     }>;
                     startDate: z.ZodString;
                     endDate: z.ZodString;
+                    isPresent: z.ZodDefault<z.ZodBoolean>;
                 }>, "strip", z.ZodTypeAny, {
                     date: string;
                     id: string;
@@ -4438,6 +4465,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }, {
                     date: string;
                     visible: boolean;
@@ -4453,6 +4481,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }>, "many">;
                 extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
@@ -4476,6 +4505,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             }, {
@@ -4496,6 +4526,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -4519,6 +4550,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
                     startDate: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
                     endDate: z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+                    isPresent: z.ZodDefault<z.ZodBoolean>;
                     summary: z.ZodString;
                     url: z.ZodObject<{
                         label: z.ZodString;
@@ -4540,6 +4572,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -4558,6 +4591,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }>, {
                     id: string;
                     visible: boolean;
@@ -4568,6 +4602,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -4586,6 +4621,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }>, "many">;
                 extraDescription: z.ZodDefault<z.ZodString>;
             }>, "strip", z.ZodTypeAny, {
@@ -4604,6 +4640,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -4627,6 +4664,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -5405,6 +5443,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -5433,6 +5472,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             };
@@ -5691,6 +5731,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -5715,6 +5756,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -6208,6 +6250,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     };
                     summary: string;
                     startDate: string;
+                    isPresent: boolean;
                     company: string;
                     position: string;
                     date?: string | undefined;
@@ -6236,6 +6279,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     score: string;
                     startDate: string;
                     endDate: string;
+                    isPresent: boolean;
                 }[];
                 extraDescription: string;
             };
@@ -6567,6 +6611,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -6591,6 +6636,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -6927,6 +6973,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     date?: string | undefined;
                     id?: string | undefined;
                     endDate?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;
@@ -6951,6 +6998,7 @@ declare const ImportResumeDto_base: import('nestjs-zod/dto').ZodDto<{
                     startDate: string;
                     endDate: string;
                     id?: string | undefined;
+                    isPresent?: boolean | undefined;
                 }[];
                 visible?: boolean | undefined;
                 columns?: number | undefined;

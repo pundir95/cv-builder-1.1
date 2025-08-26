@@ -26,7 +26,8 @@ import { useVerifyOtp } from "@/client/services/auth/two-factor-authentication/v
 import { useToast } from "@/client/components/ToastProvider";
 import { ErrorMessage } from "@reactive-resume/utils";
 import { translateError } from "@/client/services/errors/translate-error";
-import { axiosForAuth } from "@/client/libs/axios";
+import { axios, axiosForAuth } from "@/client/libs/axios";
+import { useUser } from "../services/user";
 
 // Registration form schema
 const registerSchema = z.object({
@@ -64,10 +65,13 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [currentStep, setCurrentStep] = useState<'registration' | 'verification'>('registration');
   const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userId, setUserId] = useState('');
   const [canResend, setCanResend] = useState(true);
   const [resendCountdown, setResendCountdown] = useState(0);
   const [resendingOtp, setResendingOtp] = useState(false);
-
+  const { user } = useUser();
+  console.log(user,"user123")
   const formRef = useRef<HTMLFormElement>(null);
   usePasswordToggle(formRef);
 
@@ -93,9 +97,27 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
 
   const onSubmit = async (data: FormValues) => {
     localStorage.setItem("email", data.email);
+    setUserEmail(data.email);
+    setUserPassword(data.password);
+    console.log(user,"user")
     try {
-      await register(data);
-      setUserEmail(data.email);
+      // Call the new guest email verification API
+      const response = await axiosForAuth.post("/accounts/guest/email-verification/", {
+        email: data.email,
+        password: data.password,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        phone_number: data.phone_number,
+        user_id: user?.id // Using email as user_id for now, adjust if you have a different user_id
+      });
+      
+      // Store the user_id from response if provided
+      if (response.data.user_id) {
+        setUserId(response.data.user_id);
+      } else {
+        setUserId(data.email); // Fallback to email if no user_id in response
+      }
+      
       setCurrentStep('verification');
       showToast('Registration successful! Please check your email for the OTP.', 'success');
     } catch (err) {
@@ -117,16 +139,37 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
 
   const onOtpSubmit = async (data: OtpFormValues) => {
     try {
-      // Send both OTP and email as required by the API
-      const payload = {
-        otp: data.otp,
+      // Call the new guest verify conversion OTP API
+      const response = await axiosForAuth.post("/accounts/guest/verify-conversion-otp/", {
         email: userEmail,
-      };
-      await verifyOtp(payload);
-      showToast('Email verified successfully! You can now download your resume.', 'success');
+        otp: data.otp,
+        user_id: user?.id
+      });
+      
+      showToast('Email verified successfully! Redirecting to subscription page...', 'success');
+      console.log(response.data.data,"response.data.data")
+      localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      localStorage.setItem("token", response.data.data.access);
+      localStorage.setItem("refresh_token", response.data.data.refresh);
       onClose();
-      // Refresh the page to update user state
-      window.location.reload();
+      const res = await axios.get("/accounts/api/users/",{
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem("token")}`
+        }
+       
+      })
+      if(res?.data?.length>0){
+        localStorage.setItem("user",JSON.stringify(res.data[0]));
+        // if(res.data[0].subscription_details.length>0){
+        //   void navigate("/dashboard");
+        // }else{
+        //   void navigate("/onboard/select-template");
+        // }
+      }
+      void navigate("/dashboard/plan-pricing");
+      
+      // Redirect to subscription page
+      // navigate('/dashboard/plan-pricing');
     } catch (err) {
       showToast('OTP verification failed. Please check the code and try again.', 'error');
     }
@@ -135,9 +178,11 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
   const handleResendOtp = async () => {
     setResendingOtp(true);
     try {
-      // Use the email from modal state instead of localStorage
-      const response = await axiosForAuth.post("/accounts/resend-email-verification-otp/", {
-        email: userEmail
+      // Use the new guest email verification API to resend OTP
+      const response = await axiosForAuth.post("/api/v1/accounts/guest/email-verification/", {
+        email: userEmail,
+        password: userPassword,
+        user_id: userId
       });
       
       showToast('OTP resent successfully! Please check your email.', 'success');
@@ -167,6 +212,8 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
     form.reset();
     otpForm.reset();
     setUserEmail('');
+    setUserPassword('');
+    setUserId('');
     setCanResend(true);
     setResendCountdown(0);
     setResendingOtp(false);
@@ -270,7 +317,7 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
                           <FormItem className="w-1/2">
                             <FormLabel className="text-foreground flex items-center gap-2">
                               <Envelope size={16} />
-                              {t`Email`}
+                              Email
                             </FormLabel>
                             <FormControl>
                               <Input
@@ -317,7 +364,7 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
                           <FormItem>
                             <FormLabel className="text-foreground flex items-center gap-2">
                               <Lock size={16} />
-                              {t`Password`}
+                              Password
                             </FormLabel>
                             <FormControl>
                               <div className="relative">
@@ -385,7 +432,7 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
                         className="w-full bg-[#D6EF3C]/90 text-black py-3 rounded-xl font-semibold hover:bg-[#D6EF3C] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                       >
                         <User size={18} className="mr-2" />
-                        {t`Complete Registration`}
+                        Complete Registration
                       </Button>
                       
                       <Button

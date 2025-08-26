@@ -96,6 +96,7 @@ export class LinkedInParser implements Parser<JSZip, LinkedIn> {
     // Positions
     if (data.Positions && data.Positions.length > 0) {
       for (const position of data.Positions) {
+        const isPresent = !position["Finished On"] || position["Finished On"] === "Present";
         result.sections.experience.items.push({
           ...defaultExperience,
           id: createId(),
@@ -103,7 +104,10 @@ export class LinkedInParser implements Parser<JSZip, LinkedIn> {
           position: position.Title,
           location: position.Location,
           summary: position.Description ?? "",
-          date: `${position["Started On"]} - ${position["Finished On"] ?? "Present"}`,
+          startDate: position["Started On"] ?? "",
+          endDate: isPresent ? "" : (position["Finished On"] ?? ""),
+          isPresent: isPresent,
+          date: isPresent ? `${position["Started On"]} - Present` : `${position["Started On"]} - ${position["Finished On"]}`,
         });
       }
     }
@@ -111,13 +115,17 @@ export class LinkedInParser implements Parser<JSZip, LinkedIn> {
     // Education
     if (data.Education && data.Education.length > 0) {
       for (const education of data.Education) {
+        const isPresent = !education["End Date"] || education["End Date"] === "Present";
         result.sections.education.items.push({
           ...defaultEducation,
           id: createId(),
           institution: avoidTooShort(education["School Name"], 2),
           studyType: avoidTooShort(education["Degree Name"], 2),
           summary: avoidTooShort(education.Notes ?? "", 2),
-          date: `${education["Start Date"]} - ${education["End Date"] ?? "Present"}`,
+          startDate: education["Start Date"] ?? "",
+          endDate: isPresent ? "" : (education["End Date"] ?? ""),
+          isPresent: isPresent,
+          date: isPresent ? `${education["Start Date"]} - Present` : `${education["Start Date"]} - ${education["End Date"]}`,
         });
       }
     }

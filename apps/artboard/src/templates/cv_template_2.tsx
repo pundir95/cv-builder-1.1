@@ -154,8 +154,8 @@ const Rating = ({ level }: RatingProps) => (
           width: '10px',
           height: '10px',
           borderRadius: '50%',
-          border: '1px solid var(--primary)',
-          backgroundColor: level > index ? 'var(--primary)' : 'transparent'
+          border: '1px solid #000',
+          backgroundColor: level > index ? '#000' : 'transparent'
         }}
       />
     ))}

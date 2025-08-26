@@ -87,13 +87,17 @@ export class JsonResumeParser implements Parser<Json, JsonResume> {
     // Work
     if (data.work) {
       for (const work of data.work) {
+        const isPresent = !work.endDate || work.endDate.toLowerCase() === 'present';
         result.sections.experience.items.push({
           ...defaultExperience,
           id: createId(),
           company: work.name ?? "",
           position: work.position ?? "",
           summary: work.summary ?? "",
-          date: `${work.startDate} - ${work.endDate}`,
+          startDate: work.startDate ?? "",
+          endDate: isPresent ? "" : (work.endDate ?? ""),
+          isPresent: isPresent,
+          date: isPresent ? `${work.startDate} - Present` : `${work.startDate} - ${work.endDate}`,
           url: { ...defaultExperience.url, href: work.url ?? "" },
         });
       }
@@ -117,6 +121,7 @@ export class JsonResumeParser implements Parser<Json, JsonResume> {
     // Education
     if (data.education) {
       for (const education of data.education) {
+        const isPresent = !education.endDate || education.endDate.toLowerCase() === 'present';
         result.sections.education.items.push({
           ...defaultEducation,
           id: createId(),
@@ -124,7 +129,10 @@ export class JsonResumeParser implements Parser<Json, JsonResume> {
           studyType: education.studyType ?? "",
           area: education.area ?? "",
           score: education.score ?? "",
-          date: `${education.startDate} - ${education.endDate}`,
+          startDate: education.startDate ?? "",
+          endDate: isPresent ? "" : (education.endDate ?? ""),
+          isPresent: isPresent,
+          date: isPresent ? `${education.startDate} - Present` : `${education.startDate} - ${education.endDate}`,
           url: { ...defaultEducation.url, href: education.url ?? "" },
         });
       }

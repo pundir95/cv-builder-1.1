@@ -2,8 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables - Base Colors */
+:root {
+  /* Zinc - Primary/Secondary */
+  --zinc-50: 0 0% 98%;
+  --zinc-100: 240 4.8% 95.9%;
+  --zinc-200: 240 5.9% 90%;
+  --zinc-300: 240 4.9% 83.9%;
+  --zinc-400: 240 5% 64.9%;
+  --zinc-500: 240 3.8% 46.1%;
+  --zinc-600: 240 5.2% 33.9%;
+  --zinc-700: 240 5.3% 26.1%;
+  --zinc-800: 240 3.7% 15.9%;
+  --zinc-900: 240 5.9% 10%;
+  --zinc-950: 240 10% 3.9%;
+
+  /* Rose - Error */
+  --rose-50: 355.7 100% 97.3%;
+  --rose-100: 355.6 100% 94.7%;
+  --rose-200: 352.7 96.1% 90%;
+  --rose-300: 352.6 95.7% 81.8%;
+  --rose-400: 351.3 94.5% 71.4%;
+  --rose-500: 349.7 89.2% 60.2%;
+  --rose-600: 346.8 77.2% 49.8%;
+  --rose-700: 345.3 82.7% 40.8%;
+  --rose-800: 343.4 79.7% 34.7%;
+  --rose-900: 341.5 75.5% 30.4%;
+  --rose-950: 343.1 87.7% 15.9%;
+
+  /* Theme Variables */
+  --primary: var(--zinc-900);
+  --primary-accent: var(--zinc-800);
+  --primary-foreground: var(--zinc-50);
+  --background: var(--zinc-50);
+  --foreground: var(--zinc-950);
+  --border: var(--zinc-200);
+}
+
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* Debug: Test if CSS variables are working */
+.debug-css-vars {
+  color: var(--primary);
+  background-color: var(--background);
+  border: 1px solid var(--border);
+}
+
 * {
   font-variant-ligatures: none;
+  font-family: 'Outfit';
 
   @apply border-current;
 }
@@ -25,7 +73,7 @@ body {
 }
 
 .wysiwyg {
-  @apply prose-foreground prose max-w-none prose-headings:mb-2 prose-headings:mt-0 prose-p:mb-2 prose-p:mt-0 prose-p:leading-normal prose-a:break-all prose-ol:mb-2 prose-ol:mt-0 prose-ul:mb-2 prose-ul:mt-0 prose-li:mb-2 prose-li:mt-0 prose-li:leading-normal prose-img:mb-2 prose-img:mt-0 prose-hr:mb-2 prose-hr:mt-0;
+  @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-0 prose-p:mb-2 prose-p:mt-0 prose-p:leading-normal prose-a:break-all prose-ol:mb-2 prose-ol:mt-0 prose-ul:mb-2 prose-ul:mt-0 prose-li:mb-2 prose-li:mt-0 prose-li:leading-normal prose-img:mb-2 prose-img:mt-0 prose-hr:mb-2 prose-hr:mt-0;
 }
 .overflow-wrap-anywhere
 {

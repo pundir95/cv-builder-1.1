@@ -9,9 +9,11 @@ import {
   FormMessage,
   Input,
   RichInput,
+  Checkbox,
 } from "@reactive-resume/ui";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
+import { useEffect, useState } from "react";
 
 import { AiActions } from "@/client/components/ai-actions";
 import { useSectionProgress } from "@/client/hooks/use-section-progress";
@@ -24,6 +26,8 @@ const formSchema = educationSchema;
 type FormValues = z.infer<typeof formSchema>;
 
 export const EducationDialog = () => {
+  const [isPresent, setIsPresent] = useState(false);
+  
   const form = useForm<FormValues>({
     defaultValues: defaultEducation,
     resolver: zodResolver(formSchema),
@@ -31,13 +35,31 @@ export const EducationDialog = () => {
 
   // Watch form values to determine completion
   const formValues = form.watch();
+  
+  // Get form errors for validation display
+  const formErrors = form.formState.errors;
+  
+  // Sync isPresent state with form values
+  useEffect(() => {
+    setIsPresent(formValues.isPresent || false);
+  }, [formValues.isPresent]);
+  
+  // Handle present checkbox change
+  const handlePresentChange = (checked: boolean) => {
+    setIsPresent(checked);
+    form.setValue('isPresent', checked);
+    if (checked) {
+      form.setValue('endDate', '');
+      form.clearErrors('endDate'); // Clear any endDate validation errors
+    }
+  };
+  
   const isCompleted = Boolean(
     formValues.institution &&
     formValues.studyType &&
     formValues.area &&
-    formValues.date &&
     formValues.startDate &&
-    formValues.endDate
+    (formValues.endDate || isPresent)
   );
 
   // Use the progress hook
@@ -168,22 +190,48 @@ export const EducationDialog = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>End Date</FormLabel>
+              <FormLabel>End Date {!isPresent && <span className="text-destructive">*</span>}</FormLabel>
               <FormControl>
-                <Input 
-                  {...field} 
-                  type="date" 
-                  placeholder={t`End Date`}
-                  min={form.getValues("startDate")}
-                  onChange={(e) => {
-                    const startDate = form.getValues("startDate");
-                    if (!startDate || e.target.value >= startDate) {
-                      field.onChange(e);
-                    }
-                  }}
-                />
+                <div className="space-y-2">
+                  <Input 
+                    {...field} 
+                    type="date" 
+                    placeholder={t`End Date`}
+                    min={form.getValues("startDate")}
+                    disabled={isPresent}
+                    onChange={(e) => {
+                      const startDate = form.getValues("startDate");
+                      if (!startDate || e.target.value >= startDate) {
+                        field.onChange(e);
+                      }
+                    }}
+                  />
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="present"
+                      checked={isPresent}
+                      onCheckedChange={handlePresentChange}
+                    />
+                    <label
+                      htmlFor="present"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Currently studying here
+                    </label>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
+              {!formErrors?.endDate && field.value && !isPresent && (
+                <p className="text-xs text-muted-foreground">
+                  End date: {new Date(field.value).toLocaleDateString()}
+                </p>
+              )}
+              {isPresent && (
+                <p className="text-xs text-muted-foreground">
+                  Currently enrolled - no end date required
+                </p>
+              )}
             </FormItem>
           )}
         />

@@ -73,9 +73,9 @@ export const SectionDialog = <T extends SectionItem>({
       }
 
     
-      if ((id === "experience" || id === "education") && "date" in values && "startDate" in values && "endDate" in values) {
+      if ((id === "experience" || id === "education") && "date" in values && "startDate" in values && "endDate" in values && "isPresent" in values) {
       
-        if (values.startDate && values.endDate) {
+        if (values.startDate) {
           const formatDate = (dateStr: string) => {
             const date = new Date(dateStr);
             return date.toLocaleDateString('en-GB', {
@@ -85,7 +85,18 @@ export const SectionDialog = <T extends SectionItem>({
             }); 
           };
 
-          const formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
+          let formattedDate = '';
+          if (values.isPresent) {
+            // If currently working/studying, show "Start Date - Present"
+            formattedDate = `${formatDate(values.startDate)} – Present`;
+          } else if (values.endDate) {
+            // If has end date, show "Start Date – End Date"
+            formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
+          } else {
+            // If no end date and not present, just show start date
+            formattedDate = formatDate(values.startDate);
+          }
+          
           console.log(formattedDate,"formattedDate")
           
           if (isCreate) {
@@ -131,9 +142,9 @@ export const SectionDialog = <T extends SectionItem>({
       );
 
       // Update date format for experience section
-      if ((id === "experience" || id === "education") && "date" in values && "startDate" in values && "endDate" in values) {
+      if ((id === "experience" || id === "education") && "date" in values && "startDate" in values && "endDate" in values && "isPresent" in values) {
       
-        if (values.startDate && values.endDate) {
+        if (values.startDate) {
           const formatDate = (dateStr: string) => {
             const date = new Date(dateStr);
             return date.toLocaleDateString('en-GB', {
@@ -143,7 +154,18 @@ export const SectionDialog = <T extends SectionItem>({
             }); 
           };
 
-          const formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
+          let formattedDate = '';
+          if (values.isPresent) {
+            // If currently working/studying, show "Start Date - Present"
+            formattedDate = `${formatDate(values.startDate)} – Present`;
+          } else if (values.endDate) {
+            // If has end date, show "Start Date – End Date"
+            formattedDate = `${formatDate(values.startDate)} – ${formatDate(values.endDate)}`;
+          } else {
+            // If no end date and not present, just show start date
+            formattedDate = formatDate(values.startDate);
+          }
+          
           console.log(formattedDate,"formattedDate")
           const index = section.items.findIndex((item) => item.id === (isCreate ? payload?.id : payload.item?.id));
           if (index !== -1) {
