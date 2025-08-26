@@ -8,7 +8,7 @@ import {
   Select, SelectTrigger, SelectContent, SelectItem, SelectValue,
   Form, FormControl, FormField, FormItem, FormLabel, FormMessage
 } from '@reactive-resume/ui';
-import { User, Envelope, Phone, Buildings, UploadSimple, FileText, CheckCircle } from '@phosphor-icons/react';
+import { User, Envelope, Phone, Buildings, UploadSimple, FileText, CheckCircle, X } from '@phosphor-icons/react';
 import { axios } from '@/client/libs/axios';
 import { toast } from '@/client/hooks/use-toast';
 import { useNavigate } from 'react-router';
@@ -40,9 +40,9 @@ const INDUSTRIES = [
 
 // Define the schema for form validation
 const humanCheckerSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(1, "Phone number is required"),
+  // name: z.string().min(1, "Name is required"),
+  // email: z.string().email("Invalid email address"),
+  // phone: z.string().min(1, "Phone number is required"),
   industry: z.string().min(1, "Industry is required"),
   file: z.instanceof(File, { message: "Please upload your CV" }),
 });
@@ -57,9 +57,6 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
   const form = useForm<FormValues>({
     resolver: zodResolver(humanCheckerSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
       industry: "",
       file: undefined as any,
     },
@@ -75,12 +72,10 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
     setSubmitting(true);
     console.log(data, "form");
     
-    setTimeout(() => {
-      setSubmitting(false);
       const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
+      // formData.append("name", data.name);
+      // formData.append("email", data.email);
+      // formData.append("phone", data.phone);
       formData.append("industry", data.industry);
       formData.append("file", data.file);
       formData.append("payment_id", paymentId || "");
@@ -88,6 +83,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
       axios.post("/cv-manager/human-resume-verification/", formData).then(async (res) => {
         console.log(res.data.data);
         setIsComplete(true);
+        setSubmitting(false);
         toast({
           title: "Resume verified successfully",
           description: "Our team will review and provide feedback within 24 hours.",
@@ -98,8 +94,18 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
         });
         navigate("/dashboard/resumes");
         onClose();
+      }).catch((err)=>{
+        console.log(err);
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          duration: 5000,
+          className: "bg-red-500 text-white",
+          icon: <X size={24} className="text-white" />, 
+          variant: "error",
+        });
+        setSubmitting(false);
       });
-    }, 800);
   };
 
   return (
@@ -119,7 +125,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 mt-2">
             <div className="grid grid-cols-1 gap-4">
-              <FormField
+              {/* <FormField
                 name="name"
                 control={form.control}
                 render={({ field }) => (
@@ -181,7 +187,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               
               <FormField
                 name="industry"
@@ -237,6 +243,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
               <Button
                 type="submit"
                 loading={submitting}
+                disabled={submitting}
                 className="w-full mt-2 bg-gradient-to-r from-[#D6EF3C] to-[#A7E92F] text-black rounded-full shadow-md hover:from-[#A7E92F] hover:to-[#D6EF3C] transition-all border border-[#D6EF3C]/40"
               >
                 Submit
