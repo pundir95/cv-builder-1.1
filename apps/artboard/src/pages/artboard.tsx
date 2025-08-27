@@ -33,6 +33,7 @@ export const ArtboardPage = () => {
   useEffect(() => {
     document.documentElement.style.setProperty("font-size", `${metadata.typography.font.size}px`);
     document.documentElement.style.setProperty("line-height", `${metadata.typography.lineHeight}`);
+    document.documentElement.style.setProperty("--font-family", metadata.typography.font.family);
 
     document.documentElement.style.setProperty("--margin", `${metadata.page.margin}px`);
     document.documentElement.style.setProperty("--font-size", `${metadata.typography.font.size}px`);

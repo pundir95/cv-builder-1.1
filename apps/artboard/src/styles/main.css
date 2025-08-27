@@ -51,7 +51,7 @@
 
 * {
   font-variant-ligatures: none;
-  font-family: 'Outfit';
+  font-family: var(--font-family, 'Outfit');
 
   @apply border-current;
 }

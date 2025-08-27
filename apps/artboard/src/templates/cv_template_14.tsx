@@ -247,7 +247,7 @@ export const cv_template_14 = () => {
         display: "flex",
         background: lightGray,
         overflow: "hidden",
-        fontFamily: "Segoe UI, Arial, sans-serif",
+        fontFamily: "var(--font-family, 'Segoe UI, Arial, sans-serif')",
         color: darkGray,
         minHeight: "100vh",
         border: `1px solid ${primaryColor}`,
