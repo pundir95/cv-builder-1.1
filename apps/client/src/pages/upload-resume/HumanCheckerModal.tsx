@@ -23,6 +23,7 @@ interface HumanCheckerModalProps {
     email: string;
     phone: string;
     industry: string;
+    yearsOfExperience: string;
     file: File | null;
   }) => void;
   paymentId: string | null;
@@ -44,6 +45,7 @@ const humanCheckerSchema = z.object({
   // email: z.string().email("Invalid email address"),
   // phone: z.string().min(1, "Phone number is required"),
   industry: z.string().min(1, "Industry is required"),
+  yearsOfExperience: z.string().min(1, "Years of experience is required"),
   file: z.instanceof(File, { message: "Please upload your CV" }),
 });
 
@@ -58,6 +60,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
     resolver: zodResolver(humanCheckerSchema),
     defaultValues: {
       industry: "",
+      yearsOfExperience: "",
       file: undefined as any,
     },
   });
@@ -77,6 +80,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
       // formData.append("email", data.email);
       // formData.append("phone", data.phone);
       formData.append("industry", data.industry);
+      formData.append("years_of_experience", data.yearsOfExperience);
       formData.append("file", data.file);
       formData.append("payment_id", paymentId || "");
       
@@ -207,6 +211,34 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
                         {INDUSTRIES.map((ind) => (
                           <SelectItem key={ind} value={ind}>{ind}</SelectItem>
                         ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                name="yearsOfExperience"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <User size={18} className="text-gray-500" /> Years of Experience
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80">
+                          <SelectValue placeholder="Select experience level" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="0-1">0-1 years</SelectItem>
+                        <SelectItem value="1-3">1-3 years</SelectItem>
+                        <SelectItem value="3-5">3-5 years</SelectItem>
+                        <SelectItem value="5-8">5-8 years</SelectItem>
+                        <SelectItem value="8-12">8-12 years</SelectItem>
+                        <SelectItem value="12+">12+ years</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -23,6 +23,10 @@ interface ResumeVerification {
   score: number | null;
   status: string;
   updated_at: string;
+  cv__user__first_name: string;
+  cv__user__last_name: string;
+  cv__user__email: string;
+  cv__user__phone_number: string;
 }
 
 export default function ResumeChecker() {
@@ -174,9 +178,9 @@ export default function ResumeChecker() {
             {resumes.map((resume: ResumeVerification, idx: number) => (
               <tr key={resume.id || idx} className="border-b hover:bg-gray-50">
                 {/* <td className="p-4 whitespace-nowrap">{resume.id}</td> */}
-                <td className="p-4 whitespace-nowrap">{resume.name}</td>
-                <td className="p-4">{resume.email}</td>
-                <td className="p-4 whitespace-nowrap">{resume.phone}</td>
+                <td className="p-4 whitespace-nowrap">{resume.cv__user__first_name} {resume.cv__user__last_name}</td>
+                <td className="p-4">{resume.cv__user__email}</td>
+                <td className="p-4 whitespace-nowrap">{resume.cv__user__phone_number}</td>
               
                 <td className="p-4 whitespace-nowrap">{resume.industry_type}</td>
                 <td className="p-4 whitespace-nowrap">
