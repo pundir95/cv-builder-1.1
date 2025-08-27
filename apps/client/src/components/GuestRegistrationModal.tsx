@@ -151,6 +151,7 @@ export const GuestRegistrationModal = ({ isOpen, onClose }: GuestRegistrationMod
       localStorage.setItem("user", JSON.stringify(response.data.data.user));
       localStorage.setItem("token", response.data.data.access);
       localStorage.setItem("refresh_token", response.data.data.refresh);
+      localStorage.removeItem("reference_id");
       onClose();
       const res = await axios.get("/accounts/api/users/",{
         headers:{
