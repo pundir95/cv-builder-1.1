@@ -8,7 +8,7 @@ import {
   Select, SelectTrigger, SelectContent, SelectItem, SelectValue,
   Form, FormControl, FormField, FormItem, FormLabel, FormMessage
 } from '@reactive-resume/ui';
-import { User, Envelope, Phone, Buildings, UploadSimple, FileText, CheckCircle, X } from '@phosphor-icons/react';
+import { User, Envelope, Phone, Buildings, UploadSimple, FileText, CheckCircle, X, Target, Briefcase, Question, Lightbulb } from '@phosphor-icons/react';
 import { axios } from '@/client/libs/axios';
 import { toast } from '@/client/hooks/use-toast';
 import { useNavigate } from 'react-router';
@@ -24,6 +24,10 @@ interface HumanCheckerModalProps {
     phone: string;
     industry: string;
     yearsOfExperience: string;
+    cv_goals: string;
+    job_role: string;
+    extra_help: string;
+    extra_feedback: string;
     file: File | null;
   }) => void;
   paymentId: string | null;
@@ -46,6 +50,10 @@ const humanCheckerSchema = z.object({
   // phone: z.string().min(1, "Phone number is required"),
   industry: z.string().min(1, "Industry is required"),
   yearsOfExperience: z.string().min(1, "Years of experience is required"),
+  cv_goals: z.string().min(1, "Please select your goal"),
+  job_role: z.string().min(1, "Job role is required"),
+  extra_help: z.string().optional(),
+  extra_feedback: z.string().optional(),
   file: z.instanceof(File, { message: "Please upload your CV" }),
 });
 
@@ -61,6 +69,10 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
     defaultValues: {
       industry: "",
       yearsOfExperience: "",
+      cv_goals: "",
+      job_role: "",
+      extra_help: "",
+      extra_feedback: "",
       file: undefined as any,
     },
   });
@@ -81,6 +93,10 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
       // formData.append("phone", data.phone);
       formData.append("industry", data.industry);
       formData.append("years_of_experience", data.yearsOfExperience);
+      formData.append("cv_goals", data.cv_goals);
+      formData.append("job_role", data.job_role);
+      formData.append("extra_help", data.extra_help || "");
+      formData.append("extra_feedback", data.extra_feedback || "");
       formData.append("file", data.file);
       formData.append("payment_id", paymentId || "");
       
@@ -121,7 +137,7 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
             Check your resume with human
           </DialogTitle>
           <DialogDescription>
-            Please fill in your details and upload your CV. Our team will review and provide feedback.
+            Please fill in your details, answer a few questions about your goals, and upload your CV. Our team will review and provide personalized feedback.
           </DialogDescription>
         </DialogHeader>
         <div className="my-2 border-b border-gray-200" />
@@ -239,6 +255,119 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
                 )}
               />
               
+              {/* Question 1 - CV Goals */}
+              <FormField
+                name="cv_goals"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Target size={18} className="text-gray-500" /> What is your goal with your CV?
+                    </FormLabel>
+                    <FormControl>
+                      <div className="space-y-2">
+                        {[
+                          { value: "new_industry", label: "I am looking for a job in a new industry" },
+                          { value: "improve_cv", label: "I want to improve my current CV" },
+                          { value: "specific_job", label: "I am looking for a specific job and want feedback" },
+                          { value: "unsure_quality", label: "I am unsure if my CV is good enough" }
+                        ].map((option) => (
+                          <button
+                            key={option.value}
+                            type="button"
+                            onClick={() => field.onChange(option.value)}
+                            className={`w-full text-left px-4 py-3 rounded-lg border transition-all duration-150 focus:outline-none ${
+                              field.value === option.value
+                                ? 'bg-blue-50 border-blue-400 text-blue-700'
+                                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            <div className="flex items-center space-x-3">
+                              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                                field.value === option.value
+                                  ? 'border-blue-400 bg-blue-400'
+                                  : 'border-gray-300'
+                              }`}>
+                                {field.value === option.value && (
+                                  <div className="w-2 h-2 rounded-full bg-white"></div>
+                                )}
+                              </div>
+                              <span className="text-sm">{option.label}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              {/* Question 2 - Job Role */}
+              <FormField
+                name="job_role"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Briefcase size={18} className="text-gray-500" /> What type of job or role are you looking for?
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., Salesperson, Finance Assistant, Front-end Developer, Retail Job"
+                        className="rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              {/* Question 3 - Extra Help (Optional) */}
+              <FormField
+                name="extra_help"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Question size={18} className="text-gray-500" /> Is there anything on your CV that you are unsure about? (Optional)
+                    </FormLabel>
+                    <FormControl>
+                      <textarea
+                        {...field}
+                        placeholder="e.g., 'I don't know if I have the right experience', 'I think the language is uncertain', 'It feels too long'"
+                        className="w-full min-h-[80px] px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80 resize-none"
+                        rows={3}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              {/* Question 4 - Extra Feedback (Optional) */}
+              <FormField
+                name="extra_feedback"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <Lightbulb size={18} className="text-gray-500" /> What would you like us to focus on the most? (Optional)
+                    </FormLabel>
+                    <FormControl>
+                      <textarea
+                        {...field}
+                        placeholder="Tell us about any specific area you'd like extra feedback on..."
+                        className="w-full min-h-[80px] px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80 resize-none"
+                        rows={3}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
               <FormField
                 name="file"
                 control={form.control}
@@ -264,12 +393,12 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
               />
             </div>
             
-            <DialogFooter>
+            <DialogFooter className="mt-4 border-t border-gray-200 pt-4">
               <Button
                 type="submit"
                 loading={submitting}
                 disabled={submitting}
-                className="w-full mt-2 bg-gradient-to-r from-[#D6EF3C] to-[#A7E92F] text-black rounded-full shadow-md hover:from-[#A7E92F] hover:to-[#D6EF3C] transition-all border border-[#D6EF3C]/40"
+                className="w-full bg-gradient-to-r from-[#D6EF3C] to-[#A7E92F] text-black rounded-full shadow-md hover:from-[#A7E92F] hover:to-[#D6EF3C] transition-all border border-[#D6EF3C]/40"
               >
                 Submit
               </Button>
