@@ -14,9 +14,10 @@ import { useState } from "react";
 
 import { usePrintResume } from "@/client/services/resume/print";
 import { useResumeStore } from "@/client/stores/resume";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { SectionIcon } from "../shared/section-icon";
 import { GuestRegistrationModal } from "@/client/components/GuestRegistrationModal";
+import { useDownloadResume } from "@/client/services/resume/downloadResume";
 
 const onJsonExport = () => {
   const { resume } = useResumeStore.getState();
@@ -34,8 +35,11 @@ const openInNewTab = (url: string) => {
 export const ExportSection = ({ setShowSubscriptionModal, setShowGuestRegistrationModal }: { setShowSubscriptionModal: (show: boolean) => void, setShowGuestRegistrationModal: (show: boolean) => void }) => {
   const navigate = useNavigate();
   const { printResume, loading } = usePrintResume();
+  const { id } = useParams();
+  const { downloadResume, loading: downloadLoading, error } = useDownloadResume();
   const user=localStorage.getItem("user");
   const userData=JSON.parse(user || "{}");
+  const { resume } = useResumeStore.getState();
 
   const hasSubscription=userData?.subscription_details?.length > 0;
   
@@ -165,72 +169,80 @@ export const ExportSection = ({ setShowSubscriptionModal, setShowGuestRegistrati
       setShowSubscriptionModal(true);
       return;
     }
-    const templateRef = sharedState.getTemplateRef();
-    
-    if (templateRef) {
-      let templateString = templateRef.innerHTML;
-
-      // Inject print-specific CSS
-      const printCSS = `
-        <style>
-          .card, .section { page-break-inside: avoid; break-inside: avoid; }
-          .page-break { page-break-before: always; break-before: always; }
-        </style>
-      `;
-      templateString = printCSS + templateString;
-
-      // Replace width: 40% with width: 100% in the template string
-      const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "100%"');
-      console.log(modifiedTemplateString,"templateString");
-      
-      // Configure PDF options
-      const options = {
-        margin: 0,
-        filename: 'resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-          margin: 15,
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          imageTimeout: 0,
-          logging: true,
-          paddingOffsetY: 0,
-          paddingOffsetX: 0,
-        
-        },
-        jsPDF: { 
-          unit: 'mm', 
-          format: 'a4', 
-          orientation: 'portrait',
-          compress: true
-        },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-      };
-
-      try {
-        // Create a temporary div to hold the HTML content
-        const element = document.createElement('div');
-        element.innerHTML = modifiedTemplateString;
-        
-        // Wait for images to load
-        const images = element.getElementsByTagName('img');
-        await Promise.all(Array.from(images).map(img => {
-          if (img.complete) return Promise.resolve();
-          return new Promise(resolve => {
-            img.onload = resolve;
-            img.onerror = resolve;
-          });
-        }));
-        
-        // Generate PDF
-        await html2pdf().set(options).from(element).save();
-      } catch (error) {
-        console.error("Error generating PDF:", error);
-      }
-    } else {
-      console.error("Template reference is null. Please ensure the builder page is loaded.");
+    try {
+      await downloadResume({
+        cv_id: id || "",
+        template_id: resume?.cv_template?.id || ""
+      });
+    } catch (err) {
+      console.error("Download failed:", err);
     }
+    // const templateRef = sharedState.getTemplateRef();
+    
+    // if (templateRef) {
+    //   let templateString = templateRef.innerHTML;
+
+    //   // Inject print-specific CSS
+    //   const printCSS = `
+    //     <style>
+    //       .card, .section { page-break-inside: avoid; break-inside: avoid; }
+    //       .page-break { page-break-before: always; break-before: always; }
+    //     </style>
+    //   `;
+    //   templateString = printCSS + templateString;
+
+    //   // Replace width: 40% with width: 100% in the template string
+    //   const modifiedTemplateString = templateString.replace(/width:\s*['"]?40%['"]?/, 'width: "100%"');
+    //   console.log(modifiedTemplateString,"templateString");
+      
+    //   // Configure PDF options
+    //   const options = {
+    //     margin: 0,
+    //     filename: 'resume.pdf',
+    //     image: { type: 'jpeg', quality: 0.98 },
+    //     html2canvas: { 
+    //       margin: 15,
+    //       scale: 2,
+    //       useCORS: true,
+    //       allowTaint: true,
+    //       imageTimeout: 0,
+    //       logging: true,
+    //       paddingOffsetY: 0,
+    //       paddingOffsetX: 0,
+        
+    //     },
+    //     jsPDF: { 
+    //       unit: 'mm', 
+    //       format: 'a4', 
+    //       orientation: 'portrait',
+    //       compress: true
+    //     },
+    //     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    //   };
+
+    //   try {
+    //     // Create a temporary div to hold the HTML content
+    //     const element = document.createElement('div');
+    //     element.innerHTML = modifiedTemplateString;
+        
+    //     // Wait for images to load
+    //     const images = element.getElementsByTagName('img');
+    //     await Promise.all(Array.from(images).map(img => {
+    //       if (img.complete) return Promise.resolve();
+    //       return new Promise(resolve => {
+    //         img.onload = resolve;
+    //         img.onerror = resolve;
+    //       });
+    //     }));
+        
+    //     // Generate PDF
+    //     await html2pdf().set(options).from(element).save();
+    //   } catch (error) {
+    //     console.error("Error generating PDF:", error);
+    //   }
+    // } else {
+    //   console.error("Template reference is null. Please ensure the builder page is loaded.");
+    // }
   };
 
   return (

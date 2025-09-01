@@ -77,7 +77,7 @@ export const BuilderToolbar = () => {
     }}
     >
       <div className="inline-flex items-center justify-center rounded-full bg-background px-4 shadow-xl">
-        <Tooltip content={t`Undo`}>
+        {/* <Tooltip content={t`Undo`}>
           <Button
             size="icon"
             variant="ghost"
@@ -132,7 +132,7 @@ export const BuilderToolbar = () => {
           >
             {loading ? <CircleNotch className="animate-spin" /> : <FilePdf />}
           </Button>
-        </Tooltip>
+        </Tooltip> */}
       </div>
     </motion.div>
   );

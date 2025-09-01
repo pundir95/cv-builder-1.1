@@ -2,12 +2,13 @@ import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@reactive-resume/ui";
-import { Warning, PencilSimple, Download, Plus, Bank, CreditCard, Shield, Check, Money, Lock } from "@phosphor-icons/react";
+import { Warning, PencilSimple, Download, Plus, Bank, CreditCard, Shield, Check, Money, Lock, CircleNotch } from "@phosphor-icons/react";
 import { useNavigate } from "react-router";
 import { useCanResumeDownload, useResumes } from "@/client/services/resume";
 import { useState, useEffect } from "react";
 import { ResumeDto } from "@reactive-resume/dto";
 import { SubscriptionModal } from "@/client/components";
+import { useDownloadResume } from "@/client/services/resume/downloadResume";
 
 export const UserDashboardPage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ export const UserDashboardPage = () => {
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const { downloadResume, loading: downloadLoading, error } = useDownloadResume();
+
   console.log(userData,"userData")
 
   const hasSubscription = userData?.subscription_details?.length > 0;
@@ -40,7 +43,7 @@ export const UserDashboardPage = () => {
     }
   };
 
-  const handleDownloadClick = () => {
+  const handleDownloadClick = async () => {
     if (!hasSubscription) {
       setModalConfig({
         title: "Upgrade to Download Resume",
@@ -50,6 +53,14 @@ export const UserDashboardPage = () => {
     } else {
       // Handle download logic for subscribed users
       console.log("Downloading resume...");
+      try {
+        await downloadResume({
+          cv_id: selectedResume?.id || "",
+          template_id: selectedResume?.cv_template?.id || ""
+        });
+      } catch (err) {
+        console.error("Download failed:", err);
+      }
     }
   };
 
@@ -143,8 +154,10 @@ export const UserDashboardPage = () => {
                 variant="ghost" 
                 className="flex items-center gap-2 flex-1 justify-center py-2.5 hover:bg-gray-100 transition-colors"
                 onClick={handleDownloadClick}
+                disabled={downloadLoading}
               >
-                <Download size={16} /> Download
+                {downloadLoading ? <CircleNotch size={16} className="animate-spin" /> : <Download size={16} />}
+                Download
               </Button>
             </div>
             

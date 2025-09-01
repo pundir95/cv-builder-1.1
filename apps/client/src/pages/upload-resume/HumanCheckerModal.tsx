@@ -356,12 +356,38 @@ export const HumanCheckerModal: React.FC<HumanCheckerModalProps> = ({ open, onCl
                       <Lightbulb size={18} className="text-gray-500" /> What would you like us to focus on the most? (Optional)
                     </FormLabel>
                     <FormControl>
-                      <textarea
-                        {...field}
-                        placeholder="Tell us about any specific area you'd like extra feedback on..."
-                        className="w-full min-h-[80px] px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all bg-white/80 resize-none"
-                        rows={3}
-                      />
+                      <div className="space-y-2">
+                        {[
+                          { value: "layout_design", label: "Layout & design" },
+                          { value: "wording_language", label: "Wording & language" },
+                          { value: "content_experience", label: "Content & experience" },
+                          { value: "results_focus", label: "Results focus (e.g. measurable achievements)" },
+                          { value: "ats_adaptation", label: "ATS adaptation (automatic selection compatibility)" }
+                        ].map((option) => (
+                          <label
+                            key={option.value}
+                            className="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                          >
+                            <input
+                              type="checkbox"
+                              value={option.value}
+                              checked={field.value?.includes(option.value) || false}
+                              onChange={(e) => {
+                                const currentValues = field.value ? field.value.split(',') : [];
+                                if (e.target.checked) {
+                                  const newValues = [...currentValues, option.value];
+                                  field.onChange(newValues.join(','));
+                                } else {
+                                  const newValues = currentValues.filter(val => val !== option.value);
+                                  field.onChange(newValues.join(','));
+                                }
+                              }}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                            />
+                            <span className="text-sm text-gray-700">{option.label}</span>
+                          </label>
+                        ))}
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
