@@ -1,15 +1,54 @@
 import { sortByDate } from "@reactive-resume/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pencil, Trash, Download } from "@phosphor-icons/react";
+import { useState, useMemo } from "react";
 
 import { useResumes } from "@/client/services/resume";
+import { Pagination } from "@/client/components/pagination";
 
 import { BaseListItem } from "./_components/base-item";
 import { CreateResumeListItem } from "./_components/create-item";
 import { ImportResumeListItem } from "./_components/import-item";
 import { ResumeListItem } from "./_components/resume-item";
 
-export const ListView = ({ resumes, loading }: { resumes: any[], loading: boolean } ) => {
+interface ListViewProps {
+  resumes: any[];
+  loading: boolean;
+  pagination: any;
+  currentPage: number;
+  itemsPerPage: number;
+  onPageChange: (page: number) => void;
+}
+
+export const ListView = ({ resumes, loading, pagination, currentPage, itemsPerPage, onPageChange }: ListViewProps) => {
+  // Calculate pagination values from server response
+  const totalItems = pagination?.total || 0;
+  const totalPages = pagination?.totalPages || Math.ceil(totalItems / itemsPerPage);
+  const hasNextPage = currentPage < totalPages;
+  const hasPreviousPage = currentPage > 1;
+
+  // Sort resumes by date (server should handle this, but keeping as fallback)
+  const sortedResumes = useMemo(() => {
+    return resumes.sort((a, b) => sortByDate(a, b, "updatedAt"));
+  }, [resumes]);
+
+  // Pagination handlers
+  const handlePageChange = (pageNumber: number) => {
+    onPageChange(pageNumber);
+  };
+
+  const handleNextPage = () => {
+    if (hasNextPage) {
+      onPageChange(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (hasPreviousPage) {
+      onPageChange(currentPage - 1);
+    }
+  };
+
   return (
     <div className="grid gap-y-2">
       {/* <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }}>
@@ -46,23 +85,38 @@ export const ListView = ({ resumes, loading }: { resumes: any[], loading: boolea
             </thead>
             <tbody>
               <AnimatePresence>
-                {resumes
-                  .sort((a, b) => sortByDate(a, b, "updatedAt"))
-                  .map((resume, index) => (
-                    <motion.tr
-                      key={resume.id}
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0, transition: { delay: index * 0.1 } }}
-                      exit={{ opacity: 0, filter: "blur(8px)", transition: { duration: 0.5 } }}
-                      className="border-b border-secondary/20 hover:bg-secondary/5"
-                    >
-                      <ResumeListItem resume={resume} asTableRow />
-                    </motion.tr>
-                  ))}
+                {sortedResumes.map((resume, index) => (
+                  <motion.tr
+                    key={resume.id}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: index * 0.1 } }}
+                    exit={{ opacity: 0, filter: "blur(8px)", transition: { duration: 0.5 } }}
+                    className="border-b border-secondary/20 hover:bg-secondary/5"
+                  >
+                    <ResumeListItem resume={resume} asTableRow />
+                  </motion.tr>
+                ))}
               </AnimatePresence>
             </tbody>
           </table>
         </div>
+      )}
+
+      {/* Pagination Component */}
+      {!loading && totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+          onNextPage={handleNextPage}
+          onPrevPage={handlePrevPage}
+          hasNextPage={hasNextPage}
+          hasPreviousPage={hasPreviousPage}
+          isLoading={loading}
+          className="mt-4"
+        />
       )}
     </div>
   );

@@ -16,13 +16,25 @@ type Layout = "grid" | "list";
 
 export const ResumesPage = () => {
   const [layout, setLayout] = useState<Layout>("list");
-  const { resumes, loading } = useResumes();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  
+  const { resumes, loading, pagination } = useResumes(currentPage, itemsPerPage);
   const navigate = useNavigate();
 
+  console.log(pagination,"pagination")
+  
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   useEffect(()=>{
     queryClient.invalidateQueries({ queryKey: ["resumes"] });
-  },[resumes])
+  },[currentPage, itemsPerPage])
+
+  // Remove the problematic useEffect that was causing infinite loop
+  // The query will automatically refetch when currentPage or itemsPerPage changes
 
 
   return (
@@ -72,13 +84,27 @@ export const ResumesPage = () => {
 
         <ScrollArea
           allowOverflow
-          className="h-[calc(100vh-140px)] overflow-visible lg:h-[calc(100vh-88px)]"
+          className="min-h-[calc(100vh-140px)] overflow-visible lg:min-h-[calc(100vh-88px)]"
         >
            <TabsContent value="list">
-            <ListView resumes={resumes || []} loading={loading} />
+            <ListView 
+              resumes={resumes || []} 
+              loading={loading} 
+              pagination={pagination}
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              onPageChange={handlePageChange}
+            />
           </TabsContent>
         <TabsContent value="grid">
-            <GridView resumes={resumes} loading={loading} />
+            <GridView 
+              resumes={resumes} 
+              loading={loading} 
+              pagination={pagination}
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              onPageChange={handlePageChange}
+            />
           </TabsContent>
        
           

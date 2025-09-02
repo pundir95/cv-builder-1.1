@@ -9,6 +9,7 @@ import {
   LockOpen,
   PencilSimple,
   TrashSimple,
+  UserCheck,
 } from "@phosphor-icons/react";
 import type { ResumeDto } from "@reactive-resume/dto";
 import {
@@ -193,7 +194,15 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
     return (
       <>
         <td className="px-6 py-4 align-middle">
-          <div className="font-medium text-gray-900 whitespace-nowrap">{resume.title}</div>
+          <div className="flex items-center gap-2">
+            <div className="font-medium text-gray-900 whitespace-nowrap">{resume.title}</div>
+            {resume.human_verification && (
+              <div className="flex items-center gap-1 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                <UserCheck size={12} />
+                <span>Human Verified</span>
+              </div>
+            )}
+          </div>
           <div className="text-xs text-gray-500 whitespace-nowrap">{lastUpdated}</div>
         </td>
         <td className="px-6 py-4 align-middle text-gray-700">{createdAt}</td>
@@ -235,7 +244,17 @@ export const ResumeListItem = ({ resume, asTableRow }: Props) => {
       <ContextMenuTrigger className="even:bg-secondary/20">
         <BaseListItem
           className="group"
-          title={resume.title}
+          title={
+            <div className="flex items-center gap-2">
+              <span>{resume.title}</span>
+              {resume.human_verification && (
+                <div className="flex items-center gap-1 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                  <UserCheck size={12} />
+                  <span>Human Verified</span>
+                </div>
+              )}
+            </div>
+          }
           description={t`${lastUpdated}`}
           created={createdAt}
           strength={strength}

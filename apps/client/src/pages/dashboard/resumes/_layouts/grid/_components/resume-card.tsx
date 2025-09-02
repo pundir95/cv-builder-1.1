@@ -6,6 +6,7 @@ import {
   LockOpen,
   PencilSimple,
   TrashSimple,
+  UserCheck,
 } from "@phosphor-icons/react";
 import type { ResumeDto } from "@reactive-resume/dto";
 import {
@@ -106,7 +107,15 @@ export const ResumeCard = ({ resume }: Props) => {
                 "bg-gradient-to-t from-background/100 to-transparent",
               )}
             >
-              <h4 className="line-clamp-2 font-medium">{resume.title}</h4>
+              <div className="flex items-center gap-2">
+                <h4 className="line-clamp-2 font-medium flex-1">{resume.title}</h4>
+                {resume.human_verification && (
+                  <div className="flex items-center gap-1 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0">
+                    <UserCheck size={10} />
+                    <span className="hidden sm:inline">Human Verified</span>
+                  </div>
+                )}
+              </div>
               <p className="line-clamp-1 text-xs opacity-75">{t`Last updated ${lastUpdated}`}</p>
             </div>
 

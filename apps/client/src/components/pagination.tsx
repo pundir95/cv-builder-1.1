@@ -68,10 +68,10 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className={`flex items-center justify-between px-6 py-4 bg-secondary/5 border-t border-secondary/20 ${className}`}>
-      <div className="text-sm text-primary/70">
+    <div className={`flex justify-end px-6 py-4 bg-secondary/5 border-t border-secondary/20 ${className}`}>
+      {/* <div className="text-sm text-primary/70">
         Page {currentPage} of {totalPages}
-      </div>
+      </div> */}
       
       <div className="flex items-center space-x-2">
         {/* Previous Button */}
@@ -114,9 +114,9 @@ export const Pagination: React.FC<PaginationProps> = ({
       </div>
       
       {/* Items per page info */}
-      <div className="text-sm text-primary/70">
+      {/* <div className="text-sm text-primary/70">
         {itemsPerPage} items per page
-      </div>
+      </div> */}
     </div>
   );
 }; 
