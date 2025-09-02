@@ -2893,6 +2893,7 @@ export declare const resumeSchema: z.ZodObject<{
     }>>;
     visibility: z.ZodDefault<z.ZodEnum<["private", "public"]>>;
     locked: z.ZodDefault<z.ZodBoolean>;
+    human_verification: z.ZodDefault<z.ZodBoolean>;
     userId: z.ZodDefault<z.ZodString>;
     user: z.ZodOptional<z.ZodObject<{
         id: z.ZodDefault<z.ZodString>;
@@ -3319,6 +3320,7 @@ export declare const resumeSchema: z.ZodObject<{
     slug: string;
     visibility: "public" | "private";
     locked: boolean;
+    human_verification: boolean;
     user?: {
         email: string;
         id: string;
@@ -3729,6 +3731,7 @@ export declare const resumeSchema: z.ZodObject<{
     cv_data?: any;
     visibility?: "public" | "private" | undefined;
     locked?: boolean | undefined;
+    human_verification?: boolean | undefined;
 }>;
 declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     id: string;
@@ -4102,6 +4105,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     slug: string;
     visibility: "public" | "private";
     locked: boolean;
+    human_verification: boolean;
     user?: {
         email: string;
         id: string;
@@ -7015,6 +7019,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     }>>;
     visibility: z.ZodDefault<z.ZodEnum<["private", "public"]>>;
     locked: z.ZodDefault<z.ZodBoolean>;
+    human_verification: z.ZodDefault<z.ZodBoolean>;
     userId: z.ZodDefault<z.ZodString>;
     user: z.ZodOptional<z.ZodObject<{
         id: z.ZodDefault<z.ZodString>;
@@ -7460,6 +7465,7 @@ declare const ResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     cv_data?: any;
     visibility?: "public" | "private" | undefined;
     locked?: boolean | undefined;
+    human_verification?: boolean | undefined;
 }>;
 export declare class ResumeDto extends ResumeDto_base {
 }

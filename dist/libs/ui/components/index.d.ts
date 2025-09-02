@@ -17,6 +17,7 @@ export * from './form';
 export * from './hover-card';
 export * from './input';
 export * from './label';
+export * from './pagination';
 export * from './popover';
 export * from './portal';
 export * from './resizable-panel';

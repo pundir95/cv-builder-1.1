@@ -104,6 +104,7 @@ export const builderLoader: LoaderFunction<ResumeDto> = async ({ params }) => {
         locked: data1.locked,
         data: data1?.cv_data,
         cv_template: data1.cv_template,
+        human_verification: data1.human_verification,
       };
     
 
@@ -148,6 +149,7 @@ export const sharedBuilderLoader: LoaderFunction<any> = async ({ params }) => {
         locked: data1.locked,
         data: data1.cv?.cv_data,
         cv_template: data1.cv_template,
+        human_verification: data1.human_verification,
       };
 
     useResumeStore.setState({ resume: resumeDto });
@@ -198,6 +200,7 @@ export const sharedWithAnyone: LoaderFunction<any> = async ({ params }) => {
         locked: cv_details?.locked,
         data: cv_details?.cv_data,
         cv_template: cv_details?.cv_template,
+        human_verification: cv_details?.human_verification,
       };
       localStorage.setItem("user", JSON.stringify(cv_details?.user))
 

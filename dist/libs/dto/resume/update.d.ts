@@ -2892,6 +2892,7 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
     }>>>;
     visibility: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodEnum<["private", "public"]>>>;
     locked: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodBoolean>>;
+    human_verification: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodBoolean>>;
     userId: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodString>>;
     user: import('zod').ZodOptional<import('zod').ZodOptional<import('zod').ZodObject<{
         id: import('zod').ZodDefault<import('zod').ZodString>;
@@ -3337,6 +3338,7 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
     slug?: string | undefined;
     visibility?: "public" | "private" | undefined;
     locked?: boolean | undefined;
+    human_verification?: boolean | undefined;
 }, {
     id?: string | undefined;
     title?: string | undefined;
@@ -3728,6 +3730,7 @@ export declare const updateResumeSchema: import('zod').ZodObject<{
     slug?: string | undefined;
     visibility?: "public" | "private" | undefined;
     locked?: boolean | undefined;
+    human_verification?: boolean | undefined;
 }>;
 declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     id?: string | undefined;
@@ -4120,6 +4123,7 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     slug?: string | undefined;
     visibility?: "public" | "private" | undefined;
     locked?: boolean | undefined;
+    human_verification?: boolean | undefined;
 }, import('zod').ZodObjectDef<{
     id: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodString>>;
     title: import('zod').ZodOptional<import('zod').ZodString>;
@@ -7014,6 +7018,7 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     }>>>;
     visibility: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodEnum<["private", "public"]>>>;
     locked: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodBoolean>>;
+    human_verification: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodBoolean>>;
     userId: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodString>>;
     user: import('zod').ZodOptional<import('zod').ZodOptional<import('zod').ZodObject<{
         id: import('zod').ZodDefault<import('zod').ZodString>;
@@ -7459,6 +7464,7 @@ declare const UpdateResumeDto_base: import('nestjs-zod/dto').ZodDto<{
     slug?: string | undefined;
     visibility?: "public" | "private" | undefined;
     locked?: boolean | undefined;
+    human_verification?: boolean | undefined;
 }>;
 export declare class UpdateResumeDto extends UpdateResumeDto_base {
 }

@@ -6686,6 +6686,7 @@ const ir = i.object({
   data: rr.default(na),
   visibility: i.enum(["private", "public"]).default("private"),
   locked: i.boolean().default(!1),
+  human_verification: i.boolean().default(!1),
   userId: Be,
   user: ct.optional(),
   createdAt: Me,
