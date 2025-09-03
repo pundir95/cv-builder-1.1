@@ -4,7 +4,8 @@ import { userSchema } from "./user";
 
 export const updateUserSchema = userSchema.partial().pick({
   locale: true,
-  username: true,
+  first_name: true,
+  last_name: true,
   email: true,
   picture: true,
 });

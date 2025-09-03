@@ -14,21 +14,24 @@ export declare const updateUserSchema: import('zod').ZodObject<Pick<{
     updatedAt: import('zod').ZodOptional<import('zod').ZodEffects<import('zod').ZodUnion<[import('zod').ZodDate, import('zod').ZodString]>, Date, string | Date>>;
     created_at: import('zod').ZodOptional<import('zod').ZodEffects<import('zod').ZodUnion<[import('zod').ZodDate, import('zod').ZodString]>, Date, string | Date>>;
     updated_at: import('zod').ZodOptional<import('zod').ZodEffects<import('zod').ZodUnion<[import('zod').ZodDate, import('zod').ZodString]>, Date, string | Date>>;
-}, "email" | "picture" | "username" | "locale">, "strip", import('zod').ZodTypeAny, {
+}, "email" | "picture" | "first_name" | "last_name" | "locale">, "strip", import('zod').ZodTypeAny, {
     email?: string | undefined;
     picture?: string | null | undefined;
-    username?: string | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
     locale?: string | undefined;
 }, {
     email?: string | undefined;
     picture?: string | null | undefined;
-    username?: string | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
     locale?: string | undefined;
 }>;
 declare const UpdateUserDto_base: import('nestjs-zod/dto').ZodDto<{
     email?: string | undefined;
     picture?: string | null | undefined;
-    username?: string | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
     locale?: string | undefined;
 }, import('zod').ZodObjectDef<Pick<{
     id: import('zod').ZodOptional<import('zod').ZodDefault<import('zod').ZodString>>;
@@ -46,10 +49,11 @@ declare const UpdateUserDto_base: import('nestjs-zod/dto').ZodDto<{
     updatedAt: import('zod').ZodOptional<import('zod').ZodEffects<import('zod').ZodUnion<[import('zod').ZodDate, import('zod').ZodString]>, Date, string | Date>>;
     created_at: import('zod').ZodOptional<import('zod').ZodEffects<import('zod').ZodUnion<[import('zod').ZodDate, import('zod').ZodString]>, Date, string | Date>>;
     updated_at: import('zod').ZodOptional<import('zod').ZodEffects<import('zod').ZodUnion<[import('zod').ZodDate, import('zod').ZodString]>, Date, string | Date>>;
-}, "email" | "picture" | "username" | "locale">, "strip", import('zod').ZodTypeAny>, {
+}, "email" | "picture" | "first_name" | "last_name" | "locale">, "strip", import('zod').ZodTypeAny>, {
     email?: string | undefined;
     picture?: string | null | undefined;
-    username?: string | undefined;
+    first_name?: string | undefined;
+    last_name?: string | undefined;
     locale?: string | undefined;
 }>;
 export declare class UpdateUserDto extends UpdateUserDto_base {

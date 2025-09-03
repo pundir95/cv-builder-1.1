@@ -145,13 +145,13 @@ export const AccountSettings = () => {
                 >
                   Organization
                 </Button>
-                <Button
+                {/* <Button
                   variant="ghost"
                   className={`text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'subscription' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}
                   onClick={() => handleSectionChange('subscription')}
                 >
                   Subscription
-                </Button>
+                </Button> */}
                 <Button
                   variant="ghost"
                   className={`text-normal font-normal justify-start rounded-full border duration-300 ${activeSection === 'communication' ? 'bg-[#D6EF3C]/90 text-black border-[#D6EF3C]/90' : 'bg-white text-[#0D84F3] border-[#0D84F3] hover:bg-[#e6f3fd]'}`}

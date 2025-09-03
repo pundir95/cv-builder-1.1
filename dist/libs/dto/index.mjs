@@ -4486,7 +4486,8 @@ class za extends te(oa) {
 }
 const ua = ct.partial().pick({
   locale: !0,
-  username: !0,
+  first_name: !0,
+  last_name: !0,
   email: !0,
   picture: !0
 });

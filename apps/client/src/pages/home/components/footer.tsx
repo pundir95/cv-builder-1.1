@@ -45,9 +45,14 @@ export const Footer = () => (
           </a>
 
           <Link
-            to="/meta/privacy-policy"
+            to="/privacy-policy"
             className="block text-sm font-medium"
           >{t`Privacy Policy`}</Link>
+
+          <Link
+            to="/terms"
+            className="block text-sm font-medium"
+          >{t`Terms & Conditions`}</Link>
         </div>
 
         <div className="absolute bottom-0 right-0 lg:space-x-2">

@@ -19,10 +19,10 @@ const mockUsers = [
   // Add more users as needed
 ];
 
-export default function OrganisationUsers({showModal, setShowModal, employees, add_on_user_limit, setAddOnUserLimit, setOrganizationDetails}: {showModal: any, setShowModal: any, employees: any, add_on_user_limit : any, setAddOnUserLimit : (limit: number) => void, setOrganizationDetails: (details: any ) => void}) {
+export default function OrganisationUsers({showModal, setShowModal, employees, add_on_user_limit, setAddOnUserLimit, setOrganizationDetails, organizationDetail}: {showModal: any, setShowModal: any, employees: any, add_on_user_limit : any, setAddOnUserLimit : (limit: number) => void, setOrganizationDetails: (details: any ) => void, organizationDetail: any}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
-  const [users, setUsers] = useState(mockUsers);
+  const [users, setUsers] = useState<any[]>([]);
   const [isDeleteORDisable, setIsDeleteORDisable] = useState({
     delete: false,
     deletedId: "",
@@ -41,25 +41,24 @@ useEffect(()=>{
   localStorage.removeItem("is_add_on_user")
 },[is_add_on_user])
 
+const fetchAddOnUsers = async () => {
+  try {
+    const response = await axios.get('addon-user/auth/add-on-user-list/');
+    if (response.data) {
+      console.log(response.data,"response.data");
+      setUsers(response.data.data);
+    }
+  } catch (error) {
+    toast({
+      title: "Error fetching users",
+      description: "There was a problem fetching the add-on users.",
+      variant: "error",
+    });
+  }
+};
+
 useEffect(()=>{
-    const fetchAddOnUsers = async () => {
-      try {
-        const response = await axios.get('addon-user/auth/add-on-user-list/');
-        if (response.data) {
-          console.log(response.data,"response.data");
-          setUsers(response.data.data);
-        }
-      } catch (error) {
-        toast({
-          title: "Error fetching users",
-          description: "There was a problem fetching the add-on users.",
-          variant: "error",
-        });
-      }
-    };
-
     fetchAddOnUsers();
-
 },[])
   
   // Filtered users based on search and filter
@@ -161,6 +160,16 @@ useEffect(()=>{
             </Select>
           </div>
           <Button className="bg-[#D6EF3C]/90 rounded-full text-black px-6" onClick={() =>{
+            // Check if organization domain is available
+            if (!organizationDetail?.org_domain) {
+              toast({
+                title: "Organization Details Required",
+                description: "Please fill in the organization details first before adding users.",
+                variant: "error",
+              });
+              return;
+            }
+            
             if(userDataObj?.subscription_details?.length>0){
               if(add_on_user_limit==0){
                 setShowModal({...showModal, addOnUser: true,createAddOnUser: false})
@@ -232,7 +241,7 @@ useEffect(()=>{
             setIsDeleteORDisable({...isDeleteORDisable, delete: true})
           }}
           />
-        <CreateAddOnUser isOpen={showModal.createAddOnUser} onClose={() => setShowModal({...showModal, createAddOnUser: false})} setAddOnUserLimit={setAddOnUserLimit} />
+        <CreateAddOnUser isOpen={showModal.createAddOnUser} onClose={() => setShowModal({...showModal, createAddOnUser: false})} setAddOnUserLimit={setAddOnUserLimit} onUserCreated={fetchAddOnUsers} />
       </Card>
       {isDeleteORDisable.delete && <DeleteSubscriptionUser isOpen={isDeleteORDisable.delete}  onClose={() => setIsDeleteORDisable({...isDeleteORDisable, delete: false})} id={isDeleteORDisable.deletedId}
       text="Delete"

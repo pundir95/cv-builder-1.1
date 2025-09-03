@@ -39,9 +39,9 @@ export const DashboardLayout = () => {
 
       <footer className="w-full flex justify-center items-center py-4 border-t text-xs text-neutral-900">
         <nav className="flex flex-wrap justify-center gap-2 md:gap-4 px-4">
-          <a href="#" className="font-semibold hover:underline whitespace-nowrap">TERMS AND CONDITIONS</a>
+          <a href="/terms" className="font-semibold hover:underline whitespace-nowrap">TERMS AND CONDITIONS</a>
           <span className="hidden md:inline">|</span>
-          <a href="#" className="font-semibold hover:underline whitespace-nowrap">PRIVACY POLICY</a>
+          <a href="/privacy-policy" className="font-semibold hover:underline whitespace-nowrap">PRIVACY POLICY</a>
           <span className="hidden md:inline">|</span>
           <a href="#" className="font-semibold hover:underline whitespace-nowrap">ACCESSIBILITY</a>
           <span className="hidden md:inline">|</span>

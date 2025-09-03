@@ -29,7 +29,7 @@ export const SettingsPage = () => (
       <ScrollArea hideScrollbar className="h-[calc(100vh-140px)] lg:h-[calc(100vh-88px)]">
         <div className="space-y-6">
           <AccountSettings />
-          <Separator />
+          {/* <Separator /> */}
           {/* <SecuritySettings /> */}
           {/* <Separator /> */}
           {/* <ProfileSettings /> */}

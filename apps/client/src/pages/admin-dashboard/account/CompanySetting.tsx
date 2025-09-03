@@ -1,5 +1,5 @@
 import { Label } from '@radix-ui/react-label';
-import { Pencil } from '@phosphor-icons/react';
+import { ArrowLeft, Pencil } from '@phosphor-icons/react';
 import { Button, Input } from '@reactive-resume/ui';
 import { Card } from '@reactive-resume/ui';
 import React, { useEffect, useState } from 'react';
@@ -120,9 +120,10 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
          
 
             <Card className="p-6 items-start">
-              <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})}>
+              {showModal.organisationUsers || showModal.organisationDetailsEdit && <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})} className='flex items-center gap-2'>
+                <ArrowLeft size={16} />
                 Back
-              </button>
+              </button>}
              { showModal.organisationDetails && <OrganisationDetails setShowModal={setShowModal} showModal={showModal} employees={employees} organizationDetail={organizationDetail} />}
             {showModal.organisationDetailsEdit &&  <div className="space-y-6 w-full">
                 <div className="flex sm:flex-row flex-col gap-3 items-center justify-between">
@@ -215,7 +216,7 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
                 </div>
               </div>}
             {showModal.organisationUsers && <div className='w-full'>
-               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} add_on_user_limit={add_on_user_limit} setAddOnUserLimit={setAddOnUserLimit} setOrganizationDetails={setOrganizationDetails} />
+               <OrganisationUsers showModal={showModal} setShowModal={setShowModal} employees={employees} add_on_user_limit={add_on_user_limit} setAddOnUserLimit={setAddOnUserLimit} setOrganizationDetails={setOrganizationDetails} organizationDetail={organizationDetail} />
               </div>}
             </Card>
           </div>

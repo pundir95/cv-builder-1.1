@@ -27,7 +27,7 @@ import { Pencil, Eye, Clipboard, Users, Hash } from '@phosphor-icons/react';
         <div className="flex items-center gap-4 lg:flex-row flex-col">
           {/* Avatar */}
           <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl font-bold text-indigo-600">
-            {organizationDetail?.company_name?.[0] || organizationDetail?.name?.[0] || 'A'}
+            {organizationDetail?.company_name?.[0] || organizationDetail?.name?.[0]}
           </div>
           <div>
             <div className="text-lg font-semibold">Organization Name: <span className="font-bold">{organizationDetail?.company_name || organizationDetail?.name || 'N/A'}</span></div>

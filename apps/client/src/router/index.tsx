@@ -40,6 +40,7 @@ import CustomerOrganisation from "../pages/organistation-customer/CustomerOrgani
 import ResumeChecker from "../pages/admin-dashboard/resume-checker/ResumeChecker";
 import PreviewPage from "../pages/preview/preview-page";
 import CreatePasswordPage from "../pages/auth/CreatePassword/CreatePasswordPage";
+import TermsPage from "../pages/meta/terms";
 
 
 export const routes = createRoutesFromElements(
@@ -154,6 +155,9 @@ export const routes = createRoutesFromElements(
       
 
       {/* Public Routes */}
+      {/* <Route path="meta"> */}
+        <Route path="terms" element={<TermsPage />} />
+      {/* </Route> */}
       <Route path=":username">
         <Route path=":slug" loader={publicLoader} element={<PublicResumePage />} />
       </Route>

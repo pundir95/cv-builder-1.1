@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -94,7 +94,8 @@ const roles = [
   { value: 'member', label: 'Member' },
 ];
 
-const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit}: { isOpen: boolean; onClose: () => void; setAddOnUserLimit: (limit: any) => void; }) => {
+const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit, onUserCreated}: { isOpen: boolean; onClose: () => void; setAddOnUserLimit: (limit: any) => void; onUserCreated?: () => void; }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<FormValues>({
     resolver: zodResolver(createAddOnUserSchema),
     defaultValues: {
@@ -117,6 +118,7 @@ const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit}: { isOpen: boolea
     }
     
     try {
+      setIsLoading(true);
       const response = await axios.post("/addon-user/auth/create-add-on-user/", payload);
       
       // Fetch user data
@@ -127,6 +129,12 @@ const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit}: { isOpen: boolea
       const employeesResponse = await axios.get(`/company/organization-employees/`);
       console.log(employeesResponse, "res");
       setAddOnUserLimit((prevLimit: any) => prevLimit - 1);
+      
+      // Call the refresh function to update the users list
+      if (onUserCreated) {
+        onUserCreated();
+      }
+      
       onClose();
       toast({
         title: "Success",
@@ -140,6 +148,8 @@ const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit}: { isOpen: boolea
         description: err.message || "Failed to create add-on user",
         variant: "error",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -266,8 +276,8 @@ const CreateAddOnUser = ({ isOpen, onClose, setAddOnUserLimit}: { isOpen: boolea
               />
             </div>
             
-            <Button type="submit" style={addBtnStyles}>
-              Add Member
+            <Button type="submit" style={addBtnStyles} disabled={isLoading}>
+              {isLoading ? "Adding..." : "Add Member"}
             </Button>
           </form>
         </Form>
