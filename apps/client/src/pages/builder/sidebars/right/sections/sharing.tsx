@@ -30,21 +30,35 @@ export const SharingSection = () => {
   const [sharedUrl, setSharedUrl] = useState("");
 
   useEffect(() => {
-    axios.get(`/company/organization-employees/`).then((res) => {
-      setEmployees(res?.data?.data || []);
-    })
-    axios.get(`/cv-manager/cv-shared-with/${id}/`).then((res) => {
-      setSharedCvs(res?.data?.data || []);
-    })
-  }, [])
+    const fetchData = async () => {
+      try {
+        const [employeesResponse, sharedCvsResponse] = await Promise.all([
+          axios.get(`/addon-user/auth/add-on-user-list/`),
+          axios.get(`/cv-manager/cv-shared-with/${id}/`)
+        ]);
+        console.log(employeesResponse?.data.data,"employeesResponse?.data?.data")
+        setEmployees(employeesResponse?.data.data || []);
+        setSharedCvs(sharedCvsResponse?.data?.data || []);
+      } catch (error) {
+        console.error('Error fetching sharing data:', error);
+        toast({
+          variant: "error",
+          title: t`Failed to load sharing data`,
+          description: t`There was a problem loading the sharing information. Please try again.`,
+        });
+      }
+    };
+
+    fetchData();
+  }, [id, toast])
 
   useEffect(() => {
     if (sharedCvs?.length > 0 || employees?.length > 0) {
       const filteredEmployees = employees?.filter((employee: any) => {
-        if (!employee?.organization_user?.id) return false;
-        if (employee.organization_user.id === user?.id) return false;
+        if (!employee?.id) return false;
+        if (employee.id === user?.id) return false;
         const isAlreadyShared = sharedCvs.some((sharedCv: any) =>
-          sharedCv?.organization_user?.id === employee.organization_user.id
+          sharedCv?.id === employee.id
         );
         return !isAlreadyShared;
       });
@@ -63,33 +77,92 @@ export const SharingSection = () => {
     });
   };
 
-  const handleShareWithUser = () => {
-    axios.post(`/cv-manager/share-cv/`, {
-      "share_user": selectedUserId,
-      "cv": location.pathname.split("/")[2]
-    }).then((res) => {
-      console.log(res);
-   
-    })
+  const handleShareWithUser = async () => {
+    if (!selectedUserId) {
+      toast({
+        variant: "error",
+        title: t`Please select a user`,
+        description: t`You need to select a user before sharing.`,
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.post(`/cv-manager/share-cv/`, {
+        "share_user": selectedUserId,
+        "cv": location.pathname.split("/")[2]
+      });
+      
+      // Refresh the shared CVs list
+      const sharedCvsResponse = await axios.get(`/cv-manager/cv-shared-with/${id}/`);
+      setSharedCvs(sharedCvsResponse?.data?.data || []);
+      
+      // Clear selection
+      setSelectedUserId("");
+      
+      toast({
+        variant: "default",
+        title: t`CV shared successfully`,
+        description: t`The CV has been shared with the selected user.`,
+      });
+    } catch (error) {
+      console.error('Error sharing CV:', error);
+      toast({
+        variant: "error",
+        title: t`Failed to share CV`,
+        description: t`There was a problem sharing the CV. Please try again.`,
+      });
+    }
   }
 
-  const handleUnshare = (id: any) => {
-    axios.delete(`/cv-manager/share-cv/${id}/`).then((res) => {
-      console.log(res);
-    })
+  const handleUnshare = async (shareId: any) => {
+    try {
+      await axios.delete(`/cv-manager/share-cv/${shareId}/`);
+      
+      // Refresh the shared CVs list
+      const sharedCvsResponse = await axios.get(`/cv-manager/cv-shared-with/${id}/`);
+      setSharedCvs(sharedCvsResponse?.data?.data || []);
+      
+      toast({
+        variant: "default",
+        title: t`Access removed`,
+        description: t`The user no longer has access to this CV.`,
+      });
+    } catch (error) {
+      console.error('Error removing access:', error);
+      toast({
+        variant: "error",
+        title: t`Failed to remove access`,
+        description: t`There was a problem removing access. Please try again.`,
+      });
+    }
   }
 
-  const handleCvsahreAnyone = (value: any) => {
-    axios.post(`/share-resume/api/resume/share/`, {
-      "shared_by_user": user?.id,
-      cv: location.pathname.split("/")[2],
-      permission: value,
-      "expiry_day": "7"
-    }).then((res) => {
-      console.log(res);
-      let url=  `${window.location.origin}/builder/anyone/${id}?shared_id=${res?.data?.id}&ref_id=${res?.data?.ref_id}`;
+  const handleCvsahreAnyone = async (value: any) => {
+    try {
+      const response = await axios.post(`/share-resume/api/resume/share/`, {
+        "shared_by_user": user?.id,
+        cv: location.pathname.split("/")[2],
+        permission: value,
+        "expiry_day": "7"
+      });
+      
+      const url = `${window.location.origin}/builder/anyone/${id}?shared_id=${response?.data?.id}&ref_id=${response?.data?.ref_id}`;
       setSharedUrl(url);
-    })
+      
+      toast({
+        variant: "default",
+        title: t`Share link created`,
+        description: t`A shareable link has been generated successfully.`,
+      });
+    } catch (error) {
+      console.error('Error creating share link:', error);
+      toast({
+        variant: "error",
+        title: t`Failed to create share link`,
+        description: t`There was a problem creating the share link. Please try again.`,
+      });
+    }
   }
 
   return (
@@ -191,9 +264,9 @@ export const SharingSection = () => {
                       onChange={(e) => setSelectedUserId(e.target.value)}
                     >
                       <option value="" disabled selected>Select users to share with</option>
-                      {employees.map((employee: any) => (
+                      {employees && employees.length > 0 && employees.map((employee: any) => (
                         <option key={employee?.id} value={employee?.id}>
-                          {employee?.organization_user?.first_name} ({employee?.organization_user?.email})
+                          {employee?.first_name} ({employee?.email})
                         </option>
                       ))}
                     </select>

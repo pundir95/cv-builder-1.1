@@ -76,7 +76,7 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
           {/* <Separator /> */}
           {/* <PageSection /> */}
           <Separator />
-          <ExportSection setShowSubscriptionModal={setShowSubscriptionModal} setShowGuestRegistrationModal={setShowGuestRegistrationModal} />
+          {!window.location.search.includes('sahredcv=true') && !window.location.search.includes('shared_id') && <ExportSection setShowSubscriptionModal={setShowSubscriptionModal} setShowGuestRegistrationModal={setShowGuestRegistrationModal} />}
           <Separator />
           {/* <CssSection />
           <Separator /> */}

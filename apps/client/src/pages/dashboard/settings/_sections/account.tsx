@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { t } from "@lingui/macro";
+
 import { Check, UploadSimple, Warning } from "@phosphor-icons/react";
 import type { UpdateUserDto } from "@reactive-resume/dto";
 import { updateUserSchema } from "@reactive-resume/dto";
@@ -157,7 +157,7 @@ export const AccountSettings = () => {
     if (user.email !== data.email) {
       toast({
         variant: "info",
-        title: t`Check your email for the confirmation link to update your email address.`,
+        title: 'Check your email for the confirmation link to update your email address.',
       });
     }
 
@@ -173,13 +173,13 @@ export const AccountSettings = () => {
       await updateUserProfile(formData);
       toast({
         variant: "success",
-        title: t`Profile updated successfully!`,
+        title: 'Profile updated successfully!',
       });
       form.reset(data);
     } catch (error) {
       toast({
         variant: "error",
-        title: t`Failed to update profile. Please try again.`,
+        title: 'Failed to update profile. Please try again.',
       });
     }
   };
@@ -240,14 +240,14 @@ export const AccountSettings = () => {
     return (
       <div className="space-y-8">
         <div className="space-y-2">
-          <h3 className="text-2xl font-bold leading-relaxed tracking-tight">{t`Account`}</h3>
+          <h3 className="text-2xl font-bold leading-relaxed tracking-tight">Account</h3>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            {t`Here, you can update your account information such as your profile picture, first name, and last name.`}
+            Here, you can update your account information such as your profile picture, first name, and last name.
           </p>
         </div>
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <span className="ml-2 text-muted-foreground">{t`Loading profile data...`}</span>
+          <span className="ml-2 text-muted-foreground">Loading profile data...</span>
         </div>
       </div>
     );
@@ -256,9 +256,9 @@ export const AccountSettings = () => {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h3 className="text-2xl font-bold leading-relaxed tracking-tight">{t`Account`}</h3>
+        <h3 className="text-2xl font-bold leading-relaxed tracking-tight">Account</h3>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          {t`Here, you can update your account information such as your profile picture, first name, and last name.`}
+          Here, you can update your account information such as your profile picture, first name, and last name.
         </p>
       </div>
 
@@ -267,9 +267,9 @@ export const AccountSettings = () => {
           {/* Profile Picture Section */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <h4 className="text-lg font-semibold">{t`Profile Picture`}</h4>
+              <h4 className="text-lg font-semibold">Profile Picture</h4>
               <p className="text-sm text-muted-foreground">
-                {t`Upload a profile picture or enter a URL to your image.`}
+                Upload a profile picture or enter a URL to your image.
               </p>
             </div>
             
@@ -290,7 +290,7 @@ export const AccountSettings = () => {
 
                   <div className="flex-1 space-y-4">
                     <FormItem>
-                      <FormLabel>{t`Picture URL`}</FormLabel>
+                      <FormLabel>Picture URL</FormLabel>
                       <FormControl>
                         <Input 
                           placeholder="https://example.com/your-image.jpg" 
@@ -312,10 +312,10 @@ export const AccountSettings = () => {
                           className="flex items-center gap-2"
                         >
                           <UploadSimple size={16} />
-                          {t`Upload Image`}
+                          Upload Image
                         </Button>
                         <span className="text-xs text-muted-foreground">
-                          {t`JPG, PNG, or GIF. Max 5MB.`}
+                          JPG, PNG, or GIF. Max 5MB.
                         </span>
                       </div>
                       
@@ -345,19 +345,19 @@ export const AccountSettings = () => {
                               
                               toast({
                                 variant: "success",
-                                title: t`Profile picture updated successfully!`,
+                                title: 'Profile picture updated successfully!',
                               });
                             } catch (error) {
                               toast({
                                 variant: "error",
-                                title: t`Failed to update profile picture. Please try again.`,
+                                title: 'Failed to update profile picture. Please try again.',
                               });
                             }
                           }
                         }}
                         className="flex items-center gap-2"
                       >
-                        {loading ? t`Updating...` : t`Update Picture`}
+                        {loading ? 'Updating...' : 'Update Picture'}
                       </Button>
                     </div>
                   </div>
@@ -369,9 +369,9 @@ export const AccountSettings = () => {
           {/* Personal Information Section */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <h4 className="text-lg font-semibold">{t`Personal Information`}</h4>
+              <h4 className="text-lg font-semibold">Personal Information</h4>
               <p className="text-sm text-muted-foreground">
-                {t`Update your personal details and contact information.`}
+                Update your personal details and contact information.
               </p>
             </div>
             
@@ -382,7 +382,7 @@ export const AccountSettings = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t`First Name`}</FormLabel>
+                      <FormLabel>First Name</FormLabel>
                       <FormControl>
                         <Input 
                           autoComplete="given-name" 
@@ -400,7 +400,7 @@ export const AccountSettings = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t`Last Name`}</FormLabel>
+                      <FormLabel>Last Name</FormLabel>
                       <FormControl>
                         <Input 
                           autoComplete="family-name" 
@@ -432,18 +432,18 @@ export const AccountSettings = () => {
                       await updateUserProfile(formData);
                       toast({
                         variant: "success",
-                        title: t`Personal information updated successfully!`,
+                        title: 'Personal information updated successfully!',
                       });
                     } catch (error) {
                       toast({
                         variant: "error",
-                        title: t`Failed to update personal information. Please try again.`,
+                        title: 'Failed to update personal information. Please try again.',
                       });
                     }
                   }}
                   className="flex items-center gap-2"
                 >
-                  {loading ? t`Updating...` : t`Update Personal Info`}
+                  {loading ? 'Updating...' : 'Update Personal Info'}
                 </Button>
               </div>
             </div>
@@ -452,9 +452,9 @@ export const AccountSettings = () => {
           {/* Email Section */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <h4 className="text-lg font-semibold">{t`Email Address`}</h4>
+              <h4 className="text-lg font-semibold">Email Address</h4>
               <p className="text-sm text-muted-foreground">
-                {t`Your email address is used for account notifications and password recovery.`}
+                Your email address is used for account notifications and password recovery.
               </p>
             </div>
             
@@ -463,7 +463,7 @@ export const AccountSettings = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t`Email Address`}</FormLabel>
+                  <FormLabel>Email Address</FormLabel>
                   <FormControl>
                     <Input 
                       type="email" 
@@ -482,7 +482,7 @@ export const AccountSettings = () => {
                     <div className="flex items-center gap-x-1.5">
                       {user.emailVerified ? <Check size={14} /> : <Warning size={14} />}
                       <span className="text-sm">
-                        {user.emailVerified ? t`Email verified` : t`Email not verified`}
+                        {user.emailVerified ? 'Email verified' : 'Email not verified'}
                       </span>
                     </div>
                     {!user.emailVerified && (
@@ -492,7 +492,7 @@ export const AccountSettings = () => {
                         className="h-auto p-0 text-xs text-amber-600 hover:text-amber-700"
                         onClick={onResendVerificationEmail}
                       >
-                        {t`Resend verification email`}
+                        Resend verification email
                       </Button>
                     )}
                   </FormDescription>
@@ -517,18 +517,18 @@ export const AccountSettings = () => {
                     await updateUserProfile(formData);
                     toast({
                       variant: "success",
-                      title: t`Email address updated successfully!`,
+                      title: 'Email address updated successfully!',
                     });
                   } catch (error) {
                     toast({
                       variant: "error",
-                      title: t`Failed to update email address. Please try again.`,
+                      title: 'Failed to update email address. Please try again.',
                     });
                   }
                 }}
                 className="flex items-center gap-2"
               >
-                {loading ? t`Updating...` : t`Update Email`}
+                {loading ? 'Updating...' : 'Update Email'}
               </Button>
             </div>
           </div>
@@ -550,14 +550,14 @@ export const AccountSettings = () => {
                     onClick={onReset}
                     disabled={loading}
                   >
-                    {t`Cancel`}
+                    Cancel
                   </Button>
                   <Button 
                     type="submit" 
                     disabled={loading}
                     className="min-w-[120px]"
                   >
-                    {loading ? t`Saving...` : t`Save Changes`}
+                    {loading ? 'Saving...' : 'Save Changes'}
                   </Button>
                 </motion.div>
               )}

@@ -117,10 +117,8 @@ const CompanySetting: React.FC<{activeSection: string, setIsEditing: (isEditing:
   return (
     <div className={`md:col-span-3 ${activeSection !== 'company' && 'hidden'}`}>
             {/* Profile Card */}
-         
-
             <Card className="p-6 items-start">
-              {showModal.organisationUsers || showModal.organisationDetailsEdit && <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})} className='flex items-center gap-2'>
+              {(showModal.organisationUsers || showModal.organisationDetailsEdit )&& <button onClick={() => setShowModal({...showModal, organisationDetails: true, organisationDetailsEdit: false, organisationUsers: false})} className='flex items-center gap-2'>
                 <ArrowLeft size={16} />
                 Back
               </button>}
