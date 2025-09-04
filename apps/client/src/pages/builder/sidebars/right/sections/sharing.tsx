@@ -1,4 +1,4 @@
-import { Select, t } from "@lingui/macro";
+import { Select } from "@lingui/macro";
 import { Command, CopySimple, Link, Share, X } from "@phosphor-icons/react";
 import { AvatarImage, AvatarFallback, Avatar, Button, Input, Label, Switch } from "@reactive-resume/ui";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,10 +12,15 @@ import { useEffect, useState } from "react";
 import { axios } from '@/client/libs/axios';
 import { useLocation, useParams } from "react-router";
 
-export const SharingSection = () => {
+export const SharingSection = ({ setShowSubscriptionModal, setSubscriptionModalType, setShowGuestRegistrationModal }: { 
+  setShowSubscriptionModal: (show: boolean) => void;
+  setSubscriptionModalType: (type: 'download' | 'sharing') => void;
+  setShowGuestRegistrationModal: (show: boolean) => void;
+}) => {
   const { user } = useUser();
   const { toast } = useToast();
   const username = user?.username;
+  const isSubscriptionHave = JSON.parse(localStorage.getItem("user") || "{}")?.subscription_details?.length > 0;
 
   const setValue = useResumeStore((state) => state.setValue);
   const slug = useResumeStore((state) => state.resume.slug);
@@ -31,6 +36,7 @@ export const SharingSection = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if(isSubscriptionHave){ 
       try {
         const [employeesResponse, sharedCvsResponse] = await Promise.all([
           axios.get(`/addon-user/auth/add-on-user-list/`),
@@ -43,10 +49,11 @@ export const SharingSection = () => {
         console.error('Error fetching sharing data:', error);
         toast({
           variant: "error",
-          title: t`Failed to load sharing data`,
-          description: t`There was a problem loading the sharing information. Please try again.`,
+          title: "Failed to load sharing data",
+          description: "There was a problem loading the sharing information. Please try again.",
         });
       }
+    }
     };
 
     fetchData();
@@ -69,20 +76,28 @@ export const SharingSection = () => {
   
 
   const onCopy = async () => {
+    if (!handleSubscriptionCheck()) {
+      return;
+    }
+    
     await navigator.clipboard.writeText(sharedUrl);
     toast({
       variant: "success",
-      title: t`A link has been copied to your clipboard.`,
-      description: t`Anyone with this link can view and download the resume. Share it on your profile or with recruiters.`,
+      title: "A link has been copied to your clipboard.",
+      description: "Anyone with this link can view and download the resume. Share it on your profile or with recruiters.",
     });
   };
 
   const handleShareWithUser = async () => {
+    if (!handleSubscriptionCheck()) {
+      return;
+    }
+
     if (!selectedUserId) {
       toast({
         variant: "error",
-        title: t`Please select a user`,
-        description: t`You need to select a user before sharing.`,
+        title: "Please select a user",
+        description: "You need to select a user before sharing.",
       });
       return;
     }
@@ -102,20 +117,24 @@ export const SharingSection = () => {
       
       toast({
         variant: "default",
-        title: t`CV shared successfully`,
-        description: t`The CV has been shared with the selected user.`,
+        title: "CV shared successfully",
+        description: "The CV has been shared with the selected user.",
       });
     } catch (error) {
       console.error('Error sharing CV:', error);
       toast({
         variant: "error",
-        title: t`Failed to share CV`,
-        description: t`There was a problem sharing the CV. Please try again.`,
+        title: "Failed to share CV",
+        description: "There was a problem sharing the CV. Please try again.",
       });
     }
   }
 
   const handleUnshare = async (shareId: any) => {
+    if (!handleSubscriptionCheck()) {
+      return;
+    }
+
     try {
       await axios.delete(`/cv-manager/share-cv/${shareId}/`);
       
@@ -125,20 +144,38 @@ export const SharingSection = () => {
       
       toast({
         variant: "default",
-        title: t`Access removed`,
-        description: t`The user no longer has access to this CV.`,
+        title: "Access removed",
+        description: "The user no longer has access to this CV.",
       });
     } catch (error) {
       console.error('Error removing access:', error);
       toast({
         variant: "error",
-        title: t`Failed to remove access`,
-        description: t`There was a problem removing access. Please try again.`,
+        title: "Failed to remove access",
+        description: "There was a problem removing access. Please try again.",
       });
     }
   }
 
+  const handleSubscriptionCheck = () => {
+    if (!isSubscriptionHave) {
+      const userData = JSON.parse(localStorage.getItem("user") || "{}");
+      if (userData.is_guest_user) {
+        setShowGuestRegistrationModal(true);
+        return false;
+      }
+      setSubscriptionModalType('sharing');
+      setShowSubscriptionModal(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleCvsahreAnyone = async (value: any) => {
+    if (!handleSubscriptionCheck()) {
+      return;
+    }
+
     try {
       const response = await axios.post(`/share-resume/api/resume/share/`, {
         "shared_by_user": user?.id,
@@ -152,15 +189,15 @@ export const SharingSection = () => {
       
       toast({
         variant: "default",
-        title: t`Share link created`,
-        description: t`A shareable link has been generated successfully.`,
+        title: "Share link created",
+        description: "A shareable link has been generated successfully.",
       });
     } catch (error) {
       console.error('Error creating share link:', error);
       toast({
         variant: "error",
-        title: t`Failed to create share link`,
-        description: t`There was a problem creating the share link. Please try again.`,
+        title: "Failed to create share link",
+        description: "There was a problem creating the share link. Please try again.",
       });
     }
   }
@@ -169,8 +206,8 @@ export const SharingSection = () => {
     <section id="sharing" className="grid gap-y-6">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
-          <SectionIcon id="sharing" size={18} name={t`Sharing`} />
-          <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{t`Sharing`}</h2>
+          <SectionIcon id="sharing" size={18} name="Sharing" />
+          <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">Sharing</h2>
         </div>
       </header>
 
@@ -181,6 +218,9 @@ export const SharingSection = () => {
               id="anyone-visibility"
               checked={isAnyoneEnabled}
               onCheckedChange={(checked) => {
+                if (checked && !handleSubscriptionCheck()) {
+                  return;
+                }
                 setIsAnyoneEnabled(checked);
                 if (checked) setIsOrgEnabled(false);
                 setValue("visibility", checked ? "public" : "private");
@@ -190,7 +230,7 @@ export const SharingSection = () => {
               <Label htmlFor="anyone-visibility" className="space-y-1 mb-3 block">
                 <p>Anyone</p>
                 <p className="text-xs opacity-60">
-                  {t`Anyone, even those outside your organization will be able this.`}
+                  Anyone, even those outside your organization will be able this.
                 </p>
               </Label>
             </div>
@@ -232,6 +272,9 @@ export const SharingSection = () => {
               id="org-visibility"
               checked={isOrgEnabled}
               onCheckedChange={(checked) => {
+                if (checked && !handleSubscriptionCheck()) {
+                  return;
+                }
                 setIsOrgEnabled(checked);
                 if (checked) setIsAnyoneEnabled(false);
                 setValue("visibility", checked ? "public" : "private");
@@ -241,7 +284,7 @@ export const SharingSection = () => {
               <Label htmlFor="org-visibility" className="space-y-1">
                 <p>Share with Organization Users</p>
                 <p className="text-xs opacity-60">
-                  {t`Only users in your organization can view and download the resume.`}
+                  Only users in your organization can view and download the resume.
                 </p>
               </Label>
             </div>

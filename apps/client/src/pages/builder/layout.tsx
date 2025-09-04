@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import ImproveResume from "@/client/components/ImproveResume";
 import {axios} from "@/client/libs/axios";
 import { OTPVerificationModal } from "../../../../artboard/src/components/otp-verification";
+import { useToast } from "@/client/hooks/use-toast";
 
 
 const onOpenAutoFocus = (event: Event) => {
@@ -49,6 +50,8 @@ export const BuilderLayout = () => {
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [showOTPVerificationModal, setShowOTPVerificationModal] = useState(false);
   const [email, setEmail] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+  const { toast } = useToast();
   useEffect(() => {
     // Check if URL contains 'anyone'
     if (location.pathname.includes('/anyone/')) {
@@ -95,14 +98,41 @@ export const BuilderLayout = () => {
     try {
       const response = await axios.post('/share-resume/verify-email/', {
         otp: otp,
-        email:email,
+        email: email,
       });
-      console.log(response,"response")
-      setShowOTPVerificationModal(false)
-      setShowVerificationModal(false)
+      
+      console.log(response, "response");
+      
+      // Show success message
+      toast({
+        variant: "success",
+        title: "Email Verified Successfully",
+        description: "Your email has been verified. You can now access the resume.",
+      });
+      
+      // Close modals and mark as verified
+      setShowOTPVerificationModal(false);
+      setShowVerificationModal(false);
       localStorage.setItem('resume_verified', 'true');
-    } catch (error) {
-      console.log(error,"error")
+      setIsVerified(true);
+    } catch (error: any) {
+      console.error('OTP verification failed:', error);
+      
+      // Extract error message from response
+      const errorMessage = error.response?.data?.message || 
+                         error.response?.data?.error || 
+                         error.message || 
+                         'Failed to verify OTP. Please try again.';
+      
+      // Show error message to user
+      toast({
+        variant: "error",
+        title: "Verification Failed",
+        description: errorMessage,
+      });
+      
+      // Keep the OTP modal open so user can try again
+      // Don't close the modal on error
     }
   }
 
@@ -158,6 +188,10 @@ export const BuilderLayout = () => {
         isOpen={showOTPVerificationModal}
         onClose={() => setShowOTPVerificationModal(false)}
         onVerificationComplete={handleOTPVerificationComplete}
+        onBack={()=>setShowOTPVerificationModal(false)}
+        email={email}
+        isVerified={isVerified}
+        setIsVerified={setIsVerified}
       />
       </>
     );

@@ -169,7 +169,7 @@ export const LoginPage = () => {
                           />
                         </div>
                       </FormControl>
-                      <FormDescription>{t`You can also enter your username.`}</FormDescription>
+                      {/* <FormDescription>{t`You can also enter your username.`}</FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}

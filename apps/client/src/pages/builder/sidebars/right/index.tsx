@@ -31,8 +31,10 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
   const [selectedFilter, setSelectedFilter] = useState<any>(null);
   const containterRef = useRef<HTMLDivElement | null>(null);
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [subscriptionModalType, setSubscriptionModalType] = useState<'download' | 'sharing'>('download');
   const [showGuestRegistrationModal, setShowGuestRegistrationModal] = useState(false);
-
+  const isSubscriptionHave = JSON.parse(localStorage.getItem("user") || "{}")?.subscription_details?.length > 0;
+  console.log(isSubscriptionHave,"isSubscriptionHave")
   const scrollIntoView = (selector: string) => {
     const section = containterRef.current?.querySelector(selector);
     section?.scrollIntoView({ behavior: "smooth" });
@@ -76,13 +78,13 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
           {/* <Separator /> */}
           {/* <PageSection /> */}
           <Separator />
-          {!window.location.search.includes('sahredcv=true') && !window.location.search.includes('shared_id') && <ExportSection setShowSubscriptionModal={setShowSubscriptionModal} setShowGuestRegistrationModal={setShowGuestRegistrationModal} />}
+          {!window.location.search.includes('sahredcv=true') && !window.location.search.includes('shared_id') && <ExportSection setShowSubscriptionModal={setShowSubscriptionModal} setShowGuestRegistrationModal={setShowGuestRegistrationModal} setSubscriptionModalType={setSubscriptionModalType} />}
           <Separator />
           {/* <CssSection />
           <Separator /> */}
           {/* <PageSection />
           <Separator /> */}
-        { !window.location.search.includes('sahredcv=true') && !window.location.search.includes('shared_id') && <SharingSection /> }
+        { !window.location.search.includes('sahredcv=true') && !window.location.search.includes('shared_id') && <SharingSection setShowSubscriptionModal={setShowSubscriptionModal} setSubscriptionModalType={setSubscriptionModalType} setShowGuestRegistrationModal={setShowGuestRegistrationModal} /> }
         {/* <Separator /> */}
           {/* <StatisticsSection /> */}
           <Separator />
@@ -172,8 +174,11 @@ export const RightSidebar = ({ showRightSidebar, setShowRightSidebar, setShowLef
       <SubscriptionModal
         isOpen={showSubscriptionModal}
         onClose={() => setShowSubscriptionModal(false)}
-        title={"Upgrade to Download Resume"}
-        message={"Downloading and processing resumes requires a premium subscription. Upgrade now to unlock AI-powered resume analysis!"}
+        title={subscriptionModalType === 'download' ? "Upgrade to Download Resume" : "Upgrade to Share Resume"}
+        message={subscriptionModalType === 'download' 
+          ? "Downloading and processing resumes requires a premium subscription. Upgrade now to unlock AI-powered resume analysis!"
+          : "Sharing functionality requires a premium subscription. Upgrade now to unlock sharing features!"
+        }
       />
       <GuestRegistrationModal 
         isOpen={showGuestRegistrationModal}

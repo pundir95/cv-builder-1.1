@@ -32,7 +32,11 @@ const openInNewTab = (url: string) => {
   if (win) win.focus();
 };
 
-export const ExportSection = ({ setShowSubscriptionModal, setShowGuestRegistrationModal }: { setShowSubscriptionModal: (show: boolean) => void, setShowGuestRegistrationModal: (show: boolean) => void }) => {
+export const ExportSection = ({ setShowSubscriptionModal, setShowGuestRegistrationModal, setSubscriptionModalType }: { 
+  setShowSubscriptionModal: (show: boolean) => void; 
+  setShowGuestRegistrationModal: (show: boolean) => void;
+  setSubscriptionModalType: (type: 'download' | 'sharing') => void;
+}) => {
   const navigate = useNavigate();
   const { printResume, loading } = usePrintResume();
   const { id } = useParams();
@@ -166,6 +170,7 @@ export const ExportSection = ({ setShowSubscriptionModal, setShowGuestRegistrati
         setShowGuestRegistrationModal(true);
         return;
       }
+      setSubscriptionModalType('download');
       setShowSubscriptionModal(true);
       return;
     }

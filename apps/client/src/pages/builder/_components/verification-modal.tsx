@@ -1,6 +1,27 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Envelope, Phone, ShieldCheck } from "@phosphor-icons/react";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useToast } from "@/client/components/ToastProvider";
+
+// Validation schema matching the application's pattern
+const verificationSchema = z.object({
+  name: z.string()
+    .min(1, "Name is required")
+    .min(2, "Name must be at least 2 characters"),
+  email: z.string()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address"),
+  phone: z.string()
+    .min(1, "Phone number is required")
+    .max(255, "Phone number must be less than 255 characters")
+});
+
+type FormValues = z.infer<typeof verificationSchema>;
 
 interface VerificationModalProps {
   isOpen: boolean;
@@ -9,22 +30,25 @@ interface VerificationModalProps {
 }
 
 export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: VerificationModalProps) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: ""
-  });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { showToast } = useToast();
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(verificationSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: ""
+    }
+  });
 
   // Reset form when modal opens
   useEffect(() => {
     if (isOpen) {
-      setFormData({ name: "", email: "", phone: "" });
-      setErrors({});
+      form.reset();
       setIsSubmitting(false);
     }
-  }, [isOpen]);
+  }, [isOpen, form]);
 
   // Handle escape key
   useEffect(() => {
@@ -45,85 +69,22 @@ export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: V
     };
   }, [isOpen, onClose]);
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    // if (!formData.phone.trim()) {
-    //   newErrors.phone = "Phone number is required";
-    // } else {
-    //   const cleanPhone = formData.phone.replace(/\s/g, '');
-    //   if (!/^[\+]?[1-9][\d]{0,15}$/.test(cleanPhone)) {
-    //     newErrors.phone = "Please enter a valid phone number";
-    //   }
-    // }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
+  const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
     try {
       // Simulate API call - replace with actual verification logic
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      onVerificationComplete(formData);
+      onVerificationComplete(data);
     } catch (error) {
       console.error('Verification failed:', error);
-      setErrors({ submit: "Verification failed. Please try again." });
+      showToast('Verification failed. Please try again.', 'error');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
-    }
-    if (errors.submit) {
-      setErrors(prev => ({ ...prev, submit: "" }));
-    }
-  };
-
-  const formatPhoneNumber = (value: string) => {
-    // Remove all non-digits
-    const cleaned = value.replace(/\D/g, '');
-    
-    // Format as (XXX) XXX-XXXX for US numbers
-    if (cleaned.length <= 3) {
-      return cleaned;
-    } else if (cleaned.length <= 6) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
-    } else {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
-    }
-  };
-
-  const handlePhoneChange = (value: string) => {
-    const formatted = formatPhoneNumber(value);
-    handleInputChange("phone", formatted);
-  };
 
   if (!isOpen) return null;
 
@@ -166,31 +127,26 @@ export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: V
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
-            {errors.submit && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-600 text-sm">{errors.submit}</p>
-              </div>
-            )}
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
 
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                 <User size={16} className="text-gray-500" />
                 Full Name
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
+                {...form.register("name")}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.name ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
+                  form.formState.errors.name ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
                 }`}
                 placeholder="Enter your full name"
                 autoComplete="name"
                 autoFocus
               />
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              {form.formState.errors.name && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.name.message}</p>
               )}
             </div>
 
@@ -198,19 +154,19 @@ export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: V
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                 <Envelope size={16} className="text-gray-500" />
                 Email Address
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
+                {...form.register("email")}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.email ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
+                  form.formState.errors.email ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
                 }`}
                 placeholder="Enter your email address"
                 autoComplete="email"
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              {form.formState.errors.email && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
               )}
             </div>
 
@@ -218,19 +174,27 @@ export const VerificationModal = ({ isOpen, onClose, onVerificationComplete }: V
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                 <Phone size={16} className="text-gray-500" />
                 Phone Number
+                <span className="text-red-500">*</span>
               </label>
-              <input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handlePhoneChange(e.target.value)}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.phone ? "border-red-300 bg-red-50" : "border-gray-300 hover:border-gray-400"
+              <PhoneInput
+                country="IN"
+                value={form.watch("phone")}
+                onChange={(value) => {
+                  form.setValue("phone", value);
+                  form.trigger("phone"); // Trigger validation when value changes
+                }}
+                inputClass={`!w-full !px-4 !py-3 !pl-11 !border !rounded-lg focus:!ring-2 focus:!ring-blue-500 focus:!border-transparent !transition-colors !h-12 ${
+                  form.formState.errors.phone ? "!border-red-300 !bg-red-50" : "!border-gray-300 hover:!border-gray-400"
                 }`}
-                placeholder="(555) 123-4567"
-                autoComplete="tel"
+                containerClass="!w-full"
+                buttonClass={`!border-r !border-gray-300 !rounded-l-lg !h-12 ${
+                  form.formState.errors.phone ? "!border-red-300" : ""
+                }`}
+                dropdownClass="!z-50"
+                placeholder="Enter your phone number"
               />
-              {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+              {form.formState.errors.phone && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.phone.message}</p>
               )}
             </div>
 

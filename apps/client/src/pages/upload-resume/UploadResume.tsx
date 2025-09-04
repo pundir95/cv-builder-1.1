@@ -448,6 +448,34 @@ const uploadResume = () => {
           visible:true
         }
       });
+      resumeData.sections.interests.items = res.data.data.interests?.map((ele:any)=>{
+        return {
+          id:createId(),
+          name:ele?.name,
+          summary:ele?.summary,
+        }
+      });
+      resumeData.sections.projects.items = res.data.data.projects?.map((ele:any)=>{
+        return {
+          id:createId(),
+          name:ele?.title,
+          summary:ele?.description,
+          date:ele?.date,
+          visible:true,
+          url:{label: "", href: ""},
+          keywords:[]
+        }
+      });
+      resumeData.sections.awards.items = res.data.data.awards?.map((ele:any)=>{
+        return {
+          id:createId(),
+          name:ele?.title,
+          date:ele?.date,
+          visible:true,
+          url:{label: "", href: ""},
+          keywords:[]
+        }
+      });
 
 
       console.log(resumeData,"resumeData")

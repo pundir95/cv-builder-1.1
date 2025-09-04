@@ -8,6 +8,9 @@ interface OTPVerificationModalProps {
   onVerificationComplete: (otp: string) => void;
   email?: string;
   onResendOTP?: () => Promise<void>;
+  isVerified?: boolean;
+  setIsVerified?: (isVerified: boolean) => void;
+  onBack?: () => void;
 }
 
 export const OTPVerificationModal = ({ 
@@ -15,7 +18,10 @@ export const OTPVerificationModal = ({
   onClose, 
   onVerificationComplete, 
   email = "user@example.com",
-  onResendOTP 
+  onResendOTP,
+  isVerified = false,
+  setIsVerified,
+  onBack
 }: OTPVerificationModalProps) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -23,7 +29,7 @@ export const OTPVerificationModal = ({
   const [isResending, setIsResending] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(true);
-  const [isVerified, setIsVerified] = useState(false);
+  // const [isVerified, setIsVerified] = useState(false);
   
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -36,7 +42,7 @@ export const OTPVerificationModal = ({
       setIsResending(false);
       setTimeLeft(30);
       setIsTimerActive(true);
-      setIsVerified(false);
+      // setIsVerified(false);
       // Focus first input
       setTimeout(() => {
         inputRefs.current[0]?.focus();
@@ -144,10 +150,8 @@ export const OTPVerificationModal = ({
       // For demo purposes, accept any 6-digit code
       const otpString = otp.join('');
       if (otpString.length === 6) {
-        setIsVerified(true);
-        setTimeout(() => {
-          onVerificationComplete(otpString);
-        }, 1000);
+        // setIsVerified(true);
+          onVerificationComplete(otpString);;
       } else {
         setErrors({ otp: "Invalid verification code. Please try again." });
       }
@@ -339,7 +343,7 @@ export const OTPVerificationModal = ({
                 <div className="mt-6 text-center">
                   <button
                     type="button"
-                    onClick={onClose}
+                    onClick={()=>onBack?.()}
                     className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mx-auto"
                   >
                     <ArrowLeft size={16} />
