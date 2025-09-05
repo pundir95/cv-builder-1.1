@@ -411,7 +411,7 @@ const Projects = () => {
               separateLinks={section.separateLinks}
               className="font-bold"
             />
-            <div>{item.summary}</div>
+            <div>{item.description}</div>
             <div className="font-bold">{item.date}</div>
           </div>
         </div>

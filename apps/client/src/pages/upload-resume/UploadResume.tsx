@@ -6,7 +6,7 @@ import { LimitReachedModal } from '../select-template/LimitReachedModal';
 import { useNavigate, useSearchParams } from 'react-router';
 import { axios } from '@/client/libs/axios';
 import { resumeData } from '../dashboard/resumes/constant';
-import { createResume } from '@/client/services/resume';
+import { createResume, useUpdateResume } from '@/client/services/resume';
 import FirstUploadUI from './FirstUploadUI';
 import UploadContainer from './UploadContainer';
 import BuilderHeading from '../experience-level/BuilderHeading';
@@ -20,6 +20,7 @@ import HumanCheckerModal from './HumanCheckerModal';
 import { PaymentModal } from '../builder/sidebars/left/sections/picture/payment-modal';
 import { toast } from '@/client/hooks/use-toast';
 import { SubscriptionModal } from '@/client/components';
+import { queryClient } from '@/client/libs/query-client';
 
 const UploadResume = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -43,6 +44,7 @@ const UploadResume = () => {
   const user = localStorage.getItem("user") || '{"subscription_details":[]}';
   const userData = JSON.parse(user);
   const hasSubscription = userData?.subscription_details?.length > 0;
+  const { updateResume, loading: updateLoading } = useUpdateResume();
 
   // Helper function to show subscription required modal
   const showSubscriptionRequiredModal = (title: string, message: string) => {
@@ -458,8 +460,8 @@ const uploadResume = () => {
       resumeData.sections.projects.items = res.data.data.projects?.map((ele:any)=>{
         return {
           id:createId(),
-          name:ele?.title,
-          summary:ele?.description,
+          name:ele?.name,
+          description:ele?.description,
           date:ele?.date,
           visible:true,
           url:{label: "", href: ""},
@@ -476,17 +478,50 @@ const uploadResume = () => {
           keywords:[]
         }
       });
+      resumeData.sections.languages.items = res.data.data.custom?.map((ele:any)=>{
+        return {
+          id:createId(),
+          name:ele?.title,
+          description:ele?.description,
+          date:ele?.date,
+          level:ele?.level,
+          visible:true,
+        }
+      });
 
+      resumeData.sections.references.items = res.data.data.references?.map((ele:any)=>{
+        return {
+          id:createId(),
+          name:ele?.title,
+          summary:ele?.summary,
+          description:ele?.description,
+          visible:true,
+          url:{label: "", href: ""},
+          keywords:[]
+        }
+      });
 
       console.log(resumeData,"resumeData")
-
+      const isUpdate = new URLSearchParams(window.location.search).get('resume_id')
+      // if(isUpdate){
+      //   const newResume = await updateResume({
+      //     id: isUpdate,
+      //     title: res.data.data.personal_info.name,
+      //     // slug: values.slug,
+      //     visibility: "private", 
+      //     cv_data: resumeData 
+      //   });
+      //   queryClient.invalidateQueries({ queryKey: ["resumes"] });
+      //   setNewResume(newResume)
+      // } else {
       const newResume = await createResume({ slug: "New Cv", title: res.data.data.personal_info.name, cv_template:3, visibility: "private", cv_data:resumeData });
       setNewResume(newResume)
-      axios.get(`/accounts/api/users/`).then((res)=>{
-        localStorage.setItem("user",JSON.stringify(res.data[0]))
+    // }
+    axios.get(`/accounts/api/users/`).then((res)=>{
+      localStorage.setItem("user",JSON.stringify(res.data[0]))
 
-      })
-      handleNextStep()
+    })
+    handleNextStep()
 
       // void navigate(`/builder/${newResume.data.id}`)
 
